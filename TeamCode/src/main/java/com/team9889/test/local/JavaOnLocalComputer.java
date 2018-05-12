@@ -13,11 +13,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.Position;
 public class JavaOnLocalComputer {
     public static void main(String[] args) throws InterruptedException {
         // Test Code here
-        Position position = new Position(DistanceUnit.INCH, 0, 0.01, 0, System.nanoTime());
+        Position position = new Position(DistanceUnit.INCH, 0, 0, 0, 0);
+        Position position1 = new Position(DistanceUnit.INCH, 0, 5, 0, 1000000);
         System.out.println(position.x);
         System.out.println(position.y);
         System.out.println(position.z);
-        System.out.println(position.acquisitionTime);
+        System.out.println(position1.acquisitionTime-position.acquisitionTime);
 
     }
 }
