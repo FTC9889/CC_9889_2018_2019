@@ -15,10 +15,10 @@ import com.team9889.subsystems.Robot;
 public abstract class Team9889Linear extends LinearOpMode {
 
     // Robot Object
-    public Robot Robot = new Robot();
+    protected Robot Robot = com.team9889.subsystems.Robot.getInstance();
 
     // Match Timer
-    public ElapsedTime matchTime = new ElapsedTime();
+    protected ElapsedTime matchTime = new ElapsedTime();
 
     public void waitForStart(boolean autonomous) {
         Robot.init(hardwareMap, autonomous);

@@ -13,9 +13,19 @@ public abstract class Subsystem {
 
     public abstract void zeroSensors();
 
+    public abstract void update();
+
     public abstract void outputToTelemetry(Telemetry telemetry);
 
     public abstract void test(Telemetry telemetry);
 
     public abstract void stop();
+
+    void sleep(long milliseconds){
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }

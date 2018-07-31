@@ -5,15 +5,8 @@ package com.team9889.auto;
  */
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous
 public class Autonomous extends AutoModeBase {
-
     @Override
-    public void runOpMode() {
-        waitForStart(true);
+    public void run() {
 
-        if(opModeIsActive() && !isStopRequested()) {
-
-        }
     }
-
-
 }

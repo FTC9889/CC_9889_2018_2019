@@ -1,6 +1,7 @@
 package com.team9889.control.loops;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.team9889.lib.control.Loops.Loop;
 
 /**
  * Created by joshua9889 on 4/5/2018.

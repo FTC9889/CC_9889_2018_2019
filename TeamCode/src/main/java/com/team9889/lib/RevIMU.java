@@ -3,6 +3,7 @@ package com.team9889.lib;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.team9889.lib.drivetrain.DriveConfig;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -16,6 +17,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Position;
  */
 
 public class RevIMU {
+
     private BNO055IMU imu;
 
     public RevIMU(String id, HardwareMap hardwareMap){
@@ -35,13 +37,10 @@ public class RevIMU {
     }
 
     public double getNormalHeading() {
-        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        return angles.firstAngle;
-    }
+        Orientation angles;
 
-    public double getHeading(){
-        Position position = new Position();
-        //imu.startAccelerationIntegration(position, 0, 1000);
-        return 0;
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
+        return angles.firstAngle;
     }
 }

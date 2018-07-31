@@ -22,6 +22,11 @@ public class Lift extends Subsystem {
     }
 
     @Override
+    public void update() {
+
+    }
+
+    @Override
     public void outputToTelemetry(Telemetry telemetry) {
 
     }

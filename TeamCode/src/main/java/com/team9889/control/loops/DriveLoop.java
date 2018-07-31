@@ -1,6 +1,7 @@
 package com.team9889.control.loops;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.team9889.lib.control.Loops.Loop;
 import com.team9889.subsystems.Drive;
 import com.team9889.subsystems.Robot;
 

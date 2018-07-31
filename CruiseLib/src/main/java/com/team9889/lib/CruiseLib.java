@@ -1,5 +1,8 @@
 package com.team9889.lib;
 
+import com.team9889.lib.control.Math.Pose;
+import com.team9889.lib.control.Math.Rotation2d;
+
 /**
  * Created by Joshua on 6/23/17.
  */
@@ -118,6 +121,17 @@ public class CruiseLib {
      */
     public static boolean isWithinRange(double measured, double expected, double tol){
         return measured-tol<expected && measured+tol>expected;
+    }
+
+    public static double getDistanceBetweenTwoPoses(Pose pose1, Pose pose2){
+        double x = (pose1.getX() - pose2.getX()) * (pose1.getX() - pose2.getX());
+        double y = (pose1.getY() - pose2.getY()) * (pose1.getY() - pose2.getY());
+
+        return Math.sqrt(x+y);
+    }
+
+    public static Rotation2d getAngleDifference(Rotation2d firstAngle, Rotation2d secondAngle){
+        return new Rotation2d(firstAngle.getTheda(Rotation2d.Unit.DEGREES) - secondAngle.getTheda(Rotation2d.Unit.DEGREES), Rotation2d.Unit.DEGREES);
     }
 
 }

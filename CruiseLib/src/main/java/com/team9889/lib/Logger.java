@@ -1,4 +1,4 @@
-package com.team9889.lib.simulation;
+package com.team9889.lib;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -13,12 +13,12 @@ import java.nio.charset.Charset;
 
 public class Logger {
     private FileOutputStream logger = null;
-    private Charset charset = null;
+    private Charset charset;
 
-    private static Logger mInstance = new Logger("localLogs/" +
+    private static Logger localIntance = new Logger("localLogs/" +
             String.valueOf(System.currentTimeMillis()) + ".txt");
-    public static Logger getInstance(){
-        return mInstance;
+    public static Logger getInstance(boolean local){
+        return localIntance;
     }
 
     public Logger(String fileName){

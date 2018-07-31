@@ -50,6 +50,13 @@ public class Robot extends Subsystem{
     }
 
     @Override
+    public void update() {
+        for (Subsystem subsystem:subsystems){
+            subsystem.update();
+        }
+    }
+
+    @Override
     public void outputToTelemetry(Telemetry telemetry) {
         for (Subsystem subsystem: subsystems){
             subsystem.outputToTelemetry(telemetry);
@@ -68,6 +75,7 @@ public class Robot extends Subsystem{
     @Override
     public void stop() {
         for (Subsystem subsystem: subsystems){
+
             RobotLog.a("=========== Stopping "+subsystem.toString()+" ===========");
             subsystem.stop();
             RobotLog.a("=========== Finished Stopping "+subsystem.toString()+" ===========");

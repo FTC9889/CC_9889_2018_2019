@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp
 public class Teleop extends Team9889Linear{
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
         waitForStart(false);
     }
 }

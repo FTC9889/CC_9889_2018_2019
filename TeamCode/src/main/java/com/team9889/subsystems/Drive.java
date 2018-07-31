@@ -1,6 +1,5 @@
 package com.team9889.subsystems;
 
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -11,7 +10,6 @@ import com.team9889.lib.CruiseLib;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 /**
  * Created by joshua9889 on 10/6/2017.
@@ -20,11 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 public class Drive extends Subsystem {
 
     //Identify variables
-    public DcMotorEx rightMaster_, leftMaster_ = null;
-
-    private ModernRoboticsI2cRangeSensor backPing = null;
-
-    private boolean isFinishedRunningToPosition = false;
+    private DcMotorEx rightMaster_, leftMaster_ = null;
 
     public enum DriveZeroPowerStates {
         BRAKE,
@@ -67,6 +61,11 @@ public class Drive extends Subsystem {
     }
 
     @Override
+    public void update() {
+
+    }
+
+    @Override
     public void test(Telemetry telemetry) {
         if(getGyroAngleDegrees()<0.5 && getGyroAngleDegrees()>-0.5){
             RobotLog.a("Gyro OK");
@@ -102,16 +101,6 @@ public class Drive extends Subsystem {
             telemetry.addData("Right Drive", "Bad");
             telemetry.addData("Right Drive Ticks", String.valueOf(getRightTicks()));
         }
-
-        if(getPingDistance()!=0.0){
-            RobotLog.a("Ping OK");
-            telemetry.addData("Ping", "OK");
-        } else {
-            RobotLog.a("Ping Bad");
-            RobotLog.a("Ping Distance: "+ String.valueOf(getPingDistance())+"cm");
-            telemetry.addData("Ping", "Bad");
-            telemetry.addData("Ping Distance: ", String.valueOf(getPingDistance())+"cm");
-        }
     }
 
     public double getGyroAngleDegrees() {
@@ -120,10 +109,6 @@ public class Drive extends Subsystem {
 
     public double getGyroAngleRadians(){
         return CruiseLib.degreesToRadians(getGyroAngleDegrees());
-    }
-
-    public double getPingDistance(){
-        return backPing.getDistance(DistanceUnit.INCH);
     }
 
     public double getLeftDistanceInches(){
@@ -181,29 +166,6 @@ public class Drive extends Subsystem {
     public void setVelocityTarget(double left, double right) {
         this.leftMaster_.setVelocity(2*left, AngleUnit.RADIANS);
         this.rightMaster_.setVelocity(2*right, AngleUnit.RADIANS);
-    }
-
-    public void setLeftRightPath(int left_pos, int right_pos, double left_power, double right_power){
-        isFinishedRunningToPosition = false;
-        this.DriveControlState(DriveControlStates.POSITION);
-        this.DriveZeroPowerState(DriveZeroPowerStates.BRAKE);
-
-        this.leftMaster_.setTargetPosition(left_pos);
-        this.rightMaster_.setTargetPosition(right_pos);
-        this.setLeftRightPower(left_power, right_power);
-
-        if(Math.abs(leftMaster_.getTargetPosition()) - Math.abs(leftMaster_.getCurrentPosition()) < 20
-                && Math.abs(rightMaster_.getTargetPosition())- Math.abs(rightMaster_.getCurrentPosition()) < 20) {
-            this.setLeftRightPower(0,0);
-            isFinishedRunningToPosition = true;
-        }
-    }
-
-    public void setTargetTolerence(int tolerance) {
-        try {
-            this.leftMaster_.setTargetPositionTolerance(tolerance);
-            this.rightMaster_.setTargetPositionTolerance(tolerance);
-        } catch (Exception e){}
     }
 
     public void DriveControlState(DriveControlStates state){
@@ -277,13 +239,5 @@ public class Drive extends Subsystem {
                 rightMaster_.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             }
         } catch (Exception e) {}
-    }
-
-    private void sleep(long milliseconds){
-        try {
-            Thread.sleep(milliseconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }
