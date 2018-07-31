@@ -1,7 +1,8 @@
-package com.team9889.control.loops;
+package com.team9889.lib.control.Loops;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 
 /**
  * Created by joshua9889 on 4/5/2018.
@@ -12,27 +13,50 @@ import java.util.List;
 public class LoopManager {
 
     private List<Loop> loops;
+    private TimerTask updater;
+
+    private Thread updaterThread;
 
     public LoopManager(int maxLoops){
-        loops = new ArrayList<Loop>();
+        loops = new ArrayList<>(maxLoops);
     }
 
     public void addLoop(Loop loop){
         loops.add(loop);
     }
 
-    public void startLoops(){
-        System.out.println("======= Starting Control Loops =======");
-        for (Loop loop:loops) {
-            loop.run();
-        }
+    public void start(){
+        setup();
+
+        updaterThread.start();
     }
 
-    public void stopLoops(){
-        System.out.println("======= Stopping Control Loops =======");
-        for (Loop loop:loops) {
-            loop.interrupt();
-        }
+    public void stop(){
+        if(!updaterThread.isInterrupted())
+            updaterThread.interrupt();
+    }
+
+    private void setup(){
+        updater = new TimerTask() {
+            @Override
+            public void run() {
+                for (Loop loop: loops) {
+                    loop.start(System.nanoTime());
+                }
+
+                while (!Thread.interrupted()){
+                    for (Loop loop : loops) {
+                        loop.loop(System.nanoTime());
+                    }
+                }
+
+                for (Loop loop: loops) {
+                    loop.stop(System.nanoTime());
+                }
+            }
+        };
+
+        updaterThread = new Thread(updater);
     }
 
 }

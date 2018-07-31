@@ -8,16 +8,16 @@ import com.team9889.lib.CruiseLib;
  * Simple Bang-Bang Controller
  */
 
-public class BangBangController extends FeedBackController{
+public class BangBang extends FeedBackController{
 
-    public BangBangController(double wantedValue, double lowerValue, double upperValue){
+    public BangBang(double wantedValue, double lowerValue, double upperValue){
         this.wantedValue = wantedValue;
         this.lowerValue = lowerValue;
         this.upperValue = upperValue;
         this.tolerance =0;
     }
 
-    public BangBangController(double wantedValue, double tolerance, double lowerValue, double upperValue){
+    public BangBang(double wantedValue, double tolerance, double lowerValue, double upperValue){
         this.wantedValue = wantedValue;
         this.lowerValue = lowerValue;
         this.upperValue = upperValue;

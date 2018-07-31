@@ -11,18 +11,17 @@ public class LiftLoop extends Loop {
     ElapsedTime t = new ElapsedTime();
 
     @Override
-    public void start() {
-        t.reset();
+    public void start(double timestamp) {
+
     }
 
     @Override
-    public void loop() {
-        System.out.println("LiftLoop> "+t.nanoseconds() + " | System Time: " + System.currentTimeMillis());
-        t.reset();
+    public void loop(double timestamp) {
+
     }
 
     @Override
-    public void stop() {
+    public void stop(double timestamp) {
 
     }
 }

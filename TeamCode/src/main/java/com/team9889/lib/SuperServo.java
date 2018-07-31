@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 /**
+ * Created by joshua9889 on 7/5/2018.
  * Class to wrap both servo types into one
  */
 

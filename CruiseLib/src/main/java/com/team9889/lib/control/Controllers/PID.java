@@ -4,9 +4,9 @@ package com.team9889.lib.control.Controllers;
  * Created by joshua9889 on 4/15/2018.
  */
 
-public class PIDController extends FeedBackController {
+public class PID extends FeedBackController {
 
-    public PIDController(double kP, double kI, double kD){
+    public PID(double kP, double kI, double kD){
         this.p = kP;
         this.i = kI;
         this.d = kD;

@@ -5,4 +5,5 @@ package com.team9889.lib.control.Path;
  **/
 
 public class PathGenerator {
+
 }

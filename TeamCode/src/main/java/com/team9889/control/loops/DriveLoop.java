@@ -20,14 +20,14 @@ public class DriveLoop extends Loop {
     public boolean isActing = false;
 
     @Override
-    public void start() {
+    public void start(double timestamp) {
         leftStartPosition = mDrive.getLeftTicks();
         rightStartPosition = mDrive.getRightTicks();
         t.reset();
     }
 
     @Override
-    public void loop() {
+    public void loop(double timestamp) {
         newLeftPosition = mDrive.getLeftTicks();
         newRightPosition = mDrive.getRightTicks();
         angle = mDrive.getGyroAngleRadians();
@@ -36,7 +36,7 @@ public class DriveLoop extends Loop {
     }
 
     @Override
-    public void stop() {
-        mDrive.stop();
+    public void stop(double timestamp) {
+
     }
 }
