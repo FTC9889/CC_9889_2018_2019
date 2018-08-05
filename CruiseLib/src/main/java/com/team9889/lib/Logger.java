@@ -15,12 +15,6 @@ public class Logger {
     private FileOutputStream logger = null;
     private Charset charset;
 
-    private static Logger localIntance = new Logger("localLogs/" +
-            String.valueOf(System.currentTimeMillis()) + ".txt");
-    public static Logger getInstance(boolean local){
-        return localIntance;
-    }
-
     public Logger(String fileName){
         charset = Charset.forName("US-ASCII");
         try {

@@ -41,9 +41,9 @@ public class Rotation2d {
         this.mTheda = theda;
         this.mUnit = Unit.DEGREES;
 
-        double radianMeasue = Math.toDegrees(theda);
-        this.x = Math.cos(radianMeasue);
-        this.y = Math.sin(radianMeasue);
+        double radianMeasure = Math.toDegrees(theda);
+        this.x = Math.cos(radianMeasure);
+        this.y = Math.sin(radianMeasure);
     }
 
     public double getX() {

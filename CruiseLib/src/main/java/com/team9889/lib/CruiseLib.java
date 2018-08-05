@@ -72,8 +72,7 @@ public class CruiseLib {
     }
 
     public static double power3MaintainSign(double val){
-        double output = val*val*val;
-        return output;
+        return val*val*val;
     }
 
     public static double calcLeftTankDrive(double x, double y) {
@@ -132,6 +131,11 @@ public class CruiseLib {
 
     public static Rotation2d getAngleDifference(Rotation2d firstAngle, Rotation2d secondAngle){
         return new Rotation2d(firstAngle.getTheda(Rotation2d.Unit.DEGREES) - secondAngle.getTheda(Rotation2d.Unit.DEGREES), Rotation2d.Unit.DEGREES);
+    }
+
+    public  static double round(double x, int digits){
+        double num = 10 * digits;
+        return ((int)(x * num))/num;
     }
 
 }
