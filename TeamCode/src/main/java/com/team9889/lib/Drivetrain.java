@@ -104,10 +104,6 @@ public class Drivetrain extends Subsystem {
             case MECANUM:
                 System.out.println("You built a bad robot");
                 break;
-            case DIFFERENTIAL_2Motor:
-                break;
-            case DIFFERENTIAL_4Motor:
-                break;
             default:
                 double currentLeftPosition = getLeftPosition();
                 double currentRightPosition = getRightPosition();
@@ -119,16 +115,16 @@ public class Drivetrain extends Subsystem {
                 double heading = getGyroAngle().getTheda(Rotation2d.Unit.RADIANS);
 
                 if (Math.abs(leftDelta - rightDelta) < 5) { // basically going straight
-                    currentPose.setX(currentPose.getX() + leftDelta * Math.cos(heading));
-                    currentPose.setX(currentPose.getY() + rightDelta * Math.sin(heading));
-                    currentPose.setTheda(heading, Rotation2d.Unit.RADIANS);
+//                    currentPose.setX(currentPose.getX() + leftDelta * Math.cos(heading));
+//                    currentPose.setX(currentPose.getY() + rightDelta * Math.sin(heading));
+//                    currentPose.setTheda(heading, Rotation2d.Unit.RADIANS);
                 } else {
                     double R = mConfig.wheelbase_diameter * (leftDelta + rightDelta) / (2 * (rightDelta - leftDelta));
                     double wd = (rightDelta - leftDelta) / mConfig.wheelbase_diameter;
 
-                    currentPose.setX(currentPose.getY() + R*Math.sin(wd + heading) - R * Math.sin(heading));
-                    currentPose.setY(currentPose.getY() - R * Math.cos(wd + heading) + R * Math.cos(heading));
-                    currentPose.setTheda(heading + wd, Rotation2d.Unit.RADIANS);
+//                    currentPose.setX(currentPose.getY() + R*Math.sin(wd + heading) - R * Math.sin(heading));
+//                    currentPose.setY(currentPose.getY() - R * Math.cos(wd + heading) + R * Math.cos(heading));
+//                    currentPose.setTheda(heading + wd, Rotation2d.Unit.RADIANS);
                 }
 
                 leftVelocity = leftDelta / dt;
@@ -163,10 +159,10 @@ public class Drivetrain extends Subsystem {
         telemetry.addData("Right Position", getRightPosition());
         telemetry.addData("Left Position IN", getLeftPositionInches());
         telemetry.addData("Right Position IN", getRightPositionInches());
-        telemetry.addData("Current Pose X", currentPose.getX());
-        telemetry.addData("Current Pose Y", currentPose.getY());
-        telemetry.addData("Current Pose Theda",
-                currentPose.getTheda(Rotation2d.Unit.DEGREES));
+//        telemetry.addData("Current Pose X", currentPose.getX());
+//        telemetry.addData("Current Pose Y", currentPose.getY());
+//        telemetry.addData("Current Pose Theda",
+//                currentPose.getTheda(Rotation2d.Unit.DEGREES));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.team9889.lib;
 
 import com.team9889.lib.control.Math.Pose;
+import com.team9889.lib.control.Math.Position2d;
 import com.team9889.lib.control.Math.Rotation2d;
 
 /**
@@ -122,7 +123,7 @@ public class CruiseLib {
         return measured-tol<expected && measured+tol>expected;
     }
 
-    public static double getDistanceBetweenTwoPoses(Pose pose1, Pose pose2){
+    public static double getDistanceBetweenTwoPosition2d(Position2d pose1, Position2d pose2){
         double x = (pose1.getX() - pose2.getX()) * (pose1.getX() - pose2.getX());
         double y = (pose1.getY() - pose2.getY()) * (pose1.getY() - pose2.getY());
 

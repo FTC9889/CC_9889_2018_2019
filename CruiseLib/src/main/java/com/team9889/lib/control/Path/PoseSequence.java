@@ -1,6 +1,7 @@
 package com.team9889.lib.control.Path;
 
 import com.team9889.lib.control.Math.Pose;
+import com.team9889.lib.control.Math.Position2d;
 import com.team9889.lib.control.Math.Rotation2d;
 
 import java.util.ArrayList;
@@ -10,13 +11,13 @@ import java.util.ArrayList;
  **/
 
 public class PoseSequence {
-    public ArrayList<Pose> poses = new ArrayList<>();
+    public ArrayList<Position2d> poses = new ArrayList<>();
 
-    public void addPose(Pose newPose){
+    public void addPose(Position2d newPose){
         poses.add(newPose);
     }
 
-    public Pose getPose(int index){
+    public Position2d getPose(int index){
         return poses.get(index);
     }
 

@@ -1,4 +1,4 @@
-package com.team9889.lib.control;
+package com.team9889.lib.control.KalmanFilter;
 
 import java.io.PrintStream;
 

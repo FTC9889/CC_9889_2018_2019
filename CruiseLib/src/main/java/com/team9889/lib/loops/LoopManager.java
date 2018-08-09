@@ -1,4 +1,4 @@
-package com.team9889.lib.control.Loops;
+package com.team9889.lib.loops;
 
 import java.util.ArrayList;
 import java.util.List;

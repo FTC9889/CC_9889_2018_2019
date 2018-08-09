@@ -1,4 +1,4 @@
-package com.team9889.lib.control.Loops;
+package com.team9889.lib.loops;
 
 /**
  * Created by joshua9889 on 4/5/2018.

@@ -1,4 +1,4 @@
-package com.team9889.lib.control;
+package com.team9889.lib.control.KalmanFilter;
 
 /** 
  * Implementation of a Kalman filter using the Matrix class

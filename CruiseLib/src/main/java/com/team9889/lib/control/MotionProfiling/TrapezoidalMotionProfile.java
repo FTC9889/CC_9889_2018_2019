@@ -57,17 +57,24 @@ public class TrapezoidalMotionProfile implements MotionProfile {
         double Position, Velocity, Acceleration;
 
         if (t<=timeToAcc){
-            Position = p1(t);
-            Velocity = v1(t);
-            Acceleration = a1(t);
+            Position = (max_a/2.0) * t * t;
+            Velocity = max_a * t;
+            Acceleration =  max_a;
+
         } else if(t<=timeToCruise){
-            Position = p2(t);
-            Velocity = v2(t);
-            Acceleration = a2(t);
+            Position = (max_v * t) - ((max_v * max_v)/(2.0 * max_a));
+            Velocity = max_v;
+            Acceleration = 0;
+
         } else if(t<=totalTime){
-            Position = p3(t);
-            Velocity = v3(t);
-            Acceleration = a3(t);
+            Position = (totalTime * max_v) +
+                    (totalTime * max_a * t) -
+                    (Math.pow(max_v, 2) / max_a) -
+                    (0.5 * ((max_a * t*t) + (max_a * totalTime * totalTime)));
+
+            Velocity = (max_a * totalTime) - (max_a * t);;
+            Acceleration = -max_a;
+
         } else {
             Position = setpoint;
             Velocity = 0;
@@ -79,48 +86,5 @@ public class TrapezoidalMotionProfile implements MotionProfile {
         Acceleration *= direction;
 
         return new double[]{Position, Velocity, Acceleration};
-    }
-
-    private double p1(double t){
-        double A2 = (max_a/2.0);
-        return A2 * t * t;
-    }
-
-    private double p2(double t){
-        double Vx = max_v * t;
-        double V2 = max_v * max_v;
-        return  Vx - (V2/(2.0 * max_a));
-    }
-
-    private double p3(double t){
-        double tv = totalTime * max_v;
-        double tax = totalTime * max_a * t;
-        double Vsquared_divByA = Math.pow(max_v, 2) / max_a;
-        double lastPart = 0.5 * ((max_a * t*t) + (max_a * totalTime * totalTime));
-        return tv + tax - Vsquared_divByA - lastPart;
-    }
-
-    private double v1(double t){
-        return max_a * t;
-    }
-
-    private double v2(double t){
-        return max_v;
-    }
-
-    private double v3(double t){
-        return (max_a * totalTime) - (max_a * t);
-    }
-
-    private double a1(double t){
-        return max_a;
-    }
-
-    private double a2(double t){
-        return 0.0;
-    }
-
-    private double a3(double t){
-        return -max_a;
     }
 }

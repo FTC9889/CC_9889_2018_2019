@@ -43,7 +43,7 @@ def main():
         else:
             ArrayLabel = ""
 
-        plt.plot(range(0, len(plots[i])), plots[i], pointType, label = ArrayLabel)
+        plt.plot(range(0, len(plots[i])), plots[i], pointType,label = ArrayLabel)
     plt.xlabel("Time")
     plt.legend()
     plt.show()
