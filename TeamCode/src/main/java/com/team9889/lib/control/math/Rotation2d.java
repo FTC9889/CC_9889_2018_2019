@@ -71,4 +71,8 @@ public class Rotation2d {
                 return mTheda;
         }
     }
+
+    public static Rotation2d add(Rotation2d r1, Rotation2d r2){
+        return new Rotation2d(r1.getTheda(Unit.DEGREES) + r2.getTheda(Unit.DEGREES), Unit.DEGREES);
+    }
 }

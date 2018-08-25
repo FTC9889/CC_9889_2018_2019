@@ -13,8 +13,6 @@ public abstract class Subsystem {
 
     public abstract void zeroSensors();
 
-    public abstract void update();
-
     public abstract void outputToTelemetry(Telemetry telemetry);
 
     public abstract void test(Telemetry telemetry);

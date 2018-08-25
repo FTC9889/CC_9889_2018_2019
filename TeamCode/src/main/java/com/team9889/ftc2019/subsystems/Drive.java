@@ -7,6 +7,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.Constants;
 import com.team9889.lib.CruiseLib;
+import com.team9889.lib.control.math.Pose;
+import com.team9889.lib.control.math.Rotation2d;
+import com.team9889.lib.control.math.Vector2d;
+import com.team9889.lib.hardware.RevIMU;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -19,6 +23,10 @@ public class Drive extends Subsystem {
 
     //Identify variables
     private DcMotorEx rightMaster_, leftMaster_ = null;
+
+    private RevIMU imu = null;
+
+    private Pose currentPose = new Pose();
 
     public enum DriveZeroPowerStates {
         BRAKE,
@@ -37,6 +45,8 @@ public class Drive extends Subsystem {
         this.rightMaster_ = hardwareMap.get(DcMotorEx.class, Constants.kRightDriveMasterId);
         this.leftMaster_ = hardwareMap.get(DcMotorEx.class, Constants.kLeftDriveMasterId);
         this.rightMaster_.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        imu = new RevIMU("imu", hardwareMap);
     }
 
     @Override
@@ -52,7 +62,7 @@ public class Drive extends Subsystem {
         telemetry.addData("Right Position", this.getRightTicks());
         telemetry.addData("Left Power", this.leftMaster_.getPower());
         telemetry.addData("Right Power", this.rightMaster_.getPower());
-        telemetry.addData("Gyro Angle", this.getGyroAngleDegrees());
+        telemetry.addData("Gyro Angle", this.getAngle().getTheda(Rotation2d.Unit.DEGREES));
     }
 
     @Override
@@ -61,20 +71,15 @@ public class Drive extends Subsystem {
     }
 
     @Override
-    public void update() {
-
-    }
-
-    @Override
     public void test(Telemetry telemetry) {
-        if(getGyroAngleDegrees()<0.5 && getGyroAngleDegrees()>-0.5){
+        if(getAngle().getTheda(Rotation2d.Unit.DEGREES)<0.5 && getAngle().getTheda(Rotation2d.Unit.DEGREES)>-0.5){
             RobotLog.a("Gyro OK");
             telemetry.addData("Gyro", "OK");
         } else {
             RobotLog.a("Gyro Bad");
-            RobotLog.a("Gyro Angle: " + String.valueOf(getGyroAngleDegrees()));
+            RobotLog.a("Gyro Angle: " + String.valueOf(getAngle().getTheda(Rotation2d.Unit.DEGREES)));
             telemetry.addData("Gyro", "OK");
-            telemetry.addData("Gyro Angle", String.valueOf(getGyroAngleDegrees()));
+            telemetry.addData("Gyro Angle", String.valueOf(getAngle().getTheda(Rotation2d.Unit.DEGREES)));
         }
 
         setLeftRightPower(0.1, 0);
@@ -108,12 +113,12 @@ public class Drive extends Subsystem {
         return "Drive";
     }
 
-    public double getGyroAngleDegrees() {
-        return 0;
+    public Rotation2d getAngle(){
+        return new Rotation2d(imu.getNormalHeading(), Rotation2d.Unit.DEGREES);
     }
 
-    public double getGyroAngleRadians(){
-        return CruiseLib.degreesToRadians(getGyroAngleDegrees());
+    public Pose getPose() {
+        return currentPose;
     }
 
     public double getLeftDistanceInches(){
@@ -162,15 +167,6 @@ public class Drive extends Subsystem {
         double left = throttle + turn;
         double right = throttle - turn;
         setLeftRightPower(left, right);
-    }
-
-    /**
-     * @param left Wanted Left Velocity, in Radians per second
-     * @param right Wanted RIght Velocity, in Radians per second
-     */
-    public void setVelocityTarget(double left, double right) {
-        this.leftMaster_.setVelocity(2*left, AngleUnit.RADIANS);
-        this.rightMaster_.setVelocity(2*right, AngleUnit.RADIANS);
     }
 
     public void DriveControlState(DriveControlStates state){

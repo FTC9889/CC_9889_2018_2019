@@ -26,6 +26,7 @@ public class Constants {
     // Robot Specs
     private final static double FinalGearReduction = (19.2 / 1.);
     private final static double WheelDiameter = (4.0);
+    public final static double WheelbaseWidth = 16.25;
 
     // NeveRest 40 Encoders
     private final static double PPR40 = (28.0);
