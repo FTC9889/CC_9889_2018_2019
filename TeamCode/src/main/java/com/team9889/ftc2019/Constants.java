@@ -33,7 +33,7 @@ public class Constants {
 
     // NeveRest Orbitals 20 Encoders
     private final static double PPR20 = (134.4);
-    private final static double EncoderCounts20 = (PPR20 * FinalGearReduction);
+    private final static double EncoderCounts20 = 537.6;
 
     // Same output always
     public final static double CountsPerInch = (EncoderCounts20 / (WheelDiameter*Math.PI));
