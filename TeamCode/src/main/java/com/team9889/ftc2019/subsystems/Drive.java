@@ -1,57 +1,101 @@
 package com.team9889.ftc2019.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.configuration.LynxConstants;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.Constants;
 import com.team9889.lib.CruiseLib;
-import com.team9889.lib.control.math.Pose;
-import com.team9889.lib.control.math.Rotation2d;
-import com.team9889.lib.control.math.Vector2d;
+import com.team9889.lib.control.math.cartesian.Pose;
+import com.team9889.lib.control.math.cartesian.Rotation2d;
+import com.team9889.lib.control.math.cartesian.Vector2d;
 import com.team9889.lib.hardware.RevIMU;
+import com.team9889.lib.loops.Loop;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 /**
  * Created by joshua9889 on 10/6/2017.
  */
 
-public class Drive extends Subsystem {
+public class Drive extends Subsystem implements Loop{
 
-    //Identify variables
-    private DcMotorEx rightMaster_, leftMaster_ = null;
+    /**
+     * ticks to inch
+     * (Wheel Diameter * PI) * Counts Per Rotation
+     */
+    public final double ENCODER_TO_DISTANCE_RATIO = (4.0 * Math.PI) * 537.6;
 
+    /**
+     * Hardware
+     */
+    private DcMotor rightMaster_, leftMaster_ = null;
     private RevIMU imu = null;
 
-    private Pose currentPose = new Pose();
+    /**
+     * Tracker
+     */
+    private static Pose currentPose = new Pose();
+    private static double lastLeftDistance;
+    private static double lastRightDistance;
 
-    public enum DriveZeroPowerStates {
-        BRAKE,
-        FLOAT
+    @Override
+    public void start(double timestamp) {
+        lastLeftDistance = getLeftDistance();
+        lastRightDistance = getRightDistance();
     }
 
+    @Override
+    public void loop(double timestamp) {
+        double avgDistance = (getLeftDistance() + getRightDistance()) / 2.0;
+        double leftDistance = getLeftDistance()-lastLeftDistance;
+        double rightDistance = getRightDistance()-lastRightDistance;
+
+        double changeInAngle = (rightDistance - leftDistance) / Constants.WheelbaseWidth;
+        double changeInX = avgDistance * Math.cos(changeInAngle);
+        double changeInY = avgDistance * Math.sin(changeInAngle);
+
+        Vector2d vector2d = Vector2d.add(getPose().getVector2D(), new Vector2d(changeInX, changeInY));
+        Rotation2d rotation2d = Rotation2d.add(getPose().getRotation2d(), new Rotation2d(changeInAngle, Rotation2d.Unit.RADIANS));
+
+        lastLeftDistance = leftDistance;
+        lastRightDistance = rightDistance;
+
+        getPose().setVector2D(vector2d);
+        getPose().setRotation2d(rotation2d);
+    }
+
+    @Override
+    public void stop(double timestamp) {
+        
+    }
+
+    /**
+     * Used to easily modify the type of control we want
+     */
     public enum DriveControlStates {
         POWER,
         SPEED,
         POSITION,
+        MOTION_PROFILE,
         OPERATOR_CONTROL
     }
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
-        this.rightMaster_ = hardwareMap.get(DcMotorEx.class, Constants.kRightDriveMasterId);
-        this.leftMaster_ = hardwareMap.get(DcMotorEx.class, Constants.kLeftDriveMasterId);
+        this.rightMaster_ = hardwareMap.get(DcMotor.class, Constants.kRightDriveMasterId);
+        this.leftMaster_ = hardwareMap.get(DcMotor.class, Constants.kLeftDriveMasterId);
         this.rightMaster_.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        imu = new RevIMU("imu", hardwareMap);
+        if(LynxConstants.isRevControlHub()){ // Allows us to use MR practice bot
+            imu = new RevIMU("imu", hardwareMap);
+        }
     }
 
     @Override
     public void stop() {
-        this.DriveZeroPowerState(DriveZeroPowerStates.BRAKE);
+        this.DriveZeroPowerState(DcMotor.ZeroPowerBehavior.FLOAT);
         this.DriveControlState(DriveControlStates.POWER);
         this.setLeftRightPower(0,0);
     }
@@ -113,42 +157,47 @@ public class Drive extends Subsystem {
         return "Drive";
     }
 
+    /**
+     * @return Angle of the robot in Rotation2d.
+     */
     public Rotation2d getAngle(){
-        return new Rotation2d(imu.getNormalHeading(), Rotation2d.Unit.DEGREES);
+        try {
+            return new Rotation2d(imu.getNormalHeading(), Rotation2d.Unit.DEGREES);
+        } catch (Exception e){
+            return new Rotation2d(0, Rotation2d.Unit.DEGREES);
+        }
     }
 
     public Pose getPose() {
         return currentPose;
     }
 
-    public double getLeftDistanceInches(){
-        return Constants.ticks2Inches(getLeftTicks());
+    /**
+     * @return Left distance in Inches
+     */
+    public double getLeftDistance(){
+        return getLeftTicks() * ENCODER_TO_DISTANCE_RATIO;
     }
 
+    /**
+     * @return Right distance in Inches
+     */
+    public double getRightDistance(){
+        return getRightTicks() * ENCODER_TO_DISTANCE_RATIO;
+    }
+
+    /**
+     * @return Left distance in ticks
+     */
     public int getLeftTicks() {
         return this.leftMaster_.getCurrentPosition();
     }
 
-    public double getRightDistanceInches(){
-        return Constants.ticks2Inches(getRightTicks());
-    }
-
+    /**
+     * @return Right distance in ticks
+     */
     public int getRightTicks(){
         return this.rightMaster_.getCurrentPosition();
-    }
-
-    /**
-     * @return Returns the current Left velocity , in Radians per second
-     */
-    public double getLeftVelocity(){
-        return this.leftMaster_.getVelocity(AngleUnit.RADIANS);
-    }
-
-    /**
-     * @return Returns the current Right velocity , in Radians per second
-     */
-    public double getRightVelocity(){
-        return this.rightMaster_.getVelocity(AngleUnit.RADIANS);
     }
 
     /**
@@ -156,13 +205,13 @@ public class Drive extends Subsystem {
      * @param right Wanted Right Power between [-1.0,1.0]
      */
     public void setLeftRightPower(double left, double right) {
-        try {
-            this.leftMaster_.setPower(CruiseLib.limitValue(left, 1, -1));
-            this.rightMaster_.setPower(CruiseLib.limitValue(right, 1, -1));
-        } catch (Exception e){}
-
+        this.leftMaster_.setPower(CruiseLib.limitValue(left, 1, -1));
+        this.rightMaster_.setPower(CruiseLib.limitValue(right, 1, -1));
     }
 
+    /**
+     * Think of a car. Your gas peddle is throttle. The steering wheel is turn
+     */
     public void setThrottleSteerPower(double throttle, double turn){
         double left = throttle + turn;
         double right = throttle - turn;
@@ -173,49 +222,35 @@ public class Drive extends Subsystem {
         switch (state){
             case POWER:
                 this.withoutEncoders();
+                this.DriveZeroPowerState(DcMotor.ZeroPowerBehavior.FLOAT);
                 break;
             case SPEED:
                 this.withEncoders();
+                this.DriveZeroPowerState(DcMotor.ZeroPowerBehavior.BRAKE);
                 break;
             case POSITION:
                 this.runToPosition();
+                this.DriveZeroPowerState(DcMotor.ZeroPowerBehavior.BRAKE);
                 break;
             case OPERATOR_CONTROL:
                 this.withoutEncoders();
+                this.DriveZeroPowerState(DcMotor.ZeroPowerBehavior.FLOAT);
+                break;
+            case MOTION_PROFILE:
+                this.withoutEncoders();
+                this.DriveZeroPowerState(DcMotor.ZeroPowerBehavior.FLOAT);
                 break;
         }
     }
 
-    public void DriveZeroPowerState(DriveZeroPowerStates state){
-        switch (state){
-            case BRAKE:
-                this.BRAKE();
-                break;
-            case FLOAT:
-                this.FLOAT();
-                break;
-        }
-    }
-
-    private void BRAKE(){
-        try {
-            this.leftMaster_.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            this.rightMaster_.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        } catch (Exception e){}
-    }
-
-    private void FLOAT(){
-        try {
-            this.leftMaster_.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-            this.rightMaster_.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        } catch (Exception e){}
+    public void DriveZeroPowerState(DcMotor.ZeroPowerBehavior behavior){
+        this.leftMaster_.setZeroPowerBehavior(behavior);
+        this.rightMaster_.setZeroPowerBehavior(behavior);
     }
 
     private void withoutEncoders(){
-        try {
-            this.leftMaster_.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            this.rightMaster_.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        } catch (Exception e){}
+        this.leftMaster_.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        this.rightMaster_.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     private void withEncoders(){

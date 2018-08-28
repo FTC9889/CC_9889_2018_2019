@@ -1,7 +1,9 @@
 package com.team9889.lib;
 
-import com.team9889.lib.control.math.Rotation2d;
-import com.team9889.lib.control.math.Vector2d;
+import com.team9889.lib.control.math.cartesian.Rotation2d;
+import com.team9889.lib.control.math.cartesian.Vector2d;
+
+import org.opencv.core.Mat;
 
 /**
  * Created by Joshua on 6/23/17.
@@ -97,17 +99,21 @@ public class CruiseLib {
     }
 
     /**
+     * Use Math.toRadians
      * @param deg Degree measure
      * @return Radian value
      */
+    @Deprecated
     public static double degreesToRadians(double deg) {
         return (deg * Math.PI) / 180.0;
     }
 
     /**
+     * Use Math.toDegrees
      * @param rad Radian measure
      * @return Degree value
      */
+    @Deprecated
     public static double radianToDegrees(double rad) {
         return (rad / Math.PI) * 180.0;
     }
@@ -119,7 +125,7 @@ public class CruiseLib {
      * @return if the measured value is within a tolerance
      */
     public static boolean isWithinRange(double measured, double expected, double tol){
-        return measured-tol<expected && measured+tol>expected;
+        return measured-Math.abs(tol)<expected && measured+Math.abs(tol)>expected;
     }
 
     public static double getDistanceBetweenTwoPosition2d(Vector2d pose1, Vector2d pose2){
@@ -133,6 +139,11 @@ public class CruiseLib {
         return new Rotation2d(firstAngle.getTheda(Rotation2d.Unit.DEGREES) - secondAngle.getTheda(Rotation2d.Unit.DEGREES), Rotation2d.Unit.DEGREES);
     }
 
+    /**
+     * @param x Number you want to round
+     * @param digits Number of digits after zero
+     * @return Rounded Number
+     */
     public  static double round(double x, int digits){
         double num = 10 * digits;
         return ((int)(x * num))/num;

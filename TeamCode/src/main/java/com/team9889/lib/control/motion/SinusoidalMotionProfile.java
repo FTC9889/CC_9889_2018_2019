@@ -1,6 +1,6 @@
 package com.team9889.lib.control.motion;
 
-import com.team9889.lib.Logger;
+import com.team9889.lib.android.FileWriter;
 
 /**
  * Created by joshua9889 on 7/16/2018.
@@ -22,19 +22,19 @@ public class SinusoidalMotionProfile implements MotionProfile {
 
     // Demo
     public static void main(String... args){
-        Logger log = new Logger("sinusoidalProfile.csv");
+        FileWriter log = new FileWriter("sinusoidalProfile.csv");
         SinusoidalMotionProfile profile = new SinusoidalMotionProfile(7, new ProfileParameters(3, 1));
 
         int step = 100;
         for (int i = 0; i < step; i++) {
             double currentTime = i/(step/profile.totalTime);
-            double[] segment = profile.getOutput(currentTime);
+            MotionProfileSegment segment = profile.getOutput(currentTime);
             System.out.println("Time: " + currentTime +
-                    " | Position: " + segment[0] +
-                    " | Velocity: " + segment[1] +
-                    " | Acceleration: " + segment[2]
+                    " | Position: " + segment.getPosition() +
+                    " | Velocity: " + segment.getVelocity() +
+                    " | Acceleration: " + segment.getAcceleration()
             );
-            log.write(segment[0] + "," + segment[1] + "," + segment[2]);
+            log.write(segment.getPosition() + "," + segment.getVelocity() + "," + segment.getAcceleration());
         }
 
         log.close();
@@ -59,7 +59,7 @@ public class SinusoidalMotionProfile implements MotionProfile {
     }
 
     @Override
-    public double[] getOutput(double t) {
+    public MotionProfileSegment getOutput(double t) {
         double Position, Velocity, Acceleration;
 
         if(t< getTotalTime()){
@@ -72,7 +72,7 @@ public class SinusoidalMotionProfile implements MotionProfile {
             Acceleration = 0.0;
         }
 
-        return new double[]{Position, Velocity, Acceleration};
+        return new MotionProfileSegment(Position, Velocity, Acceleration);
     }
 
     public double getTotalTime(){

@@ -1,6 +1,6 @@
 package com.team9889.lib.control.motion;
 
-import com.team9889.lib.Logger;
+import com.team9889.lib.android.FileWriter;
 
 /**
  * Created by joshua9889 on 7/16/2018.
@@ -23,7 +23,7 @@ public class TrapezoidalMotionProfile implements MotionProfile {
 
     // Demo
     public static void main(String... args){
-        Logger log = new Logger("trapezoidalProfile.csv");
+        FileWriter log = new FileWriter("trapezoidalProfile.csv");
         TrapezoidalMotionProfile profile = new TrapezoidalMotionProfile();
         ProfileParameters parameters = new ProfileParameters(1.5, 2);
         profile.calculate(2.5, parameters);
@@ -31,13 +31,13 @@ public class TrapezoidalMotionProfile implements MotionProfile {
         int step = 1000;
         for (int i = 0; i < step; i++) {
             double currentTime = i/(step/profile.totalTime);
-            double[] segment = profile.getOutput(currentTime);
+            MotionProfileSegment segment = profile.getOutput(currentTime);
             System.out.println("Time: " + currentTime +
-                    " | Position: " + segment[0] +
-                    " | Velocity: " + segment[1] +
-                    " | Acceleration: " + segment[2]
+                    " | Position: " + segment.getPosition() +
+                    " | Velocity: " + segment.getVelocity() +
+                    " | Acceleration: " + segment.getAcceleration()
             );
-            log.write(segment[0] + "," + segment[1] + "," + segment[2]);
+            log.write(segment.getPosition() + "," + segment.getVelocity() + "," + segment.getAcceleration());
         }
 
         log.close();
@@ -61,7 +61,7 @@ public class TrapezoidalMotionProfile implements MotionProfile {
     }
 
     @Override
-    public double[] getOutput(double t) {
+    public MotionProfileSegment getOutput(double t) {
         double Position, Velocity, Acceleration;
 
         if (t<=timeToAcc){
@@ -93,7 +93,7 @@ public class TrapezoidalMotionProfile implements MotionProfile {
         Velocity *= direction;
         Acceleration *= direction;
 
-        return new double[]{Position, Velocity, Acceleration};
+        return new MotionProfileSegment(Position, Velocity, Acceleration);
     }
 
     public double getTotalTime(){

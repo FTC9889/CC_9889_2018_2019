@@ -1,7 +1,7 @@
 package com.team9889.lib.control.path;
 
-import com.team9889.lib.control.math.Pose;
-import com.team9889.lib.control.math.Rotation2d;
+import com.team9889.lib.control.math.cartesian.Pose;
+import com.team9889.lib.control.math.cartesian.Rotation2d;
 
 import java.util.ArrayList;
 

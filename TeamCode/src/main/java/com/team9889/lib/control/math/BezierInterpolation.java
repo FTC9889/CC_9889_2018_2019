@@ -1,5 +1,7 @@
 package com.team9889.lib.control.math;
 
+import com.team9889.lib.control.math.cartesian.Vector2d;
+
 /**
  * Created by joshua9889 on 7/10/2018.
  */

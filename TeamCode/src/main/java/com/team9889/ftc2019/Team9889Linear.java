@@ -4,6 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.subsystems.Robot;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.SimpleFormatter;
+
 /**
  * Created by joshua9889 on 3/28/2018.
  *
@@ -21,6 +25,11 @@ public abstract class Team9889Linear extends LinearOpMode {
     protected ElapsedTime matchTime = new ElapsedTime();
 
     public void waitForStart(boolean autonomous) {
+        Date currentData = new Date();
+        SimpleDateFormat  format = new SimpleDateFormat("dd.M.yyyy hh:mm:ss");
+
+        Constants.LOG.write("Robot Init Started at " + format.format(currentData));
+
         Robot.init(hardwareMap, autonomous);
 
         telemetry.setMsTransmissionInterval(autonomous ? 50:1000);
@@ -40,14 +49,13 @@ public abstract class Team9889Linear extends LinearOpMode {
         }
 
         matchTime.reset();
-
     }
 
     /**
      * Run this to update the Default Telemetry
      */
     protected void updateTelemetry(){
-        if(telemetry.getMsTransmissionInterval()==20)
+        if(telemetry.getMsTransmissionInterval()==50)
             telemetry.addData("Match Timer", this.matchTime.seconds()-30);
         else
             telemetry.addData("Match Timer", this.matchTime.seconds()-120);

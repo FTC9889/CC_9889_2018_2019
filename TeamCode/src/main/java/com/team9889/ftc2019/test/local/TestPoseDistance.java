@@ -1,8 +1,8 @@
 package com.team9889.ftc2019.test.local;
 
 import com.team9889.lib.CruiseLib;
-import com.team9889.lib.control.math.Rotation2d;
-import com.team9889.lib.control.math.Vector2d;
+import com.team9889.lib.control.math.cartesian.Rotation2d;
+import com.team9889.lib.control.math.cartesian.Vector2d;
 
 public class TestPoseDistance {
     public static void main(String... args){

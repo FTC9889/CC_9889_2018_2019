@@ -16,7 +16,7 @@ public interface MotionProfile {
 
     /**
      * @param t Current Time
-     * @return  [position, velocity, acceleration]
+     * @return  Position, Velocity, Acceleration
      */
-    double[] getOutput(double t);
+    MotionProfileSegment getOutput(double t);
 }

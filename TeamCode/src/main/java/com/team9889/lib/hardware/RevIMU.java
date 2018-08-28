@@ -19,6 +19,7 @@ public class RevIMU {
 
     public RevIMU(String id, HardwareMap hardwareMap){
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
@@ -26,18 +27,13 @@ public class RevIMU {
         parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
-        // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
-        // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
-        // and named "imu".
         imu = hardwareMap.get(BNO055IMU.class, id);
         imu.initialize(parameters);
     }
 
     public double getNormalHeading() {
         Orientation angles;
-
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-
         return angles.firstAngle;
     }
 }
