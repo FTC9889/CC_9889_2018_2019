@@ -39,7 +39,7 @@ public class CruiseCode {
         classes = actions;
     }
 
-    public void run(){
+    public void run(){ // TODO: Make this thread safe
         String[] commandsFromFile = fileReader.lines();
 
         // Iterate over all lines

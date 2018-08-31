@@ -9,6 +9,8 @@ import com.team9889.lib.android.FileWriter;
 
 public class Constants {
 
+    public static final boolean isSimulation = true;
+
     public static FileWriter LOG = new FileWriter("log.txt");
 
     //VuMark Licence Key

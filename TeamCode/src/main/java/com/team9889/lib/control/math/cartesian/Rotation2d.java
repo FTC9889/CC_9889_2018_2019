@@ -21,6 +21,19 @@ public class Rotation2d {
         setTheda(theda, unit);
     }
 
+    public Rotation2d(double x, double y){
+        double magnitude = Math.hypot(x, y);
+
+        double cos_angle_ = x / magnitude;
+        double sin_angle_ = y / magnitude;
+
+        this.mPosition.x = cos_angle_;
+        this.mPosition.y = sin_angle_;
+
+        setTheda(Math.atan2(mPosition.y, mPosition.x), AngleUnit.RADIANS);
+        System.out.println(getTheda(AngleUnit.DEGREES));
+    }
+
     public void setTheda(double theda, AngleUnit unit) {
         switch (unit){
             case DEGREES:
@@ -78,5 +91,17 @@ public class Rotation2d {
     @Override
     public String toString() {
         return String.valueOf(getTheda(AngleUnit.DEGREES)) + " Degrees";
+    }
+
+    public double cos() {
+        return Math.cos(getTheda(AngleUnit.RADIANS));
+    }
+
+    public double sin() {
+        return Math.sin(getTheda(AngleUnit.RADIANS));
+    }
+
+    public double tan() {
+        return Math.tan(getTheda(AngleUnit.RADIANS));
     }
 }

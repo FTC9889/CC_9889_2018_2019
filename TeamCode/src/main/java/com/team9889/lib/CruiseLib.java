@@ -3,6 +3,7 @@ package com.team9889.lib;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
 import com.team9889.lib.control.math.cartesian.Vector2d;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.opencv.core.Mat;
 
 /**
@@ -136,7 +137,7 @@ public class CruiseLib {
     }
 
     public static Rotation2d getAngleDifference(Rotation2d firstAngle, Rotation2d secondAngle){
-        return new Rotation2d(firstAngle.getTheda(Rotation2d.Unit.DEGREES) - secondAngle.getTheda(Rotation2d.Unit.DEGREES), Rotation2d.Unit.DEGREES);
+        return new Rotation2d(firstAngle.getTheda(AngleUnit.DEGREES) - secondAngle.getTheda(AngleUnit.DEGREES), AngleUnit.DEGREES);
     }
 
     /**

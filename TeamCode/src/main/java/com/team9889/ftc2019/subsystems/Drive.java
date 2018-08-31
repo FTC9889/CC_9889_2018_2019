@@ -14,6 +14,7 @@ import com.team9889.lib.hardware.RevIMU;
 import com.team9889.lib.loops.Loop;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 /**
  * Created by joshua9889 on 10/6/2017.
@@ -57,7 +58,7 @@ public class Drive extends Subsystem implements Loop{
         double changeInY = avgDistance * Math.sin(changeInAngle);
 
         Vector2d vector2d = Vector2d.add(getPose().getVector2D(), new Vector2d(changeInX, changeInY));
-        Rotation2d rotation2d = Rotation2d.add(getPose().getRotation2d(), new Rotation2d(changeInAngle, Rotation2d.Unit.RADIANS));
+        Rotation2d rotation2d = Rotation2d.add(getPose().getRotation2d(), new Rotation2d(changeInAngle, AngleUnit.RADIANS));
 
         lastLeftDistance = leftDistance;
         lastRightDistance = rightDistance;
@@ -87,6 +88,7 @@ public class Drive extends Subsystem implements Loop{
         this.rightMaster_ = hardwareMap.get(DcMotor.class, Constants.kRightDriveMasterId);
         this.leftMaster_ = hardwareMap.get(DcMotor.class, Constants.kLeftDriveMasterId);
         this.rightMaster_.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.DriveControlState(DriveControlStates.POWER);
 
         if(LynxConstants.isRevControlHub()){ // Allows us to use MR practice bot
             imu = new RevIMU("imu", hardwareMap);
@@ -95,7 +97,6 @@ public class Drive extends Subsystem implements Loop{
 
     @Override
     public void stop() {
-        this.DriveZeroPowerState(DcMotor.ZeroPowerBehavior.FLOAT);
         this.DriveControlState(DriveControlStates.POWER);
         this.setLeftRightPower(0,0);
     }
@@ -106,7 +107,7 @@ public class Drive extends Subsystem implements Loop{
         telemetry.addData("Right Position", this.getRightTicks());
         telemetry.addData("Left Power", this.leftMaster_.getPower());
         telemetry.addData("Right Power", this.rightMaster_.getPower());
-        telemetry.addData("Gyro Angle", this.getAngle().getTheda(Rotation2d.Unit.DEGREES));
+        telemetry.addData("Gyro Angle", this.getAngle().getTheda(AngleUnit.DEGREES));
     }
 
     @Override
@@ -116,14 +117,14 @@ public class Drive extends Subsystem implements Loop{
 
     @Override
     public void test(Telemetry telemetry) {
-        if(getAngle().getTheda(Rotation2d.Unit.DEGREES)<0.5 && getAngle().getTheda(Rotation2d.Unit.DEGREES)>-0.5){
+        if(getAngle().getTheda(AngleUnit.DEGREES)<0.5 && getAngle().getTheda(AngleUnit.DEGREES)>-0.5){
             RobotLog.a("Gyro OK");
             telemetry.addData("Gyro", "OK");
         } else {
             RobotLog.a("Gyro Bad");
-            RobotLog.a("Gyro Angle: " + String.valueOf(getAngle().getTheda(Rotation2d.Unit.DEGREES)));
+            RobotLog.a("Gyro Angle: " + String.valueOf(getAngle().getTheda(AngleUnit.DEGREES)));
             telemetry.addData("Gyro", "OK");
-            telemetry.addData("Gyro Angle", String.valueOf(getAngle().getTheda(Rotation2d.Unit.DEGREES)));
+            telemetry.addData("Gyro Angle", String.valueOf(getAngle().getTheda(AngleUnit.DEGREES)));
         }
 
         setLeftRightPower(0.1, 0);
@@ -162,9 +163,9 @@ public class Drive extends Subsystem implements Loop{
      */
     public Rotation2d getAngle(){
         try {
-            return new Rotation2d(imu.getNormalHeading(), Rotation2d.Unit.DEGREES);
+            return new Rotation2d(imu.getNormalHeading(), AngleUnit.DEGREES);
         } catch (Exception e){
-            return new Rotation2d(0, Rotation2d.Unit.DEGREES);
+            return new Rotation2d(0, AngleUnit.DEGREES);
         }
     }
 

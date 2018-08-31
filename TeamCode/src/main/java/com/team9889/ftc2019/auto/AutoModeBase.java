@@ -1,5 +1,6 @@
 package com.team9889.ftc2019.auto;
 
+import com.team9889.ftc2019.Constants;
 import com.team9889.ftc2019.Team9889Linear;
 
 /**
@@ -8,7 +9,6 @@ import com.team9889.ftc2019.Team9889Linear;
 
 public abstract class AutoModeBase extends Team9889Linear {
 
-    public boolean simulation = false;
     private AllianceColor currentAutoRunning = AllianceColor.RED;
 
     protected enum AllianceColor{
@@ -35,7 +35,7 @@ public abstract class AutoModeBase extends Team9889Linear {
     }
 
     public void StartDriveAbsolute(double left, double right) {
-        if(!simulation){
+        if(!Constants.isSimulation){
 
         }
     }
