@@ -1,7 +1,5 @@
 package com.team9889.ftc2019;
 
-import com.team9889.lib.android.FileWriter;
-
 /**
  * Class to store constants
  * Created by joshua9889 on 4/10/2017.
@@ -10,8 +8,6 @@ import com.team9889.lib.android.FileWriter;
 public class Constants {
 
     public static final boolean isSimulation = true;
-
-    public static FileWriter LOG = new FileWriter("log.txt");
 
     //VuMark Licence Key
     public final static String kVuforiaLicenceKey = "AUEjQhP/////AAAAGV8qq1GGcE03gQHKWYPRZBNIZYZq8Do" +

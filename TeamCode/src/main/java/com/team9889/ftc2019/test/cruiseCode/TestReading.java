@@ -9,9 +9,6 @@ import com.team9889.lib.android.FileReader;
 public class TestReading extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        Constants.LOG.write("Test");
-        Constants.LOG.write("Hello");
-        Constants.LOG.close();
         FileReader reader = new FileReader("log.txt");
         sleep(1000);
         telemetry.addData("", reader.read());

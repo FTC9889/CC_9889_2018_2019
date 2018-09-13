@@ -1,5 +1,6 @@
 package com.team9889.lib.cruiseCode;
 
+import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.auto.actions.Drive;
 import com.team9889.ftc2019.auto.actions.Telemetry;
@@ -29,7 +30,7 @@ public class CruiseCode {
         actions.add(new Wait());
         actions.add(new Telemetry());
 
-        CruiseCode code = new CruiseCode("test", actions);
+        CruiseCode code = new CruiseCode("auto/test", actions);
         code.run();
     }
 
@@ -39,7 +40,7 @@ public class CruiseCode {
         classes = actions;
     }
 
-    public void run(){ // TODO: Make this thread safe
+    private void run(){ // TODO: Make this thread safe
         String[] commandsFromFile = fileReader.lines();
 
         // Iterate over all lines
@@ -79,14 +80,23 @@ public class CruiseCode {
                                 argsToAction += "," + parameters[k];
                             }
 
-                            fileWriter.write("Starting to Run " + currentClass.getClass().getSimpleName()
-                                    + " at " + new SimpleDateFormat("hh:mm:ss:S MM.dd.yyyy").format(new Date()));
+                            String output = "Starting to Run " + currentClass.getClass().getSimpleName()
+                                    + " at " + new SimpleDateFormat("hh:mm:ss:S MM.dd.yyyy").format(new Date());
+
+                            fileWriter.write(output);
+                            try{RobotLog.d(output);}catch (Exception e){}
+
+                            // Setup
                             currentClass.setup(argsToAction);
 
+                            // Run
                             runAction(currentClass);
 
-                            fileWriter.write("Finished Running " + currentClass.getClass().getSimpleName()
-                                    + " at " + new SimpleDateFormat("hh:mm:ss:S MM.dd.yyyy").format(new Date()));
+                            output = "Finished Running " + currentClass.getClass().getSimpleName()
+                                    + " at " + new SimpleDateFormat("hh:mm:ss:S MM.dd.yyyy").format(new Date());
+
+                            fileWriter.write(output);
+                            try{RobotLog.d(output);}catch (Exception e){}
                         }
                     }
                 }
@@ -106,11 +116,4 @@ public class CruiseCode {
 
         action.done();
     }
-
-    private void printArray(String[] array){
-        for (String anArray : array) {
-            System.out.println(anArray);
-        }
-    }
-
 }

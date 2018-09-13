@@ -3,7 +3,6 @@ package com.team9889.lib.hardware;
 import android.hardware.Camera;
 
 import com.qualcomm.robotcore.hardware.Light;
-import com.team9889.ftc2019.Constants;
 
 import static android.hardware.Camera.Parameters.FLASH_MODE_OFF;
 import static android.hardware.Camera.Parameters.FLASH_MODE_TORCH;
@@ -29,7 +28,7 @@ public class CameraFlash implements Light {
             parm.setFlashMode(FLASH_MODE_TORCH);
             mCamera.setParameters(parm);
             isLightOn = true;
-            Constants.LOG.write("Camera - ON");
+//            Constants.LOG.write("Camera - ON");
         }
     }
 
@@ -38,19 +37,19 @@ public class CameraFlash implements Light {
             parm.setFlashMode(FLASH_MODE_OFF);
             mCamera.setParameters(parm);
             isLightOn = false;
-            Constants.LOG.write("Camera - OFF");
+//            Constants.LOG.write("Camera - OFF");
         }
     }
 
     public void open(){
         mCamera = Camera.open();
-        Constants.LOG.write("Camera - OPEN");
+//        Constants.LOG.write("Camera - OPEN");
     }
 
     public void release(){
         off();
         mCamera.release();
-        Constants.LOG.write("Camera - RELEASE");
+//        Constants.LOG.write("Camera - RELEASE");
     }
 
     @Override

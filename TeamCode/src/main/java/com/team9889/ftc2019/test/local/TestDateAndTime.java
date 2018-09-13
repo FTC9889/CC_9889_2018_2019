@@ -12,7 +12,7 @@ public class TestDateAndTime {
         Date currentData = new Date();
         SimpleDateFormat format = new SimpleDateFormat("M.dd.yyyy hh:mm:ss");
 
-        Constants.LOG.write(NORMAL, "Robot Init Started at " + format.format(currentData));
-        Constants.LOG.close();
+//        Constants.LOG.write(NORMAL, "Robot Init Started at " + format.format(currentData));
+//        Constants.LOG.close();
     }
 }

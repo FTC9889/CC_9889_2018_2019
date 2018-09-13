@@ -4,7 +4,6 @@ import com.team9889.lib.control.math.cartesian.Rotation2d;
 import com.team9889.lib.control.math.cartesian.Vector2d;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.opencv.core.Mat;
 
 /**
  * Created by Joshua on 6/23/17.
@@ -148,6 +147,15 @@ public class CruiseLib {
     public  static double round(double x, int digits){
         double num = 10 * digits;
         return ((int)(x * num))/num;
+    }
+
+    /**
+     * @param array Array to print
+     */
+    private void printArray(String[] array){
+        for (String anArray : array) {
+            System.out.println(anArray);
+        }
     }
 
 }

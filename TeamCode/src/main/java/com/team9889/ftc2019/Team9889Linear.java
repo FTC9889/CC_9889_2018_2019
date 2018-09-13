@@ -28,7 +28,7 @@ public abstract class Team9889Linear extends LinearOpMode {
         Date currentData = new Date();
         SimpleDateFormat  format = new SimpleDateFormat("dd.M.yyyy hh:mm:ss");
 
-        Constants.LOG.write("Robot Init Started at " + format.format(currentData));
+//        Constants.LOG.write("Robot Init Started at " + format.format(currentData));
 
         Robot.init(hardwareMap, autonomous);
 

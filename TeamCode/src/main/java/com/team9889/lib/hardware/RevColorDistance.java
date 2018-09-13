@@ -1,11 +1,9 @@
 package com.team9889.lib.hardware;
 
-import android.graphics.Color;
-
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.team9889.ftc2019.Constants;
+import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -32,7 +30,7 @@ public class RevColorDistance{
             if(sensorDistance==null)
                 sensorDistance = hardwareMap.get(DistanceSensor.class, id);
 
-            Constants.LOG.write("RevColorDistance " + id +" - Initialed");
+            RobotLog.d("===== RevColorDistance " + id + " - Initialed =====");
         }
     }
 
