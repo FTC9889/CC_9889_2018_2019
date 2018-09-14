@@ -27,4 +27,18 @@ public class Constants {
     public final static String kRightDriveMasterId = "right";
 
     public final static double WheelbaseWidth = 16.25;
+
+   /*---------------------
+    |                     |
+    |        Arms!        |
+    |                     |
+    ---------------------*/
+
+    //Settings for Arms
+    public final static String kLeftShoulderID = "leftShoulder";
+    public final static String kRightShoulderId = "rightShoulder";
+    public final static String kLeftElbowId = "leftElbow";
+    public final static String kRightElbowId = "rightElbow";
+    public final static String kLeftClawId = "leftClaw";
+    public final static String kRightClawId = "rightClaw";
 }
