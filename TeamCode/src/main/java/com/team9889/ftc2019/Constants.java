@@ -27,4 +27,17 @@ public class Constants {
     public final static String kRightDriveMasterId = "right";
 
     public final static double WheelbaseWidth = 16.25;
+
+   /*---------------------
+    |                     |
+    |       Intake        |
+    |                     |
+    ---------------------*/
+
+    //Settings for Intake
+    public final static String kIntakeMotorID = "Intake";
+    public final static String kfrontcolorsensor = "front";
+    public final static String kbackcolorsensor = "back";
+
+
 }
