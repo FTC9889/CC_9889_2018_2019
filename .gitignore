@@ -24,5 +24,8 @@ Thumbs.db
 .gradle
 build/
 
+# Cruise Code Local logs
+.log
+
 *ASUS_PC_01*
 

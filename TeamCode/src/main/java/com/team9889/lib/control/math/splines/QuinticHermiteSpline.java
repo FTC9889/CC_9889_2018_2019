@@ -101,9 +101,4 @@ public class QuinticHermiteSpline {
         double num = (dx(t) * dddy(t) - dddx(t) * dy(t)) * dx2dy2 - 3 * (dx(t) * ddy(t) - ddx(t) * dy(t)) * (dx(t) * ddx(t) + dy(t) * ddy(t));
         return num * num / (dx2dy2 * dx2dy2 * dx2dy2 * dx2dy2 * dx2dy2);
     }
-
-    public Rotation2d getHeading(double t) {
-        return new Rotation2d(dx(t), dy(t));
-    }
-
 }

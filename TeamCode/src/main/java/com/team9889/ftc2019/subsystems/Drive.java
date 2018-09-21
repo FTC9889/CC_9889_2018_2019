@@ -24,9 +24,9 @@ public class Drive extends Subsystem implements Loop{
 
     /**
      * ticks to inch
-     * (Wheel Diameter * PI) * Counts Per Rotation
+     * (Wheel Diameter * PI) / Counts Per Rotation
      */
-    public final double ENCODER_TO_DISTANCE_RATIO = (4.0 * Math.PI) * 537.6;
+    public final double ENCODER_TO_DISTANCE_RATIO = (4.0 * Math.PI) / 537.6;
 
     /**
      * Hardware
