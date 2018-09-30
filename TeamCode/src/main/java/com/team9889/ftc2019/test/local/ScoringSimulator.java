@@ -35,11 +35,11 @@ public class ScoringSimulator {
     static final double distance = Math.sqrt(25*25*2);
 
     static final double timeTraveling = 2 * distance / (ips * 0.8);
-    static final double lineUpTime = 2;
-    static final double intakeTime = 2;
+    static final double lineUpTime = 1.5;
+    static final double intakeTime = 1.4;
 
     // Robot Teleop Timing
-    static double timePerCycle = timeTraveling + lineUpTime + intakeTime;
+    static double timePerCycle = 10;//timeTraveling + lineUpTime + intakeTime;
 
     // Robot Teleop Timing
     static double hangTime = 1.6;
@@ -51,7 +51,7 @@ public class ScoringSimulator {
         double autonomousTimeLeftWithoutMinerals = (Autonomous - timeToLand - timeToSample - timeToClaim - timeToPark);
 
         int autoPointsWithMinerals = (
-                (int)mineralPoints(autonomousTimeLeftWithoutMinerals, timePerCycle, 0, 2 * SilverinSilverCargoHold)
+                //(int)mineralPoints(autonomousTimeLeftWithoutMinerals, timePerCycle, 0, 2 * SilverinSilverCargoHold)
                         + Landing
                         + Claiming
                         + Parking
@@ -64,22 +64,26 @@ public class ScoringSimulator {
         print("--Auton--");
         print("Time left autonomous w/o minerals: " + autonomousTimeLeftWithoutMinerals);
         print("Number of Cycles by robot in auto: " + autonomousTimeLeftWithoutMinerals/timePerCycle);
-        print("Mineral Points: " + (int)mineralPoints(autonomousTimeLeftWithoutMinerals, timePerCycle, 0, 2 * SilverinSilverCargoHold));
+        print("Minerals Scored: " + ((int)mineralPoints(autonomousTimeLeftWithoutMinerals, timePerCycle, 0, 2 * SilverinSilverCargoHold)/5));
         print("Score with minerals: " + autoPointsWithMinerals);
 
         print("\n--Teleop--");
         print("Teleop Points: " + teleopPoints);
         print("Points per second: " + (double)teleopPoints/(double)Teleop);
+        print("Minerals Scored: " + (teleopPoints/5));
         print("Seconds per Cycle: " + timePerCycle + "\n");
 
-        print(((3*NumberOfGold/2) * 5) + ((15 + (NumberOfSilver/2)) * 5));
+        print(((NumberOfGold/2) * 5) + ((15 + (NumberOfSilver/2)) * 5) + " : " + (NumberOfSilver/2 + NumberOfGold/2));
+        print((NumberOfSilver*5) + (NumberOfGold*5) + " : " + (NumberOfGold+NumberOfSilver));
 
         print("\n--Endgame--");
-        print("Endgame Points: " + endgamePoints + "\n");
+        print("Endgame Points: " + endgamePoints);
+        print("Minerals Scored: " + ((endgamePoints-Latching)/5) + "\n");
 
         int finalScore = (autoPointsWithMinerals + teleopPoints + endgamePoints);
         print("Final Score (Single Robot): " + finalScore);
         print("Final Score (Double Robot): " + (2*finalScore));
+        print("Minerals Scored: " + ( ((endgamePoints-Latching)/5) + teleopPoints/5 + (int)mineralPoints(autonomousTimeLeftWithoutMinerals, timePerCycle, 0, 2 * SilverinSilverCargoHold)/5));
     }
 
     public static double mineralPoints(double time, double timePerCycle, double defenceFactor, double pointsPerCycle){

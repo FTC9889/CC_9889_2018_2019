@@ -20,7 +20,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
  * Created by joshua9889 on 10/6/2017.
  */
 
-public class Drive extends Subsystem implements Loop{
+public class Drive extends Subsystem {
 
     /**
      * ticks to inch
@@ -41,37 +41,6 @@ public class Drive extends Subsystem implements Loop{
     private static double lastLeftDistance;
     private static double lastRightDistance;
 
-    @Override
-    public void start(double timestamp) {
-        lastLeftDistance = getLeftDistance();
-        lastRightDistance = getRightDistance();
-    }
-
-    @Override
-    public void loop(double timestamp) {
-        double avgDistance = (getLeftDistance() + getRightDistance()) / 2.0;
-        double leftDistance = getLeftDistance()-lastLeftDistance;
-        double rightDistance = getRightDistance()-lastRightDistance;
-
-        double changeInAngle = (rightDistance - leftDistance) / Constants.WheelbaseWidth;
-        double changeInX = avgDistance * Math.cos(changeInAngle);
-        double changeInY = avgDistance * Math.sin(changeInAngle);
-
-        Vector2d vector2d = Vector2d.add(getPose().getVector2D(), new Vector2d(changeInX, changeInY));
-        Rotation2d rotation2d = Rotation2d.add(getPose().getRotation2d(), new Rotation2d(changeInAngle, AngleUnit.RADIANS));
-
-        lastLeftDistance = leftDistance;
-        lastRightDistance = rightDistance;
-
-        getPose().setVector2D(vector2d);
-        getPose().setRotation2d(rotation2d);
-    }
-
-    @Override
-    public void stop(double timestamp) {
-        
-    }
-
     /**
      * Used to easily modify the type of control we want
      */
@@ -89,8 +58,9 @@ public class Drive extends Subsystem implements Loop{
         this.leftMaster_ = hardwareMap.get(DcMotor.class, Constants.kLeftDriveMasterId);
         this.rightMaster_.setDirection(DcMotorSimple.Direction.REVERSE);
         this.DriveControlState(DriveControlStates.POWER);
+        zeroSensors();
 
-        if(LynxConstants.isRevControlHub()){ // Allows us to use MR practice bot
+        if(LynxConstants.isRevControlHub() && auto){ // Allows us to use MR practice bot
             imu = new RevIMU("imu", hardwareMap);
         }
     }
@@ -217,6 +187,18 @@ public class Drive extends Subsystem implements Loop{
         double left = throttle + turn;
         double right = throttle - turn;
         setLeftRightPower(left, right);
+    }
+
+    public void setLeftRightPosition(double left, double right){
+        this.DriveControlState(DriveControlStates.POSITION);
+
+        this.leftMaster_.setTargetPosition(getLeftTicks() + (int)(left / ENCODER_TO_DISTANCE_RATIO));
+        this.rightMaster_.setTargetPosition(getRightTicks() + (int)(right / ENCODER_TO_DISTANCE_RATIO));
+
+        while(Math.abs(getLeftDistance()-left) > 0.1 && Math.abs(getRightDistance() - right) > 0.1){
+            this.setLeftRightPower(0.2, 0.2);
+        }
+        this.setLeftRightPower(0.0, 0.0);
     }
 
     public void DriveControlState(DriveControlStates state){

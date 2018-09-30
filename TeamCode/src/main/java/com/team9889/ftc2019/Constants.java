@@ -26,7 +26,7 @@ public class Constants {
     public final static String kLeftDriveMasterId = "left";
     public final static String kRightDriveMasterId = "right";
 
-    public final static double WheelbaseWidth = 16.25;
+    public final static double WheelbaseWidth = 16;
 
    /*---------------------
     |                     |
