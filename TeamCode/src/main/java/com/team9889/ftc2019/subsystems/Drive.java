@@ -31,7 +31,7 @@ public class Drive extends Subsystem {
     /**
      * Hardware
      */
-    private DcMotor rightMaster_, leftMaster_ = null;
+    public DcMotor rightMaster_, leftMaster_ = null;
     private RevIMU imu = null;
 
     /**
@@ -60,9 +60,9 @@ public class Drive extends Subsystem {
         this.DriveControlState(DriveControlStates.POWER);
         zeroSensors();
 
-        if(LynxConstants.isRevControlHub() && auto){ // Allows us to use MR practice bot
-            imu = new RevIMU("imu", hardwareMap);
-        }
+
+        imu = new RevIMU("imu", hardwareMap);
+
     }
 
     @Override

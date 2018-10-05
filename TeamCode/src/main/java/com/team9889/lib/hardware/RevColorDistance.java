@@ -35,7 +35,10 @@ public class RevColorDistance{
     }
 
     public double getCm(){
-        return sensorDistance.getDistance(DistanceUnit.CM);
+        if(sensorDistance != null)
+            return sensorDistance.getDistance(DistanceUnit.CM);
+        else
+            return 0;
     }
 
     public double red(){

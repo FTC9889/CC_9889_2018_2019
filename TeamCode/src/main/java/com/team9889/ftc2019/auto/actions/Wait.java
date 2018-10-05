@@ -10,6 +10,10 @@ public class Wait extends Action {
     private ElapsedTime t;
     private int timeToWaitMilli;
 
+    public Wait(int waitTime){
+        timeToWaitMilli = waitTime;
+    }
+
     @Override
     public void setup(String args) {
         double[] array = getNumbersFromString(args);

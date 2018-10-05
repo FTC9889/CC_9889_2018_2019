@@ -35,7 +35,7 @@ public class Constants {
     ---------------------*/
 
     //Settings for Intake
-    public final static String kIntakeMotorID = "Intake";
+    public final static String kIntakeMotorID = "li";
     public final static String kfrontcolorsensor = "front";
     public final static String kbackcolorsensor = "back";
 

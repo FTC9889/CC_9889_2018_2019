@@ -25,10 +25,7 @@ public class CruiseCode {
 
     public static void main(String... args){
         ArrayList<Action> actions = new ArrayList<>();
-        actions.add(new Drive());
-        actions.add(new Turn());
-        actions.add(new Wait());
-        actions.add(new Telemetry());
+
 
         CruiseCode code = new CruiseCode("auto/test", actions);
         code.run();

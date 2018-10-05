@@ -20,8 +20,8 @@ public class Intake extends Subsystem{
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
         this.intakemotor = hardwareMap.get(DcMotor.class, Constants.kIntakeMotorID);
-        this.front = new RevColorDistance(Constants.kfrontcolorsensor,hardwareMap);
-        this.front = new RevColorDistance(Constants.kbackcolorsensor,hardwareMap);
+        //this.front = new RevColorDistance(Constants.kfrontcolorsensor,hardwareMap);
+        //this.back = new RevColorDistance(Constants.kbackcolorsensor,hardwareMap);
     }
 
     @Override
@@ -52,6 +52,7 @@ public class Intake extends Subsystem{
     public void intake (){
         setIntakePower(1);
     }
+
     public void outtake (){
         setIntakePower(-1);
     }

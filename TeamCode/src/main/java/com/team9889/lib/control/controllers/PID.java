@@ -1,5 +1,7 @@
 package com.team9889.lib.control.controllers;
 
+import com.qualcomm.robotcore.util.RobotLog;
+
 /**
  * Created by joshua9889 on 4/15/2018.
  */
@@ -30,6 +32,7 @@ public class PID extends FeedBackController {
             // P control first time
             output = p * error;
             first = false;
+            RobotLog.a(String.valueOf(output));
         } else {
             double currentTime = System.currentTimeMillis() - lastTime;
             integral = integral + (error *currentTime);
