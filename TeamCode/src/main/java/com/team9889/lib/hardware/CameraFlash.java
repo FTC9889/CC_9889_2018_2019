@@ -28,7 +28,6 @@ public class CameraFlash implements Light {
             parm.setFlashMode(FLASH_MODE_TORCH);
             mCamera.setParameters(parm);
             isLightOn = true;
-//            Constants.LOG.write("Camera - ON");
         }
     }
 
@@ -37,19 +36,16 @@ public class CameraFlash implements Light {
             parm.setFlashMode(FLASH_MODE_OFF);
             mCamera.setParameters(parm);
             isLightOn = false;
-//            Constants.LOG.write("Camera - OFF");
         }
     }
 
     public void open(){
         mCamera = Camera.open();
-//        Constants.LOG.write("Camera - OPEN");
     }
 
     public void release(){
         off();
         mCamera.release();
-//        Constants.LOG.write("Camera - RELEASE");
     }
 
     @Override
