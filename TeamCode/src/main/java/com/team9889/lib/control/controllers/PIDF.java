@@ -11,6 +11,12 @@ public class PIDF extends PID {
 
     @Override
     public double update(double current, double wanted) {
-        return super.update(current, wanted) + kFF;
+        double error = wanted - current;
+        double sign = 1;
+
+        if(error != 0)
+            sign = error / Math.abs(error);
+
+        return super.update(current, wanted) + (sign*kFF);
     }
 }

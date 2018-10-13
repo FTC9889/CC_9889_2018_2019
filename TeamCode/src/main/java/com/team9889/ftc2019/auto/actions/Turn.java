@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.subsystems.Drive;
 import com.team9889.ftc2019.subsystems.Robot;
 import com.team9889.lib.control.controllers.PID;
+import com.team9889.lib.control.controllers.PIDF;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
@@ -16,13 +17,13 @@ public class Turn extends Action {
     private double angle;
 
     // Proportional gain
-    private double kP = 0.08;
+    private double kP = 0.19;
 
     // Integral gain
     private double kI = 0;
 
     // Derivative gain
-    private double kD = 14;
+    private double kD = 5;
 
     PID pid = new PID(kP, kI, kD);
 
@@ -35,21 +36,13 @@ public class Turn extends Action {
 
     @Override
     public boolean isFinished() {
-        return Math.abs(Robot.getInstance().getDrive().getAngle().getTheda(AngleUnit.DEGREES) - angle) < 2;
+        return Math.abs(Robot.getInstance().getDrive().getAngle().getTheda(AngleUnit.DEGREES) - angle) < 1;
     }
 
     @Override
     public void update() {
         leftPow = pid.update(-Robot.getInstance().getDrive().getAngle().getTheda(AngleUnit.DEGREES), angle);
-
-        if(Math.abs(leftPow)> 0.6)
-            leftPow = 0.6;
-        else if(Math.abs(leftPow)<0.06)
-            leftPow = 0.06;
-
         rightPow = -leftPow;
-
-        RobotLog.a("Angle: " + String.valueOf(Robot.getInstance().getDrive().getAngle().getTheda(AngleUnit.DEGREES)) + " | Left Power: " + String.valueOf(leftPow));
 
         Robot.getInstance().getDrive().setLeftRightPower(leftPow, rightPow);
     }
