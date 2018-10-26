@@ -1,7 +1,9 @@
 package com.team9889.ftc2019;
 
+import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.subsystems.Robot;
 
 import java.text.SimpleDateFormat;
@@ -20,6 +22,7 @@ public abstract class Team9889Linear extends LinearOpMode {
 
     // Robot Object
     protected Robot Robot = com.team9889.ftc2019.subsystems.Robot.getInstance();
+    public GoldAlignDetector detector;
 
     // Match Timer
     protected ElapsedTime matchTime = new ElapsedTime();
@@ -28,7 +31,7 @@ public abstract class Team9889Linear extends LinearOpMode {
         Date currentData = new Date();
         SimpleDateFormat  format = new SimpleDateFormat("dd.M.yyyy hh:mm:ss");
 
-//        Constants.LOG.write("Robot Init Started at " + format.format(currentData));
+        RobotLog.a("Robot Init Started at " + format.format(currentData));
 
         Robot.init(hardwareMap, autonomous);
 

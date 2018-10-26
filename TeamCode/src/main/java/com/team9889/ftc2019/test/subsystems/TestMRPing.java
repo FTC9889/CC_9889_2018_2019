@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @Autonomous
 public class TestMRPing extends LinearOpMode{
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
         ModernRoboticsUltrasonic ping = new ModernRoboticsUltrasonic("ping", hardwareMap);
 
         while (!isStarted()){

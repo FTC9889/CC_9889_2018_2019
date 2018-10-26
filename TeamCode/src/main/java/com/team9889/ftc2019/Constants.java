@@ -27,7 +27,12 @@ public class Constants {
     public final static String kRightDriveMasterId = "right";
 
     public final static double WheelbaseWidth = 16;
+    public final static double WheelDiameter = 4;
+    public final static double AngleToInchRatio = (Math.PI/180.) * (WheelbaseWidth/2.);
 
+    public static void main(String... args){
+        System.out.println(AngleToInchRatio);
+    }
    /*---------------------
     |                     |
     |       Intake        |
@@ -54,4 +59,20 @@ public class Constants {
     public final static String kRightElbowId = "rightElbow";
     public final static String kLeftClawId = "leftClaw";
     public final static String kRightClawId = "rightClaw";
+
+
+
+    /*---------------------
+    |                     |
+    |        Lift!        |
+    |                     |
+    ---------------------*/
+
+    //Settings for Lift
+    public final static String kLeftLift = "leftLift";
+    public final static String kRightLift = "rightLift";
+    public final static String kHookServo = "hookServo";
+    public final static String kLiftTouchSensor = "liftTouchSensor";
+    public final static double kMaxLiftHeight = 100; // tbd
+    public final static double kLiftTicksToHeightRatio = 100; // tbd
 }

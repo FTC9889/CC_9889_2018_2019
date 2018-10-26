@@ -11,7 +11,7 @@ import com.team9889.ftc2019.Team9889Linear;
 public class TestDrive2 extends Team9889Linear{
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
         waitForStart(true);
 
         telemetry.addData("left", Robot.getDrive().getLeftDistance() );

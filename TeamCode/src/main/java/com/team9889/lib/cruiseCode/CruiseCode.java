@@ -2,10 +2,6 @@ package com.team9889.lib.cruiseCode;
 
 import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.auto.actions.Action;
-import com.team9889.ftc2019.auto.actions.Drive;
-import com.team9889.ftc2019.auto.actions.Telemetry;
-import com.team9889.ftc2019.auto.actions.Turn;
-import com.team9889.ftc2019.auto.actions.Wait;
 import com.team9889.lib.android.FileReader;
 import com.team9889.lib.android.FileWriter;
 

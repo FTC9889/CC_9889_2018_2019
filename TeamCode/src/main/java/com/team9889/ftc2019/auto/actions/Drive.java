@@ -32,8 +32,11 @@ public class Drive extends Action {
     }
 
     @Override
-    public boolean isFinished() {
-        return Math.abs(Robot.getDrive().getLeftDistance() - left) < 0.1 && Math.abs(Robot.getDrive().getRightDistance() - right) < 0.1;
+    public void start() {
+        Robot.getDrive().DriveControlState(com.team9889.ftc2019.subsystems.Drive.DriveControlStates.POSITION);
+
+        Robot.getDrive().leftMaster_.setTargetPosition(Robot.getDrive().getLeftTicks() + (int) (left / Robot.getDrive().ENCODER_TO_DISTANCE_RATIO));
+        Robot.getDrive().rightMaster_.setTargetPosition(Robot.getDrive().getRightTicks() + (int) (right / Robot.getDrive().ENCODER_TO_DISTANCE_RATIO));
     }
 
     @Override
@@ -42,16 +45,12 @@ public class Drive extends Action {
     }
 
     @Override
-    public void done() {
-        Robot.getDrive().setLeftRightPower(0.0, 0.0);
+    public boolean isFinished() {
+        return Math.abs(Robot.getDrive().getLeftDistance() - left) < 0.1 && Math.abs(Robot.getDrive().getRightDistance() - right) < 0.1;
     }
 
     @Override
-    public void start() {
-        Robot.getDrive().DriveControlState(com.team9889.ftc2019.subsystems.Drive.DriveControlStates.POSITION);
-
-        Robot.getDrive().leftMaster_.setTargetPosition(Robot.getDrive().getLeftTicks() + (int) (left / Robot.getDrive().ENCODER_TO_DISTANCE_RATIO));
-        Robot.getDrive().rightMaster_.setTargetPosition(Robot.getDrive().getRightTicks() + (int) (right / Robot.getDrive().ENCODER_TO_DISTANCE_RATIO));
-
+    public void done() {
+        Robot.getDrive().setLeftRightPower(0.0, 0.0);
     }
 }
