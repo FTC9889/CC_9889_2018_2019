@@ -75,4 +75,16 @@ public class Constants {
     public final static String kLiftTouchSensor = "liftTouchSensor";
     public final static double kMaxLiftHeight = 100; // tbd
     public final static double kLiftTicksToHeightRatio = 100; // tbd
+
+
+
+    /*---------------------
+    |                     |
+    |        Camera!        |
+    |                     |
+    ---------------------*/
+
+    //Settings for Camera
+    public final static String kCameraXAxis = "CameraXAxis";
+    public final static String kCameraYAxis = "CameraYAxis";
 }
