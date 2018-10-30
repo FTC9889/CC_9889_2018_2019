@@ -1,12 +1,12 @@
 package com.team9889.ftc2019.subsystems;
 
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.team9889.ftc2019.Constants;
-import com.team9889.lib.hardware.RevColorDistance;
 
-import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
@@ -15,13 +15,22 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Intake extends Subsystem{
     private DcMotor intakemotor;
-    private RevColorDistance front, back;
+    private DcMotorEx extender;
+    private Servo intakeRotator;
+    private DigitalChannel limitSwitch;
+
+    enum States {
+        INTAKING, EXTENDING, ZEROING
+    }
+
+    private States currentState = States.ZEROING;
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
         this.intakemotor = hardwareMap.get(DcMotor.class, Constants.kIntakeMotorID);
-        //this.front = new RevColorDistance(Constants.kfrontcolorsensor,hardwareMap);
-        //this.back = new RevColorDistance(Constants.kbackcolorsensor,hardwareMap);
+        this.extender = hardwareMap.get(DcMotorEx.class, Constants.kIntakeExtender);
+        this.intakeRotator = hardwareMap.get(Servo.class, Constants.kIntakeRotator);
+        this.limitSwitch = hardwareMap.get(DigitalChannel.class, Constants.kIntakeSwitch);
     }
 
     @Override
@@ -32,8 +41,9 @@ public class Intake extends Subsystem{
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
         telemetry.addData("IntakePower",intakemotor.getPower());
-        telemetry.addData("front color sensor",front.getCm());
-        telemetry.addData("back color sensor",back.getCm());
+        telemetry.addData("Intake Extender", extender.getCurrentPosition());
+        telemetry.addData("Angle of Intake", intakeRotator.getPosition());
+        telemetry.addData("Intake Switch", intakeSwitchValue());
     }
 
     @Override
@@ -57,6 +67,30 @@ public class Intake extends Subsystem{
         setIntakePower(-1);
     }
 
+    public void setIntakeExtenderPower(double power){
+        if (power < 0 && intakeSwitchValue() == true){
+            setIntakeExtenderPower(0);
+        }
+        else
+        extender.setPower(power);
+    }
+
+    public boolean intakeSwitchValue (){
+        return limitSwitch.getState();
+    }
+
+    public void setIntakeRotatorPosition(double position){
+        intakeRotator.setPosition(position);
+    }
+
+    public void setWantedState(States wantedState){
+        if(wantedState != currentState){
+            switch (wantedState){
+                case ZEROING:
+
+            }
+        }
+    }
 
 }
 

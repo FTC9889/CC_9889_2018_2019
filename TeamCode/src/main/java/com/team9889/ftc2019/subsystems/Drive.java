@@ -16,6 +16,8 @@ import com.team9889.lib.loops.Loop;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
+import static com.team9889.ftc2019.Constants.ENCODER_TO_DISTANCE_RATIO;
+
 /**
  * Created by joshua9889 on 10/6/2017.
  */
@@ -23,15 +25,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 public class Drive extends Subsystem {
 
     /**
-     * ticks to inch
-     * (Wheel Diameter * PI) / Counts Per Rotation
-     */
-    public final double ENCODER_TO_DISTANCE_RATIO = (4.0 * Math.PI) / 537.6;
-
-    /**
      * Hardware
      */
-    public DcMotor rightMaster_, leftMaster_ = null;
+    public DcMotor rightMaster_, leftMaster_, rightSlave_, leftSlave_ = null;
     private RevIMU imu = null;
 
     /**
@@ -56,7 +52,12 @@ public class Drive extends Subsystem {
     public void init(HardwareMap hardwareMap, boolean auto) {
         this.rightMaster_ = hardwareMap.get(DcMotor.class, Constants.kRightDriveMasterId);
         this.leftMaster_ = hardwareMap.get(DcMotor.class, Constants.kLeftDriveMasterId);
+        this.leftSlave_ = hardwareMap.get(DcMotor.class, Constants.kLeftDriveSlaveId);
+        this.rightSlave_ = hardwareMap.get(DcMotor.class, Constants.getkRightDriveSlaveId);
+
         this.rightMaster_.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.rightSlave_.setDirection(DcMotorSimple.Direction.REVERSE);
+
         this.DriveControlState(DriveControlStates.POWER);
         zeroSensors();
 
@@ -177,7 +178,9 @@ public class Drive extends Subsystem {
      */
     public void setLeftRightPower(double left, double right) {
         this.leftMaster_.setPower(CruiseLib.limitValue(left, 1, -1));
+        this.leftSlave_.setPower(CruiseLib.limitValue(left, 1, -1));
         this.rightMaster_.setPower(CruiseLib.limitValue(right, 1, -1));
+        this.rightSlave_.setPower(CruiseLib.limitValue(right, 1, -1));
     }
 
     /**
@@ -189,6 +192,7 @@ public class Drive extends Subsystem {
         setLeftRightPower(left, right);
     }
 
+    @Deprecated
     public void setLeftRightPosition(double left, double right){
         this.DriveControlState(DriveControlStates.POSITION);
 
@@ -228,26 +232,30 @@ public class Drive extends Subsystem {
 
     public void DriveZeroPowerState(DcMotor.ZeroPowerBehavior behavior){
         this.leftMaster_.setZeroPowerBehavior(behavior);
+        this.leftSlave_.setZeroPowerBehavior(behavior);
         this.rightMaster_.setZeroPowerBehavior(behavior);
+        this.rightSlave_.setZeroPowerBehavior(behavior);
     }
 
     private void withoutEncoders(){
         this.leftMaster_.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        this.leftSlave_.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         this.rightMaster_.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        this.rightSlave_.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     private void withEncoders(){
-        try {
-            this.leftMaster_.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            this.rightMaster_.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        } catch (Exception e){}
+        this.leftMaster_.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.leftSlave_.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.rightMaster_.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.rightSlave_.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     private void runToPosition(){
-        try {
-            this.leftMaster_.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            this.rightMaster_.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        } catch (Exception e){}
+        this.leftMaster_.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.leftSlave_.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.rightMaster_.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.rightSlave_.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     //Reset encoders until They both equal 0
@@ -255,9 +263,13 @@ public class Drive extends Subsystem {
         try {
             while(getLeftTicks() != 0 && getRightTicks() != 0){
                 leftMaster_.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                leftSlave_.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 rightMaster_.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightSlave_.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 Thread.yield();
             }
         } catch (Exception e) {}
+
+        this.withoutEncoders();
     }
 }

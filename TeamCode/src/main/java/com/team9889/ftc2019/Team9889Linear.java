@@ -1,5 +1,7 @@
 package com.team9889.ftc2019;
 
+import com.disnodeteam.dogecv.CameraViewDisplay;
+import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -38,6 +40,9 @@ public abstract class Team9889Linear extends LinearOpMode {
         telemetry.setMsTransmissionInterval(autonomous ? 50:1000);
 
         if(autonomous){
+
+
+
             // Autonomous Init Loop code
             while(isInInitLoop()){
                 telemetry.addData("Waiting for Start","");

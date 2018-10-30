@@ -23,11 +23,21 @@ public class Constants {
     ---------------------*/
 
     //Settings for Drive class
-    public final static String kLeftDriveMasterId = "left";
-    public final static String kRightDriveMasterId = "right";
+    public final static String kLeftDriveMasterId = "lf";
+    public final static String kRightDriveMasterId = "rf";
+    public final static String kLeftDriveSlaveId = "lb";
+    public final static String getkRightDriveSlaveId = "rb";
+
 
     public final static double WheelbaseWidth = 16;
     public final static double WheelDiameter = 4;
+
+    /**
+     * ticks to inch
+     * (Wheel Diameter * PI) / Counts Per Rotation
+     */
+
+    public final static double ENCODER_TO_DISTANCE_RATIO = (WheelDiameter * Math.PI) / 537.6;;
     public final static double AngleToInchRatio = (Math.PI/180.) * (WheelbaseWidth/2.);
 
     public static void main(String... args){
@@ -41,8 +51,9 @@ public class Constants {
 
     //Settings for Intake
     public final static String kIntakeMotorID = "li";
-    public final static String kfrontcolorsensor = "front";
-    public final static String kbackcolorsensor = "back";
+    public final static String kIntakeExtender = "intakeextender";
+    public final static String kIntakeRotator = "intakeRotator";
+    public final static String kIntakeSwitch = "intakeSwitch";
 
 
 
