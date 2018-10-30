@@ -1,10 +1,8 @@
 package com.team9889.ftc2019.auto.actions;
 
-import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.subsystems.Drive;
 import com.team9889.ftc2019.subsystems.Robot;
 import com.team9889.lib.control.controllers.PID;
-import com.team9889.lib.control.controllers.PIDF;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 

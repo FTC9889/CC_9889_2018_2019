@@ -33,8 +33,6 @@ import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.Dogeforia;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
-import com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector;
-import com.disnodeteam.dogecv.filters.LeviColorFilter;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;

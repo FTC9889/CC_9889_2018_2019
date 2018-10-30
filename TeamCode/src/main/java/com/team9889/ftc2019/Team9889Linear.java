@@ -1,16 +1,15 @@
 package com.team9889.ftc2019;
 
-import com.disnodeteam.dogecv.CameraViewDisplay;
-import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.subsystems.Robot;
 
+import org.firstinspires.ftc.robotcore.internal.camera.WebcamExample;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.SimpleFormatter;
 
 /**
  * Created by joshua9889 on 3/28/2018.

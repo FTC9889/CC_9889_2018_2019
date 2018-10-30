@@ -34,8 +34,6 @@ import com.disnodeteam.dogecv.detectors.roverrukus.HoughSilverDetector;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.opencv.core.Size;
-
 
 @TeleOp(name="Hough Silver Example", group="DogeCV")
 

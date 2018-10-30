@@ -1,6 +1,5 @@
 package com.team9889.ftc2019.auto;
 
-import com.team9889.ftc2019.Constants;
 import com.team9889.ftc2019.Team9889Linear;
 import com.team9889.ftc2019.auto.actions.Action;
 
@@ -33,12 +32,6 @@ public abstract class AutoModeBase extends Team9889Linear {
     private void setCurrentAutoRunning(){
         //TODO: Add code for GUI
         this.currentAutoRunning = AllianceColor.RED;
-    }
-
-    public void StartDriveAbsolute(double left, double right) {
-        if(!Constants.isSimulation){
-
-        }
     }
 
     public void runAction(Action action){

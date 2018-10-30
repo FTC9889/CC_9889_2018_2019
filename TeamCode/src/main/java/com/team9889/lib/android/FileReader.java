@@ -1,9 +1,6 @@
 package com.team9889.lib.android;
 
 import android.os.Environment;
-import android.util.Log;
-
-import com.qualcomm.robotcore.util.RobotLog;
 
 import java.io.File;
 import java.io.FileInputStream;

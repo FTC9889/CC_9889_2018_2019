@@ -3,15 +3,12 @@ package com.team9889.ftc2019.subsystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.configuration.LynxConstants;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.Constants;
 import com.team9889.lib.CruiseLib;
 import com.team9889.lib.control.math.cartesian.Pose;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
-import com.team9889.lib.control.math.cartesian.Vector2d;
 import com.team9889.lib.hardware.RevIMU;
-import com.team9889.lib.loops.Loop;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;

@@ -1,7 +1,6 @@
 package com.team9889.ftc2019;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
 
 /**
  * Created by joshua9889 on 3/28/2018.

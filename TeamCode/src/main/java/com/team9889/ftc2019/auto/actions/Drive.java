@@ -4,7 +4,8 @@ import com.team9889.ftc2019.subsystems.Robot;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+import static com.team9889.ftc2019.Constants.ENCODER_TO_DISTANCE_RATIO;
 
 /**
  * Created by joshua9889 on 8/28/2018.
@@ -35,8 +36,8 @@ public class Drive extends Action {
     public void start() {
         Robot.getDrive().DriveControlState(com.team9889.ftc2019.subsystems.Drive.DriveControlStates.POSITION);
 
-        Robot.getDrive().leftMaster_.setTargetPosition(Robot.getDrive().getLeftTicks() + (int) (left / Robot.getDrive().ENCODER_TO_DISTANCE_RATIO));
-        Robot.getDrive().rightMaster_.setTargetPosition(Robot.getDrive().getRightTicks() + (int) (right / Robot.getDrive().ENCODER_TO_DISTANCE_RATIO));
+        Robot.getDrive().leftMaster_.setTargetPosition(Robot.getDrive().getLeftTicks() + (int) (left / ENCODER_TO_DISTANCE_RATIO));
+        Robot.getDrive().rightMaster_.setTargetPosition(Robot.getDrive().getRightTicks() + (int) (right / ENCODER_TO_DISTANCE_RATIO));
     }
 
     @Override

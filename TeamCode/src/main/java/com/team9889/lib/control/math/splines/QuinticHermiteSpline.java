@@ -1,7 +1,6 @@
 package com.team9889.lib.control.math.splines;
 
 import com.team9889.lib.control.math.cartesian.Pose;
-import com.team9889.lib.control.math.cartesian.Rotation2d;
 import com.team9889.lib.control.math.cartesian.Vector2d;
 
 public class QuinticHermiteSpline {

@@ -7,6 +7,8 @@ import com.team9889.lib.control.math.cartesian.Rotation2d;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
+import static com.team9889.ftc2019.Constants.ENCODER_TO_DISTANCE_RATIO;
+
 /**
  * Created by MannoMation on 10/26/2018.
  */
@@ -32,8 +34,8 @@ public class DriveTurn extends Action{
     public void start() {
         mDrive.DriveControlState(com.team9889.ftc2019.subsystems.Drive.DriveControlStates.POSITION);
 
-        mDrive.leftMaster_.setTargetPosition(mDrive.getLeftTicks() + (int) (left / mDrive.ENCODER_TO_DISTANCE_RATIO));
-        mDrive.rightMaster_.setTargetPosition(mDrive.getRightTicks() + (int) (right / mDrive.ENCODER_TO_DISTANCE_RATIO));
+        mDrive.leftMaster_.setTargetPosition(mDrive.getLeftTicks() + (int) (left / ENCODER_TO_DISTANCE_RATIO));
+        mDrive.rightMaster_.setTargetPosition(mDrive.getRightTicks() + (int) (right / ENCODER_TO_DISTANCE_RATIO));
     }
 
     @Override

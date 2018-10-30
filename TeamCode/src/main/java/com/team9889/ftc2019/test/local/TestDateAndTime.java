@@ -1,11 +1,7 @@
 package com.team9889.ftc2019.test.local;
 
-import com.team9889.ftc2019.Constants;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import static com.team9889.lib.android.FileWriter.NORMAL;
 
 public class TestDateAndTime {
     public static void main(String... args){
