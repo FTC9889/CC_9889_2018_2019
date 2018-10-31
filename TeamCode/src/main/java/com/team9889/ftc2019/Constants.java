@@ -37,7 +37,7 @@ public class Constants {
      * (Wheel Diameter * PI) / Counts Per Rotation
      */
 
-    public final static double ENCODER_TO_DISTANCE_RATIO = (WheelDiameter * Math.PI) / 537.6;;
+    public final static double ENCODER_TO_DISTANCE_RATIO = (WheelDiameter * Math.PI) / 537.6;
     public final static double AngleToInchRatio = (Math.PI/180.) * (WheelbaseWidth/2.);
 
     public static void main(String... args){
@@ -52,8 +52,8 @@ public class Constants {
     //Settings for Intake
     public final static String kIntakeMotorID = "li";
     public final static String kIntakeExtender = "intakeextender";
-    public final static String kIntakeRotator = "intakeRotator";
-    public final static String kIntakeSwitch = "intakeSwitch";
+    public final static String kIntakeRotator = "intakerotator";
+    public final static String kIntakeSwitch = "intakeswitch";
 
 
 
@@ -80,13 +80,14 @@ public class Constants {
     ---------------------*/
 
     //Settings for Lift
-    public final static String kLeftLift = "leftLift";
-    public final static String kRightLift = "rightLift";
-    public final static String kHookServo = "hookServo";
-    public final static String kLiftTouchSensor = "liftTouchSensor";
+    public final static String kLeftLift = "leftlift";
+    public final static String kRightLift = "rightlift";
+    public final static String kHookServo = "hookservo";
+    public final static String kLiftTouchSensor = "lifttouchsensor";
     public final static double kMaxLiftHeight = 100; // tbd
-    public final static double kLiftTicksToHeightRatio = 100; // tbd
-
+    public final static double kLiftTicksPerRev = 537.6;
+    public final static double kLiftSpoolDiameter = 1.5;
+    public final static double kLiftTicksToHeightRatio = kLiftSpoolDiameter * Math.PI / kLiftTicksPerRev;
 
 
     /*---------------------
@@ -96,6 +97,6 @@ public class Constants {
     ---------------------*/
 
     //Settings for Camera
-    public final static String kCameraXAxis = "CameraXAxis";
-    public final static String kCameraYAxis = "CameraYAxis";
+    public final static String kCameraXAxis = "cameraxaxis";
+    public final static String kCameraYAxis = "camerayaxis";
 }

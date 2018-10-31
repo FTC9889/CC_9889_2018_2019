@@ -2,7 +2,7 @@ package com.team9889.ftc2019.auto.modes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.team9889.ftc2019.auto.AutoModeBase;
-import com.team9889.ftc2019.auto.actions.Drive;
+import com.team9889.ftc2019.auto.actions.DriveToPosition;
 import com.team9889.ftc2019.auto.actions.DriveTurn;
 import com.team9889.ftc2019.auto.actions.LiftLand;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
@@ -19,12 +19,12 @@ public class AutonomousDepotSide extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {
         runAction(new LiftLand());
-        runAction(new Drive(29, 29));
+        runAction(new DriveToPosition(29, 29));
 //      Detect and intake
-        runAction(new Drive(15, 15));
+        runAction(new DriveToPosition(15, 15));
 //      Drop team marker
         runAction(new DriveTurn(new Rotation2d(-135, AngleUnit.DEGREES)));
-        runAction(new Drive(66, 66));
+        runAction(new DriveToPosition(66, 66));
 //      Stick arm out to park
     }
 }

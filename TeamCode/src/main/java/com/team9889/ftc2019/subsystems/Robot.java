@@ -26,9 +26,10 @@ public class Robot extends Subsystem{
     private Drive mDrive = new Drive();
     private Lift mLift = new Lift();
     private Intake mIntake = new Intake();
+    private Camera mCamera = new Camera();
 
     private List<Subsystem> subsystems = Arrays.asList(
-            mDrive, mLift, mIntake // Add more subsystems here as needed
+            mDrive, mLift, mIntake, mCamera // Add more subsystems here as needed
     );
 
     /**
@@ -86,4 +87,8 @@ public class Robot extends Subsystem{
     public Intake getIntake() {
         return mIntake;
     }
+
+    public Lift getLift() {return mLift;}
+
+    public Camera getCamera() {return mCamera;}
 }

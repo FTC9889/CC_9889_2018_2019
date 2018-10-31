@@ -1,11 +1,13 @@
 package com.team9889.ftc2019.subsystems;
 
+import com.qualcomm.hardware.motors.NeveRest20Gearmotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.team9889.ftc2019.Constants;
+import com.team9889.lib.control.controllers.PID;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -20,6 +22,7 @@ public class Lift extends Subsystem {
     private DcMotorEx left, right;
     private Servo hook;
     private DigitalChannel touch;
+    private PID pid = new PID(160, 32, 112);
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
@@ -74,7 +77,18 @@ public class Lift extends Subsystem {
     }
 
     public double getHeight(){
-        return getHeightTicks() * Constants.kLiftTicksToHeightRatio;
+        return getHeightTicks() / Constants.kLiftTicksToHeightRatio;
+    }
+
+    public void setLiftPower(double power){
+        if (power < 0 && isBottomLimitReached() == true){
+            left.setPower(0);
+            right.setPower(0);
+        }
+        else {
+            left.setPower(power);
+            right.setPower(power);
+        }
     }
 
     @Override

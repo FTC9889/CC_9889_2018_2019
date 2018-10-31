@@ -18,6 +18,7 @@ public class Intake extends Subsystem{
     private DcMotorEx extender;
     private Servo intakeRotator;
     private DigitalChannel limitSwitch;
+    private boolean intakeTouchSensor = false;
 
     enum States {
         INTAKING, EXTENDING, ZEROING
@@ -60,11 +61,11 @@ public class Intake extends Subsystem{
     }
 
     public void intake (){
-        setIntakePower(1);
+        setIntakePower(-1);
     }
 
     public void outtake (){
-        setIntakePower(-1);
+        setIntakePower(1);
     }
 
     public void setIntakeExtenderPower(double power){
@@ -76,7 +77,11 @@ public class Intake extends Subsystem{
     }
 
     public boolean intakeSwitchValue (){
-        return limitSwitch.getState();
+        if (limitSwitch.getState() == true)
+            return intakeTouchSensor = false;
+
+        else
+            return intakeTouchSensor = true;
     }
 
     public void setIntakeRotatorPosition(double position){

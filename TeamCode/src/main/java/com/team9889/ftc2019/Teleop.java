@@ -10,15 +10,31 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class Teleop extends Team9889Linear{
 
     boolean intake = true;
-    boolean goback = false;
+    boolean gobackintake = false;
+    boolean lift = true;
+    boolean gobacklift = false;
 
     @Override
     public void runOpMode() {
         waitForStart(false);
 
+//        Robot.getCamera().setXYAxisPosition();
+
         while (opModeIsActive()){
             Robot.getDrive().setThrottleSteerPower(-gamepad1.left_stick_y, gamepad1.right_stick_x);
+/*
+            if (gamepad1.a){
+                if (lift) {
+                    gobacklift = true;
+                }
+            }
 
+            if (gobacklift){
+                Robot.getLift().setLiftPower(-1);
+            } else {
+                gobacklift = false;
+            }
+*/
             if (gamepad2.a)
                 Robot.getIntake().intake();
             else if (gamepad2.y)
@@ -28,17 +44,17 @@ public class Teleop extends Team9889Linear{
 
             if (gamepad2.dpad_down){
                 if (intake){
-                    goback = true;
+                    gobackintake = true;
                     intake = false;
                 }
             } else
                 intake = true;
 
-            if (goback && Math.abs(gamepad2.left_stick_y) < 0.01){
+            if (gobackintake && Math.abs(gamepad2.left_stick_y) < 0.01){
                 Robot.getIntake().setIntakeExtenderPower(-1);
             } else {
                 Robot.getIntake().setIntakeExtenderPower(-gamepad2.left_stick_y);
-                goback = false;
+                gobackintake = false;
             }
 
 

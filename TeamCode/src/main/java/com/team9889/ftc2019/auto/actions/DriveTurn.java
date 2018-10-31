@@ -33,9 +33,8 @@ public class DriveTurn extends Action{
     @Override
     public void start() {
         mDrive.DriveControlState(com.team9889.ftc2019.subsystems.Drive.DriveControlStates.POSITION);
-
-        mDrive.leftMaster_.setTargetPosition(mDrive.getLeftTicks() + (int) (left / ENCODER_TO_DISTANCE_RATIO));
-        mDrive.rightMaster_.setTargetPosition(mDrive.getRightTicks() + (int) (right / ENCODER_TO_DISTANCE_RATIO));
+        mDrive.leftMaster_.setTargetPosition(mDrive.getLeftTicks() + (int) (left / Constants.ENCODER_TO_DISTANCE_RATIO));
+        mDrive.rightMaster_.setTargetPosition(mDrive.getRightTicks() + (int) (right / Constants.ENCODER_TO_DISTANCE_RATIO));
     }
 
     @Override
