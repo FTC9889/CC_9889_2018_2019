@@ -39,9 +39,6 @@ public abstract class Team9889Linear extends LinearOpMode {
         telemetry.setMsTransmissionInterval(autonomous ? 50:1000);
 
         if(autonomous){
-
-
-
             // Autonomous Init Loop code
             while(isInInitLoop()){
                 telemetry.addData("Waiting for Start","");

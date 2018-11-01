@@ -1,5 +1,8 @@
 package com.team9889.ftc2019.auto;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import com.team9889.ftc2019.Team9889Linear;
 import com.team9889.ftc2019.auto.actions.Action;
 
@@ -29,9 +32,21 @@ public abstract class AutoModeBase extends Team9889Linear {
         }
     }
 
+    private String red      = "Red";
+    private String blue     = "Blue";
+    private String crater   = "Crater";
+    private String depot    = "Depot";
+
     private void setCurrentAutoRunning(){
-        //TODO: Add code for GUI
-        this.currentAutoRunning = AllianceColor.RED;
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(hardwareMap.appContext);
+        String alliance = preferences.getString("AllianceColor", "error");
+        String side = preferences.getString("Side", "error");
+        boolean doubleSample = preferences.getBoolean("DoubleSample", false);
+
+        if (alliance.equals(red))
+            this.currentAutoRunning = AllianceColor.RED;
+        else if(alliance.equals(blue))
+            this.currentAutoRunning = AllianceColor.BLUE;
     }
 
     public void runAction(Action action){

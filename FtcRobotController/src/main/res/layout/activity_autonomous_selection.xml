@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.team9889.internal.AutonomousSelection">
+
+    <TextView
+        android:id="@+id/autonomousSelectionID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Autonomous Selection"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fieldView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitStart"
+        android:src="@drawable/RR2_above_view_of_field"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/autonomousSelectionID" />
+
+    <Switch
+        android:id="@+id/doubleSample"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="392dp"
+        android:checked="false"
+        android:text="Double Sample"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fieldView" />
+
+    <Button
+        android:id="@+id/blueDepot"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="206dp"
+        android:layout_marginTop="130dp"
+        android:rotation="45"
+        android:rotationX="50%"
+        android:rotationY="50%"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fieldView" />
+
+    <Button
+        android:id="@+id/redDepot"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="204dp"
+        android:rotation="45"
+        android:rotationX="50%"
+        android:rotationY="50%"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fieldView" />
+
+    <Button
+        android:id="@+id/blueCrater"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="204dp"
+        android:layout_marginTop="204dp"
+        android:rotation="-45"
+        android:rotationX="50%"
+        android:rotationY="50%"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fieldView" />
+
+    <Button
+        android:id="@+id/redCrater"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="128dp"
+        android:rotation="-45"
+        android:rotationX="50%"
+        android:rotationY="50%"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fieldView" />
+
+    <Button
+        android:id="@+id/saveAndExitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:text="Save and Exit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/doubleSample" />
+</android.support.constraint.ConstraintLayout>

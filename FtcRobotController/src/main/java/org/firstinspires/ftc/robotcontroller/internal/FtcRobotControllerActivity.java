@@ -95,6 +95,7 @@ import com.qualcomm.robotcore.util.RobotLog;
 import com.qualcomm.robotcore.wifi.NetworkConnection;
 import com.qualcomm.robotcore.wifi.NetworkConnectionFactory;
 import com.qualcomm.robotcore.wifi.NetworkType;
+import com.team9889.internal.AutonomousSelection;
 
 import org.firstinspires.ftc.ftccommon.external.SoundPlayingRobotMonitor;
 import org.firstinspires.ftc.ftccommon.internal.FtcRobotControllerWatchdogService;
@@ -541,6 +542,11 @@ public class FtcRobotControllerActivity extends Activity
     }
     else if (id == R.id.action_about) {
       Intent intent = new Intent(AppUtil.getDefContext(), FtcAboutActivity.class);
+      startActivity(intent);
+      return true;
+    }
+    else if (id == R.id.action_autonomous_settings){
+      Intent intent = new Intent(AppUtil.getDefContext(), AutonomousSelection.class);
       startActivity(intent);
       return true;
     }

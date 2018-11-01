@@ -25,3 +25,7 @@ repositories {
 }
 
 apply from: 'build.release.gradle'
+
+dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:+'
+}
