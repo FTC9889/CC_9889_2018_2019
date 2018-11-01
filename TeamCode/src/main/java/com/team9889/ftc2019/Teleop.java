@@ -52,7 +52,7 @@ public class Teleop extends Team9889Linear{
 
             if (gobackintake && Math.abs(gamepad2.left_stick_y) < 0.01){
                 Robot.getIntake().setIntakeExtenderPower(-1);
-            } else {
+            } else if (Robot.getIntake().intakeSwitchValue() == true){
                 Robot.getIntake().setIntakeExtenderPower(-gamepad2.left_stick_y);
                 gobackintake = false;
             }

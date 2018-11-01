@@ -84,6 +84,10 @@ public class Intake extends Subsystem{
             return intakeTouchSensor = true;
     }
 
+    public void setIntakeExtenderPosition(double position){
+        setIntakeExtenderPosition(position * Constants.kIntakeTicksToInchRatio);
+    }
+
     public void setIntakeRotatorPosition(double position){
         intakeRotator.setPosition(position);
     }

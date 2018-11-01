@@ -4,6 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.team9889.ftc2019.auto.AutoModeBase;
 import com.team9889.ftc2019.auto.actions.DriveToPosition;
 import com.team9889.ftc2019.auto.actions.DriveTurn;
+import com.team9889.ftc2019.auto.actions.Intake;
+import com.team9889.ftc2019.auto.actions.IntakeToPosition;
+import com.team9889.ftc2019.auto.actions.Outtake;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -23,10 +26,10 @@ public class AutonomousCraterSide extends AutoModeBase {
         runAction(new DriveToPosition(29, 29));
         runAction(new DriveTurn(new Rotation2d(45, AngleUnit.DEGREES)));
         runAction(new DriveToPosition(60, 60));
-//      Drop team marker
+        runAction(new Outtake());
         runAction(new DriveToPosition(-5, -5));
         runAction(new DriveTurn(new Rotation2d(180, AngleUnit.DEGREES)));
         runAction(new DriveToPosition(61, 61));
-//      Stick arm out to park
+        runAction(new IntakeToPosition(5));
     }
 }

@@ -54,6 +54,9 @@ public class Constants {
     public final static String kIntakeExtender = "intakeextender";
     public final static String kIntakeRotator = "intakerotator";
     public final static String kIntakeSwitch = "intakeswitch";
+    public final static double kIntakeTicksPerRev = 100;  //TBD
+    public final static double kIntakeSpoolDiameter = 100;  //TBD
+    public final static double kIntakeTicksToInchRatio = kIntakeSpoolDiameter * Math.PI / kIntakeTicksPerRev;
 
 
 

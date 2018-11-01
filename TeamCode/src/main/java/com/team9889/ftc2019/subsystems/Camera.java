@@ -12,6 +12,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 /**
  * Created by MannoMation on 10/27/2018.
  */
+
 public class Camera extends Subsystem{
 
     private Servo xAxis;
