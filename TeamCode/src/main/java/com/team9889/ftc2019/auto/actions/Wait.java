@@ -10,6 +10,9 @@ public class Wait extends Action {
     private ElapsedTime t;
     private int timeToWaitMilli;
 
+    /**
+     * @param waitTime Milliseconds
+     */
     public Wait(int waitTime){
         timeToWaitMilli = waitTime;
     }

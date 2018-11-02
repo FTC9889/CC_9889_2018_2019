@@ -46,9 +46,10 @@ public class GoldAlignExample extends OpMode
     @Override
     public void init() {
         telemetry.addData("Status", "DogeCV 2018.0 - Gold Align Example");
+        detector = new GoldAlignDetector();
+
         detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());
 
-        detector = new GoldAlignDetector();
         detector.useDefaults();
 
         // Optional Tuning

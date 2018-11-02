@@ -20,21 +20,20 @@ public class Camera extends Subsystem{
 
     private GoldAlignDetector detector;
 
-
-
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
         xAxis = hardwareMap.get(Servo.class, Constants.kCameraXAxis);
         yAxis = hardwareMap.get(Servo.class, Constants.kCameraYAxis);
 
-        if (auto == true) {
-            detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());
+        if (auto) {
+            setXYAxisPosition(0, 0.135);
 
             detector = new GoldAlignDetector();
+            detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());
             detector.useDefaults();
 
             // Optional Tuning
-            detector.alignSize = 100; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
+            detector.alignSize = 150; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
             detector.alignPosOffset = 0; // How far from center frame to offset this alignment zone.
             detector.downscale = 0.4; // How much to downscale the input frames
 
@@ -61,12 +60,9 @@ public class Camera extends Subsystem{
 
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
-
         telemetry.addData("X Axis", getXAxis());
         telemetry.addData("Y Axis", getYAxis());
     }
-
-
 
     @Override
     public void test(Telemetry telemetry) {
@@ -81,8 +77,16 @@ public class Camera extends Subsystem{
         return (yAxis.getPosition());
     }
 
+    public boolean isGoldInfront() {
+        return (detector.getAligned());
+    }
+
+    public double getGoldPosition(){
+        return detector.getXPosition();
+    }
+
     @Override
     public void stop() {
-
+        detector.disable();
     }
 }

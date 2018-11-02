@@ -22,7 +22,6 @@ public class CruiseCode {
     public static void main(String... args){
         ArrayList<Action> actions = new ArrayList<>();
 
-
         CruiseCode code = new CruiseCode("auto/test", actions);
         code.run();
     }

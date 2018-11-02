@@ -58,8 +58,8 @@ public class Drive extends Subsystem {
         this.DriveControlState(DriveControlStates.POWER);
         zeroSensors();
 
-
-        imu = new RevIMU("imu", hardwareMap);
+        if(auto)
+            imu = new RevIMU("imu", hardwareMap);
 
     }
 

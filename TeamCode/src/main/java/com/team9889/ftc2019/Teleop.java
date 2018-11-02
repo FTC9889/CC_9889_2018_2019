@@ -9,32 +9,25 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp
 public class Teleop extends Team9889Linear{
 
-    boolean intake = true;
-    boolean gobackintake = false;
-    boolean lift = true;
-    boolean gobacklift = false;
-
     @Override
     public void runOpMode() {
         waitForStart(false);
 
-//        Robot.getCamera().setXYAxisPosition();
-
         while (opModeIsActive()){
             Robot.getDrive().setThrottleSteerPower(-gamepad1.left_stick_y, gamepad1.right_stick_x);
-/*
-            if (gamepad1.a){
-                if (lift) {
-                    gobacklift = true;
-                }
-            }
 
-            if (gobacklift){
+            if (gamepad1.dpad_down)
                 Robot.getLift().setLiftPower(-1);
-            } else {
-                gobacklift = false;
-            }
-*/
+            else if (gamepad1.dpad_up)
+                Robot.getLift().setLiftPower(0.25);
+            else
+                Robot.getLift().setLiftPower(0.0);
+
+            if(gamepad1.left_bumper)
+                Robot.getLift().setHookPosition(0);
+            else if (gamepad1.right_bumper)
+                Robot.getLift().setHookPosition(180);
+
             if (gamepad2.a)
                 Robot.getIntake().intake();
             else if (gamepad2.y)
@@ -42,21 +35,9 @@ public class Teleop extends Team9889Linear{
             else if (gamepad2.b)
                 Robot.getIntake().stop();
 
-            if (gamepad2.dpad_down){
-                if (intake){
-                    gobackintake = true;
-                    intake = false;
-                }
-            } else
-                intake = true;
+            Robot.getIntake().setIntakeExtenderPower(-gamepad2.left_stick_y);
 
-            if (gobackintake && Math.abs(gamepad2.left_stick_y) < 0.01){
-                Robot.getIntake().setIntakeExtenderPower(-1);
-            } else if (Robot.getIntake().intakeSwitchValue() == true){
-                Robot.getIntake().setIntakeExtenderPower(-gamepad2.left_stick_y);
-                gobackintake = false;
-            }
-
+            Robot.getCamera().setXYAxisPosition(0, 0.5);
 
             updateTelemetry();
         }

@@ -6,8 +6,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.subsystems.Robot;
 
-import org.firstinspires.ftc.robotcore.internal.camera.WebcamExample;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 

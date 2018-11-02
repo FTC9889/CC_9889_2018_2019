@@ -5,6 +5,7 @@ import com.team9889.ftc2019.auto.AutoModeBase;
 import com.team9889.ftc2019.auto.actions.DriveToPosition;
 import com.team9889.ftc2019.auto.actions.DriveTurn;
 import com.team9889.ftc2019.auto.actions.Intake;
+import com.team9889.ftc2019.auto.actions.IntakeStop;
 import com.team9889.ftc2019.auto.actions.IntakeToPosition;
 import com.team9889.ftc2019.auto.actions.Outtake;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
@@ -21,7 +22,26 @@ public class AutonomousCraterSide extends AutoModeBase {
     public void run(AllianceColor allianceColor) {
 //      land
         runAction(new DriveToPosition(29, 29));
-//      Detect and intake
+
+
+        if (Robot.getCamera().isGoldInfront()){
+            runAction(new Intake());
+            runAction(new DriveToPosition(5,5));
+            runAction(new IntakeStop());
+        }
+        else{
+            runAction(new DriveTurn(new Rotation2d(45, AngleUnit.DEGREES)));
+            if (Robot.getCamera().isGoldInfront()){
+                runAction(new Intake());
+                runAction(new DriveToPosition(5,5));
+                runAction(new IntakeStop());
+            }
+            else{
+                runAction(new DriveTurn(new Rotation2d(-90, AngleUnit.DEGREES)));
+            }
+        }
+
+
         runAction(new DriveTurn(new Rotation2d(90, AngleUnit.DEGREES)));
         runAction(new DriveToPosition(29, 29));
         runAction(new DriveTurn(new Rotation2d(45, AngleUnit.DEGREES)));
