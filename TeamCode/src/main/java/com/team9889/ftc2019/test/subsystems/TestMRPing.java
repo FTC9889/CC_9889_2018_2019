@@ -1,6 +1,7 @@
 package com.team9889.ftc2019.test.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.team9889.lib.hardware.ModernRoboticsUltrasonic;
 
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  */
 
 @Autonomous
+@Disabled
 public class TestMRPing extends LinearOpMode{
     @Override
     public void runOpMode() {

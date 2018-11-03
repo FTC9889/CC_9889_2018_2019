@@ -1,6 +1,7 @@
 package com.team9889.ftc2019.test.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.team9889.ftc2019.Team9889Linear;
 
 /**
@@ -8,6 +9,7 @@ import com.team9889.ftc2019.Team9889Linear;
  */
 
 @Autonomous
+@Disabled
 public class TestDrive2 extends Team9889Linear{
 
     @Override

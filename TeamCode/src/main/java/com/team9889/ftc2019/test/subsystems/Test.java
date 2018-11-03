@@ -1,6 +1,7 @@
 package com.team9889.ftc2019.test.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.team9889.ftc2019.auto.AutoModeBase;
 import com.team9889.ftc2019.auto.actions.DriveToPosition;
 
@@ -9,9 +10,10 @@ import com.team9889.ftc2019.auto.actions.DriveToPosition;
  */
 
 @Autonomous
+@Disabled
 public class Test extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {
-        runAction(new DriveToPosition(10, 10));
+        runAction(new DriveToPosition(10, 10, 2000));
     }
 }

@@ -30,6 +30,9 @@ public class Intake extends Subsystem{
     public void init(HardwareMap hardwareMap, boolean auto) {
         this.intakemotor = hardwareMap.get(DcMotor.class, Constants.kIntakeMotorID);
         this.extender = hardwareMap.get(DcMotorEx.class, Constants.kIntakeExtender);
+
+        extender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         this.intakeRotator = hardwareMap.get(Servo.class, Constants.kIntakeRotator);
         this.limitSwitch = hardwareMap.get(DigitalChannel.class, Constants.kIntakeSwitch);
     }
@@ -69,15 +72,15 @@ public class Intake extends Subsystem{
     }
 
     public void setIntakeExtenderPower(double power){
-        if (power < 0 && intakeSwitchValue() == true){
-            setIntakeExtenderPower(0);
-        }
-        else
+//        if (power < 0 && intakeSwitchValue() == true){
+//            setIntakeExtenderPower(0);
+//        }
+//        else
         extender.setPower(power);
     }
 
     public boolean intakeSwitchValue (){
-        if (limitSwitch.getState() == true)
+        if (limitSwitch.getState())
             return intakeTouchSensor = false;
 
         else

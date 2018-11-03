@@ -1,6 +1,5 @@
 package com.team9889.ftc2019;
 
-import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;

@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp
 public class Teleop extends Team9889Linear{
 
+    private double pos = 0.4;
+
     @Override
     public void runOpMode() {
         waitForStart(false);
@@ -36,6 +38,13 @@ public class Teleop extends Team9889Linear{
                 Robot.getIntake().stop();
 
             Robot.getIntake().setIntakeExtenderPower(-gamepad2.left_stick_y);
+
+            if(gamepad2.right_bumper)
+                pos  = 0.4;
+            else if(gamepad2.left_bumper)
+                pos = 0.9;
+
+            Robot.getIntake().setIntakeRotatorPosition(pos);
 
             Robot.getCamera().setXYAxisPosition(0, 0.5);
 

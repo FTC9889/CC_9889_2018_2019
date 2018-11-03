@@ -4,10 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.team9889.ftc2019.auto.AutoModeBase;
 import com.team9889.ftc2019.auto.actions.DriveToPosition;
 import com.team9889.ftc2019.auto.actions.DriveTurn;
-import com.team9889.ftc2019.auto.actions.Intake;
-import com.team9889.ftc2019.auto.actions.IntakeStop;
-import com.team9889.ftc2019.auto.actions.IntakeToPosition;
 import com.team9889.ftc2019.auto.actions.Outtake;
+import com.team9889.ftc2019.auto.actions.Wait;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -21,35 +19,112 @@ public class AutonomousCraterSide extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {
 //      land
-        runAction(new DriveToPosition(29, 29));
 
+        Robot.getCamera().setXYAxisPosition(0, .75);
+
+        runAction(new Wait(1250));
+
+        int GoldSample = 0;
 
         if (Robot.getCamera().isGoldInfront()){
-            runAction(new Intake());
-            runAction(new DriveToPosition(5,5));
-            runAction(new IntakeStop());
-        }
-        else{
-            runAction(new DriveTurn(new Rotation2d(45, AngleUnit.DEGREES)));
+            runAction(new DriveToPosition(23,23, 3000));
+            GoldSample = 2;
+        } else{
+            Robot.getCamera().setXYAxisPosition(.175, .75);
+
+            runAction(new Wait(1000));
+
             if (Robot.getCamera().isGoldInfront()){
-                runAction(new Intake());
-                runAction(new DriveToPosition(5,5));
-                runAction(new IntakeStop());
+                runAction(new DriveToPosition(5, 5, 500));
+                runAction(new DriveTurn(new Rotation2d(45, AngleUnit.DEGREES), 1000));
+                runAction(new DriveToPosition(20, 20, 1000));
+                GoldSample = 3;
+            } else{
+                runAction(new DriveToPosition(5, 5, 1500));
+                runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 2000));
+                runAction(new DriveToPosition(20, 20, 2750));
+                GoldSample = 1;
             }
-            else{
-                runAction(new DriveTurn(new Rotation2d(-90, AngleUnit.DEGREES)));
-            }
+        }
+        Robot.getCamera().setXYAxisPosition(0, 0.5);
+
+        runAction(new DriveToPosition(-10, -10, 1500));
+
+        switch (GoldSample){
+            case 1:
+                runAction(new DriveTurn(new Rotation2d(-55, AngleUnit.DEGREES), 2000));
+                runAction(new DriveToPosition(39,39,2000));
+                break;
+
+            case 2:
+                runAction(new DriveTurn(new Rotation2d(-90, AngleUnit.DEGREES), 3000));
+                runAction(new DriveToPosition(42, 42, 2000));
+                break;
+
+            case 3:
+                runAction(new DriveTurn(new Rotation2d(-145, AngleUnit.DEGREES), 2000));
+                runAction(new DriveToPosition(35, 35, 2000));
+                break;
         }
 
 
-        runAction(new DriveTurn(new Rotation2d(90, AngleUnit.DEGREES)));
-        runAction(new DriveToPosition(29, 29));
-        runAction(new DriveTurn(new Rotation2d(45, AngleUnit.DEGREES)));
-        runAction(new DriveToPosition(60, 60));
-        runAction(new Outtake());
-        runAction(new DriveToPosition(-5, -5));
-        runAction(new DriveTurn(new Rotation2d(180, AngleUnit.DEGREES)));
-        runAction(new DriveToPosition(61, 61));
-        runAction(new IntakeToPosition(5));
+        runAction(new Wait(250));
+        runAction(new DriveTurn(new Rotation2d(Robot.getDrive().getAngle().getTheda(AngleUnit.DEGREES)-135,
+                AngleUnit.DEGREES), 1500));
+        runAction(new DriveTurn(new Rotation2d(Robot.getDrive().getAngle().getTheda(AngleUnit.DEGREES)-135,
+                AngleUnit.DEGREES), 1500));
+
+        switch (GoldSample){
+            case 1:
+                runAction(new DriveToPosition(20,20,1000));
+                runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 1000));
+                runAction(new DriveToPosition(35,35,1500));
+                runAction(new DriveTurn(new Rotation2d(55, AngleUnit.DEGREES), 1000));
+                runAction(new DriveToPosition(-12, -12, 750));
+                runAction(new DriveToPosition(12, 12, 750));
+                runAction(new DriveTurn(new Rotation2d(30, AngleUnit.DEGREES), 750));
+                runAction(new Outtake());
+                break;
+
+            case 2:
+                runAction(new DriveToPosition(30, 30, 1500));
+                runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 1000));
+                runAction(new DriveToPosition(5, 5, 750));
+                runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 1000));
+                runAction(new DriveToPosition(10,10,1500));
+                runAction(new DriveToPosition(-10,-10,1500));
+                runAction(new DriveTurn(new Rotation2d(130, AngleUnit.DEGREES), 2000));
+                runAction(new Outtake());
+                break;
+
+            case 3:
+                runAction(new DriveToPosition(28, 28, 1500));
+//                runAction(new DriveTurn(new Rotation2d(20, AngleUnit.DEGREES), 1000));
+                runAction(new DriveToPosition(15, 15, 750));
+                runAction(new Outtake());
+                runAction(new DriveToPosition(-40, -40, 3000));
+                runAction(new DriveTurn(new Rotation2d(-37.5, AngleUnit.DEGREES), 750));
+                runAction(new DriveToPosition(-24,-24,750));
+                break;
+        }
+
+//        switch (GoldSample){
+//            case 1:
+//                break;
+//
+//            case 2:
+//                runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 1000));
+//                runAction(new DriveToPosition(4,4,750));
+//                runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 1000));
+//                runAction(new DriveToPosition(25, 25, 1500));
+//                break;
+//
+//            case 3:
+//                break;
+//        }
+//        runAction(new DriveToPosition(-5, -5));
+//        runAction(new DriveTurn(new Rotation2d(180, AngleUnit.DEGREES)));
+//        runAction(new DriveToPosition(61, 61));
+//        runAction(new IntakeToPosition(5));
     }
 }

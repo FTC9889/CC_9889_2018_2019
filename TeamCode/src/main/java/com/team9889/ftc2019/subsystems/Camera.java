@@ -26,7 +26,7 @@ public class Camera extends Subsystem{
         yAxis = hardwareMap.get(Servo.class, Constants.kCameraYAxis);
 
         if (auto) {
-            setXYAxisPosition(0, 0.135);
+            setXYAxisPosition(0, 0.1);
 
             detector = new GoldAlignDetector();
             detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());

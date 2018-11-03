@@ -63,8 +63,6 @@ public abstract class AutoModeBase extends Team9889Linear {
 
         waitForStart(true);
 
-        Robot.getCamera().setXYAxisPosition(0, .6);
-
         run(currentAutoRunning);
 
         finalAction();
