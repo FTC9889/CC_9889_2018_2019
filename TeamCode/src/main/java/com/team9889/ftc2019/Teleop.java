@@ -18,6 +18,8 @@ public class Teleop extends Team9889Linear{
         while (opModeIsActive()){
             Robot.getDrive().setThrottleSteerPower(-gamepad1.left_stick_y, gamepad1.right_stick_x);
 
+            Robot.getLift().setStopperPosition(gamepad2.right_stick_y);
+
             if (gamepad1.dpad_down)
                 Robot.getLift().setLiftPower(-1);
             else if (gamepad1.dpad_up)

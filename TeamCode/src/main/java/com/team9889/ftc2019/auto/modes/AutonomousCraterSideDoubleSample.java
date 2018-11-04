@@ -15,10 +15,16 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
  */
 
 @Autonomous
-public class AutonomousCraterSide extends AutoModeBase {
+public class AutonomousCraterSideDoubleSample extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {
-//      land
+//        Robot.getLift().setStopperPosition(0.3);
+        runAction(new Wait(1000));
+        Robot.getDrive().setLeftRightPower(.1, .1);
+        runAction(new Wait(1000));
+        Robot.getDrive().setLeftRightPower(0, 0);
+        Robot.getLift().setHookPosition(0);
+        runAction(new Wait(1000));
 
         Robot.getCamera().setXYAxisPosition(0, .75);
 
@@ -36,12 +42,12 @@ public class AutonomousCraterSide extends AutoModeBase {
 
             if (Robot.getCamera().isGoldInfront()){
                 runAction(new DriveToPosition(5, 5, 500));
-                runAction(new DriveTurn(new Rotation2d(45, AngleUnit.DEGREES), 1000));
+                runAction(new DriveTurn(new Rotation2d(45, AngleUnit.DEGREES), 3000));
                 runAction(new DriveToPosition(20, 20, 1000));
                 GoldSample = 3;
             } else{
                 runAction(new DriveToPosition(5, 5, 1500));
-                runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 2000));
+                runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 3000));
                 runAction(new DriveToPosition(20, 20, 2750));
                 GoldSample = 1;
             }
@@ -62,7 +68,7 @@ public class AutonomousCraterSide extends AutoModeBase {
                 break;
 
             case 3:
-                runAction(new DriveTurn(new Rotation2d(-145, AngleUnit.DEGREES), 2000));
+                runAction(new DriveTurn(new Rotation2d(-100, AngleUnit.DEGREES), 2000));
                 runAction(new DriveToPosition(35, 35, 2000));
                 break;
         }
@@ -89,11 +95,11 @@ public class AutonomousCraterSide extends AutoModeBase {
             case 2:
                 runAction(new DriveToPosition(30, 30, 1500));
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 1000));
-                runAction(new DriveToPosition(5, 5, 750));
+                runAction(new DriveToPosition(12, 12, 750));
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 1000));
-                runAction(new DriveToPosition(10,10,1500));
-                runAction(new DriveToPosition(-10,-10,1500));
-                runAction(new DriveTurn(new Rotation2d(130, AngleUnit.DEGREES), 2000));
+                runAction(new DriveToPosition(15,15,1500));
+                runAction(new DriveToPosition(-15,-15,1500));
+                runAction(new DriveTurn(new Rotation2d(90, AngleUnit.DEGREES), 2000));
                 runAction(new Outtake());
                 break;
 

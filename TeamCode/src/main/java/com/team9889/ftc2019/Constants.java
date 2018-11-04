@@ -86,6 +86,7 @@ public class Constants {
     public final static String kLeftLift = "leftlift";
     public final static String kRightLift = "rightlift";
     public final static String kHookServo = "hookservo";
+    public final static String kLiftStopServo = "liftstopservo";
     public final static String kLiftTouchSensor = "lifttouchsensor";
     public final static double kMaxLiftHeight = 100; // tbd
     public final static double kLiftTicksPerRev = 537.6;

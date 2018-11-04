@@ -20,6 +20,7 @@ public class Lift extends Subsystem {
 
     private DcMotorEx left, right;
     private Servo hook;
+    private Servo stopper;
     private DigitalChannel touch;
 
     @Override
@@ -30,14 +31,18 @@ public class Lift extends Subsystem {
         setMode(DcMotor.ZeroPowerBehavior.BRAKE);
 
         hook = hardwareMap.get(Servo.class, Constants.kHookServo);
+        stopper = hardwareMap.get(Servo.class, Constants.kLiftStopServo);
 
         touch = hardwareMap.get(DigitalChannel.class, Constants.kLiftTouchSensor);
         touch.setMode(DigitalChannel.Mode.INPUT);
 
         if(auto) {
             setHookPosition(180);
+            setStopperPosition(0);
             zeroSensors();
         }
+        else
+            setStopperPosition(.3);
     }
 
     @Override
@@ -56,6 +61,7 @@ public class Lift extends Subsystem {
         telemetry.addData("Height of lift", getHeight());
         telemetry.addData("Difference of lift height", left.getCurrentPosition() - right.getCurrentPosition());
         telemetry.addData("Hook deployed?", isHookDeployed());
+        telemetry.addData("", stopper.getPosition());
         telemetry.addData("Touch sensor pressed?", isBottomLimitReached());
     }
 
@@ -97,6 +103,10 @@ public class Lift extends Subsystem {
     public void setLiftPower(double power){
         left.setPower(power);
         right.setPower(power);
+    }
+
+    public void setStopperPosition(double position){
+        stopper.setPosition(position);
     }
 
     public void setMode(DcMotor.ZeroPowerBehavior zeroPowerBehavior){
