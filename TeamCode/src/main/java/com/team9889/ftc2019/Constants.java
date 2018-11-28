@@ -55,7 +55,7 @@ public class Constants {
     public final static String kIntakeRotator = "intakerotator";
     public final static String kIntakeSwitch = "intakeswitch";
     public final static double kIntakeTicksPerRev = 100;  //TBD
-    public final static double kIntakeSpoolDiameter = 100;  //TBD
+    public final static double kIntakeSpoolDiameter = 1.5;
     public final static double kIntakeTicksToInchRatio = kIntakeSpoolDiameter * Math.PI / kIntakeTicksPerRev;
 
 
@@ -89,14 +89,14 @@ public class Constants {
     public final static String kLiftStopServo = "liftstopservo";
     public final static String kLiftTouchSensor = "lifttouchsensor";
     public final static double kMaxLiftHeight = 100; // tbd
-    public final static double kLiftTicksPerRev = 537.6;
-    public final static double kLiftSpoolDiameter = 1.5;
+    public final static double kLiftTicksPerRev = 1120;
+    public final static double kLiftSpoolDiameter = 1.25;
     public final static double kLiftTicksToHeightRatio = kLiftSpoolDiameter * Math.PI / kLiftTicksPerRev;
 
 
     /*---------------------
     |                     |
-    |        Camera!        |
+    |        Camera!      |
     |                     |
     ---------------------*/
 
