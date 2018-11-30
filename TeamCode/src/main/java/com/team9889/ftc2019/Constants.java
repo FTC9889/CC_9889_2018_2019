@@ -67,12 +67,12 @@ public class Constants {
     ---------------------*/
 
     //Settings for Arms
-    public final static String kLeftShoulderID = "leftShoulder";
-    public final static String kRightShoulderId = "rightShoulder";
-    public final static String kLeftElbowId = "leftElbow";
-    public final static String kRightElbowId = "rightElbow";
-    public final static String kLeftClawId = "leftClaw";
-    public final static String kRightClawId = "rightClaw";
+    public final static String kLeftShoulderID = "leftshoulder";
+    public final static String kRightShoulderId = "rightshoulder";
+    public final static String kLeftElbowId = "leftelbow";
+    public final static String kRightElbowId = "rightelbow";
+    public final static String kLeftClawId = "leftclaw";
+    public final static String kRightClawId = "rightclaw";
 
 
 
