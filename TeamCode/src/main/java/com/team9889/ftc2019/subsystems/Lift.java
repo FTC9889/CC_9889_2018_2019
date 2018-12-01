@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.team9889.ftc2019.Constants;
+import com.team9889.lib.control.controllers.PID;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -22,6 +23,7 @@ public class Lift extends Subsystem {
     private Servo hook;
     private Servo stopper;
     private DigitalChannel touch;
+    private PID pid = new PID(1, 0 ,0);
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
@@ -112,6 +114,10 @@ public class Lift extends Subsystem {
     public void setMode(DcMotor.ZeroPowerBehavior zeroPowerBehavior){
         left.setZeroPowerBehavior(zeroPowerBehavior);
         right.setZeroPowerBehavior(zeroPowerBehavior);
+    }
+
+    public void setLiftPosition(double wantedHeight){
+        setLiftPower(pid.update(getHeight(), wantedHeight));
     }
 
     @Override

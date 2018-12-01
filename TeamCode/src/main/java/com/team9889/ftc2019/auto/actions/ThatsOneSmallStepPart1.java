@@ -1,11 +1,9 @@
 package com.team9889.ftc2019.auto.actions;
 
-import com.team9889.ftc2019.subsystems.Robot;
+import com.qualcomm.ftccommon.SoundPlayer;
 
-/**
- * Created by MannoMation on 11/29/2018.
- */
-public class RightClawOpen extends Action{
+public class ThatsOneSmallStepPart1 extends Action{
+
     @Override
     public void setup(String args) {
 
@@ -13,7 +11,7 @@ public class RightClawOpen extends Action{
 
     @Override
     public void start() {
-        Robot.getInstance().getArms().setRightClawOpen(true);
+            SoundPlayer.getInstance().startPlaying();
     }
 
     @Override

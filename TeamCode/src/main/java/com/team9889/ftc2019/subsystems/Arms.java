@@ -24,8 +24,10 @@ public class Arms extends Subsystem{
         this.leftClaw = hardwareMap.get(Servo.class, Constants.kLeftClawId);
         this.rightClaw = hardwareMap.get(Servo.class, Constants.kRightClawId);
 
+        setLeftArm(0.5, 0.5);
+        setLeftClawOpen(true);
         setRightArm(0.5, 0.5);
-        setRightClaw(true);
+        setRightClawOpen(true);
     }
 
     @Override
@@ -64,11 +66,19 @@ public class Arms extends Subsystem{
         rightElbow.setPosition(Elbow);
     }
 
-    public  void setLeftClaw(boolean open){
-        leftClaw.setPosition(open ? 1: 0);
+    public  void setLeftClawOpen(boolean open){
+        leftClaw.setPosition(0);
     }
 
-    public void setRightClaw(boolean open){
+    public void setLeftClawClosed(boolean closed){
+        leftClaw.setPosition(1);
+    }
+
+    public void setRightClawOpen(boolean open){
+        rightClaw.setPosition(0);
+    }
+
+    public void setRightClawClosed(boolean closed){
         rightClaw.setPosition(1);
     }
 }

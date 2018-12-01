@@ -256,8 +256,7 @@ public class Drive extends Subsystem {
     }
 
     //Reset encoders until They both equal 0
-    public void resetEncoders() {
-        try {
+    public void resetEncoders() {        try {
             while(getLeftTicks() != 0 && getRightTicks() != 0){
                 leftMaster_.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 leftSlave_.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

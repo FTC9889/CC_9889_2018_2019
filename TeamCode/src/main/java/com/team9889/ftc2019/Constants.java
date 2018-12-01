@@ -89,9 +89,9 @@ public class Constants {
     public final static String kLiftStopServo = "liftstopservo";
     public final static String kLiftTouchSensor = "lifttouchsensor";
     public final static double kMaxLiftHeight = 100; // tbd
-    public final static double kLiftTicksPerRev = 1120;
-    public final static double kLiftSpoolDiameter = 1.25;
-    public final static double kLiftTicksToHeightRatio = kLiftSpoolDiameter * Math.PI / kLiftTicksPerRev;
+    public final static double kLiftTicksPerRev = 1120; // ticks
+    public final static double kLiftSpoolDiameter = 1.25; // in
+    public final static double kLiftTicksToHeightRatio = kLiftSpoolDiameter * Math.PI / kLiftTicksPerRev; // in
 
 
     /*---------------------
