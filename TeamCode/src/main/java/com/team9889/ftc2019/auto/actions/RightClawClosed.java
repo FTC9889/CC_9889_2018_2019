@@ -13,7 +13,7 @@ public class RightClawClosed extends Action{
 
     @Override
     public void start() {
-        Robot.getInstance().getArms().setRightClawClosed(true);
+//        Robot.getInstance().getArms().setRightClawClosed(true);
     }
 
     @Override

@@ -11,7 +11,7 @@ public class ThatsOneSmallStepPart1 extends Action{
 
     @Override
     public void start() {
-            SoundPlayer.getInstance().startPlaying();
+//            SoundPlayer.getInstance().startPlaying();
     }
 
     @Override

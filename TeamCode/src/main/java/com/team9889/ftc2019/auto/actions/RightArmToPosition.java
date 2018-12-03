@@ -21,7 +21,7 @@ public class RightArmToPosition extends Action{
 
     @Override
     public void start() {
-        Robot.getInstance().getArms().setRightArm(shoulder, elbow);
+//        Robot.getInstance().getArms().setRightArm(shoulder, elbow);
     }
 
     @Override

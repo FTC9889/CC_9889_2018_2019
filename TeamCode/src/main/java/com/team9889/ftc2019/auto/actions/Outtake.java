@@ -27,7 +27,7 @@ public class Outtake extends Action{
 
     @Override
     public boolean isFinished() {
-        return time.milliseconds()>800;
+        return time.milliseconds()>1000;
     }
 
     @Override

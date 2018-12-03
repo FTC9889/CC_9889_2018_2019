@@ -23,7 +23,7 @@ public class AutonomousCraterSideDoubleSample extends AutoModeBase {
         Robot.getDrive().setLeftRightPower(.1, .1);
         runAction(new Wait(1000));
         Robot.getDrive().setLeftRightPower(0, 0);
-        Robot.getLift().setHookPosition(0);
+//        Robot.getLift().setHookPosition(0);
         runAction(new Wait(1000));
 
         Robot.getCamera().setXYAxisPosition(0, .75);

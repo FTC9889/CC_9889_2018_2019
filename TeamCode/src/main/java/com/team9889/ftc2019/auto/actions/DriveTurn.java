@@ -38,8 +38,8 @@ public class DriveTurn extends Action{
 
     @Override
     public void start() {
-        leftPid = new PID(0.007, 0.000003, 0);
-        rightPid = new PID(0.007, 0.000003, 0);
+        leftPid = new PID(0.0065, 0.000004, 0);
+        rightPid = new PID(0.0065, 0.000004, 0);
 
         mDrive.DriveControlState(Drive.DriveControlStates.POWER);
         leftTick = mDrive.getLeftTicks() + (int)(left / ENCODER_TO_DISTANCE_RATIO);

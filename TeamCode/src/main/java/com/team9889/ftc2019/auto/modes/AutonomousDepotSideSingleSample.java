@@ -18,14 +18,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 public class AutonomousDepotSideSingleSample extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {
-        Robot.getLift().setStopperPosition(0.3);
-        runAction(new Wait(1000));
+//        Robot.getLift().setStopperPosition(0.3);
+/*        runAction(new Wait(1000));
         Robot.getDrive().setLeftRightPower(.1, .1);
         runAction(new Wait(1000));
         Robot.getDrive().setLeftRightPower(0, 0);
-        Robot.getLift().setHookPosition(0);
+//        Robot.getLift().setHookPosition(0);
         runAction(new Wait(1000));
-
+*/
         Robot.getCamera().setXYAxisPosition(0, .75);
 
         runAction(new Wait(1250));
@@ -43,10 +43,11 @@ public class AutonomousDepotSideSingleSample extends AutoModeBase {
 
             if (Robot.getCamera().isGoldInfront()){
                 runAction(new DriveToPosition(5, 5, 500));
-                runAction(new DriveTurn(new Rotation2d(45, AngleUnit.DEGREES), 3000));
+
+                runAction(new DriveTurn(new Rotation2d(35, AngleUnit.DEGREES), 3000));
                 runAction(new DriveToPosition(20, 20, 1000));
-                runAction(new DriveTurn(new Rotation2d(-60, AngleUnit.DEGREES), 3000));
-                runAction(new DriveToPosition(40, 40, 1000));
+                runAction(new DriveTurn(new Rotation2d(-50, AngleUnit.DEGREES), 3000));
+                runAction(new DriveToPosition(30, 30, 1000));
                 runAction(new Outtake());
                 GoldSample = 3;
             } else{
@@ -59,6 +60,9 @@ public class AutonomousDepotSideSingleSample extends AutoModeBase {
                 GoldSample = 1;
             }
         }
+
+        Robot.getCamera().setXYAxisPosition(0, .1);
+        runAction(new Wait(2000));
 
 
     }
