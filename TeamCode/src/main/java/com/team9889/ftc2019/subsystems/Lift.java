@@ -65,6 +65,8 @@ public class Lift extends Subsystem {
         telemetry.addData("Hook deployed?", isHookDeployed());
         telemetry.addData("", stopper.getPosition());
         telemetry.addData("Touch sensor pressed?", isBottomLimitReached());
+        telemetry.addData("left", left.getCurrentPosition());
+        telemetry.addData("right", right.getCurrentPosition());
     }
 
     @Override

@@ -53,11 +53,11 @@ public class Teleop extends Team9889Linear{
             }
 
             if (gamepad1.dpad_down)
-//                Robot.getLift().setLiftPower(-1);
-//            else if (gamepad1.dpad_up)
-//                Robot.getLift().setLiftPower(0.25);
-//            else
-//                Robot.getLift().setLiftPower(0.0);
+                Robot.getLift().setLiftPower(-1);
+            else if (gamepad1.dpad_up)
+                Robot.getLift().setLiftPower(0.25);
+            else
+                Robot.getLift().setLiftPower(0.0);
 
             if(gamepad1.left_trigger > .1) {
 //                Robot.getLift().setHookPosition(0);
@@ -90,7 +90,7 @@ public class Teleop extends Team9889Linear{
                 pos = 1;
             }
 
-//            Robot.getLift().setLiftPower(-gamepad2.right_stick_y);
+            Robot.getLift().setLiftPower(-gamepad2.right_stick_y);
 
 //            if (gamepad1.start)
 //                Robot.getLift().setLiftPosition(12);
