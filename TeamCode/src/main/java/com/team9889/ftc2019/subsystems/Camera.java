@@ -1,5 +1,7 @@
 package com.team9889.ftc2019.subsystems;
 
+import android.widget.Switch;
+
 import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
@@ -20,13 +22,26 @@ public class Camera extends Subsystem{
 
     private GoldAlignDetector detector;
 
+    public enum GoldPositions{
+        LEFT, CENTER, RIGHT, UNKNOWN
+    }
+
+    private GoldPositions gold = GoldPositions.UNKNOWN;
+
+    public enum CameraPositions{
+        FRONTCENTER, FRONTRIGHT,
+        FRONTHOPPER, BACKHOPPER,
+        STORED, UPRIGHT
+    }
+
+
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
         xAxis = hardwareMap.get(Servo.class, Constants.kCameraXAxis);
         yAxis = hardwareMap.get(Servo.class, Constants.kCameraYAxis);
 
         if (auto) {
-            setXYAxisPosition(0, 0.1);
+            setCameraPosition(CameraPositions.STORED);
 
             detector = new GoldAlignDetector();
             detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());
@@ -85,8 +100,45 @@ public class Camera extends Subsystem{
         return detector.getXPosition();
     }
 
+    public GoldPositions getGold() {
+        return gold;
+    }
+
+    public void setGold(GoldPositions gold) {
+        this.gold = gold;
+    }
+
+    public void setCameraPosition(CameraPositions position){
+        switch (position){
+            case STORED:
+                setXYAxisPosition(0, 0.1);
+                break;
+
+            case UPRIGHT:
+                setXYAxisPosition(0, 0.5);
+                break;
+
+            case BACKHOPPER:
+                setXYAxisPosition(1,0.9);
+                break;
+
+            case FRONTRIGHT:
+                setXYAxisPosition(.175, .75);
+                break;
+
+            case FRONTCENTER:
+                setXYAxisPosition(0, 0.75);
+                break;
+
+            case FRONTHOPPER:
+                setXYAxisPosition(0, 1);
+                break;
+        }//TODO: check camera positions
+    }
+
     @Override
     public void stop() {
         detector.disable();
     }
+
 }

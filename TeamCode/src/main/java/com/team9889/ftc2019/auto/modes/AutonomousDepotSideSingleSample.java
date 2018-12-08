@@ -6,6 +6,7 @@ import com.team9889.ftc2019.auto.actions.DriveToPosition;
 import com.team9889.ftc2019.auto.actions.DriveTurn;
 import com.team9889.ftc2019.auto.actions.Outtake;
 import com.team9889.ftc2019.auto.actions.Wait;
+import com.team9889.ftc2019.subsystems.Camera;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -18,26 +19,16 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 public class AutonomousDepotSideSingleSample extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {
-//        Robot.getLift().setStopperPosition(0.3);
-/*        runAction(new Wait(1000));
-        Robot.getDrive().setLeftRightPower(.1, .1);
-        runAction(new Wait(1000));
-        Robot.getDrive().setLeftRightPower(0, 0);
-//        Robot.getLift().setHookPosition(0);
-        runAction(new Wait(1000));
-*/
-        Robot.getCamera().setXYAxisPosition(0, .75);
+
+        Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
 
         runAction(new Wait(1250));
-
-        int GoldSample = 0;
 
         if (Robot.getCamera().isGoldInfront()){
             runAction(new DriveToPosition(50,50, 3000));
             runAction(new Outtake());
-            GoldSample = 2;
         } else{
-            Robot.getCamera().setXYAxisPosition(.175, .75);
+            Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTRIGHT);
 
             runAction(new Wait(1000));
 
@@ -49,7 +40,6 @@ public class AutonomousDepotSideSingleSample extends AutoModeBase {
                 runAction(new DriveTurn(new Rotation2d(-50, AngleUnit.DEGREES), 3000));
                 runAction(new DriveToPosition(30, 30, 1000));
                 runAction(new Outtake());
-                GoldSample = 3;
             } else{
                 runAction(new DriveToPosition(5, 5, 1500));
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 3000));
@@ -57,11 +47,11 @@ public class AutonomousDepotSideSingleSample extends AutoModeBase {
                 runAction(new DriveTurn(new Rotation2d(60, AngleUnit.DEGREES),2000));
                 runAction(new DriveToPosition(40, 40, 1000));
                 runAction(new Outtake());
-                GoldSample = 1;
             }
         }
 
-        Robot.getCamera().setXYAxisPosition(0, .1);
+        Robot.getCamera().setCameraPosition(Camera.CameraPositions.STORED);
+
         runAction(new Wait(2000));
 
 

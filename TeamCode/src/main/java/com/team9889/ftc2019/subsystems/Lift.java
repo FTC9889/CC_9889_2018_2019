@@ -23,7 +23,7 @@ public class Lift extends Subsystem {
     private Servo hook;
     private Servo stopper;
     private DigitalChannel touch;
-    private PID pid = new PID(1, 0 ,0);
+    private PID pid = new PID(.001, 0 ,0);
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
@@ -98,11 +98,11 @@ public class Lift extends Subsystem {
     }
 
     public double getHeightTicks(){
-        return (left.getCurrentPosition() + right.getCurrentPosition()) / 2.;
+        return (right.getCurrentPosition());
     }
 
     public double getHeight(){
-        return getHeightTicks() / Constants.kLiftTicksToHeightRatio;
+        return getHeightTicks() * Constants.kLiftTicksToHeightRatio;
     }
 
     public void setLiftPower(double power){

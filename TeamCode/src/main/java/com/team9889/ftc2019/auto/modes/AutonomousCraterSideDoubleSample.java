@@ -6,6 +6,7 @@ import com.team9889.ftc2019.auto.actions.DriveToPosition;
 import com.team9889.ftc2019.auto.actions.DriveTurn;
 import com.team9889.ftc2019.auto.actions.Outtake;
 import com.team9889.ftc2019.auto.actions.Wait;
+import com.team9889.ftc2019.subsystems.Camera;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -30,11 +31,9 @@ public class AutonomousCraterSideDoubleSample extends AutoModeBase {
 
         runAction(new Wait(1250));
 
-        int GoldSample = 0;
-
         if (Robot.getCamera().isGoldInfront()){
             runAction(new DriveToPosition(23,23, 3000));
-            GoldSample = 2;
+            Robot.getCamera().setGold(Camera.GoldPositions.CENTER);
         } else{
             Robot.getCamera().setXYAxisPosition(.175, .75);
 
@@ -44,30 +43,30 @@ public class AutonomousCraterSideDoubleSample extends AutoModeBase {
                 runAction(new DriveToPosition(5, 5, 500));
                 runAction(new DriveTurn(new Rotation2d(45, AngleUnit.DEGREES), 3000));
                 runAction(new DriveToPosition(20, 20, 1000));
-                GoldSample = 3;
+                Robot.getCamera().setGold(Camera.GoldPositions.RIGHT);
             } else{
                 runAction(new DriveToPosition(5, 5, 1500));
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 3000));
                 runAction(new DriveToPosition(20, 20, 2750));
-                GoldSample = 1;
+                Robot.getCamera().setGold(Camera.GoldPositions.LEFT);
             }
         }
         Robot.getCamera().setXYAxisPosition(0, 0.5);
 
         runAction(new DriveToPosition(-10, -10, 1500));
 
-        switch (GoldSample){
-            case 1:
+        switch (Robot.getCamera().getGold()){
+            case LEFT:
                 runAction(new DriveTurn(new Rotation2d(-55, AngleUnit.DEGREES), 2000));
                 runAction(new DriveToPosition(39,39,2000));
                 break;
 
-            case 2:
+            case RIGHT:
                 runAction(new DriveTurn(new Rotation2d(-90, AngleUnit.DEGREES), 3000));
                 runAction(new DriveToPosition(42, 42, 2000));
                 break;
 
-            case 3:
+            case CENTER:
                 runAction(new DriveTurn(new Rotation2d(-100, AngleUnit.DEGREES), 2000));
                 runAction(new DriveToPosition(35, 35, 2000));
                 break;
@@ -80,8 +79,8 @@ public class AutonomousCraterSideDoubleSample extends AutoModeBase {
         runAction(new DriveTurn(new Rotation2d(Robot.getDrive().getAngle().getTheda(AngleUnit.DEGREES)-135,
                 AngleUnit.DEGREES), 1500));
 
-        switch (GoldSample){
-            case 1:
+        switch (Robot.getCamera().getGold()){
+            case LEFT:
                 runAction(new DriveToPosition(20,20,1000));
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 1000));
                 runAction(new DriveToPosition(35,35,1500));
@@ -92,7 +91,7 @@ public class AutonomousCraterSideDoubleSample extends AutoModeBase {
                 runAction(new Outtake());
                 break;
 
-            case 2:
+            case CENTER:
                 runAction(new DriveToPosition(30, 30, 1500));
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 1000));
                 runAction(new DriveToPosition(12, 12, 750));
@@ -103,7 +102,7 @@ public class AutonomousCraterSideDoubleSample extends AutoModeBase {
                 runAction(new Outtake());
                 break;
 
-            case 3:
+            case RIGHT:
                 runAction(new DriveToPosition(28, 28, 1500));
 //                runAction(new DriveTurn(new Rotation2d(20, AngleUnit.DEGREES), 1000));
                 runAction(new DriveToPosition(15, 15, 750));

@@ -24,6 +24,10 @@ public class Intake extends Subsystem{
         INTAKING, EXTENDING, ZEROING
     }
 
+    enum RotatorStates {
+        UP, DOWN
+    }
+
     private States currentState = States.ZEROING;
 
     @Override
@@ -107,6 +111,18 @@ public class Intake extends Subsystem{
     }
     public double getIntakeRotatorPosition(){
         return(intakeRotator.getPosition());
+    }
+
+    public void setIntakeRotatorState(RotatorStates state){
+        switch (state){
+            case UP:
+                setIntakeRotatorPosition(0.4);
+                break;
+
+            case DOWN:
+                setIntakeRotatorPosition(1);
+                break;
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package com.team9889.ftc2019;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.team9889.ftc2019.subsystems.Camera;
 
 /**
  * Created by joshua9889 on 3/28/2018.
@@ -147,7 +148,7 @@ public class Teleop extends Team9889Linear{
 
             Robot.getIntake().setIntakeRotatorPosition(pos);
 
-            Robot.getCamera().setXYAxisPosition(0, 0.5);
+            Robot.getCamera().setCameraPosition(Camera.CameraPositions.UPRIGHT);
 
             updateTelemetry();
         }

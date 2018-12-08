@@ -6,6 +6,7 @@ import com.team9889.ftc2019.auto.actions.DriveToPosition;
 import com.team9889.ftc2019.auto.actions.DriveTurn;
 import com.team9889.ftc2019.auto.actions.Outtake;
 import com.team9889.ftc2019.auto.actions.Wait;
+import com.team9889.ftc2019.subsystems.Camera;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -17,25 +18,15 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 public class AutonomousCraterSideSingleSample extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {
-//            Robot.getLift().setStopperPosition(0.3);
-/*            runAction(new Wait(1000));
-            Robot.getDrive().setLeftRightPower(.1, .1);
-            runAction(new Wait(1000));
-            Robot.getDrive().setLeftRightPower(0, 0);
-//            Robot.getLift().setHookPosition(0);
-            runAction(new Wait(1000));
-*/
-            Robot.getCamera().setXYAxisPosition(0, .75);
+
+            Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
 
             runAction(new Wait(1250));
 
-            int GoldSample = 0;
-
             if (Robot.getCamera().isGoldInfront()){
                 runAction(new DriveToPosition(23,23, 3000));
-                GoldSample = 2;
             } else{
-                Robot.getCamera().setXYAxisPosition(.175, .75);
+                Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTRIGHT);
 
                 runAction(new Wait(1000));
 
@@ -43,18 +34,16 @@ public class AutonomousCraterSideSingleSample extends AutoModeBase {
                     runAction(new DriveToPosition(5, 5, 500));
                     runAction(new DriveTurn(new Rotation2d(35, AngleUnit.DEGREES), 3000));
                     runAction(new DriveToPosition(20, 20, 1000));
-                    GoldSample = 3;
                 } else{
                     runAction(new DriveToPosition(5, 5, 1500));
                     runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 3000));
                     runAction(new DriveToPosition(30, 30, 2750));
                     runAction(new DriveTurn(new Rotation2d(40, AngleUnit.DEGREES),2000));
-                    GoldSample = 1;
                 }
             }
 
-            runAction(new DriveToPosition(15, 15, 1000));
+        Robot.getCamera().setCameraPosition(Camera.CameraPositions.STORED);
 
-            Robot.getCamera().setXYAxisPosition(0, .5);
+        runAction(new DriveToPosition(15, 15, 1000));
     }
 }
