@@ -84,7 +84,7 @@ public class Teleop extends Team9889Linear{
             Robot.getIntake().setIntakeExtenderPower(-gamepad2.left_stick_y);
 
             if(gamepad2.right_bumper) {
-                pos = 0.5;
+                pos = 0.4;
             }
             else if(gamepad2.left_bumper) {
                 pos = 1;

@@ -30,6 +30,7 @@ public class Lift extends Subsystem {
         left = hardwareMap.get(DcMotorEx.class, Constants.kLeftLift);
         right = hardwareMap.get(DcMotorEx.class, Constants.kRightLift);
         right.setDirection(DcMotorSimple.Direction.REVERSE);
+        left.setDirection(DcMotorSimple.Direction.REVERSE);
         setMode(DcMotor.ZeroPowerBehavior.BRAKE);
 
         hook = hardwareMap.get(Servo.class, Constants.kHookServo);
