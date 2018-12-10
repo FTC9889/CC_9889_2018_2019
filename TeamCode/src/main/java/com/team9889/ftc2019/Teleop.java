@@ -1,8 +1,9 @@
 package com.team9889.ftc2019;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.subsystems.Camera;
+import com.team9889.ftc2019.subsystems.Intake;
+import com.team9889.ftc2019.subsystems.Lift;
 
 /**
  * Created by joshua9889 on 3/28/2018.
@@ -11,16 +12,15 @@ import com.team9889.ftc2019.subsystems.Camera;
 @TeleOp
 public class Teleop extends Team9889Linear{
 
-    private double pos = 0.4;
     private double leftClaw = 1;
     private double rightClaw = 1;
     private double leftArm = 1;
     private double rightArm = 1;
     private double liftStopper = 1;
-    private double intakeRotator = 1;
-    private double wantedIntakeRotatorPosition;
+    private
 
-    ElapsedTime liftTimer = new ElapsedTime();
+
+    Intake.RotatorStates wantedRotatorState = Intake.RotatorStates.UP;
 
     @Override
     public void runOpMode() {
@@ -60,6 +60,13 @@ public class Teleop extends Team9889Linear{
             else
                 Robot.getLift().setLiftPower(0.0);
 
+            if (gamepad1.dpad_left)
+                Robot.getLift().setLiftState(Lift.LiftStates.DOWN);
+            else if (gamepad1.dpad_right)
+                Robot.getLift().setLiftState(Lift.LiftStates.HOOKHEIGHT);
+            else if (gamepad2.x)
+                Robot.getLift().setLiftState(Lift.LiftStates.SCOREINGHEIGHT);
+
             if(gamepad1.left_trigger > .1) {
 //                Robot.getLift().setHookPosition(0);
             }
@@ -85,68 +92,15 @@ public class Teleop extends Team9889Linear{
             Robot.getIntake().setIntakeExtenderPower(-gamepad2.left_stick_y);
 
             if(gamepad2.right_bumper) {
-                pos = 0.4;
+                wantedRotatorState = Intake.RotatorStates.UP;
             }
             else if(gamepad2.left_bumper) {
-                pos = 1;
+                wantedRotatorState = Intake.RotatorStates.DOWN;
             }
 
             Robot.getLift().setLiftPower(-gamepad2.right_stick_y);
 
-//            if (gamepad1.start)
-//                Robot.getLift().setLiftPosition(12);
-
-            if (gamepad1.a) {
-//                Robot.getArms().setRightArm(.5, .5);
-//                Robot.getArms().setLeftArm(.5, .5);
-            }
-            else if (gamepad1.b) {
-//                Robot.getArms().setRightArm(.25, .25);
-//                Robot.getArms().setLeftArm(.25, .25);
-            }
-            else if (gamepad1.y){
-//                Robot.getArms().setRightArm(0,0);
-//                Robot.getArms().setLeftArm(0, 0);
-            }
-            else if (gamepad1.x){
-//                Robot.getArms().setRightArm(1, 1);
-//                Robot.getArms().setLeftArm(1, 1);
-            }
-
-            if (gamepad2.left_trigger > .1 && leftClaw == 1) {
-//                Robot.getArms().setLeftClawClosed(true);
-                leftClaw = 0;
-            }
-            else if (gamepad2.left_trigger > .1 && leftClaw == 0) {
-//                Robot.getArms().setLeftClawOpen(true);
-//                Robot.getArms().setLeftArm(.5, .5);
-                leftClaw = 1;
-                leftArm = 1;
-            }
-
-            if (gamepad2.right_trigger > .1 && rightClaw == 1) {
-//                Robot.getArms().setRightClawClosed(true);
-                rightClaw = 0;
-            }
-            else if (gamepad2.right_trigger > .1 && rightClaw == 0) {
-//                Robot.getArms().setRightClawOpen(true);
-//                Robot.getArms().setRightArm(.5, .5);
-                rightClaw = 1;
-//                rightArm = 1;
-            }
-
-            if (gamepad2.dpad_down){
-//                Robot.getArms().setRightArm(.5, .5);
-//                Robot.getArms().setLeftArm(.5, .5);
-            }
-
-            if (gamepad2.x &&  liftTimer.milliseconds()>10){
-                Robot.getIntake().setIntakeRotatorPosition(Robot.getIntake().getIntakeRotatorPosition() + 0.05);
-                liftTimer.reset();
-            }
-
-
-            Robot.getIntake().setIntakeRotatorPosition(pos);
+            Robot.getIntake().setIntakeRotatorState(wantedRotatorState);
 
             Robot.getCamera().setCameraPosition(Camera.CameraPositions.UPRIGHT);
 

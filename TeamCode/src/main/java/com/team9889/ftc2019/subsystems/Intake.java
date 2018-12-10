@@ -24,7 +24,7 @@ public class Intake extends Subsystem{
         INTAKING, EXTENDING, ZEROING
     }
 
-    enum RotatorStates {
+    public enum RotatorStates {
         UP, DOWN
     }
 

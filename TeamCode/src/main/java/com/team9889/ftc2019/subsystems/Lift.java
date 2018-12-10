@@ -25,6 +25,10 @@ public class Lift extends Subsystem {
     private DigitalChannel touch;
     private PID pid = new PID(.001, 0 ,0);
 
+    public enum LiftStates{
+        DOWN, HOOKHEIGHT, SCOREINGHEIGHT
+    }
+
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
         left = hardwareMap.get(DcMotorEx.class, Constants.kLeftLift);
@@ -119,8 +123,28 @@ public class Lift extends Subsystem {
         right.setZeroPowerBehavior(zeroPowerBehavior);
     }
 
+
+    /**
+     * @param wantedHeight In inches
+     */
     public void setLiftPosition(double wantedHeight){
         setLiftPower(pid.update(getHeight(), wantedHeight));
+    }
+
+    public void setLiftState(LiftStates state){
+        switch (state){
+            case DOWN:
+                setLiftPosition(0);
+                break;
+
+            case HOOKHEIGHT:
+                setLiftPosition(20);
+                break;
+
+            case SCOREINGHEIGHT:
+                setLiftPosition(30);
+                break;
+        }
     }
 
     @Override
