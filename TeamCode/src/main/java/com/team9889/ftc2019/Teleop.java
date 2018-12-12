@@ -12,8 +12,8 @@ import com.team9889.ftc2019.subsystems.Lift;
 @TeleOp
 public class Teleop extends Team9889Linear{
 
-    private double leftClaw = 1;
-    private double rightClaw = 1;
+    private double leftClaw = 0;
+    private double rightClaw = 0;
     private double leftArm = 1;
     private double rightArm = 1;
     private double liftStopper = 1;
@@ -31,26 +31,12 @@ public class Teleop extends Team9889Linear{
         while (opModeIsActive()){
             Robot.getDrive().setThrottleSteerPower(-gamepad1.left_stick_y, gamepad1.right_stick_x);
 
-            if (gamepad1.left_bumper && leftClaw == 1) {
-//                Robot.getArms().setLeftClawClosed(true);
-                leftClaw = 0;
-            }
-            else if (gamepad1.left_bumper && leftClaw == 0) {
-//                Robot.getArms().setLeftClawOpen(true);
-//                Robot.getArms().setLeftArm(.5, .5);
-                leftClaw = 1;
-                leftArm = 1;
+            if (gamepad1.left_bumper) {
+                Robot.getArms().setLeftClawClosed(true);
             }
 
-            if (gamepad1.right_bumper && rightClaw == 1) {
-//                Robot.getArms().setRightClawClosed(true);
-                rightClaw = 0;
-            }
-            else if (gamepad1.right_bumper && rightClaw == 0) {
-//                Robot.getArms().setRightClawOpen(true);
-//                Robot.getArms().setRightArm(.5, .5);
-                rightClaw = 1;
-//                rightArm = 1;
+            if (gamepad1.right_bumper) {
+                Robot.getArms().setRightClawClosed(true);
             }
 
             if (gamepad1.dpad_down)
@@ -96,6 +82,29 @@ public class Teleop extends Team9889Linear{
             }
             else if(gamepad2.left_bumper) {
                 wantedRotatorState = Intake.RotatorStates.DOWN;
+            }
+
+            if (gamepad1.a){
+                Robot.getArms().setLeftArm(.35, .25);
+                Robot.getArms().setLeftArm(.7, 0.25);
+                Robot.getArms().setLeftArm(.7, 0.75);
+                Robot.getArms().setRightArm(.25, 1);
+                Robot.getArms().setRightArm(.25, 0.4);
+            }
+
+//            if (gamepad1.b){
+//                Robot.getArms().setRightArm(.25, 1);
+//                Robot.getArms().setRightArm(.25, 0.4);
+//            }
+
+            if (gamepad1.x){
+                Robot.getArms().setLeftClawOpen(true);
+                Robot.getArms().setRightClawOpen(true);
+            }
+
+            if (rightClaw == 1 && leftClaw == 1){
+                Robot.getArms().setRightArm(1, 1);
+                Robot.getArms().setLeftArm(0, 0.25);
             }
 
             Robot.getLift().setLiftPower(-gamepad2.right_stick_y);
