@@ -13,7 +13,6 @@ import com.team9889.ftc2019.auto.actions.RightClawOpen;
 public class TestArms extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {
-//        runAction(new RightArmToPosition(135, 135));
-        runAction(new RightClawOpen());
+        Robot.getArms().setRightArm(1, 1);
     }
 }

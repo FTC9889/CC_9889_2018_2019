@@ -124,6 +124,5 @@ public class Intake extends Subsystem{
                 break;
         }
     }
-
 }
 

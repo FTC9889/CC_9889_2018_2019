@@ -12,12 +12,13 @@ import com.team9889.ftc2019.subsystems.Lift;
 @TeleOp
 public class Teleop extends Team9889Linear{
 
-    private double leftClaw = 0;
-    private double rightClaw = 0;
+    private double leftClaw = 1;
+    private double rightClaw = 1;
     private double leftArm = 1;
     private double rightArm = 1;
     private double liftStopper = 1;
-    private
+    private double leftBumperState = 0;
+    private double rightBumperState = 0;
 
 
     Intake.RotatorStates wantedRotatorState = Intake.RotatorStates.UP;
@@ -31,13 +32,44 @@ public class Teleop extends Team9889Linear{
         while (opModeIsActive()){
             Robot.getDrive().setThrottleSteerPower(-gamepad1.left_stick_y, gamepad1.right_stick_x);
 
-            if (gamepad1.left_bumper) {
-                Robot.getArms().setLeftClawClosed(true);
+            if (gamepad1.left_bumper && leftClaw == 1 || leftBumperState == 1 && leftClaw == 1) {
+                leftBumperState = 1;
+                if (!gamepad1.left_bumper) {
+                    Robot.getArms().setLeftClawClosed(true);
+                    leftClaw = 0;
+                    leftBumperState = 0;
+                }
             }
 
-            if (gamepad1.right_bumper) {
-                Robot.getArms().setRightClawClosed(true);
+            else if (gamepad1.left_bumper && leftClaw == 0 || leftBumperState == 1 && leftClaw == 0) {
+                leftBumperState = 1;
+                if (!gamepad1.left_bumper) {
+                    Robot.getArms().setLeftClawOpen(true);
+                    leftClaw = 1;
+                    leftArm = 0;
+                    leftBumperState = 0;
+                }
             }
+
+            if (gamepad1.right_bumper && rightClaw == 1 || rightBumperState == 1 && rightClaw == 1) {
+                rightBumperState = 1;
+                if (!gamepad1.right_bumper) {
+                    Robot.getArms().setRightClawClosed(true);
+                    rightClaw = 0;
+                    rightBumperState = 0;
+                }
+            }
+
+            else if (gamepad1.right_bumper && rightClaw == 0 || rightBumperState == 1 && rightClaw == 0) {
+                rightBumperState = 1;
+                if (!gamepad1.right_bumper) {
+                    Robot.getArms().setRightClawOpen(true);
+                    rightClaw = 1;
+                    rightArm = 0;
+                    rightBumperState = 0;
+                }
+            }
+
 
             if (gamepad1.dpad_down)
                 Robot.getLift().setLiftPower(-1);
@@ -90,21 +122,30 @@ public class Teleop extends Team9889Linear{
                 Robot.getArms().setLeftArm(.7, 0.75);
                 Robot.getArms().setRightArm(.25, 1);
                 Robot.getArms().setRightArm(.25, 0.4);
+
             }
 
-//            if (gamepad1.b){
-//                Robot.getArms().setRightArm(.25, 1);
-//                Robot.getArms().setRightArm(.25, 0.4);
-//            }
+            if (gamepad1.b){
+                Robot.getArms().setRightArm(.25, .1);
+                Robot.getArms().setRightArm(.25, .2);
+                Robot.getArms().setLeftArm(.35, .25);
+                Robot.getArms().setLeftArm(.7, 0.75);
+            }
+
+            if (gamepad1.x){
+                Robot.getIntake().setIntakeExtenderPosition(20);
+            }
 
             if (gamepad1.x){
                 Robot.getArms().setLeftClawOpen(true);
                 Robot.getArms().setRightClawOpen(true);
             }
 
-            if (rightClaw == 1 && leftClaw == 1){
+            if (rightArm == 0 && leftArm == 0){
                 Robot.getArms().setRightArm(1, 1);
                 Robot.getArms().setLeftArm(0, 0.25);
+                leftArm = 1;
+                rightArm = 1;
             }
 
             Robot.getLift().setLiftPower(-gamepad2.right_stick_y);
