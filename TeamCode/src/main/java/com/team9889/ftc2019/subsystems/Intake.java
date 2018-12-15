@@ -40,7 +40,7 @@ public class Intake extends Subsystem{
         this.intakeRotator = hardwareMap.get(Servo.class, Constants.kIntakeRotator);
         this.limitSwitch = hardwareMap.get(DigitalChannel.class, Constants.kIntakeSwitch);
 
-        setIntakeRotatorPosition(.75);
+        setIntakeRotatorState(RotatorStates.UP);
     }
 
     @Override
@@ -70,11 +70,11 @@ public class Intake extends Subsystem{
     }
 
     public void intake (){
-        setIntakePower(-1);
+        setIntakePower(1);
     }
 
     public void outtake (){
-        setIntakePower(1);
+        setIntakePower(-1);
     }
 
     public void setIntakeExtenderPower(double power){

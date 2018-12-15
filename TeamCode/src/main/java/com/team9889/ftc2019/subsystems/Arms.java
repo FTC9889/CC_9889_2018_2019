@@ -3,6 +3,7 @@ package com.team9889.ftc2019.subsystems;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.team9889.ftc2019.Constants;
+import com.team9889.ftc2019.auto.Autonomous;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -15,6 +16,10 @@ public class Arms extends Subsystem{
     private Servo leftElbow, rightElbow;
     private Servo leftClaw, rightClaw;
 
+    public enum ArmStates{
+        STORED, GRAB, PARK, GOLDGOLD, GOLDSILVER, SILVERSILVER, SILVERGOLD
+    }
+
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
         this.leftShoulder = hardwareMap.get(Servo.class, Constants.kLeftShoulderID);
@@ -24,10 +29,12 @@ public class Arms extends Subsystem{
         this.leftClaw = hardwareMap.get(Servo.class, Constants.kLeftClawId);
         this.rightClaw = hardwareMap.get(Servo.class, Constants.kRightClawId);
 
-        setLeftArm(0, 0.25);
-        setLeftClawOpen(true);
-        setRightArm(1, 1);
-        setRightClawOpen(true);
+        if (auto) {
+            setLeftArm(.2, 0.16);
+            setRightArm(.9, .71);
+            setLeftClawOpen(false);
+            setRightClawOpen(false);
+        }
     }
 
     @Override
@@ -56,6 +63,14 @@ public class Arms extends Subsystem{
 
     }
 
+    public void getLeftClawPosition(){
+        leftClaw.getPosition();
+    }
+
+    public void getRightClawPosition(){
+        rightClaw.getPosition();
+    }
+
     public void setLeftArm(double Shoulder , double Elbow){
         leftShoulder.setPosition(Shoulder);
         leftElbow.setPosition(Elbow);
@@ -67,18 +82,49 @@ public class Arms extends Subsystem{
     }
 
     public  void setLeftClawOpen(boolean open){
-        leftClaw.setPosition(0);
-    }
-
-    public void setLeftClawClosed(boolean closed){
-        leftClaw.setPosition(1);
+        if(open)
+            leftClaw.setPosition(0);
+        else
+            leftClaw.setPosition(1);
     }
 
     public void setRightClawOpen(boolean open){
-        rightClaw.setPosition(0);
+        if (open)
+            rightClaw.setPosition(0);
+        else
+            rightClaw.setPosition(1);
     }
 
-    public void setRightClawClosed(boolean closed){
-        rightClaw.setPosition(1);
+    public void setArmsStates(ArmStates state){
+        switch (state){
+            case SILVERSILVER:
+                setRightArm(0.15, 0.241);
+                setLeftArm(0.9411, 0.524);
+                break;
+            case SILVERGOLD:
+                setRightArm(0.15, 0);
+                setLeftArm(0.9411, 0.524);
+                break;
+
+            case GOLDSILVER:
+                break;
+
+            case GOLDGOLD:
+                break;
+
+            case PARK:
+                break;
+
+            case STORED:
+                setRightArm(.9, .7);
+                setLeftArm(.23, .15);
+                break;
+
+            case GRAB:
+                setRightArm(.25, .22);
+                setLeftArm(.85, .71);
+                break;
+        }
     }
+
 }

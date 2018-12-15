@@ -23,10 +23,10 @@ public class Lift extends Subsystem {
     private Servo hook;
     private Servo stopper;
     private DigitalChannel touch;
-    private PID pid = new PID(.001, 0 ,0);
+    private PID pid = new PID(.3, 0.005 ,0, 50);
 
     public enum LiftStates{
-        DOWN, HOOKHEIGHT, SCOREINGHEIGHT
+        DOWN, HOOKHEIGHT, SCOREINGHEIGHT, READY
     }
 
     @Override
@@ -36,20 +36,22 @@ public class Lift extends Subsystem {
         right.setDirection(DcMotorSimple.Direction.REVERSE);
         left.setDirection(DcMotorSimple.Direction.REVERSE);
         setMode(DcMotor.ZeroPowerBehavior.BRAKE);
+        zeroSensors();
 
-        hook = hardwareMap.get(Servo.class, Constants.kHookServo);
-        stopper = hardwareMap.get(Servo.class, Constants.kLiftStopServo);
+
+//        hook = hardwareMap.get(Servo.class, Constants.kHookServo);
+//        stopper = hardwareMap.get(Servo.class, Constants.kLiftStopServo);
 
         touch = hardwareMap.get(DigitalChannel.class, Constants.kLiftTouchSensor);
         touch.setMode(DigitalChannel.Mode.INPUT);
 
-        if(auto) {
-            setHookPosition(180);
-            setStopperPosition(0);
-            zeroSensors();
-        }
-        else
-            setStopperPosition(.3);
+//        if(auto) {
+//            setHookPosition(180);
+//            setStopperPosition(0);
+//            zeroSensors();
+//        }
+//        else
+//            setStopperPosition(.3);
     }
 
     @Override
@@ -66,12 +68,14 @@ public class Lift extends Subsystem {
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
         telemetry.addData("Height of lift", getHeight());
-        telemetry.addData("Difference of lift height", left.getCurrentPosition() - right.getCurrentPosition());
-        telemetry.addData("Hook deployed?", isHookDeployed());
-        telemetry.addData("", stopper.getPosition());
-        telemetry.addData("Touch sensor pressed?", isBottomLimitReached());
+        telemetry.addData("Height of lift in ticks", getHeightTicks());
+//        telemetry.addData("Difference of lift height", left.getCurrentPosition() - right.getCurrentPosition());
+//        telemetry.addData("Hook deployed?", isHookDeployed());
+//        telemetry.addData("", stopper.getPosition());
+//        telemetry.addData("Touch sensor pressed?", isBottomLimitReached());
         telemetry.addData("left", left.getCurrentPosition());
         telemetry.addData("right", right.getCurrentPosition());
+        telemetry.addData("Lift PID", pid.getOutput());
     }
 
     @Override
@@ -85,24 +89,24 @@ public class Lift extends Subsystem {
         setMode(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void setHookPosition(double position){
-        hook.setPosition(position/180.0);
-    }
+//    public void setHookPosition(double position){
+//        hook.setPosition(position/180.0);
+//    }
 
-    public double getHookPosition(){
-        return hook.getPosition()*180;
-    }
+//    public double getHookPosition(){
+//        return hook.getPosition()*180;
+//    }
 
-    public boolean isHookDeployed(){
-        return getHookPosition() > 90;
-    }
+//    public boolean isHookDeployed(){
+//        return getHookPosition() > 90;
+//    }
 
-    public boolean isBottomLimitReached(){
-        return touch.getState();
-    }
+//    public boolean isBottomLimitReached(){
+//        return touch.getState();
+//    }
 
     public double getHeightTicks(){
-        return (right.getCurrentPosition());
+        return (left.getCurrentPosition());
     }
 
     public double getHeight(){
@@ -114,13 +118,17 @@ public class Lift extends Subsystem {
         right.setPower(power);
     }
 
-    public void setStopperPosition(double position){
-        stopper.setPosition(position);
-    }
+//    public void setStopperPosition(double position){
+//        stopper.setPosition(position);
+//    }
 
     public void setMode(DcMotor.ZeroPowerBehavior zeroPowerBehavior){
         left.setZeroPowerBehavior(zeroPowerBehavior);
         right.setZeroPowerBehavior(zeroPowerBehavior);
+    }
+
+    public double getLiftPower(){
+        return left.getPower();
     }
 
 
@@ -129,6 +137,9 @@ public class Lift extends Subsystem {
      */
     public void setLiftPosition(double wantedHeight){
         setLiftPower(pid.update(getHeight(), wantedHeight));
+        if (getLiftPower() < 1){
+            setLiftPower(0);
+        }
     }
 
     public void setLiftState(LiftStates state){
@@ -144,6 +155,9 @@ public class Lift extends Subsystem {
             case SCOREINGHEIGHT:
                 setLiftPosition(30);
                 break;
+
+            case READY:
+                setLiftPosition(3);
         }
     }
 

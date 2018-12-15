@@ -14,11 +14,20 @@ public class PID extends FeedBackController {
         this.d = kD;
     }
 
+    public PID(double kP, double kI, double kD, double maxIntegral){
+        this.maxIntegral = maxIntegral;
+        this.p = kP;
+        this.i = kI;
+        this.d = kD;
+    }
+
     private double p, i, d;
 
     private double error_prior;
     private double integral;
     private double lastTime = 0;
+    double output;
+    private double maxIntegral = 0;
 
     private boolean first = true;
 
@@ -27,7 +36,7 @@ public class PID extends FeedBackController {
     public double update(double current, double wanted) {
         double error = wanted - current;
 
-        double output;
+
         if(first){
             // P control first time
             output = p * error;
@@ -36,6 +45,8 @@ public class PID extends FeedBackController {
         } else {
             double currentTime = System.currentTimeMillis() - lastTime;
             integral = integral + (error *currentTime);
+            if (integral > maxIntegral)
+                integral = 0;
             double derivative = (error - error_prior)/currentTime;
             output = (p * error) + (i * integral) + (d * derivative);
         }
@@ -44,4 +55,6 @@ public class PID extends FeedBackController {
         error_prior = error;
         return output;
     }
+
+    public double getOutput(){return output;}
 }

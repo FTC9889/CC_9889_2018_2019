@@ -52,7 +52,7 @@ public class Drive extends Subsystem {
         this.leftSlave_ = hardwareMap.get(DcMotor.class, Constants.kLeftDriveSlaveId);
         this.rightSlave_ = hardwareMap.get(DcMotor.class, Constants.getkRightDriveSlaveId);
 
-        this.leftMaster_.setDirection(DcMotorSimple.Direction.REVERSE);
+//        this.leftMaster_.setDirection(DcMotorSimple.Direction.REVERSE);
         this.leftSlave_.setDirection(DcMotorSimple.Direction.REVERSE);
 
         this.DriveControlState(DriveControlStates.POWER);
