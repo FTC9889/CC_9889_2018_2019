@@ -20,6 +20,10 @@ public class DrivetrainTeleop extends Team9889Linear{
         while (opModeIsActive()){
             Robot.getDrive().setThrottleSteerPower(driverStation.getThrottle(),
                     driverStation.getSteer());
+
+            Robot.getDrive().setLeftRightPower(-gamepad2.left_stick_y, -gamepad2.right_stick_y);
+
+            updateTelemetry();
         }
 
     }
