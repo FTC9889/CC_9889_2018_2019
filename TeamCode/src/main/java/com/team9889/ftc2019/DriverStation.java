@@ -24,11 +24,11 @@ public class DriverStation {
     }
 
     public boolean getReleaseLeftClaw(){
-        return gamepad1.left_bumper;
+        return gamepad1.right_bumper;
     }
 
     public boolean getReleaseRightClaw(){
-        return gamepad1.right_bumper;
+        return gamepad1.left_bumper;
     }
 
     public boolean getIntaking(){

@@ -7,6 +7,7 @@ import com.team9889.ftc2019.auto.actions.DriveTurn;
 import com.team9889.ftc2019.auto.actions.Outtake;
 import com.team9889.ftc2019.auto.actions.Wait;
 import com.team9889.ftc2019.subsystems.Camera;
+import com.team9889.ftc2019.subsystems.Lift;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -20,6 +21,9 @@ public class AutonomousCraterSideSingleSample extends AutoModeBase {
     public void run(AllianceColor allianceColor) {
 
             Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
+            while(opModeIsActive() && !Robot.getLift().inPosition()) {
+                Robot.getLift().setLiftState(Lift.LiftStates.READY);
+            }
 
             runAction(new Wait(1250));
 

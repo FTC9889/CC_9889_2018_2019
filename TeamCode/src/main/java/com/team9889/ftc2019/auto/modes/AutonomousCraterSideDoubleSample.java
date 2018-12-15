@@ -1,6 +1,7 @@
 package com.team9889.ftc2019.auto.modes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.team9889.ftc2019.auto.AutoModeBase;
 import com.team9889.ftc2019.auto.actions.DriveToPosition;
 import com.team9889.ftc2019.auto.actions.DriveTurn;
@@ -16,6 +17,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
  */
 
 @Autonomous
+@Disabled
 public class AutonomousCraterSideDoubleSample extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {

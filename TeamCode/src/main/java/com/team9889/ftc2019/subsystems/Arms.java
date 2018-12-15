@@ -2,6 +2,7 @@ package com.team9889.ftc2019.subsystems;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.Constants;
 import com.team9889.ftc2019.auto.Autonomous;
 
@@ -20,6 +21,8 @@ public class Arms extends Subsystem{
         STORED, GRAB, PARK, GOLDGOLD, GOLDSILVER, SILVERSILVER, SILVERGOLD
     }
 
+    ElapsedTime timer = new ElapsedTime();
+
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
         this.leftShoulder = hardwareMap.get(Servo.class, Constants.kLeftShoulderID);
@@ -30,8 +33,7 @@ public class Arms extends Subsystem{
         this.rightClaw = hardwareMap.get(Servo.class, Constants.kRightClawId);
 
         if (auto) {
-            setLeftArm(.2, 0.16);
-            setRightArm(.9, .71);
+            setArmsStates(ArmStates.STORED);
             setLeftClawOpen(false);
             setRightClawOpen(false);
         }
@@ -83,27 +85,29 @@ public class Arms extends Subsystem{
 
     public  void setLeftClawOpen(boolean open){
         if(open)
-            leftClaw.setPosition(0);
+            leftClaw.setPosition(.6);
         else
-            leftClaw.setPosition(1);
+            leftClaw.setPosition(.9);
     }
 
     public void setRightClawOpen(boolean open){
         if (open)
-            rightClaw.setPosition(0);
+            rightClaw.setPosition(.6);
         else
-            rightClaw.setPosition(1);
+            rightClaw.setPosition(.9);
     }
 
+    boolean first = true;
     public void setArmsStates(ArmStates state){
         switch (state){
             case SILVERSILVER:
-                setRightArm(0.15, 0.241);
-                setLeftArm(0.9411, 0.524);
+                setRightArm(0.2, 0.241);
+                setLeftArm(0.9, 0.524);
+                first = true;
                 break;
             case SILVERGOLD:
                 setRightArm(0.15, 0);
-                setLeftArm(0.9411, 0.524);
+                setLeftArm(0.9, 0.524);
                 break;
 
             case GOLDSILVER:
@@ -116,13 +120,19 @@ public class Arms extends Subsystem{
                 break;
 
             case STORED:
-                setRightArm(.9, .7);
-                setLeftArm(.23, .15);
+                setRightArm(.9, .72);
+                setLeftArm(.23, .13);
                 break;
 
             case GRAB:
-                setRightArm(.25, .22);
-                setLeftArm(.85, .71);
+                if(first){
+                    setRightArm(.9, .72);
+                    timer.reset();
+                    first = false;
+                } else if(timer.milliseconds()>40){
+                    setLeftArm(.25, .1);
+                }
+
                 break;
         }
     }

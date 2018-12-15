@@ -25,6 +25,11 @@ public class Lift extends Subsystem {
     private DigitalChannel touch;
     private PID pid = new PID(.3, 0.005 ,0, 50);
 
+
+    public boolean inPosition() {
+        return Math.abs(pid.getError()) < 0.5;
+    }
+
     public enum LiftStates{
         DOWN, HOOKHEIGHT, SCOREINGHEIGHT, READY
     }
@@ -36,7 +41,9 @@ public class Lift extends Subsystem {
         right.setDirection(DcMotorSimple.Direction.REVERSE);
         left.setDirection(DcMotorSimple.Direction.REVERSE);
         setMode(DcMotor.ZeroPowerBehavior.BRAKE);
-        zeroSensors();
+
+        if(auto)
+            zeroSensors();
 
 
 //        hook = hardwareMap.get(Servo.class, Constants.kHookServo);
@@ -153,11 +160,11 @@ public class Lift extends Subsystem {
                 break;
 
             case SCOREINGHEIGHT:
-                setLiftPosition(30);
+                setLiftPosition(13);
                 break;
 
             case READY:
-                setLiftPosition(3);
+                setLiftPosition(5);
         }
     }
 

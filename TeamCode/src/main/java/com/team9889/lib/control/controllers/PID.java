@@ -31,10 +31,12 @@ public class PID extends FeedBackController {
 
     private boolean first = true;
 
+    private double error = 1000000;
+
 
     @Override
     public double update(double current, double wanted) {
-        double error = wanted - current;
+         error = wanted - current;
 
 
         if(first){
@@ -54,6 +56,10 @@ public class PID extends FeedBackController {
         lastTime = System.currentTimeMillis();
         error_prior = error;
         return output;
+    }
+
+    public double getError(){
+        return error;
     }
 
     public double getOutput(){return output;}

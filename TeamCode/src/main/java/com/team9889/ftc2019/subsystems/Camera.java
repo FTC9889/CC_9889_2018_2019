@@ -31,7 +31,8 @@ public class Camera extends Subsystem{
     public enum CameraPositions{
         FRONTCENTER, FRONTRIGHT,
         FRONTHOPPER, BACKHOPPER,
-        STORED, UPRIGHT
+        STORED, UPRIGHT,
+        TWO_GOLD
     }
 
 
@@ -132,6 +133,9 @@ public class Camera extends Subsystem{
 
             case FRONTHOPPER:
                 setXYAxisPosition(0, 1);
+                break;
+            case TWO_GOLD:
+                setXYAxisPosition(0, 0.6);
                 break;
         }//TODO: check camera positions
     }
