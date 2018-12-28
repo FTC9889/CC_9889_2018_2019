@@ -19,4 +19,12 @@ public interface MotionProfile {
      * @return  Position, Velocity, Acceleration
      */
     MotionProfileSegment getOutput(double t);
+
+
+    /**
+     * @return Time required to finish the profile
+     */
+    double getTotalTime();
+
+    void scale(double scale);
 }

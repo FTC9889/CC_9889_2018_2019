@@ -34,6 +34,8 @@ public class Drive extends Subsystem {
     private static double lastLeftDistance;
     private static double lastRightDistance;
 
+    private static final double kEpsilon = 1E-9;
+
     /**
      * Used to easily modify the type of control we want
      */
@@ -62,7 +64,6 @@ public class Drive extends Subsystem {
 
         if(auto)
             imu = new RevIMU("imu", hardwareMap);
-
     }
 
     @Override
@@ -128,12 +129,30 @@ public class Drive extends Subsystem {
         return "Drive";
     }
 
+    public void updatePose(){
+        double currentLeftPosition = getLeftDistance();
+        double currentRightPosition = getRightDistance();
+        double dLeft = lastLeftDistance - currentLeftPosition;
+        double dRight = lastRightDistance - currentRightPosition;
+        double differenceBetweenLeftAndRight = dLeft - dRight;
+
+        if(Math.abs(differenceBetweenLeftAndRight) < kEpsilon){
+
+        } else {
+
+        }
+
+        lastLeftDistance = currentLeftPosition;
+        lastRightDistance = currentRightPosition;
+    }
+
     /**
      * @return Angle of the robot in Rotation2d.
      */
     public Rotation2d getAngle(){
         try {
-            return new Rotation2d(imu.getNormalHeading(), AngleUnit.DEGREES);
+            currentPose.setRotation2d(new Rotation2d(imu.getNormalHeading(), AngleUnit.DEGREES));
+            return currentPose.getRotation2d();
         } catch (Exception e){
             return new Rotation2d(0, AngleUnit.DEGREES);
         }

@@ -13,7 +13,7 @@ public class TrapezoidalMotionProfile implements MotionProfile {
     private double totalTime, timeToAcc, timeToCruise;
     private double setpoint, max_v, max_a;
     private double direction;
-
+    public double scale = 1;
 
     public TrapezoidalMotionProfile(){}
 
@@ -23,10 +23,9 @@ public class TrapezoidalMotionProfile implements MotionProfile {
 
     // Demo
     public static void main(String... args){
-        FileWriter log = new FileWriter("trapezoidalProfile.csv");
-        TrapezoidalMotionProfile profile = new TrapezoidalMotionProfile();
-        ProfileParameters parameters = new ProfileParameters(1.5, 2);
-        profile.calculate(2.5, parameters);
+        TrapezoidalMotionProfile profile =
+                new TrapezoidalMotionProfile(5, new ProfileParameters(2, 4));
+        FileWriter log = new FileWriter(profile.getClass().getSimpleName() + ".csv");
 
         int step = 1000;
         for (int i = 0; i < step; i++) {
@@ -43,6 +42,7 @@ public class TrapezoidalMotionProfile implements MotionProfile {
         log.close();
     }
 
+
     @Override
     public void calculate(double setpoint, ProfileParameters profileParameters) {
         if(setpoint<0)
@@ -52,7 +52,7 @@ public class TrapezoidalMotionProfile implements MotionProfile {
 
         this.setpoint = Math.abs(setpoint);
         this.max_v = profileParameters.getMaxV();
-        this.max_a = profileParameters.getMaxV();
+        this.max_a = profileParameters.getMaxA();
 
         // This is in absolute time
         timeToAcc = (max_v/max_a);
@@ -75,10 +75,11 @@ public class TrapezoidalMotionProfile implements MotionProfile {
             Acceleration = 0;
 
         } else if(t<=totalTime){
-            Position = (totalTime * max_v) +
-                    (totalTime * max_a * t) -
-                    (Math.pow(max_v, 2) / max_a) -
-                    (0.5 * ((max_a * t*t) + (max_a * totalTime * totalTime)));
+            Position = (totalTime * max_v)
+                        + (totalTime * max_a * t)
+                        - (Math.pow(max_v, 2) / max_a)
+                        - (0.5 * ((max_a * t*t)
+                        + (max_a * totalTime * totalTime)));
 
             Velocity = (max_a * totalTime) - (max_a * t);
             Acceleration = -max_a;
@@ -89,14 +90,20 @@ public class TrapezoidalMotionProfile implements MotionProfile {
             Acceleration = 0;
         }
 
-        Position *= direction;
-        Velocity *= direction;
-        Acceleration *= direction;
+        Position *= direction * scale;
+        Velocity *= direction * scale;
+        Acceleration *= direction * scale;
 
         return new MotionProfileSegment(Position, Velocity, Acceleration);
     }
 
+    @Override
     public double getTotalTime(){
         return totalTime;
+    }
+
+    @Override
+    public void scale(double scale) {
+        this.scale = scale;
     }
 }

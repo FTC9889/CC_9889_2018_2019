@@ -1,11 +1,11 @@
-package com.team9889.ftc2019.auto.actions;
+package com.team9889.ftc2019.auto.actions.Lift;
 
-import com.team9889.ftc2019.subsystems.Robot;
+import com.team9889.ftc2019.auto.actions.Action;
 
 /**
- * Created by MannoMation on 11/30/2018.
+ * Created by MannoMation on 10/26/2018.
  */
-public class LeftClawOpen extends Action{
+public class LiftLand extends Action {
     @Override
     public void setup(String args) {
 
@@ -13,7 +13,7 @@ public class LeftClawOpen extends Action{
 
     @Override
     public void start() {
-//        Robot.getInstance().getArms().setLeftClawOpen(true);
+
     }
 
     @Override

@@ -1,11 +1,11 @@
-package com.team9889.ftc2019.auto.actions;
+package com.team9889.ftc2019.auto.actions.Arms;
 
-import com.team9889.ftc2019.subsystems.Robot;
+import com.team9889.ftc2019.auto.actions.Action;
 
 /**
- * Created by MannoMation on 11/30/2018.
+ * Created by MannoMation on 11/29/2018.
  */
-public class RightClawClosed extends Action{
+public class RightClawOpen extends Action {
     @Override
     public void setup(String args) {
 
@@ -13,7 +13,7 @@ public class RightClawClosed extends Action{
 
     @Override
     public void start() {
-//        Robot.getInstance().getArms().setRightClawClosed(true);
+//        Robot.getInstance().getArms().setRightClawOpen(true);
     }
 
     @Override

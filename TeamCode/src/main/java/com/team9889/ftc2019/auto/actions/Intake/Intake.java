@@ -1,11 +1,9 @@
-package com.team9889.ftc2019.auto.actions;
+package com.team9889.ftc2019.auto.actions.Intake;
 
+import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.subsystems.Robot;
 
-/**
- * Created by MannoMation on 11/30/2018.
- */
-public class LeftClawClosed extends Action{
+public class Intake extends Action {
     @Override
     public void setup(String args) {
 
@@ -13,7 +11,7 @@ public class LeftClawClosed extends Action{
 
     @Override
     public void start() {
-//        Robot.getInstance().getArms().setLeftClawClosed(true);
+        Robot.getInstance().getIntake().intake();
     }
 
     @Override
@@ -23,7 +21,7 @@ public class LeftClawClosed extends Action{
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override

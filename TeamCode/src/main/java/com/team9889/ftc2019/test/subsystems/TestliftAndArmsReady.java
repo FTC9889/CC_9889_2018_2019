@@ -1,9 +1,7 @@
 package com.team9889.ftc2019.test.subsystems;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.team9889.ftc2019.Team9889Linear;
-import com.team9889.ftc2019.subsystems.Arms;
 import com.team9889.ftc2019.subsystems.Lift;
 
 /**
@@ -17,7 +15,7 @@ public class TestliftAndArmsReady extends Team9889Linear {
         waitForStart(false);
         while (opModeIsActive()){
             Robot.getLift().setLiftState(Lift.LiftStates.READY);
-//            Robot.getArms().setArmsStates(Arms.ArmStates.GRAB);
+//            Robot.getArms().setArmsStates(Arms.SuperstructureStates.GRAB);
 
             updateTelemetry();
         }

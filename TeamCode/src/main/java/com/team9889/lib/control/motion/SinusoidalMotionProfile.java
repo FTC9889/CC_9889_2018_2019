@@ -13,6 +13,7 @@ public class SinusoidalMotionProfile implements MotionProfile {
     private double K1, K2, K3, M;
     private double totalTime;
     private double direction;
+    private double scale = 1;
 
     public SinusoidalMotionProfile(){}
 
@@ -22,8 +23,9 @@ public class SinusoidalMotionProfile implements MotionProfile {
 
     // Demo
     public static void main(String... args){
-        FileWriter log = new FileWriter("sinusoidalProfile.csv");
-        SinusoidalMotionProfile profile = new SinusoidalMotionProfile(7, new ProfileParameters(3, 1));
+        SinusoidalMotionProfile profile =
+                new SinusoidalMotionProfile(7, new ProfileParameters(3, 1));
+        FileWriter log = new FileWriter(profile.getClass().getSimpleName() + ".csv");
 
         int step = 100;
         for (int i = 0; i < step; i++) {
@@ -63,11 +65,11 @@ public class SinusoidalMotionProfile implements MotionProfile {
         double Position, Velocity, Acceleration;
 
         if(t< getTotalTime()){
-            Position = direction * K2 * (t - (K3 * Math.sin(K1 * t)));
-            Velocity = direction * K2 * (1 - Math.cos(K1 * t));
-            Acceleration = direction * M * Math.sin(K1 * t);
+            Position = scale * direction * K2 * (t - (K3 * Math.sin(K1 * t)));
+            Velocity = scale * direction * K2 * (1 - Math.cos(K1 * t));
+            Acceleration = scale * direction * M * Math.sin(K1 * t);
         } else {
-            Position = direction * K2 * (totalTime - (K3 * Math.sin(K1 * totalTime)));
+            Position = scale * direction * K2 * (totalTime - (K3 * Math.sin(K1 * totalTime)));
             Velocity = 0.0;
             Acceleration = 0.0;
         }
@@ -75,8 +77,14 @@ public class SinusoidalMotionProfile implements MotionProfile {
         return new MotionProfileSegment(Position, Velocity, Acceleration);
     }
 
+    @Override
     public double getTotalTime(){
         return totalTime;
+    }
+
+    @Override
+    public void scale(double scale) {
+        this.scale = scale;
     }
 
     private double K1(double T){
