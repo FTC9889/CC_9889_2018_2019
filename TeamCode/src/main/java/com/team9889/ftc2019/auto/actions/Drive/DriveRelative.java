@@ -8,7 +8,6 @@ import com.team9889.ftc2019.subsystems.Robot;
 import com.team9889.lib.android.FileWriter;
 import com.team9889.lib.control.controllers.MotionProfileFollower;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
-import com.team9889.lib.control.motion.MotionProfile;
 import com.team9889.lib.control.motion.MotionProfileSegment;
 import com.team9889.lib.control.motion.ProfileParameters;
 import com.team9889.lib.control.motion.TrapezoidalMotionProfile;
@@ -36,7 +35,7 @@ public class DriveRelative extends Action {
     private Rotation2d theda;
 
     // Profile parameters
-    private ProfileParameters profileParameters =
+    private ProfileParameters encoderParameters =
             new ProfileParameters(3 * 12, 12*12); // In Inches TODO: Tune this Value
 
     // Offsets
@@ -63,10 +62,13 @@ public class DriveRelative extends Action {
 
     @Override
     public void start() {
-        TrapezoidalMotionProfile leftProfile = new TrapezoidalMotionProfile(forward, profileParameters);
-        TrapezoidalMotionProfile rightProfile = new TrapezoidalMotionProfile(forward, profileParameters);
+        TrapezoidalMotionProfile leftProfile = new TrapezoidalMotionProfile(forward, encoderParameters);
+        TrapezoidalMotionProfile rightProfile = new TrapezoidalMotionProfile(forward, encoderParameters);
 
-        if(theda.getTheda(AngleUnit.DEGREES) != 0) {
+        if(forward == 0) {
+            leftProfile = new TrapezoidalMotionProfile(-Constants.WheelbaseWidth * theda.getTheda(AngleUnit.RADIANS), encoderParameters);
+            rightProfile = new TrapezoidalMotionProfile(Constants.WheelbaseWidth * theda.getTheda(AngleUnit.RADIANS), encoderParameters);
+        } else if(theda.getTheda(AngleUnit.DEGREES) != 0) {
             double radius = forward / theda.getTheda(AngleUnit.RADIANS);
 
             // This is a ratio between the center radius and outer and inner radii
@@ -124,8 +126,11 @@ public class DriveRelative extends Action {
         if(!simulation) {
             double leftCurrent = mDrive.getLeftDistance() - leftOffset;
             double rightCurrent = mDrive.getRightDistance() - rightOffset;
-            mDrive.setLeftRightPower(leftFollower.update(leftCurrent, timer.milliseconds()),
-                    rightFollower.update(rightCurrent, timer.milliseconds()));
+
+            double left = leftFollower.update(leftCurrent, timer.milliseconds());
+            double right = rightFollower.update(rightCurrent, timer.milliseconds());
+
+            mDrive.setLeftRightPower(left, right);
         }
     }
 
