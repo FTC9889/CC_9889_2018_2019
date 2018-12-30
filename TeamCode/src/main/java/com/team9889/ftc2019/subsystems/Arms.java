@@ -16,9 +16,14 @@ public class Arms extends Subsystem{
     private Servo leftShoulder, rightShoulder;
     private Servo leftElbow, rightElbow;
     private Servo leftClaw, rightClaw;
+    public double grabPosition;
 
     public enum ArmStates{
-        STORED, GRAB, PARK, GOLDGOLD, GOLDSILVER, SILVERSILVER, SILVERGOLD
+        STORED, GRABGOLDGOLD, GRABSILVERSILVER, PARK, GOLDGOLD, SILVERSILVER, SILVERGOLD
+    }
+
+    public enum MineralPositions {
+        GOLDGOLD, SILVERSILVER, SILVERGOLD
     }
 
     ElapsedTime timer = new ElapsedTime();
@@ -101,39 +106,80 @@ public class Arms extends Subsystem{
     public void setArmsStates(ArmStates state){
         switch (state){
             case SILVERSILVER:
-                setRightArm(0.2, 0.241);
-                setLeftArm(0.9, 0.524);
+                setRightArm(0.321, 0.04);
+                setLeftArm(0.879, 0.752);
                 first = true;
                 break;
             case SILVERGOLD:
-                setRightArm(0.15, 0);
-                setLeftArm(0.9, 0.524);
-                break;
-
-            case GOLDSILVER:
+                setRightArm(0.267, 0);
+                setLeftArm(0.931, 0.547);
+                first = true;
                 break;
 
             case GOLDGOLD:
+                setLeftArm(0.882, 0.686);
+                setRightArm(0.081, 0.224);
+                first = true;
                 break;
 
             case PARK:
                 break;
 
             case STORED:
-                setRightArm(.9, .72);
-                setLeftArm(.23, .13);
+                setRightArm(.984, .584);
+                setLeftArm(.191, .146);
                 break;
 
-            case GRAB:
+            case GRABGOLDGOLD:
+                if (grabPosition != 1) {
+                    if (first) {
+                        setLeftArm(.3, .1);
+                        timer.reset();
+                        first = false;
+                    } else if (timer.milliseconds() > 40) {
+                        setRightArm(.9, .7);
+                    }
+                }
+                break;
+
+//                Also SILVERGOLD
+            case GRABSILVERSILVER:
                 if(first){
-                    setRightArm(.9, .72);
+                    setLeftArm(.265, .122);
                     timer.reset();
                     first = false;
                 } else if(timer.milliseconds()>40){
-                    setLeftArm(.25, .1);
+                    setRightArm(.94, .606);
                 }
+        }
+    }
 
+    public void setMineralPositions(MineralPositions state){
+        switch (state){
+            case GOLDGOLD:
+                setArmsStates(ArmStates.GRABGOLDGOLD);
+                setRightClawOpen(false);
+                setLeftClawOpen(false);
+                Robot.getInstance().getLift().setLiftState(Lift.LiftStates.SCOREINGHEIGHT);
+                setArmsStates(Arms.ArmStates.GOLDGOLD);
                 break;
+
+            case SILVERSILVER:
+                setArmsStates(ArmStates.GRABSILVERSILVER);
+                setRightClawOpen(false);
+                setLeftClawOpen(false);
+                Robot.getInstance().getLift().setLiftState(Lift.LiftStates.SCOREINGHEIGHT);
+                setArmsStates(ArmStates.SILVERSILVER);
+                break;
+
+            case SILVERGOLD:
+                setArmsStates(ArmStates.GRABSILVERSILVER);
+                setRightClawOpen(false);
+                setLeftClawOpen(false);
+                Robot.getInstance().getLift().setLiftState(Lift.LiftStates.SCOREINGHEIGHT);
+                setArmsStates(ArmStates.SILVERGOLD);
+                break;
+
         }
     }
 

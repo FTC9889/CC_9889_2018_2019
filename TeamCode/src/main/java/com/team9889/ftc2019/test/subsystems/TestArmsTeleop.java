@@ -8,16 +8,48 @@ import com.team9889.ftc2019.Team9889Linear;
  */
 @TeleOp
 public class TestArmsTeleop extends Team9889Linear {
+
+    double leftShoulder = 0.23;
+    double leftElbow = 0.13;
+
+    double rightShoulder = 0.9;
+    double rightElbow = 0.72;
+
+    double dp = 0.001;
+
     @Override
     public void runOpMode() {
         waitForStart(false);
 
         while (opModeIsActive()) {
-            Robot.getArms().setRightArm(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
+            if(gamepad1.dpad_down)
+                leftShoulder -= dp;
+            else if(gamepad1.dpad_up)
+                leftShoulder += dp;
 
-            Robot.getArms().setLeftArm(-gamepad2.left_stick_y, gamepad2.right_stick_y);
+            if (gamepad1.dpad_right)
+                leftElbow -= dp;
+            else if(gamepad1.dpad_left)
+                leftElbow += dp;
 
-            updateTelemetry();
+            if(gamepad1.a)
+                rightShoulder -= dp;
+            else if(gamepad1.y)
+                rightShoulder += dp;
+
+            if (gamepad1.b)
+                rightElbow -= dp;
+            else if(gamepad1.x)
+                rightElbow += dp;
+
+            Robot.getArms().setLeftArm(leftShoulder, leftElbow);
+            Robot.getArms().setRightArm(rightShoulder, rightElbow);
+
+            telemetry.addData("Left Shoulder Position", leftShoulder);
+            telemetry.addData("Left Elbow Position", leftElbow);
+            telemetry.addData("Right Shoulder Position", rightShoulder);
+            telemetry.addData("Right Elbow Position", rightElbow);
+            telemetry.update();
         }
     }
 }

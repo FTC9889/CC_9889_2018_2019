@@ -45,7 +45,7 @@ public class Teleop extends Team9889Linear{
         Robot.getIntake().setIntakeRotatorState(Intake.RotatorStates.UP);
         Robot.getLift().setLiftState(Lift.LiftStates.READY);
 
-        Robot.getArms().setArmsStates(Arms.ArmStates.STORED);
+//        Robot.getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
 
         Robot.getArms().setLeftClawOpen(true);
         Robot.getArms().setRightClawOpen(true);
@@ -132,7 +132,7 @@ public class Teleop extends Team9889Linear{
             }
 
             else if (gamepad2.dpad_down) {
-                Robot.getArms().setArmsStates(Arms.ArmStates.GRAB);
+                Robot.getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
             }
 
 //            else if (gamepad1.b){ // Silver Gold
