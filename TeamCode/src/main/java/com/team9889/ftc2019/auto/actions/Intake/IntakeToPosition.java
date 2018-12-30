@@ -1,13 +1,19 @@
-package com.team9889.ftc2019.auto.actions;
+package com.team9889.ftc2019.auto.actions.Intake;
 
-import com.qualcomm.robotcore.util.ElapsedTime;
+import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.subsystems.Robot;
 
 /**
  * Created by MannoMation on 11/1/2018.
  */
-public class Outtake extends Action{
-    private ElapsedTime time;
+
+public class IntakeToPosition extends Action {
+
+    private double motor;
+
+    public IntakeToPosition(double motor){
+        this.motor = motor;
+    }
 
     @Override
     public void setup(String args) {
@@ -16,8 +22,7 @@ public class Outtake extends Action{
 
     @Override
     public void start() {
-        Robot.getInstance().getIntake().setIntakePower(.8);
-        time = new ElapsedTime();
+        Robot.getInstance().getIntake().setIntakeExtenderPosition(motor);
     }
 
     @Override
@@ -27,11 +32,11 @@ public class Outtake extends Action{
 
     @Override
     public boolean isFinished() {
-        return time.milliseconds()>1000;
+        return false;
     }
 
     @Override
     public void done() {
-        Robot.getInstance().getIntake().setIntakePower(0);
+
     }
 }

@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.Constants;
-import com.team9889.ftc2019.auto.Autonomous;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 

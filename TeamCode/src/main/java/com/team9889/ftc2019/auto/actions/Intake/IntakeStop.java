@@ -1,8 +1,12 @@
-package com.team9889.ftc2019.auto.actions;
+package com.team9889.ftc2019.auto.actions.Intake;
 
+import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.subsystems.Robot;
 
-public class Intake extends Action {
+/**
+ * Created by MannoMation on 11/2/2018.
+ */
+public class IntakeStop extends Action {
     @Override
     public void setup(String args) {
 
@@ -10,7 +14,7 @@ public class Intake extends Action {
 
     @Override
     public void start() {
-        Robot.getInstance().getIntake().intake();
+        Robot.getInstance().getIntake().stop();
     }
 
     @Override

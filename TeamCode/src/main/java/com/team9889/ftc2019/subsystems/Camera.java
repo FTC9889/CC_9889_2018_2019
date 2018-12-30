@@ -1,7 +1,5 @@
 package com.team9889.ftc2019.subsystems;
 
-import android.widget.Switch;
-
 import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
@@ -134,6 +132,7 @@ public class Camera extends Subsystem{
             case FRONTHOPPER:
                 setXYAxisPosition(0, 1);
                 break;
+
             case TWO_GOLD:
                 setXYAxisPosition(0, 0.6);
                 break;

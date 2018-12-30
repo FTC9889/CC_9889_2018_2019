@@ -30,12 +30,8 @@
 package com.team9889.ftc2019.test.subsystems;
 
 import com.qualcomm.ftccommon.SoundPlayer;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.team9889.ftc2019.Team9889Linear;
-
-import java.io.File;
 
 /**
  * This file demonstrates how to play simple sounds on both the RC and DS phones.

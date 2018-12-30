@@ -1,6 +1,7 @@
-package com.team9889.ftc2019.auto.actions;
+package com.team9889.ftc2019.auto.actions.Drive;
 
 import com.team9889.ftc2019.Constants;
+import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.subsystems.Drive;
 import com.team9889.ftc2019.subsystems.Robot;
 import com.team9889.lib.control.controllers.PID;
@@ -13,7 +14,7 @@ import static com.team9889.ftc2019.Constants.ENCODER_TO_DISTANCE_RATIO;
 /**
  * Created by MannoMation on 11/2/2018.
  */
-public class DriveLeftMotor extends Action{
+public class DriveLeftMotor extends Action {
     private double left;
     private double leftTick;
     private PID leftPid;

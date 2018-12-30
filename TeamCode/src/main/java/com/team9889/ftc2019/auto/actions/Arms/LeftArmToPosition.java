@@ -1,12 +1,12 @@
-package com.team9889.ftc2019.auto.actions;
+package com.team9889.ftc2019.auto.actions.Arms;
 
-import com.team9889.ftc2019.subsystems.Robot;
+import com.team9889.ftc2019.auto.actions.Action;
 
 /**
  * Created by MannoMation on 11/30/2018.
  */
 
-public class LeftArmToPosition extends Action{
+public class LeftArmToPosition extends Action {
 
     private double shoulder, elbow;
 

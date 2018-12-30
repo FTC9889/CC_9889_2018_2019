@@ -1,12 +1,13 @@
-package com.team9889.ftc2019.auto.actions;
+package com.team9889.ftc2019.auto.actions.Intake;
 
+import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.subsystems.Intake;
 import com.team9889.ftc2019.subsystems.Robot;
 
 /**
  * Created by MannoMation on 12/14/2018.
  */
-public class SamplingIntake extends Action{
+public class SamplingIntake extends Action {
     public double sampled = 0;
 
     @Override
