@@ -28,21 +28,21 @@ public class ScoringSimulator {
     // Robot Auton Timing
     static final double timeToLand = 2;
     static final double timeToClaim = 10;
-    static final double timeToSample = 2;
+    static final double timeToSample = 5;
     static final double timeToPark = 3;
 
     static final double ips = 3 * 12;
-    static final double distance = Math.sqrt(25*25*2);
+    static final double distance = Math.sqrt(25*25*2) - 18;
 
     static final double timeTraveling = 2 * distance / (ips * 0.8);
     static final double lineUpTime = 1.5;
     static final double intakeTime = 1.4;
 
     // Robot Teleop Timing
-    static double timePerCycle = 10;//timeTraveling + lineUpTime + intakeTime;
+    static double timePerCycle = timeTraveling + lineUpTime + intakeTime;
 
     // Robot Teleop Timing
-    static double hangTime = 1.6;
+    static double hangTime = 4;
 
     // How much a robot is slowed down each cycle
     static double defenceFactor = 0;
