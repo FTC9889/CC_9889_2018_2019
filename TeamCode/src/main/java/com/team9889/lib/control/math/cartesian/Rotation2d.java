@@ -75,6 +75,10 @@ public class Rotation2d {
         return new Rotation2d(r1.getTheda(AngleUnit.DEGREES) + r2.getTheda(AngleUnit.DEGREES), AngleUnit.DEGREES);
     }
 
+    public static Rotation2d subtract(Rotation2d r1, Rotation2d r2){
+        return new Rotation2d(r1.getTheda(AngleUnit.DEGREES) - r2.getTheda(AngleUnit.DEGREES), AngleUnit.DEGREES);
+    }
+
     @Override
     public String toString() {
         return String.valueOf(getTheda(AngleUnit.DEGREES)) + " Degrees";

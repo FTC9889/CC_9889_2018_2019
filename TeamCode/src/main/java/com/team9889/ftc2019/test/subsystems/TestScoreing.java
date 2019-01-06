@@ -6,9 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.team9889.ftc2019.Team9889Linear;
 import com.team9889.ftc2019.subsystems.Arms;
-import com.team9889.ftc2019.subsystems.Lift;
-
-import java.nio.ReadOnlyBufferException;
 
 /**
  * Created by MannoMation on 12/29/2018.
