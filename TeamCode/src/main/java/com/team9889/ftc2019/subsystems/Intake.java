@@ -5,9 +5,12 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.team9889.ftc2019.Constants;
+import com.team9889.lib.hardware.ModernRoboticsUltrasonic;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 /**
  * Created by licorice17 on 9/14/2018.
@@ -17,7 +20,10 @@ public class Intake extends Subsystem{
     private DcMotor intakemotor;
     private DcMotorEx extender;
     private Servo intakeRotator;
-    private DigitalChannel limitSwitch;
+    private Servo hoppergate;
+    private DigitalChannel scoreingSwitch;
+    private DigitalChannel inSwitch;
+//    private ModernRoboticsUltrasonic craterdetector;
     private boolean intakeTouchSensor = false;
 
     enum States {
@@ -38,7 +44,11 @@ public class Intake extends Subsystem{
         extender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         this.intakeRotator = hardwareMap.get(Servo.class, Constants.kIntakeRotator);
-        this.limitSwitch = hardwareMap.get(DigitalChannel.class, Constants.kIntakeSwitch);
+        this.scoreingSwitch = hardwareMap.get(DigitalChannel.class, Constants.kIntakeSwitch);
+        this.inSwitch = hardwareMap.get(DigitalChannel.class, Constants.kIntakeInSwitch);
+//        this.craterdetector = new ModernRoboticsUltrasonic(Constants.kCraterDetector , hardwareMap);
+
+        this.hoppergate = hardwareMap.get(Servo.class, Constants.kHopperGate);
 
         setIntakeRotatorState(RotatorStates.UP);
     }
@@ -86,7 +96,7 @@ public class Intake extends Subsystem{
     }
 
     public boolean intakeSwitchValue (){
-        if (limitSwitch.getState())
+        if (scoreingSwitch.getState())
             return intakeTouchSensor = false;
 
         else
@@ -109,6 +119,11 @@ public class Intake extends Subsystem{
             }
         }
     }
+
+    public void update(){
+
+    }
+
     public double getIntakeRotatorPosition(){
         return(intakeRotator.getPosition());
     }
@@ -123,6 +138,22 @@ public class Intake extends Subsystem{
                 setIntakeRotatorPosition(1);
                 break;
         }
+    }
+
+    public void setHoppergatedown(){
+        hoppergate.setPosition(1);
+    }
+
+    public void setHoppergateup(){
+        hoppergate.setPosition(0.5);
+    }
+
+//    public double getCraterDistance(){
+//        return craterdetector.getDistance(DistanceUnit.INCH);
+//    }
+
+    public void setIntakeOut(){
+//        setIntakeExtenderPosition(getCraterDistance() + 3);
     }
 }
 

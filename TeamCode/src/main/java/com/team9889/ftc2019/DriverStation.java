@@ -47,6 +47,10 @@ public class DriverStation {
         return gamepad2.left_stick_y;
     }
 
+    public boolean getIntakeExtendToCrater() {
+        return gamepad2.x;
+    }
+
     private Intake.RotatorStates wantedState = Intake.RotatorStates.UP;
     public Intake.RotatorStates getIntakeRotatorState(){
         if(gamepad2.right_bumper) {

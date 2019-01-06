@@ -22,7 +22,8 @@ public class Lift extends Subsystem {
     private DcMotorEx left, right;
     private Servo hook;
     private Servo stopper;
-    private DigitalChannel touch;
+//    private DigitalChannel lowerLimit;
+//    private DigitalChannel upperLimit;
     private PID pid = new PID(.3, 0.005 ,0, 50);
 
 
@@ -49,8 +50,11 @@ public class Lift extends Subsystem {
 //        hook = hardwareMap.get(Servo.class, Constants.kHookServo);
 //        stopper = hardwareMap.get(Servo.class, Constants.kLiftStopServo);
 
-        touch = hardwareMap.get(DigitalChannel.class, Constants.kLiftTouchSensor);
-        touch.setMode(DigitalChannel.Mode.INPUT);
+//        lowerLimit = hardwareMap.get(DigitalChannel.class, Constants.kLiftUpperLimitSensor);
+//        lowerLimit.setMode(DigitalChannel.Mode.INPUT);
+
+//        upperLimit = hardwareMap.get(DigitalChannel.class, Constants.kLiftLowerLimitSensor);
+//        upperLimit.setMode(DigitalChannel.Mode.INPUT);
 
 //        if(auto) {
 //            setHookPosition(180);

@@ -45,8 +45,6 @@ public class Teleop extends Team9889Linear{
         Robot.getIntake().setIntakeRotatorState(Intake.RotatorStates.UP);
         Robot.getLift().setLiftState(Lift.LiftStates.READY);
 
-//        Robot.getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
-
         Robot.getArms().setLeftClawOpen(true);
         Robot.getArms().setRightClawOpen(true);
 
@@ -87,45 +85,7 @@ public class Teleop extends Team9889Linear{
             // Rotator State Controller
             Robot.getIntake().setIntakeRotatorState(driverStation.getIntakeRotatorState());
 
-            // Logic for grabbing minerals from Hopper,
-            // then moving the lift up to scoring position, but not the arms
-//            if (gamepad2.dpad_up){
-//                moveMineralsFromHopperToClaws = true;
-//                directLiftControl = false;
-//            }
-
-//            if (moveMineralsFromHopperToClaws){
-//
-//            }
-//
-//            // Move lift to direct operator control
-//            if(Math.abs(gamepad2.right_stick_y) > 0.01){
-                Robot.getLift().setLiftPower(-gamepad2.right_stick_y);
-//                directLiftControl = true;
-//            } else if(!directLiftControl){
-//                Robot.getLift().setLiftState(wantedLiftState);
-//                directLiftControl = false;
-//            }
-
-//            if (gamepad2.dpad_up || dpadState == 1){
-//                dpadState = 1;
-//                Robot.getLift().setLiftState(Lift.LiftStates.DOWN);
-//                if (Robot.getLift().getHeight() < 0.2){
-//                    Robot.getArms().setLeftClawOpen(false);
-//                    Robot.getArms().setRightClawOpen(false);
-//                    Robot.getLift().setLiftState(Lift.LiftStates.SCOREINGHEIGHT);
-//                }
-
-
-//            }
-
-            // Return to grabbing position
-//            if (rightArm == 0 && leftArm == 0){
-//                Robot.getArms().setRightArm(1, 1);
-//                Robot.getArms().setLeftArm(0, 0.25);
-//                leftArm = 1;
-//                rightArm = 1;
-//            }
+            Robot.getLift().setLiftPower(-gamepad2.right_stick_y);
 
             if (gamepad1.b){ // Silver Silver
                 Robot.getArms().setArmsStates(Arms.ArmStates.SILVERSILVER);
@@ -135,17 +95,16 @@ public class Teleop extends Team9889Linear{
                 Robot.getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
             }
 
-//            else if (gamepad1.b){ // Silver Gold
-//                Robot.getArms().setRightArm(.25, .1);
-//                Robot.getArms().setRightArm(.25, .2);
-//                Robot.getArms().setLeftArm(.35, .25);
-//                Robot.getArms().setLeftArm(.7, 0.75);
-//            }
-
             if(leftClawState && rightClawState)
                 Robot.getCamera().setCameraPosition(Camera.CameraPositions.UPRIGHT);
             else
                 Robot.getCamera().setCameraPosition(Camera.CameraPositions.TWO_GOLD);
+
+            if (gamepad2.left_stick_button)
+                Robot.getIntake().setHoppergatedown();
+
+            else if (gamepad2.right_stick_button)
+                Robot.getIntake().setHoppergateup();
 
             updateTelemetry();
         }

@@ -105,51 +105,63 @@ public class Arms extends Subsystem{
     public void setArmsStates(ArmStates state){
         switch (state){
             case SILVERSILVER:
-                setRightArm(0.321, 0.04);
-                setLeftArm(0.879, 0.752);
+                setRightArm(0.269, 0.42);
+                setLeftArm(0.733, 0.63);
                 first = true;
                 break;
             case SILVERGOLD:
-                setRightArm(0.267, 0);
-                setLeftArm(0.931, 0.547);
+                setRightArm(0.259, 0.183);
+                setLeftArm(0.733, 0.542);
                 first = true;
                 break;
 
             case GOLDGOLD:
-                setLeftArm(0.882, 0.686);
-                setRightArm(0.081, 0.224);
+                setLeftArm(0.589, 0.813);
+                setRightArm(0.02, 0.541);
                 first = true;
                 break;
+
+//          case SILVERSILVERANGLELEFT:
+//                setLeftArm(0.133, 1);
+//                setRightArm(0.005, 0.535);
+//                first = true;
+//                break;
+
+//          case SILVERSILVERANGLERIGHT:
+//                setLeftArm(0.934, 0.544);
+//                setRightArm(0.649, 0.007);
+//                first = true;
+//                break;
 
             case PARK:
                 break;
 
             case STORED:
-                setRightArm(.984, .584);
-                setLeftArm(.191, .146);
+                setRightArm(.998, .844);
+                setLeftArm(0, .131);
                 break;
 
             case GRABGOLDGOLD:
                 if (grabPosition != 1) {
                     if (first) {
-                        setLeftArm(.3, .1);
+                        setLeftArm(.065, .115);
                         timer.reset();
                         first = false;
                     } else if (timer.milliseconds() > 40) {
-                        setRightArm(.9, .7);
+                        setRightArm(.952, .885);
                     }
                 }
                 break;
 
 //                Also SILVERGOLD
             case GRABSILVERSILVER:
-                if(first){
-                    setLeftArm(.265, .122);
-                    timer.reset();
-                    first = false;
-                } else if(timer.milliseconds()>40){
-                    setRightArm(.94, .606);
-                }
+                    if (first) {
+                        setLeftArm(.265, .122);
+                        timer.reset();
+                        first = false;
+                    } else if (timer.milliseconds() > 40) {
+                        setRightArm(.94, .606);
+                    }
         }
     }
 

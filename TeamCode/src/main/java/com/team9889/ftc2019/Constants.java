@@ -53,7 +53,10 @@ public class Constants {
     public final static String kIntakeMotorID = "li";
     public final static String kIntakeExtender = "intakeextender";
     public final static String kIntakeRotator = "intakerotator";
-    public final static String kIntakeSwitch = "intakeswitch";
+    public final static String kHopperGate = "hoppergate";
+    public final static String kIntakeSwitch = "intakescoringswitch";
+    public final static String kIntakeInSwitch = "intakeinswitch";
+    public final static String kCraterDetector = "craterdetector";
     public final static double kIntakeTicksPerRev = 100;  //TBD
     public final static double kIntakeSpoolDiameter = 1.5;
     public final static double kIntakeTicksToInchRatio = kIntakeSpoolDiameter * Math.PI / kIntakeTicksPerRev;
@@ -87,7 +90,8 @@ public class Constants {
     public final static String kRightLift = "rightlift";
 //    public final static String kHookServo = "hookservo";
 //    public final static String kLiftStopServo = "liftstopservo";
-    public final static String kLiftTouchSensor = "lifttouchsensor";
+    public final static String kLiftUpperLimitSensor = "liftupperlimitsensor";
+    public final static String kLiftLowerLimitSensor = "liftlowerlimitsensor";
     public final static double kMaxLiftHeight = 100; // tbd
     public final static double kLiftTicksPerRev = 1120; // ticks
     public final static double kLiftSpoolDiameter = 1.25; // in
