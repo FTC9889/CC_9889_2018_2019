@@ -63,9 +63,10 @@ public abstract class AutoModeBase extends Team9889Linear {
 
         waitForStart(true);
 
-        run(currentAutoRunning);
-
-        finalAction();
+        if (opModeIsActive()) {
+            run(currentAutoRunning);
+            finalAction();
+        }
     }
 
     public abstract void run(AllianceColor allianceColor);

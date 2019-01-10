@@ -5,6 +5,7 @@ import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.Constants;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -79,6 +80,11 @@ public class Camera extends Subsystem{
     }
 
     @Override
+    public void update(ElapsedTime time) {
+
+    }
+
+    @Override
     public void test(Telemetry telemetry) {
 
     }
@@ -122,11 +128,11 @@ public class Camera extends Subsystem{
                 break;
 
             case FRONTRIGHT:
-                setXYAxisPosition(.175, .75);
+                setXYAxisPosition(.35, .75);
                 break;
 
             case FRONTCENTER:
-                setXYAxisPosition(0, 0.75);
+                setXYAxisPosition(.175, 0.75);
                 break;
 
             case FRONTHOPPER:

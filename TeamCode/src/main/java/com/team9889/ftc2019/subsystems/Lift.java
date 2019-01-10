@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.Constants;
 import com.team9889.lib.control.controllers.PID;
 
@@ -20,12 +21,12 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Lift extends Subsystem {
 
     private DcMotorEx left, right;
-    private Servo hook;
-    private Servo stopper;
 //    private DigitalChannel lowerLimit;
 //    private DigitalChannel upperLimit;
-    private PID pid = new PID(.3, 0.005 ,0, 50);
+    private PID pid = new PID(.4, 0.005 ,0, 50);
 
+    private LiftStates currentState = LiftStates.DOWN;
+    private LiftStates wantedState = LiftStates.DOWN;
 
     public boolean inPosition() {
         return Math.abs(pid.getError()) < 0.5;
@@ -45,24 +46,6 @@ public class Lift extends Subsystem {
 
         if(auto)
             zeroSensors();
-
-
-//        hook = hardwareMap.get(Servo.class, Constants.kHookServo);
-//        stopper = hardwareMap.get(Servo.class, Constants.kLiftStopServo);
-
-//        lowerLimit = hardwareMap.get(DigitalChannel.class, Constants.kLiftUpperLimitSensor);
-//        lowerLimit.setMode(DigitalChannel.Mode.INPUT);
-
-//        upperLimit = hardwareMap.get(DigitalChannel.class, Constants.kLiftLowerLimitSensor);
-//        upperLimit.setMode(DigitalChannel.Mode.INPUT);
-
-//        if(auto) {
-//            setHookPosition(180);
-//            setStopperPosition(0);
-//            zeroSensors();
-//        }
-//        else
-//            setStopperPosition(.3);
     }
 
     @Override
@@ -80,13 +63,32 @@ public class Lift extends Subsystem {
     public void outputToTelemetry(Telemetry telemetry) {
         telemetry.addData("Height of lift", getHeight());
         telemetry.addData("Height of lift in ticks", getHeightTicks());
-//        telemetry.addData("Difference of lift height", left.getCurrentPosition() - right.getCurrentPosition());
-//        telemetry.addData("Hook deployed?", isHookDeployed());
-//        telemetry.addData("", stopper.getPosition());
-//        telemetry.addData("Touch sensor pressed?", isBottomLimitReached());
         telemetry.addData("left", left.getCurrentPosition());
         telemetry.addData("right", right.getCurrentPosition());
         telemetry.addData("Lift PID", pid.getOutput());
+    }
+
+    @Override
+    public void update(ElapsedTime time) {
+        switch (wantedState){
+            case DOWN:
+                setLiftPosition(0);
+                break;
+
+            case HOOKHEIGHT:
+                setLiftPosition(20);
+                break;
+
+            case SCOREINGHEIGHT:
+                setLiftPosition(13);
+                break;
+
+            case READY:
+                setLiftPosition(5);
+        }
+
+        if(inPosition())
+            currentState = wantedState;
     }
 
     @Override
@@ -100,22 +102,6 @@ public class Lift extends Subsystem {
         setMode(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-//    public void setHookPosition(double position){
-//        hook.setPosition(position/180.0);
-//    }
-
-//    public double getHookPosition(){
-//        return hook.getPosition()*180;
-//    }
-
-//    public boolean isHookDeployed(){
-//        return getHookPosition() > 90;
-//    }
-
-//    public boolean isBottomLimitReached(){
-//        return touch.getState();
-//    }
-
     public double getHeightTicks(){
         return (left.getCurrentPosition());
     }
@@ -128,10 +114,6 @@ public class Lift extends Subsystem {
         left.setPower(power);
         right.setPower(power);
     }
-
-//    public void setStopperPosition(double position){
-//        stopper.setPosition(position);
-//    }
 
     public void setMode(DcMotor.ZeroPowerBehavior zeroPowerBehavior){
         left.setZeroPowerBehavior(zeroPowerBehavior);
@@ -154,22 +136,7 @@ public class Lift extends Subsystem {
     }
 
     public void setLiftState(LiftStates state){
-        switch (state){
-            case DOWN:
-                setLiftPosition(0);
-                break;
-
-            case HOOKHEIGHT:
-                setLiftPosition(20);
-                break;
-
-            case SCOREINGHEIGHT:
-                setLiftPosition(13);
-                break;
-
-            case READY:
-                setLiftPosition(5);
-        }
+        this.wantedState = state;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.team9889.ftc2019.subsystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.Constants;
 import com.team9889.lib.CruiseLib;
@@ -82,6 +83,11 @@ public class Drive extends Subsystem {
     }
 
     @Override
+    public void update(ElapsedTime time) {
+
+    }
+
+    @Override
     public void zeroSensors() {
         resetEncoders();
     }
@@ -151,7 +157,7 @@ public class Drive extends Subsystem {
      */
     public Rotation2d getAngle(){
         try {
-            currentPose.setRotation2d(new Rotation2d(imu.getNormalHeading(), AngleUnit.DEGREES));
+            currentPose.setRotation2d(new Rotation2d(-imu.getNormalHeading(), AngleUnit.DEGREES));
             return currentPose.getRotation2d();
         } catch (Exception e){
             return new Rotation2d(0, AngleUnit.DEGREES);

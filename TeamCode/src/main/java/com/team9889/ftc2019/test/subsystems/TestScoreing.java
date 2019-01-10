@@ -16,28 +16,62 @@ import com.team9889.ftc2019.subsystems.Arms;
 public class TestScoreing extends Team9889Linear {
 
     public int Minerals = 1;
+    public boolean Enum;
 
     @Override
     public void runOpMode() throws InterruptedException {
         waitForStart(false);
 
         while (opModeIsActive()){
+            if (gamepad1.b)
+                Minerals = 1;
+            else if (gamepad1.y)
+                Minerals = 2;
+            else if (gamepad1.x)
+                Minerals = 3;
+
+
             if (gamepad1.a) {
                 //Camera Scans
                 switch (Minerals) {
 //                  GOLDGOLD
                     case 1:
                         Robot.getArms().setMineralPositions(Arms.MineralPositions.GOLDGOLD);
+                        Enum = true;
                         break;
 
 //                  SILVERSILVER
                     case 2:
                         Robot.getArms().setMineralPositions(Arms.MineralPositions.SILVERSILVER);
+                        Enum = true;
                         break;
 
 //                  SILVERGOLD
                     case 3:
                         Robot.getArms().setMineralPositions(Arms.MineralPositions.SILVERGOLD);
+                        Enum = true;
+                        break;
+                }
+            }
+
+            if (Enum = true){
+                switch (Minerals) {
+//                  GOLDGOLD
+                    case 1:
+                        Robot.getArms().setMineralPositions(Arms.MineralPositions.GOLDGOLD);
+                        Enum = true;
+                        break;
+
+//                  SILVERSILVER
+                    case 2:
+                        Robot.getArms().setMineralPositions(Arms.MineralPositions.SILVERSILVER);
+                        Enum = true;
+                        break;
+
+//                  SILVERGOLD
+                    case 3:
+                        Robot.getArms().setMineralPositions(Arms.MineralPositions.SILVERGOLD);
+                        Enum = true;
                         break;
                 }
             }

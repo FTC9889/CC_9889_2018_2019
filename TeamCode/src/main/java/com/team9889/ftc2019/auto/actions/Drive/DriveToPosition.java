@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.subsystems.Drive;
 import com.team9889.ftc2019.subsystems.Robot;
+import com.team9889.lib.CruiseLib;
 import com.team9889.lib.control.controllers.PID;
 
 import static com.team9889.ftc2019.Constants.ENCODER_TO_DISTANCE_RATIO;
@@ -11,6 +12,8 @@ import static com.team9889.ftc2019.Constants.ENCODER_TO_DISTANCE_RATIO;
 /**
  * Created by MannoMation on 11/2/2018.
  */
+
+@Deprecated
 public class DriveToPosition extends Action {
 
     private Drive mDrive = Robot.getInstance().getDrive();
@@ -44,8 +47,15 @@ public class DriveToPosition extends Action {
 
     @Override
     public void update() {
-        mDrive.setLeftRightPower(leftPid.update(mDrive.getLeftTicks(), leftTick),
-                rightPid.update(mDrive.getRightTicks(), rightTick));
+        double LeftPower = leftPid.update(mDrive.getLeftTicks(), leftTick);
+        double RightPower = rightPid.update(mDrive.getRightTicks(), rightTick);
+        LeftPower = CruiseLib.limitValue(LeftPower, .7);
+        RightPower = CruiseLib.limitValue(RightPower, .7);
+
+
+
+        mDrive.setLeftRightPower(LeftPower, RightPower);
+
     }
 
     @Override

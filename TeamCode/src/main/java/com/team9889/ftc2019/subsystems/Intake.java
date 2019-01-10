@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.UltrasonicSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.Constants;
 import com.team9889.lib.hardware.ModernRoboticsUltrasonic;
 
@@ -64,6 +65,11 @@ public class Intake extends Subsystem{
         telemetry.addData("Intake Extender", extender.getCurrentPosition());
         telemetry.addData("Angle of Intake", intakeRotator.getPosition());
         telemetry.addData("Intake Switch", intakeSwitchValue());
+    }
+
+    @Override
+    public void update(ElapsedTime time) {
+
     }
 
     @Override
