@@ -45,12 +45,12 @@ public class Arms extends Subsystem{
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
-        this.leftShoulder = hardwareMap.get(Servo.class, Constants.kLeftShoulderID);
-        this.rightShoulder = hardwareMap.get(Servo.class, Constants.kRightShoulderId);
-        this.leftElbow = hardwareMap.get(Servo.class, Constants.kLeftElbowId);
-        this.rightElbow = hardwareMap.get(Servo.class, Constants.kRightElbowId);
-        this.leftClaw = hardwareMap.get(Servo.class, Constants.kLeftClawId);
-        this.rightClaw = hardwareMap.get(Servo.class, Constants.kRightClawId);
+        this.leftShoulder = hardwareMap.get(Servo.class, Constants.ArmConstants.kLeftShoulderID);
+        this.rightShoulder = hardwareMap.get(Servo.class, Constants.ArmConstants.kRightShoulderId);
+        this.leftElbow = hardwareMap.get(Servo.class, Constants.ArmConstants.kLeftElbowId);
+        this.rightElbow = hardwareMap.get(Servo.class, Constants.ArmConstants.kRightElbowId);
+        this.leftClaw = hardwareMap.get(Servo.class, Constants.ArmConstants.kLeftClawId);
+        this.rightClaw = hardwareMap.get(Servo.class, Constants.ArmConstants.kRightClawId);
 
         if (auto) {
             setArmsStates(ArmStates.STORED, ArmStates.STORED);

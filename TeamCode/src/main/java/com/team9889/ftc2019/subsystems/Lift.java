@@ -38,8 +38,8 @@ public class Lift extends Subsystem {
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
-        left = hardwareMap.get(DcMotorEx.class, Constants.kLeftLift);
-        right = hardwareMap.get(DcMotorEx.class, Constants.kRightLift);
+        left = hardwareMap.get(DcMotorEx.class, Constants.LiftConstants.kLeftLift);
+        right = hardwareMap.get(DcMotorEx.class, Constants.LiftConstants.kRightLift);
         right.setDirection(DcMotorSimple.Direction.REVERSE);
         left.setDirection(DcMotorSimple.Direction.REVERSE);
         setMode(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -107,7 +107,7 @@ public class Lift extends Subsystem {
     }
 
     public double getHeight(){
-        return getHeightTicks() * Constants.kLiftTicksToHeightRatio;
+        return getHeightTicks() * Constants.LiftConstants.kLiftTicksToHeightRatio;
     }
 
     public void setLiftPower(double power){

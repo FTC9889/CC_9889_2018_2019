@@ -23,26 +23,24 @@ public class Constants {
     ---------------------*/
 
     //Settings for Drive class
-    public final static String kLeftDriveMasterId = "lf";
-    public final static String kRightDriveMasterId = "rf";
-    public final static String kLeftDriveSlaveId = "lb";
-    public final static String getkRightDriveSlaveId = "rb";
+    public static class DriveConstants {
+        public final static String kLeftDriveMasterId = "lf";
+        public final static String kRightDriveMasterId = "rf";
+        public final static String kLeftDriveSlaveId = "lb";
+        public final static String getkRightDriveSlaveId = "rb";
 
 
-    public final static double WheelbaseWidth = 16;
-    public final static double WheelDiameter = 4;
+        public final static double WheelbaseWidth = 16;
+        public final static double WheelDiameter = 4;
 
-    /**
-     * ticks to inch
-     * (Wheel Diameter * PI) / Counts Per Rotation
-     */
-
-    public final static double ENCODER_TO_DISTANCE_RATIO = (WheelDiameter * Math.PI) / 537.6;
-    public final static double AngleToInchRatio = (Math.PI/180.) * (WheelbaseWidth/2.);
-
-    public static void main(String... args){
-        System.out.println(AngleToInchRatio);
+        /**
+         * ticks to inch
+         * (Wheel Diameter * PI) / Counts Per Rotation
+         */
+        public final static double ENCODER_TO_DISTANCE_RATIO = (WheelDiameter * Math.PI) / 537.6;
+        public final static double AngleToInchRatio = (Math.PI / 180.) * (WheelbaseWidth / 2.);
     }
+
    /*---------------------
     |                     |
     |       Intake        |
@@ -50,16 +48,18 @@ public class Constants {
     ---------------------*/
 
     //Settings for Intake
-    public final static String kIntakeMotorID = "li";
-    public final static String kIntakeExtender = "intakeextender";
-    public final static String kIntakeRotator = "intakerotator";
-    public final static String kHopperGate = "hoppergate";
-    public final static String kIntakeSwitch = "intakescoringswitch";
-    public final static String kIntakeInSwitch = "intakeinswitch";
-    public final static String kCraterDetector = "craterdetector";
-    public final static double kIntakeTicksPerRev = 100;  //TBD
-    public final static double kIntakeSpoolDiameter = 1.5;
-    public final static double kIntakeTicksToInchRatio = kIntakeSpoolDiameter * Math.PI / kIntakeTicksPerRev;
+    public static class IntakeConstants {
+        public final static String kIntakeMotorID = "li";
+        public final static String kIntakeExtender = "intakeextender";
+        public final static String kIntakeRotator = "intakerotator";
+        public final static String kHopperGate = "hoppergate";
+        public final static String kIntakeSwitch = "intakescoringswitch";
+        public final static String kIntakeInSwitch = "intakeinswitch";
+        public final static String kCraterDetector = "craterdetector";
+        public final static double kIntakeTicksPerRev = 100;  //TBD
+        public final static double kIntakeSpoolDiameter = 1.5;
+        public final static double kIntakeTicksToInchRatio = kIntakeSpoolDiameter * Math.PI / kIntakeTicksPerRev;
+    }
 
 
 
@@ -70,12 +70,14 @@ public class Constants {
     ---------------------*/
 
     //Settings for Arms
-    public final static String kLeftShoulderID = "leftshoulder";
-    public final static String kRightShoulderId = "rightshoulder";
-    public final static String kLeftElbowId = "leftelbow";
-    public final static String kRightElbowId = "rightelbow";
-    public final static String kLeftClawId = "leftclaw";
-    public final static String kRightClawId = "rightclaw";
+    public static class ArmConstants {
+        public final static String kLeftShoulderID = "leftshoulder";
+        public final static String kRightShoulderId = "rightshoulder";
+        public final static String kLeftElbowId = "leftelbow";
+        public final static String kRightElbowId = "rightelbow";
+        public final static String kLeftClawId = "leftclaw";
+        public final static String kRightClawId = "rightclaw";
+    }
 
 
 
@@ -86,16 +88,16 @@ public class Constants {
     ---------------------*/
 
     //Settings for Lift
-    public final static String kLeftLift = "leftlift";
-    public final static String kRightLift = "rightlift";
-//    public final static String kHookServo = "hookservo";
-//    public final static String kLiftStopServo = "liftstopservo";
-    public final static String kLiftUpperLimitSensor = "liftupperlimitsensor";
-    public final static String kLiftLowerLimitSensor = "liftlowerlimitsensor";
-    public final static double kMaxLiftHeight = 100; // tbd
-    public final static double kLiftTicksPerRev = 1120; // ticks
-    public final static double kLiftSpoolDiameter = 1.25; // in
-    public final static double kLiftTicksToHeightRatio = kLiftSpoolDiameter * Math.PI / kLiftTicksPerRev; // in
+    public static class LiftConstants {
+        public final static String kLeftLift = "leftlift";
+        public final static String kRightLift = "rightlift";
+        public final static String kLiftUpperLimitSensor = "liftupperlimitsensor";
+        public final static String kLiftLowerLimitSensor = "liftlowerlimitsensor";
+        public final static double kMaxLiftHeight = 100; // tbd
+        public final static double kLiftTicksPerRev = 1120; // ticks
+        public final static double kLiftSpoolDiameter = 1.25; // in
+        public final static double kLiftTicksToHeightRatio = kLiftSpoolDiameter * Math.PI / kLiftTicksPerRev; // in
+    }
 
 
     /*---------------------
@@ -105,6 +107,8 @@ public class Constants {
     ---------------------*/
 
     //Settings for Camera
-    public final static String kCameraXAxis = "cameraxaxis";
-    public final static String kCameraYAxis = "camerayaxis";
+    public static class CameraConstants {
+        public final static String kCameraXAxis = "cameraxaxis";
+        public final static String kCameraYAxis = "camerayaxis";
+    }
 }

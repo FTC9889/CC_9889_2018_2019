@@ -37,8 +37,8 @@ public class Camera extends Subsystem{
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
-        xAxis = hardwareMap.get(Servo.class, Constants.kCameraXAxis);
-        yAxis = hardwareMap.get(Servo.class, Constants.kCameraYAxis);
+        xAxis = hardwareMap.get(Servo.class, Constants.CameraConstants.kCameraXAxis);
+        yAxis = hardwareMap.get(Servo.class, Constants.CameraConstants.kCameraYAxis);
 
         if (auto) {
             setCameraPosition(CameraPositions.STORED);
