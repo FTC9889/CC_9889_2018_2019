@@ -2,16 +2,14 @@ package com.team9889.ftc2019.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.Constants;
-import com.team9889.lib.hardware.ModernRoboticsUltrasonic;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 /**
  * Created by licorice17 on 9/14/2018.
@@ -27,21 +25,25 @@ public class Intake extends Subsystem{
 //    private ModernRoboticsUltrasonic craterdetector;
     private boolean intakeTouchSensor = false;
 
-    enum States {
-        INTAKING, EXTENDING, ZEROING
+    public enum States {
+        INTAKING, EXTENDING, GRABBING, ZEROING
     }
 
     public enum RotatorStates {
         UP, DOWN
     }
 
-    private States currentState = States.ZEROING;
+    private States currentExtenderState = States.ZEROING;
+    private States wantedExtenderState = States.ZEROING;
+    private RotatorStates currentRotatorState = RotatorStates.UP;
+    private RotatorStates wantedRotatorState = RotatorStates.UP;
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
         this.intakemotor = hardwareMap.get(DcMotor.class, Constants.kIntakeMotorID);
         this.extender = hardwareMap.get(DcMotorEx.class, Constants.kIntakeExtender);
 
+        extender.setDirection(DcMotorSimple.Direction.REVERSE);
         extender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         this.intakeRotator = hardwareMap.get(Servo.class, Constants.kIntakeRotator);
@@ -51,12 +53,23 @@ public class Intake extends Subsystem{
 
         this.hoppergate = hardwareMap.get(Servo.class, Constants.kHopperGate);
 
-        setIntakeRotatorState(RotatorStates.UP);
+        if (auto) {
+            extender.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            setIntakeRotatorState(RotatorStates.UP);
+            setWantedIntakeState(States.ZEROING);
+            currentExtenderState = States.ZEROING;
+            currentRotatorState = RotatorStates.UP;
+            setHoppergateup();
+        } else {
+            extender.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
     }
 
     @Override
     public void zeroSensors() {
-
+        extender.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Thread.yield();
+        extender.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     @Override
@@ -64,12 +77,60 @@ public class Intake extends Subsystem{
         telemetry.addData("IntakePower",intakemotor.getPower());
         telemetry.addData("Intake Extender", extender.getCurrentPosition());
         telemetry.addData("Angle of Intake", intakeRotator.getPosition());
-        telemetry.addData("Intake Switch", intakeSwitchValue());
+        telemetry.addData("Fully In Intake Switch", intakeInSwitchValue());
+        telemetry.addData("Grabbing Intake Switch", intakeGrabbingSwitchValue());
     }
 
     @Override
     public void update(ElapsedTime time) {
+        if (currentExtenderState != wantedExtenderState){
+            switch (wantedExtenderState) {
+                case ZEROING:
+                    if (intakeInSwitchValue()) {
+                        setIntakeExtenderPower(0);
+                        zeroSensors();
+                        currentExtenderState = States.ZEROING;
+                    } else {
+                        extender.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        setIntakeExtenderPower(-1);
+                        setIntakeRotatorState(wantedRotatorState);
+                        currentRotatorState = wantedRotatorState;
+                    }
+                    break;
+                case GRABBING:
+                    if (currentExtenderState == States.ZEROING) {
+                        if (intakeGrabbingSwitchValue()){
+                            setIntakeExtenderPower(0);
+                            currentExtenderState = States.GRABBING;
 
+                            setIntakeRotatorState(RotatorStates.DOWN);
+                            currentRotatorState = RotatorStates.DOWN;
+                        }
+                        else {
+                            extender.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                            setIntakeExtenderPower(1);
+                        }
+                    }
+                    else {
+                        if (intakeGrabbingSwitchValue()){
+                            setIntakeExtenderPower(0);
+                            currentExtenderState = States.GRABBING;
+                        }
+                        else {
+                            extender.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                            setIntakeExtenderPower(-0.3);
+
+                            setIntakeRotatorState(RotatorStates.UP);
+                            currentRotatorState = RotatorStates.UP;
+                        }
+                    }
+                    break;
+                case INTAKING:
+                    break;
+                case EXTENDING:
+                    break;
+            }
+        }
     }
 
     @Override
@@ -81,6 +142,7 @@ public class Intake extends Subsystem{
     public void stop() {
         intakemotor.setPower(0);
     }
+
     public void setIntakePower(double power){
         intakemotor.setPower(power);
     }
@@ -94,44 +156,28 @@ public class Intake extends Subsystem{
     }
 
     public void setIntakeExtenderPower(double power){
-//        if (power < 0 && intakeSwitchValue() == true){
+//        if (power < 0 && intakeInSwitchValue() == true){
 //            setIntakeExtenderPower(0);
 //        }
 //        else
         extender.setPower(power);
     }
 
-    public boolean intakeSwitchValue (){
-        if (scoreingSwitch.getState())
-            return intakeTouchSensor = false;
-
-        else
-            return intakeTouchSensor = true;
+    public boolean intakeInSwitchValue(){
+        return !inSwitch.getState();
     }
 
+    public boolean intakeGrabbingSwitchValue(){
+        return !scoreingSwitch.getState();
+    }
+
+    //TODO fix this method
     public void setIntakeExtenderPosition(double position){
         setIntakeExtenderPosition(position * Constants.kIntakeTicksToInchRatio);
     }
 
     public void setIntakeRotatorPosition(double position){
         intakeRotator.setPosition(position);
-    }
-
-    public void setWantedState(States wantedState){
-        if(wantedState != currentState){
-            switch (wantedState){
-                case ZEROING:
-
-            }
-        }
-    }
-
-    public void update(){
-
-    }
-
-    public double getIntakeRotatorPosition(){
-        return(intakeRotator.getPosition());
     }
 
     public void setIntakeRotatorState(RotatorStates state){
@@ -144,6 +190,30 @@ public class Intake extends Subsystem{
                 setIntakeRotatorPosition(1);
                 break;
         }
+    }
+
+    public void setWantedIntakeState(States wantedState, RotatorStates wantedRoatatorState){
+        this.wantedExtenderState = wantedState;
+
+        if (wantedExtenderState != States.INTAKING && wantedExtenderState != States.GRABBING){
+            this.wantedRotatorState = RotatorStates.UP;
+        } else{
+            this.wantedRotatorState = wantedRoatatorState;
+        }
+    }
+
+    public void setWantedIntakeState(States wantedState){
+        this.wantedExtenderState = wantedState;
+
+        if (wantedExtenderState != States.INTAKING && wantedExtenderState != States.GRABBING){
+            this.wantedRotatorState = RotatorStates.UP;
+        } else{
+            this.wantedRotatorState = RotatorStates.DOWN;
+        }
+    }
+
+    public boolean isCurrentStateWantedState(){
+        return(currentExtenderState == wantedExtenderState);
     }
 
     public void setHoppergatedown(){
