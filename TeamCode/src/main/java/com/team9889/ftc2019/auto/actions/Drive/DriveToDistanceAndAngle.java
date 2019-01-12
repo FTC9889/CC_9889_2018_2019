@@ -48,7 +48,7 @@ public class DriveToDistanceAndAngle extends Action {
     public void update() {
         double currentPosition = getAverageDistance();
         double throttle = drivePid.update(currentPosition, distance);
-        throttle = CruiseLib.limitValue(throttle, .5);
+        throttle = CruiseLib.limitValue(throttle, .6);
 
         double currentAngle = mDrive.getAngle().getTheda(AngleUnit.DEGREES);
         double steer = anglePid.update(currentAngle, angle);

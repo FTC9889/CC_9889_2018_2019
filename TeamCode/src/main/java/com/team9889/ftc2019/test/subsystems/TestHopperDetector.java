@@ -13,7 +13,6 @@ import com.team9889.lib.detectors.HopperDetector;
  */
 
 @Autonomous
-@Disabled
 public class TestHopperDetector extends LinearOpMode {
     HopperDetector detector;
     @Override

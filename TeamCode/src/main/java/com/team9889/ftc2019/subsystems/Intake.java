@@ -103,12 +103,12 @@ public class Intake extends Subsystem{
                             setIntakeExtenderPower(0);
                             currentExtenderState = States.GRABBING;
 
-                            setIntakeRotatorState(RotatorStates.DOWN);
+                            setIntakeRotatorPosition(0.8);
                             currentRotatorState = RotatorStates.DOWN;
                         }
                         else {
                             extender.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                            setIntakeExtenderPower(1);
+                            setIntakeExtenderPower(.5);
                         }
                     }
                     else {

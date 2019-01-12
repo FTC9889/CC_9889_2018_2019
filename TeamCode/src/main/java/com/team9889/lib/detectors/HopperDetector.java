@@ -87,27 +87,41 @@ public class HopperDetector extends DogeCVDetector {
         double cvRectangle1Shift = 0.0;
         cvRectangle(cvRectangle1Src, cvRectangle1Pt1, cvRectangle1Pt2, cvRectangle1Color, cvRectangle1Thickness, cvRectangle1Linetype, cvRectangle1Shift, cvRectangle1Output);
 */
+
+        Mat display = input;
+
+        Point tl = new Point(0,0);
+        Point br = new Point(input.size().width - 1,0);
+        Imgproc.rectangle(display, tl, br, new Scalar(0,0,255)); // Draw rect
+
         // Step HSV_Threshold0:
-        Mat hsvThreshold0Input = input;
+        Mat hsvThreshold0Input = display;
         double[] hsvThreshold0Hue = {3.3898305084745752, 180.0};
         double[] hsvThreshold0Saturation = {0.0, 30.000000000000007};
         double[] hsvThreshold0Value = {108.05084745762711, 255.0};
         hsvThreshold(hsvThreshold0Input, hsvThreshold0Hue, hsvThreshold0Saturation, hsvThreshold0Value, hsvThreshold0Output);
 
+//        // Step HSV_Threshold1:
+//        Mat hsvThreshold1Input = input;
+//        double[] hsvThreshold1Hue = {1.694915254237288, 50};
+//        double[] hsvThreshold1Saturation = {127.25988700564972, 255.0};
+//        double[] hsvThreshold1Value = {0.0, 255.0};
+//        hsvThreshold(hsvThreshold1Input, hsvThreshold1Hue, hsvThreshold1Saturation, hsvThreshold1Value, hsvThreshold1Output);
+
         // Step HSV_Threshold1:
-        Mat hsvThreshold1Input = input;
-        double[] hsvThreshold1Hue = {1.694915254237288, 27.59358288770054};
-        double[] hsvThreshold1Saturation = {127.25988700564972, 255.0};
+        Mat hsvThreshold1Input = display;
+        double[] hsvThreshold1Hue = {95, 150};
+        double[] hsvThreshold1Saturation = {0, 255.0};
         double[] hsvThreshold1Value = {0.0, 255.0};
         hsvThreshold(hsvThreshold1Input, hsvThreshold1Hue, hsvThreshold1Saturation, hsvThreshold1Value, hsvThreshold1Output);
 
         // Step Mask0:
-        Mat goldHsvMask = input;
+        Mat goldHsvMask = display;
         Mat mask0Mask = hsvThreshold1Output;
         mask(goldHsvMask, mask0Mask, mask0Output);
 
         // Step Mask1:
-        Mat silverHsvMask = input;
+        Mat silverHsvMask = display;
         Mat mask1Mask = hsvThreshold0Output;
         mask(silverHsvMask, mask1Mask, mask1Output);
 
