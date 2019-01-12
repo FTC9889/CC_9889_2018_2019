@@ -14,7 +14,7 @@ import com.team9889.lib.hardware.RevIMU;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-import static com.team9889.ftc2019.Constants.ENCODER_TO_DISTANCE_RATIO;
+import static com.team9889.ftc2019.Constants.DriveConstants.ENCODER_TO_DISTANCE_RATIO;
 
 /**
  * Created by joshua9889 on 10/6/2017.
@@ -50,10 +50,10 @@ public class Drive extends Subsystem {
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
-        this.rightMaster_ = hardwareMap.get(DcMotor.class, Constants.kRightDriveMasterId);
-        this.leftMaster_ = hardwareMap.get(DcMotor.class, Constants.kLeftDriveMasterId);
-        this.leftSlave_ = hardwareMap.get(DcMotor.class, Constants.kLeftDriveSlaveId);
-        this.rightSlave_ = hardwareMap.get(DcMotor.class, Constants.getkRightDriveSlaveId);
+        this.rightMaster_ = hardwareMap.get(DcMotor.class, Constants.DriveConstants.kRightDriveMasterId);
+        this.leftMaster_ = hardwareMap.get(DcMotor.class, Constants.DriveConstants.kLeftDriveMasterId);
+        this.leftSlave_ = hardwareMap.get(DcMotor.class, Constants.DriveConstants.kLeftDriveSlaveId);
+        this.rightSlave_ = hardwareMap.get(DcMotor.class, Constants.DriveConstants.getkRightDriveSlaveId);
 
         this.leftMaster_.setDirection(DcMotorSimple.Direction.REVERSE);
         this.leftSlave_.setDirection(DcMotorSimple.Direction.REVERSE);

@@ -40,18 +40,18 @@ public class Intake extends Subsystem{
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
-        this.intakemotor = hardwareMap.get(DcMotor.class, Constants.kIntakeMotorID);
-        this.extender = hardwareMap.get(DcMotorEx.class, Constants.kIntakeExtender);
+        this.intakemotor = hardwareMap.get(DcMotor.class, Constants.IntakeConstants.kIntakeMotorID);
+        this.extender = hardwareMap.get(DcMotorEx.class, Constants.IntakeConstants.kIntakeExtender);
 
         extender.setDirection(DcMotorSimple.Direction.REVERSE);
         extender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        this.intakeRotator = hardwareMap.get(Servo.class, Constants.kIntakeRotator);
-        this.scoreingSwitch = hardwareMap.get(DigitalChannel.class, Constants.kIntakeSwitch);
-        this.inSwitch = hardwareMap.get(DigitalChannel.class, Constants.kIntakeInSwitch);
+        this.intakeRotator = hardwareMap.get(Servo.class, Constants.IntakeConstants.kIntakeRotator);
+        this.scoreingSwitch = hardwareMap.get(DigitalChannel.class, Constants.IntakeConstants.kIntakeSwitch);
+        this.inSwitch = hardwareMap.get(DigitalChannel.class, Constants.IntakeConstants.kIntakeInSwitch);
 //        this.craterdetector = new ModernRoboticsUltrasonic(Constants.kCraterDetector , hardwareMap);
 
-        this.hoppergate = hardwareMap.get(Servo.class, Constants.kHopperGate);
+        this.hoppergate = hardwareMap.get(Servo.class, Constants.IntakeConstants.kHopperGate);
 
         if (auto) {
             extender.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -173,7 +173,7 @@ public class Intake extends Subsystem{
 
     //TODO fix this method
     public void setIntakeExtenderPosition(double position){
-        setIntakeExtenderPosition(position * Constants.kIntakeTicksToInchRatio);
+        setIntakeExtenderPosition(position * Constants.IntakeConstants.kIntakeTicksToInchRatio);
     }
 
     public void setIntakeRotatorPosition(double position){
