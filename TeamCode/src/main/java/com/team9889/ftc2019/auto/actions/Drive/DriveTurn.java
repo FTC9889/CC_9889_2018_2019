@@ -5,6 +5,7 @@ import com.team9889.ftc2019.Constants;
 import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.subsystems.Drive;
 import com.team9889.ftc2019.subsystems.Robot;
+import com.team9889.lib.CruiseLib;
 import com.team9889.lib.control.controllers.PID;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
 
@@ -50,8 +51,13 @@ public class DriveTurn extends Action {
 
     @Override
     public void update() {
-        mDrive.setLeftRightPower(leftPid.update(mDrive.getLeftTicks(), leftTick),
-                rightPid.update(mDrive.getRightTicks(), rightTick));
+        double leftPower = CruiseLib.limitValue(
+                leftPid.update(mDrive.getLeftTicks(), leftTick), 0.5);
+
+        double rightPower = CruiseLib.limitValue(
+                rightPid.update(mDrive.getRightTicks(), rightTick), 0.5);
+
+        mDrive.setLeftRightPower(leftPower, rightPower);
     }
 
     @Override

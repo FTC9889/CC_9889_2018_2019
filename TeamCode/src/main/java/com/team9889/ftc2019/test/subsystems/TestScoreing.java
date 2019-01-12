@@ -14,7 +14,11 @@ import com.team9889.ftc2019.subsystems.Arms;
 @Disabled
 @TeleOp
 public class TestScoreing extends Team9889Linear {
+    @Override
+    public void runOpMode() throws InterruptedException {
 
+    }
+/*
     public int Minerals = 1;
     public boolean Enum;
 
@@ -77,4 +81,5 @@ public class TestScoreing extends Team9889Linear {
             }
         }
     }
+    */
 }

@@ -1,5 +1,6 @@
 package com.team9889.ftc2019.auto;
 
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.Team9889Linear;
 import com.team9889.ftc2019.auto.actions.Action;
 
@@ -10,7 +11,7 @@ import com.team9889.ftc2019.auto.actions.Action;
 public abstract class AutoModeBase extends Team9889Linear {
 
     private AllianceColor currentAutoRunning = AllianceColor.RED;
-
+    protected ElapsedTime autoTimer = new ElapsedTime();
     protected enum AllianceColor{
         RED, BLUE, UNKNOWN;
         private static int RED_Num = 1;
@@ -62,6 +63,7 @@ public abstract class AutoModeBase extends Team9889Linear {
         setCurrentAutoRunning();
 
         waitForStart(true);
+        autoTimer.reset();
 
         if (opModeIsActive()) {
             run(currentAutoRunning);

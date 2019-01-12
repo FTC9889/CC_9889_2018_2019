@@ -48,18 +48,16 @@ public class Constants {
     ---------------------*/
 
     //Settings for Intake
-    public static class IntakeConstants {
-        public final static String kIntakeMotorID = "li";
-        public final static String kIntakeExtender = "intakeextender";
-        public final static String kIntakeRotator = "intakerotator";
-        public final static String kHopperGate = "hoppergate";
-        public final static String kIntakeSwitch = "intakescoringswitch";
-        public final static String kIntakeInSwitch = "intakeinswitch";
-        public final static String kCraterDetector = "craterdetector";
-        public final static double kIntakeTicksPerRev = 100;  //TBD
-        public final static double kIntakeSpoolDiameter = 1.5;
-        public final static double kIntakeTicksToInchRatio = kIntakeSpoolDiameter * Math.PI / kIntakeTicksPerRev;
-    }
+    public final static String kIntakeMotorID = "li";
+    public final static String kIntakeExtender = "intakeextender";
+    public final static String kIntakeRotator = "intakerotator";
+    public final static String kHopperGate = "hoppergate";
+    public final static String kIntakeSwitch = "intakescoringswitch";
+    public final static String kIntakeInSwitch = "intakeinswitch";
+    public final static String kCraterDetector = "craterdetector";
+    public final static double kIntakeTicksPerRev = 1120;  //Neverest 40
+    public final static double kIntakeSpoolDiameter = 1.5;
+    public final static double kIntakeTicksToInchRatio = kIntakeSpoolDiameter * Math.PI / kIntakeTicksPerRev;
 
 
 
