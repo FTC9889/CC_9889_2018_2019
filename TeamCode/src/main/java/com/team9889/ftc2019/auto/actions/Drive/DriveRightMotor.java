@@ -5,19 +5,19 @@ import com.team9889.ftc2019.Constants;
 import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.subsystems.Drive;
 import com.team9889.ftc2019.subsystems.Robot;
+import com.team9889.lib.CruiseLib;
 import com.team9889.lib.control.controllers.PID;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-import static com.team9889.ftc2019.Constants.ENCODER_TO_DISTANCE_RATIO;
+import static com.team9889.ftc2019.Constants.DriveConstants.ENCODER_TO_DISTANCE_RATIO;
 
 /**
  * Created by MannoMation on 11/2/2018.
  */
 public class DriveRightMotor extends Action {
-    private double right;
-    private double rightTick;
+    private double right, rightTick, offset;
     private PID rightPid;
     private ElapsedTime time;
     private double timeOut;
@@ -26,7 +26,8 @@ public class DriveRightMotor extends Action {
     private Drive mDrive = Robot.getInstance().getDrive();
 
     public DriveRightMotor(Rotation2d angle, double timeOut){
-        this.right =  -angle.getTheda(AngleUnit.DEGREES) * Constants.AngleToInchRatio * 2;
+        this.right =  -angle.getTheda(AngleUnit.DEGREES) * Constants.DriveConstants.AngleToInchRatio * 2;
+        this.timeOut = timeOut;
     }
 
     @Override
@@ -36,21 +37,26 @@ public class DriveRightMotor extends Action {
 
     @Override
     public void start() {
-        rightPid = new PID(0.001, 0, 0.0001);
+        rightPid = new PID(0.002, 0.0, 0.025);
 
         mDrive.DriveControlState(Drive.DriveControlStates.POWER);
-        rightTick = mDrive.getRightTicks() + (int)(right / ENCODER_TO_DISTANCE_RATIO);
+
+        offset = mDrive.getRightTicks();
+        rightTick = (int)(right / ENCODER_TO_DISTANCE_RATIO);
         time = new ElapsedTime();
     }
 
     @Override
     public void update() {
-        mDrive.setLeftRightPower(0, rightPid.update(mDrive.getRightTicks(), rightTick));
+        double rightPower = rightPid.update(mDrive.getRightTicks() - offset, rightTick);
+        rightPower = CruiseLib.limitValue(rightPower, 0.5);
+
+        mDrive.setLeftRightPower(0, rightPower);
     }
 
     @Override
     public boolean isFinished() {
-        return Math.abs(rightTick - mDrive.getRightTicks()) < 5 || time.milliseconds() > timeOut;
+        return Math.abs(rightTick - (mDrive.getRightTicks() - offset)) < 5 || time.milliseconds() > timeOut;
     }
 
     @Override

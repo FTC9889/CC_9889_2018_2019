@@ -11,7 +11,7 @@ import com.team9889.lib.control.math.cartesian.Rotation2d;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-import static com.team9889.ftc2019.Constants.ENCODER_TO_DISTANCE_RATIO;
+import static com.team9889.ftc2019.Constants.DriveConstants.ENCODER_TO_DISTANCE_RATIO;
 
 /**
  * Created by MannoMation on 10/26/2018.
@@ -28,8 +28,8 @@ public class DriveTurn extends Action {
     private Drive mDrive = Robot.getInstance().getDrive();
 
     public DriveTurn(Rotation2d angle, double timeOut){
-        this.left =  angle.getTheda(AngleUnit.DEGREES) * Constants.AngleToInchRatio;
-        this.right =  -angle.getTheda(AngleUnit.DEGREES) * Constants.AngleToInchRatio;
+        this.left =  angle.getTheda(AngleUnit.DEGREES) * Constants.DriveConstants.AngleToInchRatio;
+        this.right =  -angle.getTheda(AngleUnit.DEGREES) * Constants.DriveConstants.AngleToInchRatio;
         this.timeOut = timeOut;
     }
 

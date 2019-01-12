@@ -66,15 +66,15 @@ public class DriveRelative extends Action {
         TrapezoidalMotionProfile rightProfile = new TrapezoidalMotionProfile(forward, encoderParameters);
 
         if(forward == 0) {
-            leftProfile = new TrapezoidalMotionProfile(-Constants.WheelbaseWidth * theda.getTheda(AngleUnit.RADIANS), encoderParameters);
-            rightProfile = new TrapezoidalMotionProfile(Constants.WheelbaseWidth * theda.getTheda(AngleUnit.RADIANS), encoderParameters);
+            leftProfile = new TrapezoidalMotionProfile(-Constants.DriveConstants.WheelbaseWidth * theda.getTheda(AngleUnit.RADIANS), encoderParameters);
+            rightProfile = new TrapezoidalMotionProfile(Constants.DriveConstants.WheelbaseWidth * theda.getTheda(AngleUnit.RADIANS), encoderParameters);
         } else if(theda.getTheda(AngleUnit.DEGREES) != 0) {
             double radius = forward / theda.getTheda(AngleUnit.RADIANS);
 
             // This is a ratio between the center radius and outer and inner radii
             // It is equal to the ratio between the center arc length and outer and inner arc lengths
-            double slower = (radius - (Constants.WheelbaseWidth/2.0)) / radius;
-            double faster = (radius + (Constants.WheelbaseWidth/2.0)) / radius;
+            double slower = (radius - (Constants.DriveConstants.WheelbaseWidth/2.0)) / radius;
+            double faster = (radius + (Constants.DriveConstants.WheelbaseWidth/2.0)) / radius;
 
             // Multiple the "Gains"
             if(theda.getTheda(AngleUnit.DEGREES) > 0) {

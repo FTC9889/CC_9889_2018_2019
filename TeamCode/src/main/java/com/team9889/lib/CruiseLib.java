@@ -29,9 +29,9 @@ public class CruiseLib {
     }
 
     public static double limitValue(double val, double max) {
-        if(val > max) {
+        if(val > Math.abs(max)) {
             return max;
-        } else if(val < -max) {
+        } else if(val < -Math.abs(max)) {
             return -max;
         } else {
             return val;
@@ -39,9 +39,9 @@ public class CruiseLib {
     }
 
     public static double limitValue(double val, double max, double min) {
-        if(val > max) {
+        if(val > Math.abs(max)) {
             return max;
-        } else if(val < min) {
+        } else if(val < -Math.abs(min)) {
             return min;
         } else {
             return val;

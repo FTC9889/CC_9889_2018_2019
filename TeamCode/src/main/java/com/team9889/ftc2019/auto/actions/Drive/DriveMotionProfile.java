@@ -29,7 +29,7 @@ public class DriveMotionProfile extends Action {
             new MotionProfileFollower(0, 0, 0.7306, 0.2);
 
     public DriveMotionProfile(double distance) {
-        this.distance = distance / Constants.ENCODER_TO_DISTANCE_RATIO;
+        this.distance = distance / Constants.DriveConstants.ENCODER_TO_DISTANCE_RATIO;
     }
 
     @Override

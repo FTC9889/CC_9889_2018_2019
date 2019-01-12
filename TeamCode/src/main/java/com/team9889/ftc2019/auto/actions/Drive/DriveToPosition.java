@@ -1,13 +1,12 @@
 package com.team9889.ftc2019.auto.actions.Drive;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.team9889.ftc2019.Constants;
 import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.subsystems.Drive;
 import com.team9889.ftc2019.subsystems.Robot;
 import com.team9889.lib.CruiseLib;
 import com.team9889.lib.control.controllers.PID;
-
-import static com.team9889.ftc2019.Constants.ENCODER_TO_DISTANCE_RATIO;
 
 /**
  * Created by MannoMation on 11/2/2018.
@@ -40,8 +39,8 @@ public class DriveToPosition extends Action {
         rightPid = new PID(0.005, 0.0000001, 0.001);
 
         mDrive.DriveControlState(Drive.DriveControlStates.POWER);
-        leftTick = mDrive.getLeftTicks() + (int)(left / ENCODER_TO_DISTANCE_RATIO);
-        rightTick = mDrive.getRightTicks() + (int)(right / ENCODER_TO_DISTANCE_RATIO);
+        leftTick = mDrive.getLeftTicks() + (int)(left / Constants.DriveConstants.ENCODER_TO_DISTANCE_RATIO);
+        rightTick = mDrive.getRightTicks() + (int)(right / Constants.DriveConstants.ENCODER_TO_DISTANCE_RATIO);
         time = new ElapsedTime();
     }
 
@@ -52,10 +51,7 @@ public class DriveToPosition extends Action {
         LeftPower = CruiseLib.limitValue(LeftPower, .7);
         RightPower = CruiseLib.limitValue(RightPower, .7);
 
-
-
         mDrive.setLeftRightPower(LeftPower, RightPower);
-
     }
 
     @Override
