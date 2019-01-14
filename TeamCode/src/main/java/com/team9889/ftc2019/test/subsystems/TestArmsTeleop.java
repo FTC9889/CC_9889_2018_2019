@@ -9,11 +9,11 @@ import com.team9889.ftc2019.Team9889Linear;
 @TeleOp
 public class TestArmsTeleop extends Team9889Linear {
 
-    double leftShoulder = 0.23;
-    double leftElbow = 0.13;
+    double leftShoulder = 0;
+    double leftElbow = .131;
 
-    double rightShoulder = 0.9;
-    double rightElbow = 0.72;
+    double rightShoulder = .998;
+    double rightElbow = .844;
 
     double dp = 0.001;
 

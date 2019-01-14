@@ -5,9 +5,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.Constants;
-import com.team9889.lib.control.motion.MotionProfile;
-import com.team9889.lib.control.motion.ProfileParameters;
-import com.team9889.lib.control.motion.TrapezoidalMotionProfile;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -48,6 +45,7 @@ public class Arms extends Subsystem{
             currentArmsState = ArmStates.NULL;
 
             setArmsStates(ArmStates.STORED);
+            update(new ElapsedTime());
             setLeftClawOpen(false);
             setRightClawOpen(false);
         }
@@ -73,10 +71,8 @@ public class Arms extends Subsystem{
 
     @Override
     public void update(ElapsedTime time) {
-
         if(currentArmsState != wantedArmsState){
-            if(first) { // Make sure that the previous wanted state is met.
-                switch (currentArmsState) {
+            switch (wantedArmsState) {
                     case STORED:
                         setLeftArm(0, .131);
                         setRightArm(.998, .844);
@@ -139,12 +135,14 @@ public class Arms extends Subsystem{
                             if (first) {
                                 startTime = time.milliseconds();
                                 first = false;
-                                setLeftArm(0, 0); // Out of the way position TODO
+                                setLeftArm(0.218, 0.039);
                             } else {
-                                if (time.milliseconds() - startTime > 70) {
-                                    setRightArm(0, 0); // New Position TODO
-                                } else if (time.milliseconds() - startTime > 100) {
-                                    setLeftArm(0, 0); // New Position TODO
+                                if (time.milliseconds() - startTime > 70
+                                        && time.milliseconds() - startTime < 100) {
+                                    setRightArm(.943, .88);
+                                } else if (time.milliseconds() - startTime > 100
+                                        && time.milliseconds() - startTime > 150) {
+                                    setLeftArm(.097, .125);
                                 } else if (time.milliseconds() - startTime > 150) {
                                     currentArmsState = ArmStates.GRABGOLDGOLD;
                                     first = true;
@@ -154,13 +152,14 @@ public class Arms extends Subsystem{
                             if (first) {
                                 startTime = time.milliseconds();
                                 first = false;
-                                setLeftArm(.065, .115);
+                                setLeftArm(.097, .125);
 
                             } else {
-                                if (time.milliseconds() - startTime > 70) {
-                                    setRightArm(.952, .885);
-                                } else if (time.milliseconds() - startTime > 170) {
-                                    currentArmsState = ArmStates.GRABGOLDGOLD;
+                                if (time.milliseconds() - startTime > 200 &&
+                                        time.milliseconds() - startTime < 400) {
+                                    setRightArm(.943, .88);
+                                } else if (time.milliseconds() - startTime > 400) {
+                                    currentArmsState = wantedArmsState;
                                     first = true;
                                 }
                             }
@@ -172,28 +171,28 @@ public class Arms extends Subsystem{
                             if (first) {
                                 startTime = time.milliseconds();
                                 first = false;
-                                setLeftArm(0, 0); // Out of the way position TODO
-
+                                setRightArm(0.847, 0.962);
                             } else {
-                                if (time.milliseconds() - startTime > 70) {
-                                    setRightArm(0, 0); // New Position TODO
-                                } else if (time.milliseconds() - startTime > 100) {
-                                    setLeftArm(0, 0); // New Position TODO
+                                if (time.milliseconds() - startTime > 70
+                                        && time.milliseconds() - startTime < 100) {
+                                    setLeftArm(0.096, 0.185);
+                                } else if (time.milliseconds() - startTime > 100
+                                        && time.milliseconds() - startTime > 150) {
+                                    setRightArm(0.949, 0.943);
                                 } else if (time.milliseconds() - startTime > 150) {
                                     currentArmsState = ArmStates.GRABGOLDGOLD;
                                     first = true;
                                 }
-
                             }
                         } else {
                             if (first) {
                                 startTime = time.milliseconds();
                                 first = false;
-                                setLeftArm(0, 0);// New Position TODO
+                                setLeftArm(0.096, 0.185);
 
                             } else {
                                 if (time.milliseconds() - startTime > 70) {
-                                    setRightArm(0, 0); // New Position TODO
+                                    setRightArm(0.949, 0.943);
                                 } else if (time.milliseconds() - startTime > 170) {
                                     currentArmsState = ArmStates.GRABGOLDGOLD;
                                     first = true;
@@ -203,7 +202,6 @@ public class Arms extends Subsystem{
                         }
                         break;
                 } // End of Switch
-            }
         } else { // Current == Wanted
             RobotLog.a("Arms all Ready in Position");
         }
@@ -239,16 +237,24 @@ public class Arms extends Subsystem{
 
     public  void setLeftClawOpen(boolean open){
         if(open)
-            leftClaw.setPosition(.6);
+            leftClaw.setPosition(.215);
         else
-            leftClaw.setPosition(.9);
+            leftClaw.setPosition(.958);
     }
 
     public void setRightClawOpen(boolean open){
         if (open)
-            rightClaw.setPosition(.6);
+            rightClaw.setPosition(.116);
         else
-            rightClaw.setPosition(.9);
+            rightClaw.setPosition(.833);
+    }
+
+    public boolean bothOpen() {
+        return getLeftClawPosition() == .215 && getRightClawPosition() == .116;
+    }
+
+    public boolean isCurrentStateWantedState(){
+        return(currentArmsState == wantedArmsState);
     }
 
     public void setArmsStates(ArmStates state){
@@ -256,5 +262,10 @@ public class Arms extends Subsystem{
 
         if(wantedArmsState == ArmStates.GRABSILVERSILVER || wantedArmsState == ArmStates.GRABSILVERGOLD)
             wantedArmsState = ArmStates.GOLDGOLD;
+    }
+
+    @Override
+    public String toString() {
+        return "Arms";
     }
 }

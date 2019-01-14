@@ -65,10 +65,11 @@ public abstract class AutoModeBase extends Team9889Linear {
         waitForStart(true);
         autoTimer.reset();
 
-        if (opModeIsActive()) {
+        if (opModeIsActive() && !isStopRequested()) {
             run(currentAutoRunning);
-            finalAction();
         }
+
+        finalAction();
     }
 
     public abstract void run(AllianceColor allianceColor);
