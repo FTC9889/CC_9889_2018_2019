@@ -37,7 +37,7 @@ public class DriveRightMotor extends Action {
 
     @Override
     public void start() {
-        rightPid = new PID(0.002, 0.0, 0.025);
+        rightPid = new PID(0.003, 0.0, 0.025);
 
         mDrive.DriveControlState(Drive.DriveControlStates.POWER);
 

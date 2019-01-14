@@ -46,25 +46,20 @@ public class AutonomousCraterSideDouble extends AutoModeBase {
             runAction(new DriveTurn(new Rotation2d(-35, AngleUnit.DEGREES), 1500));
 
             ThreadAction(new IntakeInFront());
-            runAction(new Wait(300));
 
             runAction(new DriveToDistanceAndAngle(20, -135, 3000));
 
             runAction(new Outtake(-.8));
 
-            runAction(new DriveRightMotor(new Rotation2d(-105, AngleUnit.DEGREES), 3000));
+            runAction(new DriveRightMotor(new Rotation2d(-105, AngleUnit.DEGREES), 2000));
 
             runAction(new Intake());
-            runAction(new DriveToDistanceAndAngle(15, 120, 2000));
-            runAction(new DriveToDistanceAndAngle(-15, 120, 2000));
-            runAction(new IntakeStop());
-
-            Robot.getIntake().setHoppergatedown();
+            runAction(new Wait(500));
 
             runAction(new DriveRightMotor(new Rotation2d(105, AngleUnit.DEGREES), 3000));
             runAction(new DriveToDistanceAndAngle(-65, -137, 4000));
+            runAction(new IntakeStop());
 
-            Robot.getIntake().setHoppergateup();
             runAction(new Wait(400));
 
         } else{
@@ -76,12 +71,11 @@ public class AutonomousCraterSideDouble extends AutoModeBase {
                 runAction(new DriveToDistanceAndAngle(10, 0, 3000));
                 runAction(new DriveTurn(new Rotation2d(45, AngleUnit.DEGREES), 2000));
                 runAction(new DriveToDistanceAndAngle(20, 45, 1500));
+                ThreadAction(new IntakeZeroing());
                 runAction(new DriveToDistanceAndAngle(-20, 45, 1500));
 
-                ThreadAction(new IntakeZeroing());
-
                 // Face Wall
-                runAction(new DriveTurn(new Rotation2d(-130, AngleUnit.DEGREES), 3000));
+                runAction(new Turn(new Rotation2d(-90, AngleUnit.DEGREES), 3000));
                 runAction(new DriveToDistanceAndAngle(47.5, -90, 4000));
 
                 // Turn To Depot
@@ -96,6 +90,14 @@ public class AutonomousCraterSideDouble extends AutoModeBase {
                 runAction(new Outtake(-.5));
 
                 ThreadAction(new IntakeZeroing());
+
+                // Knock off second sample
+                runAction(new DriveRightMotor(new Rotation2d(45, AngleUnit.DEGREES), 1500));
+                runAction(new DriveToDistanceAndAngle(-12, -90, 1000));
+                runAction(new DriveToDistanceAndAngle(14, -90, 1000));
+                runAction(new DriveRightMotor(new Rotation2d(-45, AngleUnit.DEGREES), 1500));
+
+                // Drive to crater
                 runAction(new DriveToDistanceAndAngle(-70, -137, 4000));
 
             } else{ //Left
@@ -104,12 +106,22 @@ public class AutonomousCraterSideDouble extends AutoModeBase {
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 2000));
                 runAction(new DriveToDistanceAndAngle(24, -45, 3000));
                 ThreadAction(new IntakeZeroing());
-                runAction(new Turn(new Rotation2d(-90, AngleUnit.DEGREES), 2000));
-                runAction(new DriveToDistanceAndAngle(25, -90, 2500));
+                runAction(new Turn(new Rotation2d(-90, AngleUnit.DEGREES), 3000));
+                runAction(new DriveToDistanceAndAngle(20, -90, 2500));
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 1500));
                 ThreadAction(new IntakeInFront());
-                runAction(new DriveToDistanceAndAngle(50, -135, 3000));
-                runAction(new Outtake(-.5));
+                runAction(new DriveToDistanceAndAngle(43, -135, 3000));
+                runAction(new Outtake());
+
+                // Knock off second sample
+                runAction(new DriveRightMotor(new Rotation2d(-90, AngleUnit.DEGREES), 1500));
+                runAction(new DriveToDistanceAndAngle(15, 135, 1000));
+                runAction(new Intake());
+                runAction(new Wait(500));
+                runAction(new DriveToDistanceAndAngle(-12, 135, 1000));
+                runAction(new DriveRightMotor(new Rotation2d(90, AngleUnit.DEGREES), 1500));
+
+                runAction(new IntakeStop());
                 ThreadAction(new IntakeZeroing());
                 runAction(new DriveToDistanceAndAngle(-70, -135, 4000));
 

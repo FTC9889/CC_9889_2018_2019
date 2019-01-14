@@ -15,7 +15,12 @@ import java.util.List;
 
 public class Robot extends Subsystem{
 
+    public enum MineralPositions{
+        GOLDGOLD, SILVERSILVER, SILVERGOLD
+    }
+
     private static Robot mInstance = null;
+    private ElapsedTime clawTimer = new ElapsedTime();
 
     public static Robot getInstance() {
         if(mInstance == null)
@@ -63,7 +68,9 @@ public class Robot extends Subsystem{
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
         for (Subsystem subsystem: subsystems){
+            telemetry.addData(subsystem.toString(), "");
             subsystem.outputToTelemetry(telemetry);
+            telemetry.addLine();
         }
     }
 
@@ -107,43 +114,85 @@ public class Robot extends Subsystem{
 
     public Arms getArms() {return mArms;}
 
-//    public void setMineralPositions(Arms.MineralPositions state){
-//        switch (state){
-//            case GOLDGOLD:
-//                armTimer.reset();
-//                getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
-//                if (getArms().getLeftElbowPosition() <= .115 && getLeftShoulderPosition() <= .065 && getRightElbowPosition() >= .88 && getRightShoulderPosition() >= .95) {
-//                    setRightClawOpen(false);
-//                    setLeftClawOpen(false);
-//                    if (getLeftClawPosition() <= .6 && getRightClawPosition() <= .6) {
-//                        Robot.getInstance().getLift().setLiftState(Lift.LiftStates.SCOREINGHEIGHT);
-//                        if (Robot.getInstance().getLift().getHeight() >= 13) {
-//                            setArmsStates(Arms.ArmStates.GOLDGOLD);
-//                        }
-//                    }
-//                }
-//                break;
-//
-//            case SILVERSILVER:
-//                getLift().setLiftState();
-//                getArms().setArmsStates(Arms.ArmStates.GRABSILVERSILVER);
-//
-//                getArms().setRightClawOpen(false);
-//                getArms().setLeftClawOpen(false);
-//
-//                Robot.getInstance().getLift().setLiftState(Lift.LiftStates.SCOREINGHEIGHT);
-//
-//                getArms().setArmsStates(Arms.ArmStates.SILVERSILVER);
-//                break;
-//
-//            case SILVERGOLD:
-//                getArms().setArmsStates(Arms.ArmStates.GRABSILVERSILVER);
-//                getArms().setRightClawOpen(false);
-//                getArms().setLeftClawOpen(false);
-//                Robot.getInstance().getLift().setLiftState(Lift.LiftStates.SCOREINGHEIGHT);
-//                getArms().setArmsStates(Arms.ArmStates.SILVERGOLD);
-//                break;
-//
-//        }
-//    }
+    private int tracker = 0;
+
+    public void resetTracker(){
+        tracker = 0;
+    }
+
+    public void setMineralPositions(MineralPositions state){
+        switch (state){
+            case GOLDGOLD:
+                switch (tracker) {
+                    case 0:
+                        getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
+                        getArms().setRightClawOpen(true);
+                        getArms().setLeftClawOpen(true);
+                        if(getArms().isCurrentStateWantedState())
+                            tracker++;
+                        break;
+                    case 1:
+                        getLift().setLiftState(Lift.LiftStates.DOWN);
+                        if(getLift().isCurrentWantedState()) {
+                            tracker++;
+                            clawTimer.reset();
+                        }
+                        break;
+                    case 2:
+                        getArms().setRightClawOpen(false);
+                        getArms().setLeftClawOpen(false);
+                        if (clawTimer.milliseconds() > 1000)
+                            tracker++;
+                        break;
+                    case 3:
+                        getLift().setLiftState(Lift.LiftStates.SCOREINGHEIGHT);
+                        if (getLift().isCurrentWantedState())
+                            tracker++;
+                        break;
+                    case 4:
+                        getArms().setArmsStates(Arms.ArmStates.GOLDGOLD);
+                        if(getArms().isCurrentStateWantedState())
+                            tracker++;
+                        break;
+                    case 5:
+                        if(getArms().bothOpen())
+                            tracker++;
+                        break;
+                    case 6:
+                        getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
+                        if(getArms().isCurrentStateWantedState())
+                            tracker++;
+                        break;
+                    case 7:
+                        getLift().setLiftState(Lift.LiftStates.READY);
+                        if(getLift().isCurrentWantedState())
+                            tracker++;
+                        break;
+                }
+                break;
+
+            case SILVERSILVER:
+                getLift().setLiftState(Lift.LiftStates.READY);
+                getArms().setArmsStates(Arms.ArmStates.GRABSILVERSILVER);
+
+                getArms().setRightClawOpen(false);
+                getArms().setLeftClawOpen(false);
+
+                Robot.getInstance().getLift().setLiftState(Lift.LiftStates.SCOREINGHEIGHT);
+
+                getArms().setArmsStates(Arms.ArmStates.SILVERSILVER);
+                break;
+
+            case SILVERGOLD:
+                getArms().setArmsStates(Arms.ArmStates.GRABSILVERSILVER);
+                getArms().setRightClawOpen(false);
+                getArms().setLeftClawOpen(false);
+                Robot.getInstance().getLift().setLiftState(Lift.LiftStates.SCOREINGHEIGHT);
+                getArms().setArmsStates(Arms.ArmStates.SILVERGOLD);
+                break;
+
+        }
+
+        RobotLog.d("setMineralPositions has been updated");
+    }
 }

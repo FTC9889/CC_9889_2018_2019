@@ -150,4 +150,9 @@ public class Camera extends Subsystem{
         detector.disable();
     }
 
+    @Override
+    public String toString() {
+        return "Camera";
+    }
+
 }

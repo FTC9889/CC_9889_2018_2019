@@ -231,5 +231,10 @@ public class Intake extends Subsystem{
     public void setIntakeOut(){
 //        setIntakeExtenderPosition(getCraterDistance() + 3);
     }
+
+    @Override
+    public String toString() {
+        return "Intake";
+    }
 }
 
