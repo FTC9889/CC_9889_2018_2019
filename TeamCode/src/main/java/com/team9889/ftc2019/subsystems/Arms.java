@@ -33,7 +33,7 @@ public class Arms extends Subsystem{
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
-        this.leftShoulder = hardwareMap.get(Servo.class, Constants.ArmConstants.kLeftShoulderID);
+        this.leftShoulder = hardwareMap.get(Servo.class, Constants.ArmConstants.kLeftShoulderId);
         this.rightShoulder = hardwareMap.get(Servo.class, Constants.ArmConstants.kRightShoulderId);
         this.leftElbow = hardwareMap.get(Servo.class, Constants.ArmConstants.kLeftElbowId);
         this.rightElbow = hardwareMap.get(Servo.class, Constants.ArmConstants.kRightElbowId);

@@ -7,8 +7,6 @@ package com.team9889.ftc2019;
 
 public class Constants {
 
-    public static final boolean isSimulation = true;
-
     //VuMark Licence Key
     public final static String kVuforiaLicenceKey = "AUUHzRL/////AAABmaGWp2jobkGOsFjHcltHEso2M1NH" +
             "Ko/nBDlUfwXKZBwui9l88f5YAT31+8u5yoy3IEJ1uez7rZrIyLdyR4cCMC+a6I7X/EzkR1F094ZegAsXdg9n" +
@@ -49,13 +47,14 @@ public class Constants {
 
     //Settings for Intake
     public static class IntakeConstants {
-        public final static String kIntakeMotorID = "li";
-        public final static String kIntakeExtender = "intakeextender";
-        public final static String kIntakeRotator = "intakerotator";
-        public final static String kHopperGate = "hoppergate";
-        public final static String kIntakeSwitch = "intakescoringswitch";
-        public final static String kIntakeInSwitch = "intakeinswitch";
-        public final static String kCraterDetector = "craterdetector";
+        public final static String kIntakeMotorId = "li";
+        public final static String kIntakeExtenderId = "intakeextender";
+        public final static String kIntakeRotatorId = "intakerotator";
+        public final static String kHopperGateId = "hoppergate";
+        public final static String kIntakeSwitchId = "intakescoringswitch";
+        public final static String kIntakeInSwitchId = "intakeinswitch";
+        public final static String kCraterDetectorId = "craterdetector";
+        public final static String kIntakeCounterId = "counter";
         public final static double kIntakeTicksPerRev = 1120;  //Neverest 40
         public final static double kIntakeSpoolDiameter = 1.5;
         public final static double kIntakeTicksToInchRatio = kIntakeSpoolDiameter * Math.PI / kIntakeTicksPerRev;
@@ -71,7 +70,7 @@ public class Constants {
 
     //Settings for Arms
     public static class ArmConstants {
-        public final static String kLeftShoulderID = "leftshoulder";
+        public final static String kLeftShoulderId = "leftshoulder";
         public final static String kRightShoulderId = "rightshoulder";
         public final static String kLeftElbowId = "leftelbow";
         public final static String kRightElbowId = "rightelbow";
@@ -89,10 +88,10 @@ public class Constants {
 
     //Settings for Lift
     public static class LiftConstants {
-        public final static String kLeftLift = "leftlift";
-        public final static String kRightLift = "rightlift";
-        public final static String kLiftUpperLimitSensor = "liftupperlimitsensor";
-        public final static String kLiftLowerLimitSensor = "liftlowerlimitsensor";
+        public final static String kLeftLiftId = "leftlift";
+        public final static String kRightLiftId = "rightlift";
+        public final static String kLiftUpperLimitSensorId = "liftupperlimitsensor";
+        public final static String kLiftLowerLimitSensorId = "liftlowerlimitsensor";
         public final static double kMaxLiftHeight = 100; // tbd
         public final static double kLiftTicksPerRev = 1120; // ticks
         public final static double kLiftSpoolDiameter = 1.25; // in
@@ -108,7 +107,7 @@ public class Constants {
 
     //Settings for Camera
     public static class CameraConstants {
-        public final static String kCameraXAxis = "cameraxaxis";
-        public final static String kCameraYAxis = "camerayaxis";
+        public final static String kCameraXAxisId = "cameraxaxis";
+        public final static String kCameraYAxisId = "camerayaxis";
     }
 }

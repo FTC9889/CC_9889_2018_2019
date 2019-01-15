@@ -23,9 +23,9 @@ public class AutonomousDepotSideSingleSample extends AutoModeBase {
         ElapsedTime timer = new ElapsedTime();
 
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
-        while(opModeIsActive() && !Robot.getLift().inPosition()) {
-            Robot.getLift().setLiftState(Lift.LiftStates.READY);
-        }
+//        while(opModeIsActive() && !Robot.getLift().inPosition()) {
+//            Robot.getLift().setLiftState(Lift.LiftStates.READY);
+//        }
 
         runAction(new Wait(1250));
 

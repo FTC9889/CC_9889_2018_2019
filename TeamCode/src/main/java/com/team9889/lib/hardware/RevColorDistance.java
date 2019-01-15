@@ -24,8 +24,10 @@ public class RevColorDistance{
         this.id = id;
 
         if (hardwareMap != null) {
-            if(sensorColor==null)
+            if(sensorColor==null) {
                 sensorColor = hardwareMap.get(ColorSensor.class, id);
+                sensorColor.enableLed(false);
+            }
 
             if(sensorDistance==null)
                 sensorDistance = hardwareMap.get(DistanceSensor.class, id);
@@ -34,9 +36,9 @@ public class RevColorDistance{
         }
     }
 
-    public double getCm(){
+    public double getIN(){
         if(sensorDistance != null)
-            return sensorDistance.getDistance(DistanceUnit.CM);
+            return sensorDistance.getDistance(DistanceUnit.INCH);
         else
             return 0;
     }

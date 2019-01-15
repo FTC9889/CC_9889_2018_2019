@@ -1,6 +1,7 @@
 package com.team9889.ftc2019.auto.modes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.team9889.ftc2019.auto.AutoModeBase;
 import com.team9889.ftc2019.auto.actions.Drive.DriveToPosition;
 import com.team9889.ftc2019.auto.actions.Drive.DriveTurn;
@@ -15,14 +16,15 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
  * Created by MannoMation on 11/3/2018.
  */
 @Autonomous
+@Disabled
 public class AutonomousCraterSideSingleSample extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {
 
             Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
-            while(opModeIsActive() && !Robot.getLift().inPosition()) {
-                Robot.getLift().setLiftState(Lift.LiftStates.READY);
-            }
+//            while(opModeIsActive() && !Robot.getLift().inPosition()) {
+//                Robot.getLift().setLiftState(Lift.LiftStates.READY);
+//            }
 
             runAction(new Wait(1250));
 

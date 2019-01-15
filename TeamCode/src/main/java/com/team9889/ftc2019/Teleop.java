@@ -2,7 +2,6 @@ package com.team9889.ftc2019;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.team9889.ftc2019.subsystems.Arms;
 import com.team9889.ftc2019.subsystems.Camera;
 import com.team9889.ftc2019.subsystems.Intake;
 import com.team9889.ftc2019.subsystems.Lift;
@@ -101,10 +100,10 @@ public class Teleop extends Team9889Linear{
                 Robot.getCamera().setCameraPosition(Camera.CameraPositions.TWO_GOLD);
 
             if (gamepad2.left_stick_button)
-                Robot.getIntake().setHoppergatedown();
+                Robot.getIntake().setHopperGateDown();
 
             else if (gamepad2.right_stick_button)
-                Robot.getIntake().setHoppergateup();
+                Robot.getIntake().setHopperGateUp();
 
             updateTelemetry();
         }

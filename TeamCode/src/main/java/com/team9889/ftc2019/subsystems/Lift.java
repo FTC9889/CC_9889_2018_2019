@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.Constants;
 import com.team9889.lib.control.controllers.PID;
@@ -28,7 +27,7 @@ public class Lift extends Subsystem {
     private LiftStates currentState = LiftStates.NULL;
     private LiftStates wantedState = LiftStates.NULL;
 
-    public boolean inPosition() {
+    private boolean inPosition() {
         return Math.abs(pid.getError()) < 0.5;
     }
 
@@ -38,11 +37,11 @@ public class Lift extends Subsystem {
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
-        left = hardwareMap.get(DcMotorEx.class, Constants.LiftConstants.kLeftLift);
-        right = hardwareMap.get(DcMotorEx.class, Constants.LiftConstants.kRightLift);
+        left = hardwareMap.get(DcMotorEx.class, Constants.LiftConstants.kLeftLiftId);
+        right = hardwareMap.get(DcMotorEx.class, Constants.LiftConstants.kRightLiftId);
 
-        lowerLimit = hardwareMap.get(DigitalChannel.class, Constants.LiftConstants.kLiftLowerLimitSensor);
-        upperLimit = hardwareMap.get(DigitalChannel.class, Constants.LiftConstants.kLiftUpperLimitSensor);
+        lowerLimit = hardwareMap.get(DigitalChannel.class, Constants.LiftConstants.kLiftLowerLimitSensorId);
+        upperLimit = hardwareMap.get(DigitalChannel.class, Constants.LiftConstants.kLiftUpperLimitSensorId);
 
         right.setDirection(DcMotorSimple.Direction.REVERSE);
         left.setDirection(DcMotorSimple.Direction.REVERSE);
