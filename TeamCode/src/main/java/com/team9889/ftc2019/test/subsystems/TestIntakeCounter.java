@@ -14,7 +14,7 @@ public class TestIntakeCounter extends Team9889Linear {
         waitForStart(false);
 
         while (opModeIsActive()){
-            Robot.getIntake().updateTestCounter();
+//            Robot.getIntake().updateTestCounter();
 
             Robot.getIntake().setIntakeRotatorState(Intake.RotatorStates.DOWN);
 
@@ -23,7 +23,7 @@ public class TestIntakeCounter extends Team9889Linear {
             else
                 Robot.getIntake().setIntakePower(0);
 
-            telemetry.addData("Counted", Robot.getIntake().numberOfMinerals);
+//            telemetry.addData("Counted", Robot.getIntake().numberOfMinerals);
             telemetry.update();
         }
     }

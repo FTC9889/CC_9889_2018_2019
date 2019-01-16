@@ -105,7 +105,16 @@ public class Teleop extends Team9889Linear{
             else if (gamepad2.right_stick_button)
                 Robot.getIntake().setHopperGateUp();
 
+//            int[] color = new int[3];
+//            color[0] = ((int)(Robot.getIntake().revBackHopper.red() * 1000))/1000;
+//            color[1] = ((int)(Robot.getIntake().revBackHopper.green() * 1000))/1000;
+//            color[2] = ((int)(Robot.getIntake().revBackHopper.blue() * 1000))/1000;
+
+            setBackground(Robot.getIntake().backColor());
+
             updateTelemetry();
         }
+
+        finalAction();
     }
 }

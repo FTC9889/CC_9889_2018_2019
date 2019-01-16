@@ -1,6 +1,7 @@
 package com.team9889.ftc2019.subsystems;
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import android.graphics.Color;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
@@ -9,13 +10,15 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.team9889.ftc2019.Constants;
-import com.team9889.ftc2019.Teleop2;
+import com.team9889.lib.CruiseLib;
 import com.team9889.lib.control.controllers.PID;
 import com.team9889.lib.hardware.ModernRoboticsUltrasonic;
 import com.team9889.lib.hardware.RevColorDistance;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+import java.util.Arrays;
 
 /**
  * Created by licorice17 on 9/14/2018.
@@ -25,9 +28,8 @@ public class Intake extends Subsystem{
     private DcMotor intakeMotor, extender;
     private Servo intakeRotator, hopperGate;
     private DigitalChannel scoringSwitch, inSwitch;
-    private DigitalChannel mineralCounter;
     private ModernRoboticsUltrasonic craterDetector;
-    private RevColorDistance test;
+    public RevColorDistance revBackHopper, revFrontHopper;
 
     // PID for extending the intake
     private PID extenderPID = new PID(0.004, 0.0, 0.2);
@@ -63,11 +65,11 @@ public class Intake extends Subsystem{
 
         scoringSwitch = hardwareMap.get(DigitalChannel.class, Constants.IntakeConstants.kIntakeSwitchId);
         inSwitch = hardwareMap.get(DigitalChannel.class, Constants.IntakeConstants.kIntakeInSwitchId);
-        mineralCounter = hardwareMap.get(DigitalChannel.class, Constants.IntakeConstants.kIntakeCounterId);
 
         craterDetector = new ModernRoboticsUltrasonic(Constants.IntakeConstants.kCraterDetectorId, hardwareMap);
 
-        test = new RevColorDistance("test", hardwareMap);
+        revBackHopper = new RevColorDistance(Constants.IntakeConstants.kBackIntakeDetectorId, hardwareMap);
+        revFrontHopper = new RevColorDistance(Constants.IntakeConstants.kFrontIntakeDetectorId, hardwareMap);
 
         if (auto) {
             setIntakeRotatorState(RotatorStates.UP);
@@ -90,6 +92,10 @@ public class Intake extends Subsystem{
 
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
+        telemetry.addData("Back Detected", backHopperDetector());
+        telemetry.addData("Front Detected", frontHopperDetector());
+        telemetry.addData("Hsv Back", Arrays.toString(revBackHopper.hsv()));
+        telemetry.addData("Hsv Front", Arrays.toString(revFrontHopper.hsv()));
         telemetry.addData("IntakePower", intakeMotor.getPower());
         telemetry.addData("Intake Extender", extender.getCurrentPosition());
         telemetry.addData("Angle of Intake", intakeRotator.getPosition());
@@ -250,32 +256,54 @@ public class Intake extends Subsystem{
         return !scoringSwitch.getState();
     }
 
-    public void updateCounter(){
-        if(!mineralCounter.getState()) {
-            if(firstPress) {
-                numberOfMinerals++;
-
-                mineralTimer.reset();
-                firstPress = false;
-            } else {
-                if(mineralTimer.milliseconds() > millisecondWatcher)
-                    firstPress = true;
-            }
-        }
+    public boolean frontHopperDetector() {
+        return revFrontHopper.getIN() < 2.2;
     }
 
-    public void updateTestCounter() {
-        if(test.getIN() > 1){
-            if(firstPress) {
-                numberOfMinerals++;
+    public boolean backHopperDetector() {
+        return revBackHopper.getIN() < 2.2;
+    }
 
-                mineralTimer.reset();
-                firstPress = false;
-            } else {
-                if(mineralTimer.milliseconds() > millisecondWatcher)
-                    firstPress = true;
-            }
-        }
+    public boolean twoMineralsDectected() {
+        return frontHopperDetector() && backHopperDetector();
+    }
+
+    public int backColor() {
+        double[] hueThresholdGold = {30, 39};
+        double[] saturationThresholdGold = {0.5, 0.7};
+        double[] valueThresholdGold = {0, 100};
+
+        double[] hueThresholdSilver = {65, 74};
+        double[] saturationThresholdSilver = {0.3, 0.4};
+        double[] valueThresholdSilver = {30, 39};
+
+        if(CruiseLib.isBetween(revBackHopper.hsv()[0], hueThresholdGold[0], hueThresholdGold[1])
+                && CruiseLib.isBetween(revBackHopper.hsv()[1], saturationThresholdGold[0], saturationThresholdGold[1]))
+            return Color.YELLOW;
+        else if(CruiseLib.isBetween(revBackHopper.hsv()[0], hueThresholdSilver[0], hueThresholdSilver[1])
+            && CruiseLib.isBetween(revBackHopper.hsv()[1], saturationThresholdSilver[0], saturationThresholdSilver[1]))
+            return Color.WHITE;
+        else
+            return Color.GREEN;
+    }
+
+    public int frontColor() {
+        double[] hueThresholdGold = {40, 50};
+        double[] saturationThresholdGold = {0.4, 0.6};
+        double[] valueThresholdGold = {0, 100};
+
+        double[] hueThresholdSilver = {90, 105};
+        double[] saturationThresholdSilver = {0.2, 0.35};
+        double[] valueThresholdSilver = {30, 39};
+
+        if(CruiseLib.isBetween(revFrontHopper.hsv()[0], hueThresholdGold[0], hueThresholdGold[1])
+                && CruiseLib.isBetween(revFrontHopper.hsv()[1], saturationThresholdGold[0], saturationThresholdGold[1]))
+            return Color.YELLOW;
+        else if(CruiseLib.isBetween(revFrontHopper.hsv()[0], hueThresholdSilver[0], hueThresholdSilver[1])
+                && CruiseLib.isBetween(revFrontHopper.hsv()[1], saturationThresholdSilver[0], saturationThresholdSilver[1]))
+            return Color.WHITE;
+        else
+            return Color.GREEN;
     }
 
     @Override

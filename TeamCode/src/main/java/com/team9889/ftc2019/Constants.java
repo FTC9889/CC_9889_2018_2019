@@ -55,6 +55,10 @@ public class Constants {
         public final static String kIntakeInSwitchId = "intakeinswitch";
         public final static String kCraterDetectorId = "craterdetector";
         public final static String kIntakeCounterId = "counter";
+
+        public final static String kBackIntakeDetectorId = "backRev";
+        public final static String kFrontIntakeDetectorId = "frontRev";
+
         public final static double kIntakeTicksPerRev = 1120;  //Neverest 40
         public final static double kIntakeSpoolDiameter = 1.5;
         public final static double kIntakeTicksToInchRatio = kIntakeSpoolDiameter * Math.PI / kIntakeTicksPerRev;

@@ -1,5 +1,7 @@
 package com.team9889.lib.hardware;
 
+import android.graphics.Color;
+
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -53,5 +55,11 @@ public class RevColorDistance{
 
     public double blue(){
         return sensorColor.blue();
+    }
+
+    public float[] hsv() {
+        float[] hsvOutput = new float[3];
+        Color.RGBToHSV((int)red()*100, (int)green()*100, (int)blue()*100, hsvOutput);
+        return hsvOutput;
     }
 }
