@@ -51,6 +51,7 @@ public class Constants {
         public final static String kIntakeExtenderId = "intakeextender";
         public final static String kIntakeRotatorId = "intakerotator";
         public final static String kHopperGateId = "hoppergate";
+        public final static String kHopperCoverID = "hoppercover";
         public final static String kIntakeSwitchId = "intakescoringswitch";
         public final static String kIntakeInSwitchId = "intakeinswitch";
         public final static String kCraterDetectorId = "craterdetector";

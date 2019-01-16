@@ -1,6 +1,7 @@
 package com.team9889.ftc2019.auto.modes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.auto.AutoModeBase;
 import com.team9889.ftc2019.auto.actions.Drive.DriveToPosition;
@@ -17,6 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
  */
 
 @Autonomous
+@Disabled
 public class AutonomousDepotSideSingleSample extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {

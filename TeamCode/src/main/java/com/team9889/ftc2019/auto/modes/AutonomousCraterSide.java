@@ -8,6 +8,7 @@ import com.team9889.ftc2019.auto.actions.Drive.Turn;
 import com.team9889.ftc2019.auto.actions.Intake.IntakeInFront;
 import com.team9889.ftc2019.auto.actions.Intake.IntakeZeroing;
 import com.team9889.ftc2019.auto.actions.Intake.Outtake;
+import com.team9889.ftc2019.auto.actions.Lift.LiftLand;
 import com.team9889.ftc2019.auto.actions.Wait;
 import com.team9889.ftc2019.subsystems.Camera;
 import com.team9889.ftc2019.subsystems.Intake;
@@ -24,12 +25,9 @@ public class AutonomousCraterSide extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
-        /*
-        while(opModeIsActive() && !Robot.getLift().inPosition()) {
-            Robot.getLift().setLiftState(Lift.LiftStates.READY);
-        }
-        */
-        runAction(new IntakeInFront());
+        runAction(new LiftLand());
+
+        ThreadAction(new IntakeInFront());
         runAction(new Wait(1500));
 
         if (Robot.getCamera().isGoldInfront()){ // Middle

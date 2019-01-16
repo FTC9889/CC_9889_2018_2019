@@ -62,10 +62,10 @@ public class ScoringSimulator {
         int endgamePoints = (int)(mineralPoints((Endgame - hangTime), timePerCycle, 1, 2 * SilverinSilverCargoHold) + Latching);
 
         print("--Auton--");
-        print("Time left autonomous w/o minerals: " + autonomousTimeLeftWithoutMinerals);
+        print("Time left autonomous w/o backMinerals: " + autonomousTimeLeftWithoutMinerals);
         print("Number of Cycles by robot in auto: " + autonomousTimeLeftWithoutMinerals/timePerCycle);
         print("Minerals Scored: " + ((int)mineralPoints(autonomousTimeLeftWithoutMinerals, timePerCycle, 0, 2 * SilverinSilverCargoHold)/5));
-        print("Score with minerals: " + autoPointsWithMinerals);
+        print("Score with backMinerals: " + autoPointsWithMinerals);
 
         print("\n--Teleop--");
         print("Teleop Points: " + teleopPoints);

@@ -25,6 +25,11 @@ public class LiftLand extends Action {
 
     @Override
     public void update() {
+        if (Robot.getInstance().getLift().getHeight() > 10 && Robot.getInstance().getLift().getHeight() < 15){
+            Robot.getInstance().getDrive().setThrottleSteerPower(0.1, 0);
+        } else {
+            Robot.getInstance().getDrive().setThrottleSteerPower(0, 0);
+        }
         Robot.getInstance().getLift().update(timer);
     }
 
