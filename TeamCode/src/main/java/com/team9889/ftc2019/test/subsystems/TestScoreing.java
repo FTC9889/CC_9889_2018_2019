@@ -15,7 +15,7 @@ import com.team9889.ftc2019.subsystems.Arms;
 @TeleOp
 public class TestScoreing extends Team9889Linear {
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
 
     }
 /*
@@ -40,19 +40,19 @@ public class TestScoreing extends Team9889Linear {
                 switch (Minerals) {
 //                  GOLDGOLD
                     case 1:
-                        Robot.getArms().setMineralPositions(Arms.MineralPositions.GOLDGOLD);
+                        Robot.getArms().scoreingStateMachine(Arms.MineralPositions.GOLDGOLD);
                         Enum = true;
                         break;
 
 //                  SILVERSILVER
                     case 2:
-                        Robot.getArms().setMineralPositions(Arms.MineralPositions.SILVERSILVER);
+                        Robot.getArms().scoreingStateMachine(Arms.MineralPositions.SILVERSILVER);
                         Enum = true;
                         break;
 
 //                  SILVERGOLD
                     case 3:
-                        Robot.getArms().setMineralPositions(Arms.MineralPositions.SILVERGOLD);
+                        Robot.getArms().scoreingStateMachine(Arms.MineralPositions.SILVERGOLD);
                         Enum = true;
                         break;
                 }
@@ -62,19 +62,19 @@ public class TestScoreing extends Team9889Linear {
                 switch (Minerals) {
 //                  GOLDGOLD
                     case 1:
-                        Robot.getArms().setMineralPositions(Arms.MineralPositions.GOLDGOLD);
+                        Robot.getArms().scoreingStateMachine(Arms.MineralPositions.GOLDGOLD);
                         Enum = true;
                         break;
 
 //                  SILVERSILVER
                     case 2:
-                        Robot.getArms().setMineralPositions(Arms.MineralPositions.SILVERSILVER);
+                        Robot.getArms().scoreingStateMachine(Arms.MineralPositions.SILVERSILVER);
                         Enum = true;
                         break;
 
 //                  SILVERGOLD
                     case 3:
-                        Robot.getArms().setMineralPositions(Arms.MineralPositions.SILVERGOLD);
+                        Robot.getArms().scoreingStateMachine(Arms.MineralPositions.SILVERGOLD);
                         Enum = true;
                         break;
                 }

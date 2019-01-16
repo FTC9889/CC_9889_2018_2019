@@ -16,7 +16,7 @@ import com.team9889.lib.detectors.HopperDetector;
 public class TestHopperDetector extends LinearOpMode {
     HopperDetector detector;
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
 
             telemetry.addData("Status", "DogeCV 2018.0 - Gold Align Example");
             detector = new HopperDetector();

@@ -123,7 +123,7 @@ public class Dogeforia extends VuforiaLocalizerImpl {
                 VuforiaTrackablesImpl trackables = loadedTrackableSets.get(0);
                 int count = 0;
                 for(VuforiaTrackable trackable : trackables){
-                    if(trackable == null || ((VuforiaTrackableDefaultListener)trackable.getListener()) == null){
+                    if(trackable == null || trackable.getListener() == null){
                         continue;
                     }
                     if(((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible()){

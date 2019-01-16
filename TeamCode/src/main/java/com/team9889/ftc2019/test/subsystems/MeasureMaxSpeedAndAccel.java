@@ -22,7 +22,7 @@ public class MeasureMaxSpeedAndAccel extends Team9889Linear {
     ElapsedTime dt = new ElapsedTime();
     ElapsedTime timer = new ElapsedTime();
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
         waitForStart(true);
 
         FileWriter fileWriter = new FileWriter("speedData.csv");

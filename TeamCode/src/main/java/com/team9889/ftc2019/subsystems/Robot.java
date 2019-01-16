@@ -9,21 +9,29 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.team9889.ftc2019.subsystems.Robot.MineralPositions.NULL;
+
 /**
  * Created by joshua9889 on 3/28/2018.
  */
 
-public class Robot extends Subsystem{
+public class Robot extends Subsystem {
 
-    public enum MineralPositions{
-        GOLDGOLD, SILVERSILVER, SILVERGOLD
+    public boolean isLiftArmsDone = true;
+    public MineralPositions whichMineral = NULL;
+    public boolean isReady = true;
+    public boolean armsReadyForClaws;
+    public boolean intakeCruiseControl = true;
+
+    public enum MineralPositions {
+        GOLDGOLD, SILVERSILVER, SILVERGOLD, GOLDSILVER, NULL
     }
 
     private static Robot mInstance = null;
     private ElapsedTime clawTimer = new ElapsedTime();
 
     public static Robot getInstance() {
-        if(mInstance == null)
+        if (mInstance == null)
             mInstance = new Robot();
 
         return mInstance;
@@ -43,14 +51,14 @@ public class Robot extends Subsystem{
 
     /**
      * @param hardwareMap Hardware Map of the OpMode
-     * @param autonomous Are we running autonomous? (Used for gyros and the like)
+     * @param autonomous  Are we running autonomous? (Used for gyros and the like)
      */
     @Override
-    public void init(HardwareMap hardwareMap, boolean autonomous){
-        for (Subsystem subsystem: subsystems){
-            RobotLog.a("=========== Initialing "+subsystem.toString()+" ===========");
+    public void init(HardwareMap hardwareMap, boolean autonomous) {
+        for (Subsystem subsystem : subsystems) {
+            RobotLog.a("=========== Initialing " + subsystem.toString() + " ===========");
             subsystem.init(hardwareMap, autonomous);
-            RobotLog.a("=========== Finished Initialing "+subsystem.toString()+" ===========");
+            RobotLog.a("=========== Finished Initialing " + subsystem.toString() + " ===========");
         }
 
         timer.reset();
@@ -58,16 +66,16 @@ public class Robot extends Subsystem{
 
     @Override
     public void zeroSensors() {
-        for (Subsystem subsystem: subsystems){
-            RobotLog.a("=========== Zeroing "+subsystem.toString()+" ===========");
+        for (Subsystem subsystem : subsystems) {
+            RobotLog.a("=========== Zeroing " + subsystem.toString() + " ===========");
             subsystem.zeroSensors();
-            RobotLog.a("=========== Finished Zeroing "+subsystem.toString()+" ===========");
+            RobotLog.a("=========== Finished Zeroing " + subsystem.toString() + " ===========");
         }
     }
 
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
-        for (Subsystem subsystem: subsystems){
+        for (Subsystem subsystem : subsystems) {
             telemetry.addData(subsystem.toString(), "");
             subsystem.outputToTelemetry(telemetry);
             telemetry.addLine();
@@ -76,31 +84,34 @@ public class Robot extends Subsystem{
 
     @Override
     public void update(ElapsedTime time) {
-        for (Subsystem subsystem: subsystems) {
+        for (Subsystem subsystem : subsystems) {
             subsystem.update(timer);
         }
+
+        scoringStateMachine(whichMineral);
+
     }
 
     @Override
     public void test(Telemetry telemetry) {
-        for (Subsystem subsystem: subsystems){
-            RobotLog.a("=========== Testing "+subsystem.toString()+" ===========");
+        for (Subsystem subsystem : subsystems) {
+            RobotLog.a("=========== Testing " + subsystem.toString() + " ===========");
             subsystem.test(telemetry);
-            RobotLog.a("=========== Finished Testing "+subsystem.toString()+" ===========");
+            RobotLog.a("=========== Finished Testing " + subsystem.toString() + " ===========");
         }
     }
 
     @Override
     public void stop() {
-        for (Subsystem subsystem: subsystems){
+        for (Subsystem subsystem : subsystems) {
 
-            RobotLog.a("=========== Stopping "+subsystem.toString()+" ===========");
+            RobotLog.a("=========== Stopping " + subsystem.toString() + " ===========");
             subsystem.stop();
-            RobotLog.a("=========== Finished Stopping "+subsystem.toString()+" ===========");
+            RobotLog.a("=========== Finished Stopping " + subsystem.toString() + " ===========");
         }
     }
 
-    public Drive getDrive(){
+    public Drive getDrive() {
         return mDrive;
     }
 
@@ -108,32 +119,43 @@ public class Robot extends Subsystem{
         return mIntake;
     }
 
-    public Lift getLift() {return mLift;}
+    public Lift getLift() {
+        return mLift;
+    }
 
-    public Camera getCamera() {return mCamera;}
+    public Camera getCamera() {
+        return mCamera;
+    }
 
-    public Arms getArms() {return mArms;}
+    public Arms getArms() {
+        return mArms;
+    }
 
     private int tracker = 0;
 
-    public void resetTracker(){
+    public void resetTracker() {
         tracker = 0;
     }
 
-    public void setMineralPositions(MineralPositions state){
-        switch (state){
+    public void setWantedSuperStructure(MineralPositions mineralPositions) {
+        whichMineral = mineralPositions;
+    }
+
+    private void scoringStateMachine(MineralPositions state) {
+        switch (state) {
             case GOLDGOLD:
                 switch (tracker) {
                     case 0:
+                        isReady = false;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
                         getArms().setRightClawOpen(true);
                         getArms().setLeftClawOpen(true);
-                        if(getArms().isCurrentStateWantedState())
+                        if (getArms().isCurrentStateWantedState())
                             tracker++;
                         break;
                     case 1:
                         getLift().setLiftState(Lift.LiftStates.DOWN);
-                        if(getLift().isCurrentWantedState()) {
+                        if (getLift().isCurrentWantedState()) {
                             tracker++;
                             clawTimer.reset();
                         }
@@ -151,48 +173,203 @@ public class Robot extends Subsystem{
                         break;
                     case 4:
                         getArms().setArmsStates(Arms.ArmStates.GOLDGOLD);
-                        if(getArms().isCurrentStateWantedState())
+                        if (getArms().isCurrentStateWantedState()) {
+                            armsReadyForClaws = true;
                             tracker++;
+                        }
                         break;
                     case 5:
-                        if(getArms().bothOpen())
+                        if (getArms().bothOpen()) {
                             tracker++;
+                            armsReadyForClaws = false;
+                        }
                         break;
                     case 6:
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
-                        if(getArms().isCurrentStateWantedState())
+                        if (getArms().isCurrentStateWantedState())
                             tracker++;
                         break;
                     case 7:
-                        getLift().setLiftState(Lift.LiftStates.READY);
-                        if(getLift().isCurrentWantedState())
-                            tracker++;
+//                        getLift().setLiftState(Lift.LiftStates.READY);
+//                        if(getLift().isCurrentWantedState())
+                        tracker++;
+                        isReady = true;
                         break;
                 }
                 break;
 
             case SILVERSILVER:
-                getLift().setLiftState(Lift.LiftStates.READY);
-                getArms().setArmsStates(Arms.ArmStates.GRABSILVERSILVER);
-
-                getArms().setRightClawOpen(false);
-                getArms().setLeftClawOpen(false);
-
-                Robot.getInstance().getLift().setLiftState(Lift.LiftStates.SCOREINGHEIGHT);
-
-                getArms().setArmsStates(Arms.ArmStates.SILVERSILVER);
+                switch (tracker) {
+                    case 0:
+                        isReady = false;
+                        getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
+                        getArms().setRightClawOpen(true);
+                        getArms().setLeftClawOpen(true);
+                        if (getArms().isCurrentStateWantedState())
+                            tracker++;
+                        break;
+                    case 1:
+                        getLift().setLiftState(Lift.LiftStates.DOWN);
+                        if (getLift().isCurrentWantedState()) {
+                            tracker++;
+                            clawTimer.reset();
+                        }
+                        break;
+                    case 2:
+                        getArms().setRightClawOpen(false);
+                        getArms().setLeftClawOpen(false);
+                        if (clawTimer.milliseconds() > 1000)
+                            tracker++;
+                        break;
+                    case 3:
+                        getLift().setLiftState(Lift.LiftStates.SCOREINGHEIGHT);
+                        if (getLift().isCurrentWantedState())
+                            tracker++;
+                        break;
+                    case 4:
+                        getArms().setArmsStates(Arms.ArmStates.SILVERSILVER);
+                        if (getArms().isCurrentStateWantedState()) {
+                            tracker++;
+                            armsReadyForClaws = true;
+                        }
+                        break;
+                    case 5:
+                        if (getArms().bothOpen()) {
+                            tracker++;
+                            armsReadyForClaws = false;
+                        }
+                        break;
+                    case 6:
+                        getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
+                        if (getArms().isCurrentStateWantedState())
+                            tracker++;
+                        break;
+                    case 7:
+//                        getLift().setLiftState(Lift.LiftStates.READY);
+//                        if(getLift().isCurrentWantedState())
+                        tracker++;
+                        isReady = true;
+                        break;
+                }
                 break;
 
             case SILVERGOLD:
-                getArms().setArmsStates(Arms.ArmStates.GRABSILVERSILVER);
-                getArms().setRightClawOpen(false);
-                getArms().setLeftClawOpen(false);
-                Robot.getInstance().getLift().setLiftState(Lift.LiftStates.SCOREINGHEIGHT);
-                getArms().setArmsStates(Arms.ArmStates.SILVERGOLD);
+                switch (tracker) {
+                    case 0:
+                        isReady = false;
+                        getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
+                        getArms().setRightClawOpen(true);
+                        getArms().setLeftClawOpen(true);
+                        if (getArms().isCurrentStateWantedState())
+                            tracker++;
+                        break;
+                    case 1:
+                        getLift().setLiftState(Lift.LiftStates.DOWN);
+                        if (getLift().isCurrentWantedState()) {
+                            tracker++;
+                            clawTimer.reset();
+                        }
+                        break;
+                    case 2:
+                        getArms().setRightClawOpen(false);
+                        getArms().setLeftClawOpen(false);
+                        if (clawTimer.milliseconds() > 1000)
+                            tracker++;
+                        break;
+                    case 3:
+                        getLift().setLiftState(Lift.LiftStates.SCOREINGHEIGHT);
+                        if (getLift().isCurrentWantedState())
+                            tracker++;
+                        break;
+                    case 4:
+                        getArms().setArmsStates(Arms.ArmStates.SILVERGOLD);
+                        if (getArms().isCurrentStateWantedState()) {
+                            tracker++;
+                            armsReadyForClaws = true;
+                        }
+                        break;
+                    case 5:
+                        if (getArms().bothOpen()) {
+                            tracker++;
+                            armsReadyForClaws = false;
+                        }
+                        break;
+                    case 6:
+                        getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
+                        if (getArms().isCurrentStateWantedState())
+                            tracker++;
+                        break;
+                    case 7:
+//                        getLift().setLiftState(Lift.LiftStates.READY);
+//                        if(getLift().isCurrentWantedState())
+                        tracker++;
+                        isReady = true;
+                        break;
+                    case 8:
+                        break;
+
+                }
+
+            case GOLDSILVER:
+                switch (tracker) {
+                    case 0:
+                        isReady = false;
+                        getArms().setArmsStates(Arms.ArmStates.GRABGOLDSILVER);
+                        getArms().setRightClawOpen(true);
+                        getArms().setLeftClawOpen(true);
+                        if (getArms().isCurrentStateWantedState())
+                            tracker++;
+                        break;
+                    case 1:
+                        getLift().setLiftState(Lift.LiftStates.DOWN);
+                        if (getLift().isCurrentWantedState()) {
+                            tracker++;
+                            clawTimer.reset();
+                        }
+                        break;
+                    case 2:
+                        getArms().setRightClawOpen(false);
+                        getArms().setLeftClawOpen(false);
+                        if (clawTimer.milliseconds() > 1000)
+                            tracker++;
+                        break;
+                    case 3:
+                        getLift().setLiftState(Lift.LiftStates.SCOREINGHEIGHT);
+                        if (getLift().isCurrentWantedState())
+                            tracker++;
+                        break;
+                    case 4:
+                        getArms().setArmsStates(Arms.ArmStates.SILVERGOLD);
+                        if (getArms().isCurrentStateWantedState()) {
+                            tracker++;
+                            armsReadyForClaws = true;
+                        }
+                        break;
+                    case 5:
+                        if (getArms().bothOpen()) {
+                            tracker++;
+                            armsReadyForClaws = false;
+                        }
+                        break;
+                    case 6:
+                        getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
+                        if (getArms().isCurrentStateWantedState())
+                            tracker++;
+                        break;
+                    case 7:
+//                        getLift().setLiftState(Lift.LiftStates.READY);
+//                        if(getLift().isCurrentWantedState())
+                        tracker++;
+                        isReady = true;
+                        break;
+                    case 8:
+                        break;
+
+                }
                 break;
 
         }
 
-        RobotLog.d("setMineralPositions has been updated");
+        RobotLog.d("scoringStateMachine has been updated");
     }
 }

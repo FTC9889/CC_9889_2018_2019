@@ -9,7 +9,7 @@ import com.team9889.ftc2019.Team9889Linear;
 @TeleOp
 public class ResetEncoders extends Team9889Linear{
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
         waitForStart(false);
 
         Robot.zeroSensors();

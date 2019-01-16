@@ -77,6 +77,9 @@ public class Lift extends Subsystem {
         telemetry.addData("Lower limit pressed", getLowerLimitPressed());
 
         telemetry.addData("Is Lift in position", isCurrentWantedState());
+
+        telemetry.addData("Wanted State", wantedState);
+        telemetry.addData("Current State", currentState);
     }
 
     @Override
@@ -90,7 +93,7 @@ public class Lift extends Subsystem {
                         currentState = LiftStates.DOWN;
                     } else {
                         setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                        setLiftPower(-.3);
+                        setLiftPower(-.7);
                     }
                 break;
 
@@ -107,7 +110,7 @@ public class Lift extends Subsystem {
                         currentState = LiftStates.SCOREINGHEIGHT;
                     } else {
                         setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                        setLiftPower(.3);
+                        setLiftPower(.7);
                     }
                 break;
 

@@ -1,5 +1,6 @@
 package com.team9889.ftc2019.subsystems;
 
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
@@ -8,6 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.team9889.ftc2019.Constants;
+import com.team9889.ftc2019.Teleop2;
 import com.team9889.lib.control.controllers.PID;
 import com.team9889.lib.hardware.ModernRoboticsUltrasonic;
 import com.team9889.lib.hardware.RevColorDistance;
@@ -37,11 +39,11 @@ public class Intake extends Subsystem{
     public int numberOfMinerals = 0;
 
     public enum States {
-        INTAKING, EXTENDING, GRABBING, ZEROING
+        INTAKING, EXTENDING, GRABBING, ZEROING, NULL
     }
 
     public enum RotatorStates {
-        UP, DOWN
+        UP, DOWN, NULL
     }
 
     private States currentExtenderState = States.ZEROING;
@@ -74,6 +76,9 @@ public class Intake extends Subsystem{
             currentExtenderState = States.ZEROING;
             setHopperGateUp();
         }
+
+        setWantedIntakeState(States.NULL);
+        setIntakeRotatorState(RotatorStates.NULL);
     }
 
     @Override
@@ -90,6 +95,8 @@ public class Intake extends Subsystem{
         telemetry.addData("Angle of Intake", intakeRotator.getPosition());
         telemetry.addData("Fully In Intake Switch", intakeInSwitchValue());
         telemetry.addData("Grabbing Intake Switch", intakeGrabbingSwitchValue());
+        telemetry.addData("Wanted State", wantedExtenderState);
+        telemetry.addData("Current State", currentExtenderState);
     }
 
     @Override
@@ -100,8 +107,10 @@ public class Intake extends Subsystem{
                     setIntakeExtenderPower(0);
                     zeroSensors();
                     setHopperGateUp();
+                    Robot.getInstance().intakeCruiseControl = true;
                     currentExtenderState = States.ZEROING;
                 } else {
+                    Robot.getInstance().intakeCruiseControl = false;
                     setIntakeExtenderPower(-1);
                     setIntakeRotatorState(RotatorStates.UP);
                 }
