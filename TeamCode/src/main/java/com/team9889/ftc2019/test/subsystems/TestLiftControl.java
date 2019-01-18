@@ -3,6 +3,7 @@ package com.team9889.ftc2019.test.subsystems;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.auto.AutoModeBase;
+import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.ftc2019.subsystems.Lift;
 
 /**
@@ -13,7 +14,7 @@ public class TestLiftControl extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {
 
-        Robot.getLift().setLiftState(Lift.LiftStates.DOWN);
+        Robot.getLift().setLiftState(LiftStates.DOWN);
         while (opModeIsActive()){
             Robot.getLift().update(new ElapsedTime());
 

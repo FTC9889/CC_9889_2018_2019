@@ -59,7 +59,6 @@ public class Intake extends Subsystem {
         intakeMotor = hardwareMap.get(DcMotor.class, Constants.IntakeConstants.kIntakeMotorId);
         extender = hardwareMap.get(DcMotor.class, Constants.IntakeConstants.kIntakeExtenderId);
 
-        extender.setDirection(DcMotorSimple.Direction.REVERSE);
         extender.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         extender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -78,7 +77,7 @@ public class Intake extends Subsystem {
         if (auto) {
             setIntakeRotatorState(RotatorStates.UP);
             setWantedIntakeState(States.ZEROING);
-            hopperCoverClosed();
+            setHopperCoverState(HopperState.CLOSED);
 
             setHopperGateUp();
         }
@@ -126,33 +125,31 @@ public class Intake extends Subsystem {
                     currentExtenderState = States.ZEROING;
                 } else {
                     Robot.getInstance().intakeCruiseControl = false;
-                    setIntakeExtenderPower(-1);
+                    setIntakeExtenderPower(-.5);
                     setIntakeRotatorState(RotatorStates.UP);
                 }
                 break;
             case GRABBING:
                 if (currentExtenderState == States.ZEROING) {
                     if (intakeGrabbingSwitchValue()) {
-                        hopperCoverOpen();
+                        setHopperCoverState(HopperState.OPEN);
                         setIntakeExtenderPower(0);
                         currentExtenderState = States.GRABBING;
                         Robot.getInstance().intakeCruiseControl = true;
 
-                        setIntakeRotatorPosition(0.8);
+                        setIntakeRotatorPosition(0.5);
                     } else {
                         Robot.getInstance().intakeCruiseControl = false;
-                        setIntakeExtenderPower(.5);
+                        setIntakeExtenderPower(.3);
                     }
                 } else {
                     if (intakeGrabbingSwitchValue()) {
-                        hopperCoverOpen();
                         setIntakeExtenderPower(0);
-                        setHopperGateUp();
                         currentExtenderState = States.GRABBING;
                         Robot.getInstance().intakeCruiseControl = true;
                     } else {
                         Robot.getInstance().intakeCruiseControl = false;
-                        setIntakeExtenderPower(-0.7);
+                        setIntakeExtenderPower(-0.5);
                         setIntakeRotatorState(RotatorStates.UP);
                         setHopperGateDown();
                     }
@@ -247,7 +244,7 @@ public class Intake extends Subsystem {
     public void setIntakeRotatorState(RotatorStates state) {
         switch (state) {
             case UP:
-                setIntakeRotatorPosition(0.4);
+                setIntakeRotatorPosition(0.55);
                 break;
 
             case DOWN:
@@ -276,12 +273,18 @@ public class Intake extends Subsystem {
         return !scoringSwitch.getState();
     }
 
-    public void hopperCoverClosed(){
-        hopperCover.setPosition(1);
+    public enum HopperState {
+        OPEN, CLOSED
     }
-
-    public void hopperCoverOpen(){
-        hopperCover.setPosition(0);
+    public void setHopperCoverState (HopperState state) {
+        switch (state) {
+            case OPEN:
+                hopperCover.setPosition(0.6);
+                break;
+            case CLOSED:
+                hopperCover.setPosition(0.3);
+                break;
+        }
     }
 
     public boolean frontHopperDetector() {
@@ -296,6 +299,24 @@ public class Intake extends Subsystem {
         return frontHopperDetector() && backHopperDetector();
     }
 
+    public Robot.MineralPositions getMineralPositions() {
+        backColor();
+        frontColor();
+
+        combineMinerals();
+        if (minerals == "GoldGold") {
+            return com.team9889.ftc2019.subsystems.Robot.MineralPositions.GOLDGOLD;
+        } else if (minerals == "SilverSilver") {
+            return com.team9889.ftc2019.subsystems.Robot.MineralPositions.SILVERSILVER;
+        } else if (minerals == "SilverGold") {
+            return com.team9889.ftc2019.subsystems.Robot.MineralPositions.SILVERGOLD;
+        } else if (minerals == "GoldSilver") {
+            return com.team9889.ftc2019.subsystems.Robot.MineralPositions.GOLDSILVER;
+        } else {
+            return Robot.MineralPositions.SILVERSILVER;
+        }
+    }
+
     public void backColor() {
         double[] hueThresholdGold = {30, 39};
         double[] saturationThresholdGold = {0.5, 0.7};
@@ -308,8 +329,9 @@ public class Intake extends Subsystem {
         if (CruiseLib.isBetween(revBackHopper.hsv()[0], hueThresholdGold[0], hueThresholdGold[1])
                 && CruiseLib.isBetween(revBackHopper.hsv()[1], saturationThresholdGold[0], saturationThresholdGold[1]))
             backMinerals = "Gold";
-        else if (CruiseLib.isBetween(revBackHopper.hsv()[0], hueThresholdSilver[0], hueThresholdSilver[1])
-                && CruiseLib.isBetween(revBackHopper.hsv()[1], saturationThresholdSilver[0], saturationThresholdSilver[1]) || twoMineralsDetected())
+        else if ((CruiseLib.isBetween(revBackHopper.hsv()[0], hueThresholdSilver[0], hueThresholdSilver[1])
+                && CruiseLib.isBetween(revBackHopper.hsv()[1], saturationThresholdSilver[0], saturationThresholdSilver[1]))
+                || backHopperDetector())
             backMinerals = "Silver";
     }
 
@@ -326,7 +348,8 @@ public class Intake extends Subsystem {
                 && CruiseLib.isBetween(revFrontHopper.hsv()[1], saturationThresholdGold[0], saturationThresholdGold[1]))
             frontMinerals = "Gold";
         else if (CruiseLib.isBetween(revFrontHopper.hsv()[0], hueThresholdSilver[0], hueThresholdSilver[1])
-                && CruiseLib.isBetween(revFrontHopper.hsv()[1], saturationThresholdSilver[0], saturationThresholdSilver[1]) || twoMineralsDetected())
+                && CruiseLib.isBetween(revFrontHopper.hsv()[1], saturationThresholdSilver[0], saturationThresholdSilver[1])
+                || frontHopperDetector())
             frontMinerals = "Silver";
     }
 
@@ -339,14 +362,14 @@ public class Intake extends Subsystem {
             setWantedIntakeState(States.GRABBING);
             if (isCurrentStateWantedState()) {
                 setIntakePower(0);
-                hopperCoverOpen();
-                setHopperGateDown();
+                setHopperCoverState(HopperState.OPEN);
                 isAutoIntakeDone = true;
             } else {
+                setHopperGateDown();
                 setIntakePower(-1);
             }
         } else {
-            hopperCoverClosed();
+            setHopperCoverState(HopperState.CLOSED);
             isAutoIntakeDone = false;
             setHopperGateUp();
             setIntakePower(1);

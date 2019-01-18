@@ -3,6 +3,7 @@ package com.team9889.ftc2019.subsystems;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
+import com.team9889.ftc2019.states.LiftStates;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -17,11 +18,9 @@ import static com.team9889.ftc2019.subsystems.Robot.MineralPositions.NULL;
 
 public class Robot extends Subsystem {
 
-    public boolean isLiftArmsDone = true;
     public MineralPositions whichMineral = NULL;
-    public boolean isReady = true;
-    public boolean armsReadyForClaws;
     public boolean intakeCruiseControl = true;
+    public boolean liftCruiseControl = true;
 
     public enum MineralPositions {
         GOLDGOLD, SILVERSILVER, SILVERGOLD, GOLDSILVER, NULL
@@ -142,11 +141,11 @@ public class Robot extends Subsystem {
     }
 
     private void scoringStateMachine(MineralPositions state) {
+        liftCruiseControl = false;
         switch (state) {
             case GOLDGOLD:
                 switch (tracker) {
                     case 0:
-                        isReady = false;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
                         getArms().setRightClawOpen(true);
                         getArms().setLeftClawOpen(true);
@@ -154,7 +153,7 @@ public class Robot extends Subsystem {
                             tracker++;
                         break;
                     case 1:
-                        getLift().setLiftState(Lift.LiftStates.DOWN);
+                        getLift().setLiftState(LiftStates.DOWN);
                         if (getLift().isCurrentWantedState()) {
                             tracker++;
                             clawTimer.reset();
@@ -167,21 +166,19 @@ public class Robot extends Subsystem {
                             tracker++;
                         break;
                     case 3:
-                        getLift().setLiftState(Lift.LiftStates.SCOREINGHEIGHT);
+                        getLift().setLiftState(LiftStates.SCOREINGHEIGHT);
                         if (getLift().isCurrentWantedState())
                             tracker++;
                         break;
                     case 4:
                         getArms().setArmsStates(Arms.ArmStates.GOLDGOLD);
                         if (getArms().isCurrentStateWantedState()) {
-                            armsReadyForClaws = true;
                             tracker++;
                         }
                         break;
                     case 5:
                         if (getArms().bothOpen()) {
                             tracker++;
-                            armsReadyForClaws = false;
                         }
                         break;
                     case 6:
@@ -193,7 +190,6 @@ public class Robot extends Subsystem {
 //                        getLift().setLiftState(Lift.LiftStates.READY);
 //                        if(getLift().isCurrentWantedState())
                         tracker++;
-                        isReady = true;
                         break;
                 }
                 break;
@@ -201,7 +197,6 @@ public class Robot extends Subsystem {
             case SILVERSILVER:
                 switch (tracker) {
                     case 0:
-                        isReady = false;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
                         getArms().setRightClawOpen(true);
                         getArms().setLeftClawOpen(true);
@@ -209,7 +204,7 @@ public class Robot extends Subsystem {
                             tracker++;
                         break;
                     case 1:
-                        getLift().setLiftState(Lift.LiftStates.DOWN);
+                        getLift().setLiftState(LiftStates.DOWN);
                         if (getLift().isCurrentWantedState()) {
                             tracker++;
                             clawTimer.reset();
@@ -222,7 +217,7 @@ public class Robot extends Subsystem {
                             tracker++;
                         break;
                     case 3:
-                        getLift().setLiftState(Lift.LiftStates.SCOREINGHEIGHT);
+                        getLift().setLiftState(LiftStates.SCOREINGHEIGHT);
                         if (getLift().isCurrentWantedState())
                             tracker++;
                         break;
@@ -230,13 +225,11 @@ public class Robot extends Subsystem {
                         getArms().setArmsStates(Arms.ArmStates.SILVERSILVER);
                         if (getArms().isCurrentStateWantedState()) {
                             tracker++;
-                            armsReadyForClaws = true;
                         }
                         break;
                     case 5:
                         if (getArms().bothOpen()) {
                             tracker++;
-                            armsReadyForClaws = false;
                         }
                         break;
                     case 6:
@@ -248,7 +241,6 @@ public class Robot extends Subsystem {
 //                        getLift().setLiftState(Lift.LiftStates.READY);
 //                        if(getLift().isCurrentWantedState())
                         tracker++;
-                        isReady = true;
                         break;
                 }
                 break;
@@ -256,7 +248,6 @@ public class Robot extends Subsystem {
             case SILVERGOLD:
                 switch (tracker) {
                     case 0:
-                        isReady = false;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
                         getArms().setRightClawOpen(true);
                         getArms().setLeftClawOpen(true);
@@ -264,7 +255,7 @@ public class Robot extends Subsystem {
                             tracker++;
                         break;
                     case 1:
-                        getLift().setLiftState(Lift.LiftStates.DOWN);
+                        getLift().setLiftState(LiftStates.DOWN);
                         if (getLift().isCurrentWantedState()) {
                             tracker++;
                             clawTimer.reset();
@@ -277,7 +268,7 @@ public class Robot extends Subsystem {
                             tracker++;
                         break;
                     case 3:
-                        getLift().setLiftState(Lift.LiftStates.SCOREINGHEIGHT);
+                        getLift().setLiftState(LiftStates.SCOREINGHEIGHT);
                         if (getLift().isCurrentWantedState())
                             tracker++;
                         break;
@@ -285,13 +276,11 @@ public class Robot extends Subsystem {
                         getArms().setArmsStates(Arms.ArmStates.SILVERGOLD);
                         if (getArms().isCurrentStateWantedState()) {
                             tracker++;
-                            armsReadyForClaws = true;
                         }
                         break;
                     case 5:
                         if (getArms().bothOpen()) {
                             tracker++;
-                            armsReadyForClaws = false;
                         }
                         break;
                     case 6:
@@ -303,7 +292,6 @@ public class Robot extends Subsystem {
 //                        getLift().setLiftState(Lift.LiftStates.READY);
 //                        if(getLift().isCurrentWantedState())
                         tracker++;
-                        isReady = true;
                         break;
                     case 8:
                         break;
@@ -313,7 +301,6 @@ public class Robot extends Subsystem {
             case GOLDSILVER:
                 switch (tracker) {
                     case 0:
-                        isReady = false;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDSILVER);
                         getArms().setRightClawOpen(true);
                         getArms().setLeftClawOpen(true);
@@ -321,7 +308,7 @@ public class Robot extends Subsystem {
                             tracker++;
                         break;
                     case 1:
-                        getLift().setLiftState(Lift.LiftStates.DOWN);
+                        getLift().setLiftState(LiftStates.DOWN);
                         if (getLift().isCurrentWantedState()) {
                             tracker++;
                             clawTimer.reset();
@@ -334,7 +321,7 @@ public class Robot extends Subsystem {
                             tracker++;
                         break;
                     case 3:
-                        getLift().setLiftState(Lift.LiftStates.SCOREINGHEIGHT);
+                        getLift().setLiftState(LiftStates.SCOREINGHEIGHT);
                         if (getLift().isCurrentWantedState())
                             tracker++;
                         break;
@@ -342,13 +329,11 @@ public class Robot extends Subsystem {
                         getArms().setArmsStates(Arms.ArmStates.SILVERGOLD);
                         if (getArms().isCurrentStateWantedState()) {
                             tracker++;
-                            armsReadyForClaws = true;
                         }
                         break;
                     case 5:
                         if (getArms().bothOpen()) {
                             tracker++;
-                            armsReadyForClaws = false;
                         }
                         break;
                     case 6:
@@ -360,7 +345,6 @@ public class Robot extends Subsystem {
 //                        getLift().setLiftState(Lift.LiftStates.READY);
 //                        if(getLift().isCurrentWantedState())
                         tracker++;
-                        isReady = true;
                         break;
                     case 8:
                         break;
@@ -369,6 +353,7 @@ public class Robot extends Subsystem {
                 break;
 
         }
+        liftCruiseControl = true;
 
         RobotLog.d("scoringStateMachine has been updated");
     }

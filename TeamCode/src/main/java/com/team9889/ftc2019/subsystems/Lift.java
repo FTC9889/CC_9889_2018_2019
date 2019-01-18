@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.Constants;
+import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.lib.control.controllers.PID;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -31,10 +32,6 @@ public class Lift extends Subsystem {
         return Math.abs(pid.getError()) < 0.5;
     }
 
-    public enum LiftStates{
-        DOWN, HOOKHEIGHT, SCOREINGHEIGHT, READY, NULL
-    }
-
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
         left = hardwareMap.get(DcMotorEx.class, Constants.LiftConstants.kLeftLiftId);
@@ -48,7 +45,7 @@ public class Lift extends Subsystem {
         setMode(DcMotor.ZeroPowerBehavior.BRAKE);
 
         currentState = LiftStates.NULL;
-        wantedState = LiftStates.NULL;
+        wantedState = LiftStates.DOWN;
 
         if(auto)
             zeroSensors();
@@ -98,7 +95,7 @@ public class Lift extends Subsystem {
                 break;
 
                 case HOOKHEIGHT:
-                    setLiftPosition(20);
+                    setLiftPosition(12);
 
                     if(inPosition())
                         currentState = wantedState;
@@ -180,6 +177,10 @@ public class Lift extends Subsystem {
 
     public boolean isCurrentWantedState(){
         return currentState == wantedState;
+    }
+
+    public LiftStates getWantedState() {
+        return wantedState;
     }
 
     @Override

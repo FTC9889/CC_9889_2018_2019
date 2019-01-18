@@ -31,7 +31,7 @@ public class Camera extends Subsystem{
         FRONTCENTER, FRONTRIGHT,
         FRONTHOPPER, BACKHOPPER,
         STORED, UPRIGHT,
-        TWO_GOLD
+        TWO_GOLD, TELEOP
     }
 
 
@@ -142,7 +142,10 @@ public class Camera extends Subsystem{
             case TWO_GOLD:
                 setXYAxisPosition(0, 0.6);
                 break;
-        }//TODO: check camera positions
+
+            case TELEOP:
+                setXYAxisPosition(1, .4);
+        }
     }
 
     @Override
