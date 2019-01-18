@@ -25,10 +25,7 @@ public class Lift extends Subsystem {
     private DigitalChannel upperLimit;
     private PID pid = new PID(.4, 0.005 ,0, 50);
 
-    private LiftStates currentState = LiftStates.NULL;
-    private LiftStates wantedState = LiftStates.NULL;
-
-    private boolean inPosition() {
+    public boolean inPosition() {
         return Math.abs(pid.getError()) < 0.5;
     }
 
@@ -43,9 +40,6 @@ public class Lift extends Subsystem {
         right.setDirection(DcMotorSimple.Direction.REVERSE);
         left.setDirection(DcMotorSimple.Direction.REVERSE);
         setMode(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        currentState = LiftStates.NULL;
-        wantedState = LiftStates.DOWN;
 
         if(auto)
             zeroSensors();
@@ -72,53 +66,11 @@ public class Lift extends Subsystem {
 
         telemetry.addData("Upper limit pressed", getUpperLimitPressed());
         telemetry.addData("Lower limit pressed", getLowerLimitPressed());
-
-        telemetry.addData("Is Lift in position", isCurrentWantedState());
-
-        telemetry.addData("Wanted State", wantedState);
-        telemetry.addData("Current State", currentState);
     }
 
     @Override
     public void update(ElapsedTime time) {
-        if (currentState != wantedState){
-            switch (wantedState) {
-                case DOWN:
-                    if (getLowerLimitPressed()){
-                        setLiftPower(0);
-                        zeroSensors();
-                        currentState = LiftStates.DOWN;
-                    } else {
-                        setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                        setLiftPower(-.7);
-                    }
-                break;
 
-                case HOOKHEIGHT:
-                    setLiftPosition(12);
-
-                    if(inPosition())
-                        currentState = wantedState;
-                break;
-
-                case SCOREINGHEIGHT:
-                    if (getUpperLimitPressed()){
-                        setLiftPower(0);
-                        currentState = LiftStates.SCOREINGHEIGHT;
-                    } else {
-                        setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                        setLiftPower(.7);
-                    }
-                break;
-
-                case READY:
-                    setLiftPosition(10);
-
-                    if(inPosition())
-                        currentState = wantedState;
-                break;
-            }
-        }
     }
 
     @Override
@@ -171,24 +123,12 @@ public class Lift extends Subsystem {
         return !lowerLimit.getState();
     }
 
-    public void setLiftState(LiftStates state){
-        this.wantedState = state;
-    }
-
-    public boolean isCurrentWantedState(){
-        return currentState == wantedState;
-    }
-
-    public LiftStates getWantedState() {
-        return wantedState;
-    }
-
     @Override
     public String toString() {
         return "Lift";
     }
 
-    private void setRunMode(DcMotor.RunMode runMode){
+    public void setRunMode(DcMotor.RunMode runMode){
         left.setMode(runMode);
         right.setMode(runMode);
     }

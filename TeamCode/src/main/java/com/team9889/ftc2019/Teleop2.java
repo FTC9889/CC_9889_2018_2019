@@ -3,11 +3,11 @@ package com.team9889.ftc2019;
 import android.graphics.Color;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.team9889.ftc2019.states.ExtenderStates;
 import com.team9889.ftc2019.states.LiftStates;
+import com.team9889.ftc2019.states.SuperStructureStates;
 import com.team9889.ftc2019.subsystems.Arms;
 import com.team9889.ftc2019.subsystems.Camera;
-import com.team9889.ftc2019.subsystems.Intake;
-import com.team9889.ftc2019.subsystems.Lift;
 
 /**
  * Created by MannoMation on 1/14/2019.
@@ -18,7 +18,6 @@ public class Teleop2 extends Team9889Linear {
     private boolean autoMode = true;
     private boolean clawLeftOpenMode = true;
     private boolean clawRightOpenMode = true;
-    private Arms.ArmStates wanted = Arms.ArmStates.NULL;
     private boolean lastChangeMode, lastLeftClawChangeMode, lastRightClawChangeMode;
 
     private int colorCounter = 0;
@@ -29,15 +28,9 @@ public class Teleop2 extends Team9889Linear {
         waitForStart(false);
 
         Robot.getIntake().isAutoIntakeDone = true;
-        Robot.resetTracker();
-        Robot.whichMineral = com.team9889.ftc2019.subsystems.Robot.MineralPositions.NULL;
 
-        Robot.getIntake().setWantedIntakeState(Intake.States.ZEROING);
-        Robot.getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
-
-        if (Robot.getIntake().isCurrentStateWantedState()){
-            Robot.getIntake().setWantedIntakeState(Intake.States.GRABBING);
-        }
+        Robot.getSuperStructure().resetTracker();
+        Robot.getSuperStructure().setWantedState(SuperStructureStates.WAIT_FOR_MINERALS);
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.TELEOP);
 
         while (opModeIsActive()) {
@@ -92,17 +85,17 @@ public class Teleop2 extends Team9889Linear {
 
             //Intake (gamepad2)
             if (Robot.intakeCruiseControl) {
-                Robot.getIntake().setWantedIntakeState(Intake.States.INTAKING);
+                Robot.getIntake().setWantedIntakeState(ExtenderStates.INTAKING);
                 Robot.getIntake().setIntakeExtenderPower(-gamepad2.left_stick_y);
             }
             if (gamepad2.x) {
-                Robot.getIntake().setWantedIntakeState(Intake.States.ZEROING);
+                Robot.getIntake().setWantedIntakeState(ExtenderStates.ZEROING);
             }else if (gamepad2.a){
                 Robot.getIntake().autoIntake();
             }
 
             if (gamepad2.dpad_down){
-                Robot.getIntake().autoIntakeOveride = true;
+                Robot.getIntake().operaterControl = true;
             }
 
 

@@ -1,7 +1,7 @@
 package com.team9889.ftc2019.auto.actions.Intake;
 
 import com.team9889.ftc2019.auto.actions.Action;
-import com.team9889.ftc2019.subsystems.Intake;
+import com.team9889.ftc2019.states.RotatorStates;
 import com.team9889.ftc2019.subsystems.Robot;
 
 /**
@@ -19,7 +19,7 @@ public class SamplingIntake extends Action {
     public void start() {
 
         Robot.getInstance().getIntake().setIntakeExtenderPosition(6);
-        Robot.getInstance().getIntake().setIntakeRotatorState(Intake.RotatorStates.DOWN);
+        Robot.getInstance().getIntake().setIntakeRotatorState(RotatorStates.DOWN);
         Robot.getInstance().getIntake().intake();
 
     }
@@ -29,7 +29,7 @@ public class SamplingIntake extends Action {
 
         if (sampled == 1){
             Robot.getInstance().getIntake().stop();
-            Robot.getInstance().getIntake().setIntakeRotatorState(Intake.RotatorStates.UP);
+            Robot.getInstance().getIntake().setIntakeRotatorState(RotatorStates.UP);
             Robot.getInstance().getIntake().setIntakeExtenderPosition(0);
         }
 

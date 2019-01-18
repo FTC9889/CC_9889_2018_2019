@@ -3,7 +3,6 @@ package com.team9889.ftc2019.auto.actions.Lift;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.states.LiftStates;
-import com.team9889.ftc2019.subsystems.Lift;
 import com.team9889.ftc2019.subsystems.Robot;
 
 /**

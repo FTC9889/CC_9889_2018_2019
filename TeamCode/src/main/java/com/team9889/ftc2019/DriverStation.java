@@ -1,7 +1,7 @@
 package com.team9889.ftc2019;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.team9889.ftc2019.subsystems.Intake;
+import com.team9889.ftc2019.states.RotatorStates;
 
 /**
  * Created by MannoMation on 12/14/2018.
@@ -51,12 +51,12 @@ public class DriverStation {
         return gamepad2.x;
     }
 
-    private Intake.RotatorStates wantedState = Intake.RotatorStates.UP;
-    public Intake.RotatorStates getIntakeRotatorState(){
+    private RotatorStates wantedState = RotatorStates.UP;
+    public RotatorStates getIntakeRotatorState(){
         if(gamepad2.right_bumper) {
-            wantedState = Intake.RotatorStates.UP;
+            wantedState = RotatorStates.UP;
         } else if(gamepad2.left_bumper) {
-            wantedState = Intake.RotatorStates.DOWN;
+            wantedState = RotatorStates.DOWN;
         }
         return wantedState;
     }

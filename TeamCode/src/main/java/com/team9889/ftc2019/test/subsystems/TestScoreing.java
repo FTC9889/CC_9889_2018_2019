@@ -1,11 +1,8 @@
 package com.team9889.ftc2019.test.subsystems;
 
-import android.app.backup.RestoreObserver;
-
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.team9889.ftc2019.Team9889Linear;
-import com.team9889.ftc2019.subsystems.Arms;
 
 /**
  * Created by MannoMation on 12/29/2018.
@@ -40,19 +37,19 @@ public class TestScoreing extends Team9889Linear {
                 switch (Minerals) {
 //                  GOLDGOLD
                     case 1:
-                        Robot.getArms().scoreingStateMachine(Arms.MineralPositions.GOLDGOLD);
+                        Robot.getArms().scoreingStateMachine(Arms.SuperStructureStates.GOLDGOLD);
                         Enum = true;
                         break;
 
 //                  SILVERSILVER
                     case 2:
-                        Robot.getArms().scoreingStateMachine(Arms.MineralPositions.SILVERSILVER);
+                        Robot.getArms().scoreingStateMachine(Arms.SuperStructureStates.SILVERSILVER);
                         Enum = true;
                         break;
 
 //                  SILVERGOLD
                     case 3:
-                        Robot.getArms().scoreingStateMachine(Arms.MineralPositions.SILVERGOLD);
+                        Robot.getArms().scoreingStateMachine(Arms.SuperStructureStates.SILVERGOLD);
                         Enum = true;
                         break;
                 }
@@ -62,19 +59,19 @@ public class TestScoreing extends Team9889Linear {
                 switch (Minerals) {
 //                  GOLDGOLD
                     case 1:
-                        Robot.getArms().scoreingStateMachine(Arms.MineralPositions.GOLDGOLD);
+                        Robot.getArms().scoreingStateMachine(Arms.SuperStructureStates.GOLDGOLD);
                         Enum = true;
                         break;
 
 //                  SILVERSILVER
                     case 2:
-                        Robot.getArms().scoreingStateMachine(Arms.MineralPositions.SILVERSILVER);
+                        Robot.getArms().scoreingStateMachine(Arms.SuperStructureStates.SILVERSILVER);
                         Enum = true;
                         break;
 
 //                  SILVERGOLD
                     case 3:
-                        Robot.getArms().scoreingStateMachine(Arms.MineralPositions.SILVERGOLD);
+                        Robot.getArms().scoreingStateMachine(Arms.SuperStructureStates.SILVERGOLD);
                         Enum = true;
                         break;
                 }

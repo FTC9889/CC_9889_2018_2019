@@ -4,9 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.states.LiftStates;
+import com.team9889.ftc2019.states.RotatorStates;
 import com.team9889.ftc2019.subsystems.Camera;
-import com.team9889.ftc2019.subsystems.Intake;
-import com.team9889.ftc2019.subsystems.Lift;
 
 /**
  * Created by joshua9889 on 3/28/2018.
@@ -36,7 +35,7 @@ public class Teleop extends Team9889Linear{
 
 
     private LiftStates wantedLiftState = LiftStates.READY;
-    private Intake.RotatorStates wantedRotatorState = Intake.RotatorStates.UP;
+    private RotatorStates wantedRotatorState = RotatorStates.UP;
 
     @Override
     public void runOpMode() {
@@ -44,7 +43,7 @@ public class Teleop extends Team9889Linear{
         waitForStart(false);
 
         // Init States
-        Robot.getIntake().setIntakeRotatorState(Intake.RotatorStates.UP);
+        Robot.getIntake().setIntakeRotatorState(RotatorStates.UP);
         Robot.getLift().setLiftState(LiftStates.READY);
 
         Robot.getArms().setLeftClawOpen(true);

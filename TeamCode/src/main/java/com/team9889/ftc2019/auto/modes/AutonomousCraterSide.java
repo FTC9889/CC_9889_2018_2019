@@ -11,7 +11,6 @@ import com.team9889.ftc2019.auto.actions.Intake.Outtake;
 import com.team9889.ftc2019.auto.actions.Lift.LiftLand;
 import com.team9889.ftc2019.auto.actions.Wait;
 import com.team9889.ftc2019.subsystems.Camera;
-import com.team9889.ftc2019.subsystems.Intake;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;

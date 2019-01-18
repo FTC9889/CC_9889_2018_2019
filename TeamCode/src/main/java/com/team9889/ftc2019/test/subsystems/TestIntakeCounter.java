@@ -2,7 +2,7 @@ package com.team9889.ftc2019.test.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.team9889.ftc2019.Team9889Linear;
-import com.team9889.ftc2019.subsystems.Intake;
+import com.team9889.ftc2019.states.RotatorStates;
 
 /**
  * Created by joshua9889 on 1/14/2019.
@@ -16,7 +16,7 @@ public class TestIntakeCounter extends Team9889Linear {
         while (opModeIsActive()){
 //            Robot.getIntake().updateTestCounter();
 
-            Robot.getIntake().setIntakeRotatorState(Intake.RotatorStates.DOWN);
+            Robot.getIntake().setIntakeRotatorState(RotatorStates.DOWN);
 
             if(gamepad1.a)
                 Robot.getIntake().intake();

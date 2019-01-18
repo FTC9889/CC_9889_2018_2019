@@ -1,0 +1,1059 @@
+0.002| Arms/update|  | Current Arms State: NULL | Wanted Arms State: STORED
+0.00497| Lift Power Set: 0.0
+0.00511| Lift/update|  | Current Lift State: NULL | Wanted Lift State: DOWN | inPosition: true
+0.01682| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.01704| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.03462| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.03485| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.05068| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.05098| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.06631| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.06653| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.08244| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.08267| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.09815| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.09841| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.11426| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.11469| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.13006| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.13032| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.16044| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.16545| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.17784| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.178| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.1939| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.19409| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.21101| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.21129| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.23195| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.23212| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.25418| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.25449| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.2736| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.27381| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.29216| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.29238| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.31859| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.31883| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.33999| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.34034| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.37093| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.37122| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.3968| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.39703| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.41207| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.4123| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.43325| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.4337| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.4504| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.45164| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.46603| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.46634| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.48126| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.48195| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.49948| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.50007| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.51614| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.51654| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.53095| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.53118| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.54962| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.55021| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.56494| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.56553| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.58304| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.5835| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.59863| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.59897| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.61383| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.61404| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.62898| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.62916| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.64419| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.64442| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.65979| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.66017| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.67534| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.67557| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.69089| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.69117| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.70655| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.70676| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.72188| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.72296| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.73888| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.7392| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.75428| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.75467| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.77043| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.77078| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.7894| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.80465| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.82879| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.82903| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.84392| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.84415| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.86962| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.87012| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.88055| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.8808| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.90224| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.90251| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.91664| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.91692| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.94655| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.94676| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.95223| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.95264| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.96768| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.9679| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.98321| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.9837| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+0.99918| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+0.9997| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.01635| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+1.01685| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.03218| Arms/update|  | Current Arms State: STORED | Wanted Arms State: STORED
+1.03251| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.0328| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms Back
+1.04959| Arms/update|  | Current Arms State: STORED | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+1.04974| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.04984| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms Back
+1.06632| Arms/update|  | Current Arms State: STORED | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+1.06683| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.06698| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms Back
+1.08113| Arms/update|  | Current Arms State: STORED | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+1.08134| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.08146| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms Back
+1.09957| Arms/update|  | Current Arms State: STORED | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+1.10009| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.10035| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms Back
+1.11629| Arms/update|  | Current Arms State: STORED | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+1.11684| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.11707| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms Back
+1.13184| Arms/update|  | Current Arms State: STORED | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+1.13205| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.1322| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms Back
+1.14922| Arms/update|  | Current Arms State: STORED | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+1.14952| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.14968| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms Back
+1.16461| Arms/update|  | Current Arms State: STORED | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+1.1649| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.16499| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms Back
+1.18223| Arms/update|  | Current Arms State: STORED | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+1.18244| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.18257| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms Back
+1.19773| Arms/update|  | Current Arms State: STORED | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+1.19793| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.19805| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms Back
+1.21352| Arms/update|  | Current Arms State: STORED | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+1.21371| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.21383| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms Back
+1.23193| Arms/update|  | Current Arms State: STORED | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+1.23215| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.23222| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms Back
+1.24873| Arms/update|  | Current Arms State: STORED | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+1.24964| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.24993| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms Back
+1.26447| Arms/update|  | Current Arms State: STORED | Wanted Arms State: GRABGOLDGOLD | Right Arm Moving To Position
+1.26462| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.2647| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms Back
+1.27983| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.28002| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.2801| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Lift Moving Down
+1.29913| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.29985| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.30012| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.31453| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.31482| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.3149| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.33017| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.33038| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.33047| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.34575| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.34596| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.34605| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.36189| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.36215| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.36226| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.38146| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.38179| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.38191| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.39732| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.39756| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.39765| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.41573| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.41609| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.41629| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.43206| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.43236| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.4325| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.44773| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.44797| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.4481| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.46683| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.46708| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.46731| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.48301| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.48338| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.4835| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.49816| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.4984| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.49853| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.51333| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.51352| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.51361| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.52865| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.52885| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.52894| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.54934| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.54965| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.54983| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.56516| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.56567| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.56579| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.58223| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.58268| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.58287| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.60131| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.60154| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.60164| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.61672| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.61716| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.61736| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.63216| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.63244| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.63266| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.65044| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.65086| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.65106| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.66571| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.66623| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.6665| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.68292| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.68339| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.68366| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.70247| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.70291| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.70308| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.71759| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.71799| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.71812| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.73465| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.73527| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.73543| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.75259| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.7529| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.75302| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.77504| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.77539| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.77552| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.79364| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.79393| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.79406| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.81753| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.83124| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.83155| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.85104| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.85139| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.85147| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.86615| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.86678| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.86698| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.89371| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.89388| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.89393| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.90939| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.9096| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.90972| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.92484| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.92496| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.92501| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.94509| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.94531| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.94537| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.96096| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.96118| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.96125| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.97713| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.97745| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.97758| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+1.99288| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+1.99309| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+1.99317| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+2.00827| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.00845| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+2.00851| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+2.02638| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.02663| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+2.02673| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+2.04157| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.0421| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+2.04221| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+2.05721| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.0576| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+2.05778| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+2.07235| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.07266| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+2.07281| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+2.08804| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.08838| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+2.0885| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+2.10395| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.10417| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+2.10433| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+2.11956| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.11981| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+2.11992| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+2.13522| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.13545| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+2.13557| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+2.15116| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.1516| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+2.1518| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+2.16699| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.16738| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+2.16752| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+2.18227| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.18257| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+2.1827| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+2.20035| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.2007| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+2.20081| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+2.2164| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.21673| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+2.2169| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+2.23207| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.23236| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+2.23248| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+2.24757| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.24786| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+2.24804| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+2.26508| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.2654| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+2.26548| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+2.28192| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.28214| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+2.28223| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Claws Grabbing From Hopper
+2.29737| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.29749| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: DOWN | inPosition: true
+2.29755| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Moving Lift To Scoring Height
+2.31595| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.3162| Lift Power Set: 0.0
+2.3163| Lift/update|  | Current Lift State: DOWN | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.31635| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Moving Lift To Scoring Height
+2.33214| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.33242| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.33256| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to appropriate Scoring Location
+2.34925| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GOLDGOLD
+2.34946| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.34954| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to appropriate Scoring Location
+2.36446| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GOLDGOLD | Right Arm Moving To Position
+2.36461| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.36467| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to appropriate Scoring Location
+2.38113| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GOLDGOLD | Right Arm Moving To Position
+2.3813| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.38137| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to appropriate Scoring Location
+2.39721| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GOLDGOLD | Right Arm Moving To Position
+2.39733| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.39739| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to appropriate Scoring Location
+2.41245| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GOLDGOLD | Right Arm Moving To Position
+2.41259| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.41267| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to appropriate Scoring Location
+2.43198| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GOLDGOLD | Right Arm Moving To Position
+2.43212| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.43254| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to appropriate Scoring Location
+2.44935| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GOLDGOLD | Left Arm Moving To Final Position
+2.44971| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.44993| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to appropriate Scoring Location
+2.46712| Arms/update|  | Current Arms State: GOLDGOLD | Wanted Arms State: GOLDGOLD
+2.46787| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.46832| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Wait for both hands to open
+2.48645| Arms/update|  | Current Arms State: GOLDGOLD | Wanted Arms State: GOLDGOLD
+2.48701| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.48742| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to GRABGOLDGOLD
+2.50528| Arms/update|  | Current Arms State: GOLDGOLD | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+2.50568| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.50585| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to GRABGOLDGOLD
+2.52346| Arms/update|  | Current Arms State: GOLDGOLD | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+2.52377| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.5239| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to GRABGOLDGOLD
+2.54777| Arms/update|  | Current Arms State: GOLDGOLD | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+2.54816| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.54839| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to GRABGOLDGOLD
+2.56558| Arms/update|  | Current Arms State: GOLDGOLD | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+2.56611| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.56634| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to GRABGOLDGOLD
+2.58499| Arms/update|  | Current Arms State: GOLDGOLD | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+2.58552| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.58562| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to GRABGOLDGOLD
+2.60064| Arms/update|  | Current Arms State: GOLDGOLD | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+2.60099| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.6011| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to GRABGOLDGOLD
+2.62227| Arms/update|  | Current Arms State: GOLDGOLD | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+2.62245| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.62251| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to GRABGOLDGOLD
+2.63823| Arms/update|  | Current Arms State: GOLDGOLD | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+2.63836| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.63842| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to GRABGOLDGOLD
+2.65616| Arms/update|  | Current Arms State: GOLDGOLD | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+2.65625| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.65629| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to GRABGOLDGOLD
+2.68148| Arms/update|  | Current Arms State: GOLDGOLD | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+2.68165| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.68172| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to GRABGOLDGOLD
+2.69949| Arms/update|  | Current Arms State: GOLDGOLD | Wanted Arms State: GRABGOLDGOLD | Left Arm Moving To Position
+2.69978| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.69985| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to GRABGOLDGOLD
+2.71784| Arms/update|  | Current Arms State: GOLDGOLD | Wanted Arms State: GRABGOLDGOLD | Right Arm Moving To Position
+2.71825| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.7185| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Arms to GRABGOLDGOLD
+2.73563| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.73587| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: SCOREINGHEIGHT | inPosition: true
+2.73598| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Lift to Ready Position
+2.75123| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.75165| Lift Position Set: 10.0in
+2.75181| Lift/update|  | Current Lift State: SCOREINGHEIGHT | Wanted Lift State: READY | inPosition: true
+2.75191| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Move Lift to Ready Position
+2.77577| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.77602| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+2.77614| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2.79289| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.7931| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+2.79318| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2.81585| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.81605| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+2.81619| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2.83218| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.83259| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+2.83283| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2.85399| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.85425| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+2.85437| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2.87335| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.87346| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+2.8735| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2.89508| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.89522| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+2.89527| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2.91518| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.91529| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+2.91535| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2.9303| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.93049| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+2.93056| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2.95622| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.95643| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+2.95652| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2.9736| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.97388| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+2.97398| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2.98912| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+2.9895| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+2.98967| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.01397| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.01424| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.01434| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.03235| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.03262| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.03276| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.05318| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.05344| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.05356| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.07071| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.07119| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.0714| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.09171| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.09201| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.09213| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.10684| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.10698| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.10703| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.12476| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.12492| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.12497| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.14519| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.1454| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.14545| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.16965| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.17| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.17009| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.18716| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.18741| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.18751| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.20404| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.20434| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.20448| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.22168| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.22203| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.22218| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.24565| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.24603| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.24617| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.26373| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.26404| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.26418| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.2871| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.28741| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.28755| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.30421| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.30469| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.30492| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.32022| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.32048| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.32063| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.33551| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.33565| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.33572| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.35196| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.35231| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.35237| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.36757| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.36781| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.36801| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.38311| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.38362| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.38376| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.39818| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.39843| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.39855| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.4131| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.4135| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.41355| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.43876| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.43902| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.43911| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.46234| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.46262| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.46274| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.47791| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.47815| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.47824| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.5048| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.505| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.50507| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.52176| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.52192| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.52198| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.54017| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.5403| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.54033| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.56415| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.5647| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.56473| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.58524| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.58542| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.58547| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.60949| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.60973| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.60981| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.62726| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.62758| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.62777| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.64305| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.64346| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.64371| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.66102| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.66127| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.66136| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.67668| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.67698| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.67709| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.70084| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.70108| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.70119| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.71792| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.7181| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.71819| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.74191| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.74227| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.74247| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.75949| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.75971| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.7598| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.78449| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.78484| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.78492| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.79942| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.79957| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.79963| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.81781| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.81796| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.81799| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.83673| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.83682| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.83684| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.85258| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.85315| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.85332| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.86923| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.86947| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.86956| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.88355| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.88401| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.88425| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.9004| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.90068| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.90084| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.91783| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.9182| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.91833| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.93303| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.93331| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.93344| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.94862| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.94884| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.94896| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.96716| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.96735| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.96741| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.98227| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.98247| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.9825| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.99913| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+3.99931| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+3.9994| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.01564| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.01587| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.01592| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.03216| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.03231| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.03237| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.04916| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.04929| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.04937| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.06544| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.06569| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.06579| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.08487| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.085| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.08507| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.10034| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.10044| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.10048| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.11774| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.11787| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.11792| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.13863| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.13877| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.13883| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.16537| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.16551| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.16557| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.18236| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.18257| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.18266| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.19945| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.19962| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.19968| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.21612| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.21631| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.21637| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.23237| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.23255| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.2326| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.24846| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.24863| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.2487| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.26577| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.26606| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.26637| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.28609| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.28649| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.28653| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.3036| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.3038| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.30389| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.32051| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.3207| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.32078| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.33831| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.33855| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.33865| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.35731| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.35763| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.35778| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.38227| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.38248| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.38259| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.39974| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.39992| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.40001| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.42886| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.42911| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.42923| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.44967| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.44991| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.45002| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.4747| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.47496| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.47509| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.49232| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.49262| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.49273| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.51864| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.51875| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.51879| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.53538| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.53589| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.53601| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.55116| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.55158| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.55173| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.5691| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.56935| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.5695| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.58659| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.5868| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.58694| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.61136| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.61159| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.61168| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.6287| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.62897| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.62911| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.65305| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.65333| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.65344| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.66985| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.67019| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.67034| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.69479| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.69496| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.695| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.71968| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.71983| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.71987| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.73556| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.73585| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.73592| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.75132| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.75183| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.75192| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.76995| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.77023| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.77037| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.78449| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.78468| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.78476| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.802| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.8022| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.80229| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.81779| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.81806| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.81815| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.84309| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.84341| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.84352| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.86034| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.86059| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.86072| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.88555| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.88584| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.88593| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.90338| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.9037| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.90388| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.93062| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.93082| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.9309| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.94862| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.94882| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.94889| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.96447| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.96481| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.96491| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.98487| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+4.98498| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+4.98504| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.00233| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.00312| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.00324| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.01779| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.01812| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.01819| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.03595| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.03613| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.03621| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.061| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.06121| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.06128| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.07871| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.07895| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.07908| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.10287| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.10309| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.10318| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.12| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.12028| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.12042| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.13553| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.13578| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.13589| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.15206| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.15222| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.15229| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.17479| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.17491| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.17494| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.19885| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.19913| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.19921| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.22282| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.22317| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.22326| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.23962| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.23997| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.24008| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.26426| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.2645| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.26461| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.28213| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.28232| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.2824| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.306| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.30624| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.30638| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.32316| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.32334| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.32342| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.35196| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.35214| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.35223| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.37653| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.37663| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.37667| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.40268| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.40303| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.40316| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.41803| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.41863| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.41885| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.43398| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.43447| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.43458| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.45145| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.45178| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.45193| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.47603| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.4763| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.47638| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.49323| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.49341| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.4935| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.51876| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.51907| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.5192| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.53701| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.53723| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.53733| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.56035| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.56046| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.56052| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.58604| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.5862| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.58625| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.60486| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.60502| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.60506| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.62448| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.62461| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.62464| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.65245| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.65273| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.65285| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.67641| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.67672| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.67682| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.69326| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.69347| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.69359| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.71894| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.71912| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.7192| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.74826| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.7484| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.74844| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.77361| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.77377| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.77386| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.79903| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.79927| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.79931| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.82556| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.82568| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.82574| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.84111| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.8413| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.84138| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.86932| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.86955| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.86965| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.88728| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.8877| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.88783| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.91223| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.91251| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.91264| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.92943| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.92963| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.92973| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.95852| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.95884| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.95904| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.97782| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+5.97816| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+5.97826| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.0046| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.00484| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.00495| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.02252| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.0227| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.02276| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.04678| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.0469| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.04694| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.06525| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.06545| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.06549| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.08248| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.08283| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.08295| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.10063| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.101| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.10112| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.11751| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.11801| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.11819| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.13263| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.13288| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.13299| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.15056| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.15082| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.15096| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.17011| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.17032| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.1704| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.19552| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.19568| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.19573| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.21594| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.21605| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.21609| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.23263| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.23288| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.23367| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.24767| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.24778| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.24845| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.26768| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.26786| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.2679| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.28489| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.28513| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.28522| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.30155| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.30169| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.30176| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.31839| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.31857| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.31869| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.33376| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.3339| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.334| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.36366| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.36383| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.36388| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.38238| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.38259| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.38263| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.40172| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.4018| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.40183| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.42172| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.42191| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.42194| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.44933| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.44965| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.44979| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.46993| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.47031| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.4705| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.4854| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.48561| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.48579| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.50286| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.50311| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.50321| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.51995| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.52016| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.52028| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.53513| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.53532| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.53541| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.5655| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.56578| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.56589| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.58252| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.5828| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.58295| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.6048| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.60509| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.60522| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.62304| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.62327| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.62336| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.65195| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.65206| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.6521| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.681| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.68107| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.68117| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.70168| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.70183| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.70189| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.719| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.71928| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.71936| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.73629| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.73648| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.73657| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.7538| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.75405| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.75413| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.7714| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.77168| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.77179| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.79615| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.79637| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.79645| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.81317| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.81373| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.81393| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.83731| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.83757| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.83765| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.85464| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.85487| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.855| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.87| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.87034| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.87046| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.88708| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.88721| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.88727| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.91224| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.91232| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.91236| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.93173| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.93193| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.93198| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.9521| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.95237| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.95245| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.96965| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.96988| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.96996| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.98529| Arms/update|  | Current Arms State: GRABGOLDGOLD | Wanted Arms State: GRABGOLDGOLD
+6.98554| Lift/update|  | Current Lift State: READY | Wanted Lift State: READY | inPosition: true
+6.98562| +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
