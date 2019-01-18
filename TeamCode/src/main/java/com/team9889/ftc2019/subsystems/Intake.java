@@ -29,6 +29,7 @@ public class Intake extends Subsystem {
     private ModernRoboticsUltrasonic craterDetector;
     public RevColorDistance revBackHopper, revFrontHopper;
     public boolean isAutoIntakeDone = true;
+    public boolean autoIntakeOveride = false;
 
     public String backMinerals;
     public String frontMinerals;
@@ -157,7 +158,7 @@ public class Intake extends Subsystem {
                 break;
             case INTAKING:
                 setHopperGateUp();
-                setIntakeRotatorState(RotatorStates.DOWN);
+                setIntakeRotatorState(RotatorStates.UP);
                 currentExtenderState = States.INTAKING;
                 break;
             case EXTENDING:
@@ -358,17 +359,19 @@ public class Intake extends Subsystem {
     }
 
     public void autoIntake() {
-        if (twoMineralsDetected()) {
+        if (twoMineralsDetected() || autoIntakeOveride) {
             setWantedIntakeState(States.GRABBING);
             if (isCurrentStateWantedState()) {
                 setIntakePower(0);
                 setHopperCoverState(HopperState.OPEN);
                 isAutoIntakeDone = true;
+                autoIntakeOveride = false;
             } else {
                 setHopperGateDown();
                 setIntakePower(-1);
             }
         } else {
+            setIntakeRotatorState(RotatorStates.DOWN);
             setHopperCoverState(HopperState.CLOSED);
             isAutoIntakeDone = false;
             setHopperGateUp();

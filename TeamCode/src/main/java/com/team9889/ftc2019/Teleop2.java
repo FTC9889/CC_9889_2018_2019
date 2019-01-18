@@ -101,6 +101,10 @@ public class Teleop2 extends Team9889Linear {
                 Robot.getIntake().autoIntake();
             }
 
+            if (gamepad2.dpad_down){
+                Robot.getIntake().autoIntakeOveride = true;
+            }
+
 
             // auto/manuel mode changer (gamepad2)
             boolean changeMode = gamepad2.left_stick_button && gamepad2.right_stick_button;
