@@ -60,7 +60,7 @@ public class Constants {
         public final static String kBackIntakeDetectorId = "backRev";
         public final static String kFrontIntakeDetectorId = "frontRev";
 
-        public final static double kIntakeTicksPerRev = 1120;  //Neverest 40
+        public final static double kIntakeTicksPerRev = 537.6;  //NeveRest Orbital 20
         public final static double kIntakeSpoolDiameter = 1.5;
         public final static double kIntakeTicksToInchRatio = kIntakeSpoolDiameter * Math.PI / kIntakeTicksPerRev;
     }
@@ -97,6 +97,7 @@ public class Constants {
         public final static String kRightLiftId = "rightlift";
         public final static String kLiftUpperLimitSensorId = "liftupperlimitsensor";
         public final static String kLiftLowerLimitSensorId = "liftlowerlimitsensor";
+        public final static String kRobotToGround = "liftdistancesensor";
         public final static double kMaxLiftHeight = 100; // tbd
         public final static double kLiftTicksPerRev = 1120; // ticks
         public final static double kLiftSpoolDiameter = 1.25; // in

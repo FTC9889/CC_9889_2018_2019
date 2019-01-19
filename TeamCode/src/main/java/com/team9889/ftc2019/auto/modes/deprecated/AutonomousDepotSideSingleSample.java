@@ -1,4 +1,4 @@
-package com.team9889.ftc2019.auto.modes;
+package com.team9889.ftc2019.auto.modes.deprecated;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -8,7 +8,6 @@ import com.team9889.ftc2019.auto.actions.Drive.DriveToPosition;
 import com.team9889.ftc2019.auto.actions.Drive.DriveTurn;
 import com.team9889.ftc2019.auto.actions.Wait;
 import com.team9889.ftc2019.subsystems.Camera;
-import com.team9889.ftc2019.subsystems.Lift;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -19,6 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @Autonomous
 @Disabled
+@Deprecated
 public class AutonomousDepotSideSingleSample extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {

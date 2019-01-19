@@ -40,6 +40,7 @@ import org.opencv.core.Size;
 
 
 @TeleOp(name="Silver Example", group="DogeCV")
+@Disabled
 public class SilverExample extends OpMode
 {
     private SilverDetector detector;

@@ -1,6 +1,7 @@
 package com.team9889.ftc2019.test.subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.team9889.ftc2019.Team9889Linear;
 import com.team9889.ftc2019.subsystems.Intake;
 
@@ -8,6 +9,7 @@ import com.team9889.ftc2019.subsystems.Intake;
  * Created by joshua9889 on 1/14/2019.
  */
 @Autonomous
+@Disabled
 public class TestIntakeCounter extends Team9889Linear {
     @Override
     public void runOpMode() {

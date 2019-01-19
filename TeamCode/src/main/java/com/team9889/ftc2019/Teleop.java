@@ -1,19 +1,16 @@
 package com.team9889.ftc2019;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.ftc2019.subsystems.Camera;
 import com.team9889.ftc2019.subsystems.Intake;
-import com.team9889.ftc2019.subsystems.Lift;
 
 /**
  * Created by joshua9889 on 3/28/2018.
  */
 
 @Disabled
-@TeleOp
 public class Teleop extends Team9889Linear{
 
     DriverStation driverStation;

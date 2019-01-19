@@ -43,6 +43,7 @@ public abstract class Team9889Linear extends LinearOpMode {
         Robot.init(hardwareMap, autonomous);
 
         telemetry.setMsTransmissionInterval(autonomous ? 50:1000);
+        matchTime.reset();
 
         if(autonomous){
             setBackground(Color.GREEN);
@@ -51,6 +52,8 @@ public abstract class Team9889Linear extends LinearOpMode {
             while(isInInitLoop()){
                 telemetry.addData("Waiting for Start","");
                 telemetry.update();
+
+                Robot.getLift().update(matchTime);
             }
         } else {
             // Teleop Init Loop code

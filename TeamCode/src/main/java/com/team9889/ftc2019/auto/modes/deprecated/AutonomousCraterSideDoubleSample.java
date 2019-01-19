@@ -1,4 +1,4 @@
-package com.team9889.ftc2019.auto.modes;
+package com.team9889.ftc2019.auto.modes.deprecated;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -18,6 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @Autonomous
 @Disabled
+@Deprecated
 public class AutonomousCraterSideDoubleSample extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {

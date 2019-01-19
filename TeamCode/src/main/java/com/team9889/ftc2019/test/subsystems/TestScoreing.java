@@ -1,11 +1,8 @@
 package com.team9889.ftc2019.test.subsystems;
 
-import android.app.backup.RestoreObserver;
-
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.team9889.ftc2019.Team9889Linear;
-import com.team9889.ftc2019.subsystems.Arms;
 
 /**
  * Created by MannoMation on 12/29/2018.

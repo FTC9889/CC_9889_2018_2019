@@ -1,12 +1,13 @@
 package com.team9889.ftc2019.test.subsystems;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.team9889.ftc2019.Team9889Linear;
 
 /**
  * Created by MannoMation on 12/14/2018.
  */
-@TeleOp
+@Autonomous(group = "Tests")
 public class TestArmsTeleop extends Team9889Linear {
 
     double leftShoulder = 0;

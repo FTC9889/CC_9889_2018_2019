@@ -2,7 +2,7 @@ package com.team9889.ftc2019.auto.actions.Lift;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.auto.actions.Action;
-import com.team9889.ftc2019.states.LiftStates;
+import com.team9889.ftc2019.subsystems.Drive;
 import com.team9889.ftc2019.subsystems.Lift;
 import com.team9889.ftc2019.subsystems.Robot;
 
@@ -11,6 +11,8 @@ import com.team9889.ftc2019.subsystems.Robot;
  */
 public class LiftLand extends Action {
 
+    private Lift mLift = Robot.getInstance().getLift();
+    private Drive mDrive = Robot.getInstance().getDrive();
     private ElapsedTime timer = new ElapsedTime();
 
     @Override
@@ -20,27 +22,27 @@ public class LiftLand extends Action {
 
     @Override
     public void start() {
-        Robot.getInstance().getLift().setLiftState(LiftStates.SCOREINGHEIGHT);
         timer.reset();
     }
 
     @Override
     public void update() {
-        if (Robot.getInstance().getLift().getHeight() > 10 && Robot.getInstance().getLift().getHeight() < 15){
-            Robot.getInstance().getDrive().setThrottleSteerPower(0.1, 0);
-        } else {
-            Robot.getInstance().getDrive().setThrottleSteerPower(0, 0);
-        }
-        Robot.getInstance().getLift().update(timer);
+        if(mLift.getHeight() < 16)
+            mLift.setLiftPower(0.6);
+        else
+            mLift.setLiftPower(0);
+
+            mDrive.setThrottleSteerPower(-0.2, 0);
     }
 
     @Override
     public boolean isFinished() {
-        return Robot.getInstance().getLift().isCurrentWantedState();
+        return mLift.getHeight() > 15.8;
     }
 
     @Override
     public void done() {
-
+        mLift.setLiftPower(0);
+        mDrive.setThrottleSteerPower(0,0);
     }
 }

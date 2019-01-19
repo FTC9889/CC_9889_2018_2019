@@ -30,6 +30,7 @@
 package com.team9889.ftc2019.test.subsystems;
 
 import com.qualcomm.ftccommon.SoundPlayer;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.team9889.ftc2019.Team9889Linear;
 
@@ -67,7 +68,7 @@ import com.team9889.ftc2019.Team9889Linear;
  */
 
 @TeleOp
-//@Disabled
+@Disabled
 public class TestSounds extends Team9889Linear {
 
     // Declare OpMode members.

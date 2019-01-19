@@ -1,7 +1,6 @@
 package com.team9889.ftc2019.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -31,9 +30,13 @@ public class Intake extends Subsystem {
     public boolean isAutoIntakeDone = true;
     public boolean autoIntakeOveride = false;
 
-    public String backMinerals;
-    public String frontMinerals;
-    public String minerals;
+    private ElapsedTime autoTimer = new ElapsedTime();
+
+    private int backGoldVote = 0;
+    private int backSilverVote = 0;
+    private int frontGoldVote = 0;
+    private int frontSilverVote = 0;
+    private Robot.MineralPositions mineralPositions;
 
     // PID for extending the intake
     private PID extenderPID = new PID(0.004, 0.0, 0.2);
@@ -44,12 +47,18 @@ public class Intake extends Subsystem {
     private ElapsedTime mineralTimer = new ElapsedTime();
     public int numberOfMinerals = 0;
 
+    double startTime = 0;
+
     public enum States {
         INTAKING, EXTENDING, GRABBING, ZEROING, NULL
     }
 
     public enum RotatorStates {
         UP, DOWN, NULL
+    }
+
+    public enum MineralType {
+        GOLD, SILVER, UNKNOWN
     }
 
     private States currentExtenderState = States.ZEROING;
@@ -81,6 +90,7 @@ public class Intake extends Subsystem {
             setHopperCoverState(HopperState.CLOSED);
 
             setHopperGateUp();
+            setIntakeRotatorState(RotatorStates.UP);
         }
 
         setWantedIntakeState(States.NULL);
@@ -100,21 +110,22 @@ public class Intake extends Subsystem {
         telemetry.addData("Front Detected", frontHopperDetector());
         telemetry.addData("Hsv Back", Arrays.toString(revBackHopper.hsv()));
         telemetry.addData("Hsv Front", Arrays.toString(revFrontHopper.hsv()));
+
         telemetry.addData("IntakePower", intakeMotor.getPower());
         telemetry.addData("Intake Extender", extender.getCurrentPosition());
         telemetry.addData("Angle of Intake", intakeRotator.getPosition());
         telemetry.addData("Fully In Intake Switch", intakeInSwitchValue());
         telemetry.addData("Grabbing Intake Switch", intakeGrabbingSwitchValue());
+
         telemetry.addData("Wanted State", wantedExtenderState);
         telemetry.addData("Current State", currentExtenderState);
+
         telemetry.addData("Intake Cruise Control", Robot.getInstance().intakeCruiseControl);
     }
 
     @Override
     public void update(ElapsedTime time) {
-        if (!isAutoIntakeDone) {
-            autoIntake();
-        }
+//        updateMineralVote();
 
         if (currentExtenderState != wantedExtenderState) switch (wantedExtenderState) {
             case ZEROING:
@@ -128,38 +139,66 @@ public class Intake extends Subsystem {
                     Robot.getInstance().intakeCruiseControl = false;
                     setIntakeExtenderPower(-.5);
                     setIntakeRotatorState(RotatorStates.UP);
+                    setHopperCoverState(HopperState.CLOSED);
                 }
                 break;
             case GRABBING:
-                if (currentExtenderState == States.ZEROING) {
+                if (currentExtenderState == States.ZEROING || currentExtenderState == States.NULL) {
                     if (intakeGrabbingSwitchValue()) {
-                        setHopperCoverState(HopperState.OPEN);
-                        setIntakeExtenderPower(0);
                         currentExtenderState = States.GRABBING;
                         Robot.getInstance().intakeCruiseControl = true;
 
-                        setIntakeRotatorPosition(0.5);
+                        setHopperCoverState(HopperState.OPEN);
+                        setIntakeExtenderPower(0);
+                        setIntakePower(0);
+                        setIntakeRotatorPosition(0.8);
                     } else {
                         Robot.getInstance().intakeCruiseControl = false;
                         setIntakeExtenderPower(.3);
                     }
                 } else {
                     if (intakeGrabbingSwitchValue()) {
-                        setIntakeExtenderPower(0);
                         currentExtenderState = States.GRABBING;
                         Robot.getInstance().intakeCruiseControl = true;
+
+                        setIntakeExtenderPower(0);
+                        setIntakePower(0);
                     } else {
                         Robot.getInstance().intakeCruiseControl = false;
-                        setIntakeExtenderPower(-0.5);
+
+                        if (currentExtenderState == States.INTAKING)
+                            outtake();
+                        else
+                            setIntakePower(0);
+
+                        setIntakeExtenderPower(-.3);
                         setIntakeRotatorState(RotatorStates.UP);
+                        setHopperCoverState(HopperState.OPEN);
                         setHopperGateDown();
+
+                        if (intakeInSwitchValue())
+                            currentExtenderState = States.ZEROING;
                     }
                 }
                 break;
             case INTAKING:
-                setHopperGateUp();
-                setIntakeRotatorState(RotatorStates.UP);
-                currentExtenderState = States.INTAKING;
+                if (twoMineralsDetected()) {
+                    Robot.getInstance().intakeCruiseControl = false;
+
+                    currentExtenderState = States.INTAKING;
+                    setWantedIntakeState(States.GRABBING);
+                    setIntakePower(-0.8);
+                    setHopperGateDown();
+                    Robot.getInstance().isAutoAlreadyDone = true;
+
+                } else {
+                    Robot.getInstance().intakeCruiseControl = true;
+                    setIntakeRotatorState(RotatorStates.DOWN);
+                    setHopperCoverState(HopperState.CLOSED);
+                    setHopperGateUp();
+                    setIntakePower(1);
+                    startTime = time.milliseconds();
+                }
                 break;
             case EXTENDING:
                 break;
@@ -277,13 +316,14 @@ public class Intake extends Subsystem {
     public enum HopperState {
         OPEN, CLOSED
     }
-    public void setHopperCoverState (HopperState state) {
+
+    public void setHopperCoverState(HopperState state) {
         switch (state) {
             case OPEN:
                 hopperCover.setPosition(0.6);
                 break;
             case CLOSED:
-                hopperCover.setPosition(0.3);
+                hopperCover.setPosition(0.2);
                 break;
         }
     }
@@ -301,43 +341,30 @@ public class Intake extends Subsystem {
     }
 
     public Robot.MineralPositions getMineralPositions() {
-        backColor();
-        frontColor();
-
-        combineMinerals();
-        if (minerals == "GoldGold") {
-            return com.team9889.ftc2019.subsystems.Robot.MineralPositions.GOLDGOLD;
-        } else if (minerals == "SilverSilver") {
-            return com.team9889.ftc2019.subsystems.Robot.MineralPositions.SILVERSILVER;
-        } else if (minerals == "SilverGold") {
-            return com.team9889.ftc2019.subsystems.Robot.MineralPositions.SILVERGOLD;
-        } else if (minerals == "GoldSilver") {
-            return com.team9889.ftc2019.subsystems.Robot.MineralPositions.GOLDSILVER;
-        } else {
-            return Robot.MineralPositions.SILVERSILVER;
-        }
+        return mineralPositions;
     }
 
-    public void backColor() {
+    public MineralType backColor() {
         double[] hueThresholdGold = {30, 39};
-        double[] saturationThresholdGold = {0.5, 0.7};
+        double[] saturationThresholdGold = {0.4, 0.7};
         double[] valueThresholdGold = {0, 100};
 
         double[] hueThresholdSilver = {65, 74};
         double[] saturationThresholdSilver = {0.3, 0.4};
         double[] valueThresholdSilver = {30, 39};
 
-        if (CruiseLib.isBetween(revBackHopper.hsv()[0], hueThresholdGold[0], hueThresholdGold[1])
-                && CruiseLib.isBetween(revBackHopper.hsv()[1], saturationThresholdGold[0], saturationThresholdGold[1]))
-            backMinerals = "Gold";
-        else if ((CruiseLib.isBetween(revBackHopper.hsv()[0], hueThresholdSilver[0], hueThresholdSilver[1])
-                && CruiseLib.isBetween(revBackHopper.hsv()[1], saturationThresholdSilver[0], saturationThresholdSilver[1]))
-                || backHopperDetector())
-            backMinerals = "Silver";
+        if (backHopperDetector()) {
+            if (CruiseLib.isBetween(revBackHopper.hsv()[0], hueThresholdGold[0], hueThresholdGold[1])
+                    && CruiseLib.isBetween(revBackHopper.hsv()[1], saturationThresholdGold[0], saturationThresholdGold[1]))
+                return MineralType.GOLD;
+            else
+                return MineralType.SILVER;
+        } else
+            return MineralType.UNKNOWN;
     }
 
-    public void frontColor() {
-        double[] hueThresholdGold = {40, 50};
+    public MineralType frontColor() {
+        double[] hueThresholdGold = {43, 70};
         double[] saturationThresholdGold = {0.4, 0.6};
         double[] valueThresholdGold = {0, 100};
 
@@ -345,38 +372,32 @@ public class Intake extends Subsystem {
         double[] saturationThresholdSilver = {0.2, 0.35};
         double[] valueThresholdSilver = {30, 39};
 
-        if (CruiseLib.isBetween(revFrontHopper.hsv()[0], hueThresholdGold[0], hueThresholdGold[1])
-                && CruiseLib.isBetween(revFrontHopper.hsv()[1], saturationThresholdGold[0], saturationThresholdGold[1]))
-            frontMinerals = "Gold";
-        else if (CruiseLib.isBetween(revFrontHopper.hsv()[0], hueThresholdSilver[0], hueThresholdSilver[1])
-                && CruiseLib.isBetween(revFrontHopper.hsv()[1], saturationThresholdSilver[0], saturationThresholdSilver[1])
-                || frontHopperDetector())
-            frontMinerals = "Silver";
+        if (frontHopperDetector()) {
+            if (CruiseLib.isBetween(revFrontHopper.hsv()[0], hueThresholdGold[0], hueThresholdGold[1])
+                    && CruiseLib.isBetween(revFrontHopper.hsv()[1], saturationThresholdGold[0], saturationThresholdGold[1]))
+                return MineralType.GOLD;
+            else
+                return MineralType.SILVER;
+        } else
+            return MineralType.UNKNOWN;
     }
 
-    public void combineMinerals(){
-        minerals =  frontMinerals + backMinerals;
-    }
+    public Robot.MineralPositions updateMineralVote() {
+        MineralType front = frontColor();
+        MineralType back = backColor();
 
-    public void autoIntake() {
-        if (twoMineralsDetected() || autoIntakeOveride) {
-            setWantedIntakeState(States.GRABBING);
-            if (isCurrentStateWantedState()) {
-                setIntakePower(0);
-                setHopperCoverState(HopperState.OPEN);
-                isAutoIntakeDone = true;
-                autoIntakeOveride = false;
-            } else {
-                setHopperGateDown();
-                setIntakePower(-1);
-            }
-        } else {
-            setIntakeRotatorState(RotatorStates.DOWN);
-            setHopperCoverState(HopperState.CLOSED);
-            isAutoIntakeDone = false;
-            setHopperGateUp();
-            setIntakePower(1);
-        }
+        if (front == MineralType.SILVER && back == MineralType.GOLD)
+            mineralPositions = Robot.MineralPositions.SILVERGOLD;
+        else if (front == MineralType.SILVER && back == MineralType.SILVER)
+            mineralPositions = (Robot.MineralPositions.SILVERSILVER);
+        else if (front == MineralType.GOLD && back == MineralType.GOLD)
+            mineralPositions = (Robot.MineralPositions.GOLDGOLD);
+        else if (front == MineralType.GOLD && back == MineralType.SILVER)
+            mineralPositions = (Robot.MineralPositions.GOLDSILVER);
+        else
+            mineralPositions = Robot.MineralPositions.SILVERSILVER;
+
+        return mineralPositions;
     }
 
     @Override

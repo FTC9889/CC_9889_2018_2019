@@ -22,12 +22,19 @@ public class Robot extends Subsystem {
     public boolean intakeCruiseControl = true;
     public boolean liftCruiseControl = true;
 
+    public boolean isAutoAlreadyDone = false;
+
+    public boolean clawLeftOpenMode = true;
+    public boolean clawRightOpenMode = true;
+
     public enum MineralPositions {
         GOLDGOLD, SILVERSILVER, SILVERGOLD, GOLDSILVER, NULL
     }
 
     private static Robot mInstance = null;
     private ElapsedTime clawTimer = new ElapsedTime();
+    private ElapsedTime liftArmsTimer = new ElapsedTime();
+    private ElapsedTime dropTimer = new ElapsedTime();
 
     public static Robot getInstance() {
         if (mInstance == null)
@@ -87,8 +94,7 @@ public class Robot extends Subsystem {
             subsystem.update(timer);
         }
 
-        scoringStateMachine(whichMineral);
-
+        scoringStateMachine();
     }
 
     @Override
@@ -130,7 +136,8 @@ public class Robot extends Subsystem {
         return mArms;
     }
 
-    private int tracker = 0;
+    private int tracker = 8;
+    public boolean allowOperatorOfGrabbers = false;
 
     public void resetTracker() {
         tracker = 0;
@@ -140,15 +147,21 @@ public class Robot extends Subsystem {
         whichMineral = mineralPositions;
     }
 
-    private void scoringStateMachine(MineralPositions state) {
+    private void scoringStateMachine() {
+        MineralPositions state = whichMineral;
         liftCruiseControl = false;
+
+        if (tracker <= 1)
+            getIntake().updateMineralVote();
+
         switch (state) {
             case GOLDGOLD:
                 switch (tracker) {
                     case 0:
+                        allowOperatorOfGrabbers = false;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
-                        getArms().setRightClawOpen(true);
                         getArms().setLeftClawOpen(true);
+                        getArms().setRightClawOpen(true);
                         if (getArms().isCurrentStateWantedState())
                             tracker++;
                         break;
@@ -160,8 +173,8 @@ public class Robot extends Subsystem {
                         }
                         break;
                     case 2:
-                        getArms().setRightClawOpen(false);
                         getArms().setLeftClawOpen(false);
+                        getArms().setRightClawOpen(false);
                         if (clawTimer.milliseconds() > 1000)
                             tracker++;
                         break;
@@ -177,19 +190,30 @@ public class Robot extends Subsystem {
                         }
                         break;
                     case 5:
+                        allowOperatorOfGrabbers = true;
+
                         if (getArms().bothOpen()) {
+                            dropTimer.reset();
                             tracker++;
                         }
                         break;
                     case 6:
-                        getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
-                        if (getArms().isCurrentStateWantedState())
-                            tracker++;
+                        allowOperatorOfGrabbers = false;
+                        if (dropTimer.milliseconds() > 500 && dropTimer.milliseconds() < 1000)
+                            getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
+                        else if (dropTimer.milliseconds() > 1000) {
+                            if (getArms().isCurrentStateWantedState()) {
+                                liftArmsTimer.reset();
+                                tracker++;
+                            }
+                        }
                         break;
                     case 7:
-//                        getLift().setLiftState(Lift.LiftStates.READY);
-//                        if(getLift().isCurrentWantedState())
-                        tracker++;
+                        if (liftArmsTimer.milliseconds() > 2000) {
+                            getLift().setLiftState(LiftStates.READY);
+                            if (getLift().isCurrentWantedState())
+                                tracker++;
+                        }
                         break;
                 }
                 break;
@@ -197,9 +221,10 @@ public class Robot extends Subsystem {
             case SILVERSILVER:
                 switch (tracker) {
                     case 0:
+                        allowOperatorOfGrabbers = false;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
-                        getArms().setRightClawOpen(true);
                         getArms().setLeftClawOpen(true);
+                        getArms().setRightClawOpen(true);
                         if (getArms().isCurrentStateWantedState())
                             tracker++;
                         break;
@@ -228,19 +253,29 @@ public class Robot extends Subsystem {
                         }
                         break;
                     case 5:
+                        allowOperatorOfGrabbers = true;
                         if (getArms().bothOpen()) {
+                            dropTimer.reset();
                             tracker++;
                         }
                         break;
                     case 6:
-                        getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
-                        if (getArms().isCurrentStateWantedState())
-                            tracker++;
+                        allowOperatorOfGrabbers = false;
+                        if (dropTimer.milliseconds() > 500 && dropTimer.milliseconds() < 1000)
+                            getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
+                        else if (dropTimer.milliseconds() > 1000) {
+                            if (getArms().isCurrentStateWantedState()) {
+                                liftArmsTimer.reset();
+                                tracker++;
+                            }
+                        }
                         break;
                     case 7:
-//                        getLift().setLiftState(Lift.LiftStates.READY);
-//                        if(getLift().isCurrentWantedState())
-                        tracker++;
+                        if (liftArmsTimer.milliseconds() > 2000) {
+                            getLift().setLiftState(LiftStates.READY);
+                            if (getLift().isCurrentWantedState())
+                                tracker++;
+                        }
                         break;
                 }
                 break;
@@ -248,6 +283,7 @@ public class Robot extends Subsystem {
             case SILVERGOLD:
                 switch (tracker) {
                     case 0:
+                        allowOperatorOfGrabbers = false;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
                         getArms().setRightClawOpen(true);
                         getArms().setLeftClawOpen(true);
@@ -279,19 +315,29 @@ public class Robot extends Subsystem {
                         }
                         break;
                     case 5:
+                        allowOperatorOfGrabbers = true;
                         if (getArms().bothOpen()) {
+                            dropTimer.reset();
                             tracker++;
                         }
                         break;
                     case 6:
-                        getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
-                        if (getArms().isCurrentStateWantedState())
-                            tracker++;
+                        allowOperatorOfGrabbers = false;
+                        if (dropTimer.milliseconds() > 500 && dropTimer.milliseconds() < 1000)
+                            getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
+                        else if (dropTimer.milliseconds() > 1000) {
+                            if (getArms().isCurrentStateWantedState()) {
+                                liftArmsTimer.reset();
+                                tracker++;
+                            }
+                        }
                         break;
                     case 7:
-//                        getLift().setLiftState(Lift.LiftStates.READY);
-//                        if(getLift().isCurrentWantedState())
-                        tracker++;
+                        if (liftArmsTimer.milliseconds() > 2000) {
+                            getLift().setLiftState(LiftStates.READY);
+                            if (getLift().isCurrentWantedState())
+                                tracker++;
+                        }
                         break;
                     case 8:
                         break;
@@ -301,6 +347,7 @@ public class Robot extends Subsystem {
             case GOLDSILVER:
                 switch (tracker) {
                     case 0:
+                        allowOperatorOfGrabbers = false;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDSILVER);
                         getArms().setRightClawOpen(true);
                         getArms().setLeftClawOpen(true);
@@ -332,19 +379,29 @@ public class Robot extends Subsystem {
                         }
                         break;
                     case 5:
+                        allowOperatorOfGrabbers = true;
                         if (getArms().bothOpen()) {
+                            dropTimer.reset();
                             tracker++;
                         }
                         break;
                     case 6:
-                        getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
-                        if (getArms().isCurrentStateWantedState())
-                            tracker++;
+                        allowOperatorOfGrabbers = false;
+                        if (dropTimer.milliseconds() > 500 && dropTimer.milliseconds() < 1000)
+                            getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
+                        else if (dropTimer.milliseconds() > 1000) {
+                            if (getArms().isCurrentStateWantedState()) {
+                                liftArmsTimer.reset();
+                                tracker++;
+                            }
+                        }
                         break;
                     case 7:
-//                        getLift().setLiftState(Lift.LiftStates.READY);
-//                        if(getLift().isCurrentWantedState())
-                        tracker++;
+                        if (liftArmsTimer.milliseconds() > 2000) {
+                            getLift().setLiftState(LiftStates.READY);
+                            if (getLift().isCurrentWantedState())
+                                tracker++;
+                        }
                         break;
                     case 8:
                         break;

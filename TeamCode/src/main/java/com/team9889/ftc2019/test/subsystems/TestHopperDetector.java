@@ -1,8 +1,6 @@
 package com.team9889.ftc2019.test.subsystems;
 
 import com.disnodeteam.dogecv.CameraViewDisplay;
-import com.disnodeteam.dogecv.DogeCV;
-import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -13,6 +11,7 @@ import com.team9889.lib.detectors.HopperDetector;
  */
 
 @Autonomous
+@Disabled
 public class TestHopperDetector extends LinearOpMode {
     HopperDetector detector;
     @Override

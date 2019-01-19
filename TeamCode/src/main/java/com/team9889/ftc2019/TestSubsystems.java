@@ -1,5 +1,6 @@
 package com.team9889.ftc2019;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 /**
@@ -7,11 +8,17 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  */
 
 @TeleOp
+@Disabled
 public class TestSubsystems extends Team9889Linear{
     @Override
     public void runOpMode() {
         Robot.init(hardwareMap, true);
 
-        Robot.test(telemetry);
+        waitForStart();
+
+        while (opModeIsActive()) {
+            Robot.outputToTelemetry(telemetry);
+            telemetry.update();
+        }
     }
 }

@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * Created by MannoMation on 9/14/2018.
  */
 
-public class Arms extends Subsystem{
+public class Arms extends Subsystem {
     private Servo leftShoulder, rightShoulder;
     private Servo leftElbow, rightElbow;
     private Servo leftClaw, rightClaw;
@@ -27,7 +27,7 @@ public class Arms extends Subsystem{
     private double startTime;
     private boolean first = true;
 
-    public enum ArmStates{
+    public enum ArmStates {
         NULL, STORED,
         PARK,
         GRABGOLDSILVER, GRABGOLDGOLD,
@@ -52,6 +52,8 @@ public class Arms extends Subsystem{
             update(new ElapsedTime());
             setLeftClawOpen(false);
             setRightClawOpen(false);
+        } else {
+            setArmsStates(ArmStates.GRABGOLDGOLD);
         }
 
         first = true;
@@ -76,143 +78,151 @@ public class Arms extends Subsystem{
         telemetry.addData("Current State", currentArmsState);
     }
 
+    private double leftArmShoulderPosition, leftArmElbowPosition;
+    private double rightArmShoulderPosition, rightArmElbowPosition;
+
     @Override
     public void update(ElapsedTime time) {
-        if(currentArmsState != wantedArmsState){
+        if (currentArmsState != wantedArmsState) {
             switch (wantedArmsState) {
-                    case STORED:
-                        setLeftArm(0, .131);
-                        setRightArm(.998, .844);
-                        first = true;
+                case STORED:
+                    setLeftArm(0, .131);
+                    setRightArm(.998, .844);
+                    first = true;
 
-                        currentArmsState = ArmStates.STORED;
-                        break;
-                    case PARK:
-                        setLeftArm(0, .131);
-                        setRightArm(0.269, 0.42);
-                        first = true;
+                    currentArmsState = ArmStates.STORED;
+                    break;
+                case PARK:
+                    setLeftArm(0, .131);
+                    setRightArm(0.269, 0.42);
+                    first = true;
 
-                        currentArmsState = ArmStates.PARK;
-                        break;
-                    case GOLDGOLD:
-                        setRightArm(0.02, 0.541);
+                    currentArmsState = ArmStates.PARK;
+                    break;
+                case GOLDGOLD:
+                    setRightArm(0.02, 0.541);
 
+                    if (first) {
+                        startTime = time.milliseconds();
+                        first = false;
+                    } else {
+                        if (time.milliseconds() - startTime > 100) {
+                            setLeftArm(0.589, 0.813);
+                            currentArmsState = ArmStates.GOLDGOLD;
+                            first = true;
+                        }
+                    }
+                    break;
+                case SILVERSILVER:
+                    setLeftArm(0.733, 0.63);
+                    setRightArm(0.269, 0.42);
+
+                    if (first) {
+                        startTime = time.milliseconds();
+                        first = false;
+                    } else {
+                        if (time.milliseconds() - startTime > 100) {
+                            currentArmsState = ArmStates.SILVERSILVER;
+                            first = true;
+                        }
+                    }
+                    break;
+                case SILVERGOLD:
+                    setLeftArm(0.733, 0.542);
+                    setRightArm(0.259, 0.183);
+
+                    if (first) {
+                        startTime = time.milliseconds();
+                        first = false;
+
+                    } else {
+                        if (time.milliseconds() - startTime > 100) {
+                            currentArmsState = ArmStates.SILVERGOLD;
+                            first = true;
+                        }
+                    }
+                    break;
+                case GRABGOLDGOLD:
+                    if (currentArmsState == ArmStates.GRABGOLDSILVER) {
                         if (first) {
                             startTime = time.milliseconds();
                             first = false;
+                            setLeftArm(0.218, 0.039);
+
                         } else {
-                            if (time.milliseconds() - startTime > 100) {
-                                setLeftArm(0.589, 0.813);
-                                currentArmsState = ArmStates.GOLDGOLD;
+                            if (time.milliseconds() - startTime > 70
+                                    && time.milliseconds() - startTime < 100) {
+                                setRightArm(.954, .882);
+                            } else if (time.milliseconds() - startTime > 100
+                                    && time.milliseconds() - startTime > 150) {
+                                setLeftArm(.096, .101);
+                            } else if (time.milliseconds() - startTime > 150) {
+                                currentArmsState = ArmStates.GRABGOLDGOLD;
                                 first = true;
                             }
                         }
-                        break;
-                    case SILVERSILVER:
-                        setLeftArm(0.733, 0.63);
-                        setRightArm(0.269, 0.42);
-
+                    } else {
                         if (first) {
                             startTime = time.milliseconds();
                             first = false;
+                            setLeftArm(.096, .101);
+
                         } else {
-                            if (time.milliseconds() - startTime > 100) {
-                                currentArmsState = ArmStates.SILVERSILVER;
+                            if (time.milliseconds() - startTime > 200 &&
+                                    time.milliseconds() - startTime < 400) {
+                                setRightArm(.954, .882);
+                            } else if (time.milliseconds() - startTime > 400) {
+                                setRightArm(.954, .882);
+                                currentArmsState = ArmStates.GRABGOLDGOLD;
                                 first = true;
                             }
                         }
-                        break;
-                    case SILVERGOLD:
-                        setLeftArm(0.733, 0.542);
-                        setRightArm(0.259, 0.183);
+                    }
+                    break;
 
+                case GRABGOLDSILVER:
+                    if (currentArmsState == ArmStates.GRABGOLDGOLD) {
                         if (first) {
                             startTime = time.milliseconds();
                             first = false;
+                            setRightArm(0.847, 0.962);
 
                         } else {
-                            if (time.milliseconds() - startTime > 100) {
-                                currentArmsState = ArmStates.SILVERGOLD;
+                            if (time.milliseconds() - startTime > 300
+                                    && time.milliseconds() - startTime < 500) {
+                                setLeftArm(0.090, 0.18);
+                            } else if (time.milliseconds() - startTime > 500
+                                    && time.milliseconds() - startTime < 850) {
+                                setRightArm(0.923, 0.94);
+                            } else if (time.milliseconds() - startTime > 900) {
+                                currentArmsState = ArmStates.GRABGOLDSILVER;
                                 first = true;
                             }
                         }
-                        break;
-                    case GRABGOLDGOLD:
-                        if (currentArmsState == ArmStates.GRABGOLDSILVER) {
-                            if (first) {
-                                startTime = time.milliseconds();
-                                first = false;
-                                setLeftArm(0.218, 0.039);
-                            } else {
-                                if (time.milliseconds() - startTime > 70
-                                        && time.milliseconds() - startTime < 100) {
-                                    setRightArm(.943, .88);
-                                } else if (time.milliseconds() - startTime > 100
-                                        && time.milliseconds() - startTime > 150) {
-                                    setLeftArm(.097, .125);
-                                } else if (time.milliseconds() - startTime > 150) {
-                                    currentArmsState = ArmStates.GRABGOLDGOLD;
-                                    first = true;
-                                }
-                            }
+                    } else {
+                        if (first) {
+                            startTime = time.milliseconds();
+                            first = false;
+                            setLeftArm(0.090, 0.18);
+
                         } else {
-                            if (first) {
-                                startTime = time.milliseconds();
-                                first = false;
-                                setLeftArm(.097, .125);
-
-                            } else {
-                                if (time.milliseconds() - startTime > 200 &&
-                                        time.milliseconds() - startTime < 400) {
-                                    setRightArm(.943, .88);
-                                } else if (time.milliseconds() - startTime > 400) {
-                                    setRightArm(.943, .88);
-                                    currentArmsState = ArmStates.GRABGOLDGOLD;
-                                    first = true;
-                                }
+                            if (time.milliseconds() - startTime > 200 && time.milliseconds() - startTime < 400) {
+                                setRightArm(0.923, 0.94);
+                            } else if (time.milliseconds() - startTime > 400) {
+                                currentArmsState = ArmStates.GRABGOLDSILVER;
+                                first = true;
                             }
+
                         }
-                        break;
-
-                    case GRABGOLDSILVER:
-                        if (currentArmsState == ArmStates.GRABGOLDGOLD) {
-                            if (first) {
-                                startTime = time.milliseconds();
-                                first = false;
-                                setRightArm(0.847, 0.962);
-                            } else {
-                                if (time.milliseconds() - startTime > 300
-                                        && time.milliseconds() - startTime < 500) {
-                                    setLeftArm(0.096, 0.185);
-                                } else if (time.milliseconds() - startTime > 500
-                                        && time.milliseconds() - startTime < 850) {
-                                    setRightArm(0.949, 0.943);
-                                } else if (time.milliseconds() - startTime > 900) {
-                                    currentArmsState = ArmStates.GRABGOLDSILVER;
-                                    first = true;
-                                }
-                            }
-                        } else {
-                            if (first) {
-                                startTime = time.milliseconds();
-                                first = false;
-                                setLeftArm(0.096, 0.185);
-
-                            } else {
-                                if (time.milliseconds() - startTime > 200 && time.milliseconds() - startTime < 400) {
-                                    setRightArm(0.949, 0.943);
-                                } else if (time.milliseconds() - startTime > 400) {
-                                    currentArmsState = ArmStates.GRABGOLDSILVER;
-                                    first = true;
-                                }
-
-                            }
-                        }
-                        break;
-                } // End of Switch
+                    }
+                    break;
+            } // End of Switch
         } else { // Current == Wanted
             RobotLog.a("Arms all Ready in Position");
         }
+
+        setLeftArm();
+        setRightArm();
     }
 
     @Override
@@ -225,34 +235,48 @@ public class Arms extends Subsystem{
         wantedArmsState = ArmStates.NULL;
     }
 
-    public double getLeftClawPosition(){
+    public double getLeftClawPosition() {
         return leftClaw.getPosition();
     }
 
-    public double getRightClawPosition(){
+    public double getRightClawPosition() {
         return rightClaw.getPosition();
     }
 
-    public void setLeftArm(double Shoulder , double Elbow){
-        leftShoulder.setPosition(Shoulder);
-        leftElbow.setPosition(Elbow);
+    public void setLeftArm() {
+        leftShoulder.setPosition(leftArmShoulderPosition);
+        leftElbow.setPosition(leftArmElbowPosition);
     }
 
-    public void setRightArm(double Shoulder , double Elbow){
-        rightShoulder.setPosition(Shoulder);
-        rightElbow.setPosition(Elbow);
+    public void setLeftArm(double Shoulder, double Elbow) {
+        leftArmShoulderPosition = Shoulder;
+        leftArmElbowPosition = Elbow;
+
+        setLeftArm();
     }
 
-    public  void setLeftClawOpen(boolean open){
+    public void setRightArm() {
+        rightShoulder.setPosition(rightArmShoulderPosition);
+        rightElbow.setPosition(rightArmElbowPosition);
+    }
+
+    public void setRightArm(double Shoulder, double Elbow) {
+        rightArmShoulderPosition = Shoulder;
+        rightArmElbowPosition = Elbow;
+
+        setRightArm();
+    }
+
+    public void setLeftClawOpen(boolean open) {
         leftOpen = open;
 
-        if(open)
+        if (open)
             leftClaw.setPosition(.215);
         else
             leftClaw.setPosition(1);
     }
 
-    public void setRightClawOpen(boolean open){
+    public void setRightClawOpen(boolean open) {
         rightOpen = open;
 
         if (open)
@@ -265,14 +289,14 @@ public class Arms extends Subsystem{
         return leftOpen && rightOpen;
     }
 
-    public boolean isCurrentStateWantedState(){
-        return(currentArmsState == wantedArmsState);
+    public boolean isCurrentStateWantedState() {
+        return (currentArmsState == wantedArmsState);
     }
 
-    public void setArmsStates(ArmStates state){
+    public void setArmsStates(ArmStates state) {
         wantedArmsState = state;
 
-        if(wantedArmsState == ArmStates.GRABSILVERSILVER || wantedArmsState == ArmStates.GRABSILVERGOLD)
+        if (wantedArmsState == ArmStates.GRABSILVERSILVER || wantedArmsState == ArmStates.GRABSILVERGOLD)
             wantedArmsState = ArmStates.GOLDGOLD;
     }
 

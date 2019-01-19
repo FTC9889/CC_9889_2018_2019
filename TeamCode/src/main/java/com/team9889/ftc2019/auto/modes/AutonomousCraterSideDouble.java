@@ -11,8 +11,8 @@ import com.team9889.ftc2019.auto.actions.Intake.IntakeInFront;
 import com.team9889.ftc2019.auto.actions.Intake.IntakeStop;
 import com.team9889.ftc2019.auto.actions.Intake.IntakeZeroing;
 import com.team9889.ftc2019.auto.actions.Intake.Outtake;
-import com.team9889.ftc2019.auto.actions.Lift.LiftLand;
 import com.team9889.ftc2019.auto.actions.Wait;
+import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.ftc2019.subsystems.Camera;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
 
@@ -22,12 +22,15 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
  * Created by MannoMation on 1/12/2019.
  */
 
-@Autonomous
+@Autonomous(group = "Competition Autonomous")
 public class AutonomousCraterSideDouble extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
-        runAction(new LiftLand());
+        Robot.getLift().setLiftState(LiftStates.READY);
+        while (!Robot.getLift().isCurrentWantedState()) {
+            Robot.getLift().update(matchTime);
+        }
 
         ThreadAction(new IntakeInFront());
         runAction(new Wait(1500));
@@ -102,7 +105,7 @@ public class AutonomousCraterSideDouble extends AutoModeBase {
 
                 runAction(new DriveToDistanceAndAngle(8, 0, 3000));
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 2000));
-                runAction(new DriveToDistanceAndAngle(24, -45, 3000));
+                runAction(new DriveToDistanceAndAngle(30, -45, 3000));
                 ThreadAction(new IntakeZeroing());
                 runAction(new Turn(new Rotation2d(-90, AngleUnit.DEGREES), 3000));
                 runAction(new DriveToDistanceAndAngle(20, -90, 2500));
