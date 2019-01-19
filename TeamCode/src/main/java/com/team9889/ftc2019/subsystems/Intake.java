@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.team9889.ftc2019.Constants;
+import com.team9889.ftc2019.Mineral;
 import com.team9889.ftc2019.states.ExtenderStates;
 import com.team9889.ftc2019.states.RotatorStates;
 import com.team9889.lib.CruiseLib;
@@ -181,25 +182,7 @@ public class Intake extends Subsystem {
         return frontHopperDetected() && backHopperDetected();
     }
 
-    public Robot.MineralPositions getMineralPositions() {
-        backColor();
-        frontColor();
-
-        combineMinerals();
-        if (minerals == "GoldGold") {
-            return com.team9889.ftc2019.subsystems.Robot.MineralPositions.GOLDGOLD;
-        } else if (minerals == "SilverSilver") {
-            return com.team9889.ftc2019.subsystems.Robot.MineralPositions.SILVERSILVER;
-        } else if (minerals == "SilverGold") {
-            return com.team9889.ftc2019.subsystems.Robot.MineralPositions.SILVERGOLD;
-        } else if (minerals == "GoldSilver") {
-            return com.team9889.ftc2019.subsystems.Robot.MineralPositions.GOLDSILVER;
-        } else {
-            return Robot.MineralPositions.SILVERSILVER;
-        }
-    }
-
-    public void backColor() {
+    public Mineral backColor() {
         double[] hueThresholdGold = {30, 39};
         double[] saturationThresholdGold = {0.5, 0.7};
         double[] valueThresholdGold = {0, 100};
@@ -208,16 +191,18 @@ public class Intake extends Subsystem {
         double[] saturationThresholdSilver = {0.3, 0.4};
         double[] valueThresholdSilver = {30, 39};
 
-        if (CruiseLib.isBetween(revBackHopper.hsv()[0], hueThresholdGold[0], hueThresholdGold[1])
-                && CruiseLib.isBetween(revBackHopper.hsv()[1], saturationThresholdGold[0], saturationThresholdGold[1]))
-            backMinerals = "Gold";
-        else if ((CruiseLib.isBetween(revBackHopper.hsv()[0], hueThresholdSilver[0], hueThresholdSilver[1])
-                && CruiseLib.isBetween(revBackHopper.hsv()[1], saturationThresholdSilver[0], saturationThresholdSilver[1]))
-                || backHopperDetected())
-            backMinerals = "Silver";
+        if(backHopperDetected()) {
+            if (CruiseLib.isBetween(revBackHopper.hsv()[0], hueThresholdGold[0], hueThresholdGold[1])
+                    && CruiseLib.isBetween(revBackHopper.hsv()[1], saturationThresholdGold[0], saturationThresholdGold[1]))
+                return Mineral.GOLD;
+            else
+                return Mineral.SILVER;
+        } else {
+            return Mineral.UNKNOWN;
+        }
     }
 
-    public void frontColor() {
+    public Mineral frontColor() {
         double[] hueThresholdGold = {40, 50};
         double[] saturationThresholdGold = {0.4, 0.6};
         double[] valueThresholdGold = {0, 100};
@@ -226,13 +211,15 @@ public class Intake extends Subsystem {
         double[] saturationThresholdSilver = {0.2, 0.35};
         double[] valueThresholdSilver = {30, 39};
 
-        if (CruiseLib.isBetween(revFrontHopper.hsv()[0], hueThresholdGold[0], hueThresholdGold[1])
-                && CruiseLib.isBetween(revFrontHopper.hsv()[1], saturationThresholdGold[0], saturationThresholdGold[1]))
-            frontMinerals = "Gold";
-        else if (CruiseLib.isBetween(revFrontHopper.hsv()[0], hueThresholdSilver[0], hueThresholdSilver[1])
-                && CruiseLib.isBetween(revFrontHopper.hsv()[1], saturationThresholdSilver[0], saturationThresholdSilver[1])
-                || frontHopperDetected())
-            frontMinerals = "Silver";
+        if(frontHopperDetected()) {
+            if (CruiseLib.isBetween(revFrontHopper.hsv()[0], hueThresholdGold[0], hueThresholdGold[1])
+                    && CruiseLib.isBetween(revFrontHopper.hsv()[1], saturationThresholdGold[0], saturationThresholdGold[1]))
+                return Mineral.GOLD;
+            else
+                return Mineral.SILVER;
+        } else {
+            return Mineral.UNKNOWN;
+        }
     }
 
     public void combineMinerals() {

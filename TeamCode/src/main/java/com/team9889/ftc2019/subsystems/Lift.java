@@ -23,10 +23,13 @@ public class Lift extends Subsystem {
     private DcMotorEx left, right;
     private DigitalChannel lowerLimit;
     private DigitalChannel upperLimit;
+    private double wantedHeight = 0;
+    private boolean bangBang = true;
+    private boolean inPosition = false;
     private PID pid = new PID(.4, 0.005 ,0, 50);
 
     public boolean inPosition() {
-        return Math.abs(pid.getError()) < 0.5;
+        return ;
     }
 
     @Override
@@ -70,13 +73,20 @@ public class Lift extends Subsystem {
 
     @Override
     public void update(ElapsedTime time) {
-
+        if(!bangBang)
+            setLiftPower(pid.update(getHeight(), wantedHeight));
+        else {
+            if(getHeight() > wantedHeight + 0.5)
+                setLiftPower(-0.3);
+            else if(getHeight() < wantedHeight - 0.5)
+                setLiftPower(0.3);
+            else
+                setLiftPower(0.0);
+        }
     }
 
     @Override
-    public void test(Telemetry telemetry) {
-
-    }
+    public void test(Telemetry telemetry) {}
 
     @Override
     public void stop() {
@@ -84,7 +94,7 @@ public class Lift extends Subsystem {
         setMode(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public double getHeightTicks(){
+    private double getHeightTicks(){
         return (left.getCurrentPosition());
     }
 
@@ -97,7 +107,7 @@ public class Lift extends Subsystem {
         right.setPower(power);
     }
 
-    public void setMode(DcMotor.ZeroPowerBehavior zeroPowerBehavior){
+    private void setMode(DcMotor.ZeroPowerBehavior zeroPowerBehavior){
         left.setZeroPowerBehavior(zeroPowerBehavior);
         right.setZeroPowerBehavior(zeroPowerBehavior);
     }
@@ -111,8 +121,7 @@ public class Lift extends Subsystem {
      * @param wantedHeight In inches
      */
     public void setLiftPosition(double wantedHeight){
-        setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        setLiftPower(pid.update(getHeight(), wantedHeight));
+        this.wantedHeight = wantedHeight;
     }
 
     public boolean getUpperLimitPressed(){

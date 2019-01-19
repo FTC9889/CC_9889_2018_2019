@@ -1,6 +1,7 @@
 package com.team9889.ftc2019.statemachines;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.team9889.ftc2019.Mineral;
 import com.team9889.ftc2019.states.ArmStates;
 import com.team9889.ftc2019.states.ExtenderStates;
 import com.team9889.ftc2019.states.HopperCoverStates;
@@ -14,7 +15,11 @@ import com.team9889.ftc2019.subsystems.Robot;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.team9889.ftc2019.Mineral.GOLD;
+import static com.team9889.ftc2019.Mineral.SILVER;
+import static com.team9889.ftc2019.states.SuperStructureStates.GRAB_MINERALS_AND_SCORE;
 import static com.team9889.ftc2019.states.SuperStructureStates.NULL;
+import static com.team9889.ftc2019.states.SuperStructureStates.PARK;
 import static com.team9889.ftc2019.states.SuperStructureStates.WAIT_FOR_MINERALS;
 
 /**
@@ -38,6 +43,12 @@ public class SuperStructureStateMachine extends StateMachine {
     private int tracker = 0;
     private boolean liftCruiseControl = true;
     private boolean intakeCruiseControl = true;
+    private boolean first = true;
+    private double startTime;
+
+    private int backVoteGold = 0, backVoteSilver = 0;
+    private int frontVoteGold = 0, frontVoteSilver = 0;
+
     private ElapsedTime clawTimer = new ElapsedTime();
 
     public void resetTracker() {
@@ -55,6 +66,118 @@ public class SuperStructureStateMachine extends StateMachine {
     @Override
     public void update(ElapsedTime time) {
         switch (wantedState) {
+            case GRAB_MINERALS_AND_SCORE:
+                liftCruiseControl = false;
+                intakeCruiseControl = false;
+
+                if(Robot.getInstance().getIntake().backColor() == GOLD){
+                    backVoteGold++;
+                } else if(Robot.getInstance().getIntake().backColor() == SILVER) {
+                    backVoteSilver++;
+                }
+
+                if(Robot.getInstance().getIntake().frontColor() == GOLD){
+                    frontVoteGold++;
+                } else if(Robot.getInstance().getIntake().frontColor() == SILVER) {
+                    frontVoteSilver++;
+                }
+
+                Mineral back, front;
+                if((backVoteSilver > 400 || backVoteGold > 400) &&
+                        (frontVoteSilver > 400 || frontVoteGold > 400)) {
+                    if (backVoteGold > backVoteSilver) {
+                        back = GOLD;
+                    } else {
+                        back = SILVER;
+                    }
+
+                    if (frontVoteGold > frontVoteSilver) {
+                        front = GOLD;
+                    } else {
+                        front = SILVER;
+                    }
+
+                    if(front == SILVER && back == GOLD)
+                        setWantedState(SuperStructureStates.SCORE_SILVERGOLD);
+                    else if(front == SILVER && back == SILVER)
+                        setWantedState(SuperStructureStates.SCORE_SILVERSILVER);
+                    else if(front == GOLD && back == GOLD)
+                        setWantedState(SuperStructureStates.SCORE_GOLDGOLD);
+                    else if(front == GOLD && back == SILVER)
+                        setWantedState(SuperStructureStates.SCORE_GOLDSILVER);
+
+                    backVoteGold = 0;
+                    backVoteSilver = 0;
+                    frontVoteGold = 0;
+                    frontVoteSilver = 0;
+                }
+
+                currentState = GRAB_MINERALS_AND_SCORE;
+                break;
+            case PARK:
+                mLiftStateMachine.setWantedState(LiftStates.SCOREINGHEIGHT);
+                mRotatorStateMachine.setWantedState(RotatorStates.UP);
+                mHopperCoverStateMachine.setWantedState(HopperCoverStates.CLOSED);
+                mHopperGateStateMachine.setWantedState(HopperGateStates.UP);
+
+                if(mLiftStateMachine.isCurrentEqualWanted()) {
+                    mExtenderStateMachine.setWantedState(ExtenderStates.GRABBING);
+                    currentState = PARK;
+                }
+                break;
+            case HANGING:
+
+
+                break;
+            case GO_TO_HANG_HEIGHT:
+
+
+
+
+
+                break;
+            case LAND:
+                mLiftStateMachine.setWantedState(LiftStates.HOOKHEIGHT);
+                mArmsStateMachine.setWantedState(ArmStates.STORED);
+
+                mExtenderStateMachine.setWantedState(ExtenderStates.ZEROING);
+                mRotatorStateMachine.setWantedState(RotatorStates.UP);
+
+                mHopperCoverStateMachine.setWantedState(HopperCoverStates.CLOSED);
+                mHopperGateStateMachine.setWantedState(HopperGateStates.UP);
+
+
+
+                break;
+            case WAIT_FOR_MINERALS:
+                if(mLiftStateMachine.getCurrentState() != LiftStates.READY ||
+                        mExtenderStateMachine.getCurrentState() != ExtenderStates.GRABBING) {
+                    liftCruiseControl = false;
+                    intakeCruiseControl = false;
+                    mLiftStateMachine.setWantedState(LiftStates.READY);
+
+                    mRotatorStateMachine.setWantedState(RotatorStates.UP);
+                    mExtenderStateMachine.setWantedState(ExtenderStates.GRABBING);
+                    mHopperCoverStateMachine.setWantedState(HopperCoverStates.OPEN);
+                    mHopperGateStateMachine.setWantedState(HopperGateStates.DOWN);
+
+                } else {
+                    liftCruiseControl = true;
+                    intakeCruiseControl = true;
+                }
+                break;
+
+            case NULL:
+                liftCruiseControl = true;
+                intakeCruiseControl = true;
+                break;
+
+            case MANUEL_INTAKING:
+                intakeCruiseControl = true;
+                mHopperGateStateMachine.setWantedState(HopperGateStates.UP);
+                mHopperCoverStateMachine.setWantedState(HopperCoverStates.CLOSED);
+                break;
+
             case SCORE_GOLDGOLD:
                 liftCruiseControl = false;
                 switch (tracker) {
@@ -253,53 +376,6 @@ public class SuperStructureStateMachine extends StateMachine {
 
                 }
                 break;
-
-            case PARK:
-                mLiftStateMachine.setWantedState(LiftStates.SCOREINGHEIGHT);
-                mRotatorStateMachine.setWantedState(RotatorStates.UP);
-                mHopperCoverStateMachine.setWantedState(HopperCoverStates.CLOSED);
-                mHopperGateStateMachine.setWantedState(HopperGateStates.UP);
-
-                if(mLiftStateMachine.isCurrentEqualWanted())
-                    mExtenderStateMachine.setWantedState(ExtenderStates.GRABBING);
-                break;
-            case LAND:
-                mLiftStateMachine.setWantedState(LiftStates.HOOKHEIGHT);
-                mArmsStateMachine.setWantedState(ArmStates.STORED);
-
-                mExtenderStateMachine.setWantedState(ExtenderStates.ZEROING);
-                mRotatorStateMachine.setWantedState(RotatorStates.UP);
-
-                mHopperCoverStateMachine.setWantedState(HopperCoverStates.CLOSED);
-                mHopperGateStateMachine.setWantedState(HopperGateStates.UP);
-
-                break;
-            case WAIT_FOR_MINERALS:
-                if(mLiftStateMachine.getCurrentState() != LiftStates.READY ||
-                        mExtenderStateMachine.getCurrentState() != ExtenderStates.GRABBING) {
-                    liftCruiseControl = false;
-                    intakeCruiseControl = false;
-                    mLiftStateMachine.setWantedState(LiftStates.READY);
-
-                    mRotatorStateMachine.setWantedState(RotatorStates.UP);
-                    mExtenderStateMachine.setWantedState(ExtenderStates.GRABBING);
-                    mHopperCoverStateMachine.setWantedState(HopperCoverStates.OPEN);
-                    mHopperGateStateMachine.setWantedState(HopperGateStates.DOWN);
-
-                } else {
-                    liftCruiseControl = true;
-                    intakeCruiseControl = true;
-                }
-                break;
-            case NULL:
-                liftCruiseControl = true;
-                intakeCruiseControl = true;
-                break;
-            case MANUEL_INTAKING:
-                intakeCruiseControl = true;
-                mHopperGateStateMachine.setWantedState(HopperGateStates.UP);
-                mHopperCoverStateMachine.setWantedState(HopperCoverStates.CLOSED);
-                break;
         }
 
         for (StateMachine stateMachine : stateMachines) {
@@ -320,5 +396,13 @@ public class SuperStructureStateMachine extends StateMachine {
     @Override
     public boolean isCurrentEqualWanted() {
         return wantedState == currentState;
+    }
+
+    public boolean allowOperaterLiftControl() {
+        return liftCruiseControl;
+    }
+
+    public boolean allowOperaterIntakeControl() {
+        return intakeCruiseControl;
     }
 }

@@ -68,15 +68,14 @@ public class Teleop2 extends Team9889Linear {
                 Robot.getArms().setRightClawOpen(false);
             }
 
-            if(Robot.liftCruiseControl){
+            if(Robot.getSuperStructure().allowOperaterLiftControl()){
                 if (gamepad2.y) {
-                    Robot.liftCruiseControl = false;
-                    Robot.getLift().setLiftState(LiftStates.HOOKHEIGHT);
+                    Robot.getSuperStructure().setWantedState(SuperStructureStates.GO_TO_HANG_HEIGHT);
                 } else {
                     Robot.getLift().setLiftPower(-gamepad2.right_stick_y);
                 }
             } else {
-                if(Robot.getLift().isCurrentWantedState() &&
+                if(Robot.getSuperStructure().isCurrentEqualWanted() &&
                         Robot.getLift().getWantedState() == LiftStates.HOOKHEIGHT)
                     Robot.liftCruiseControl = true;
             }

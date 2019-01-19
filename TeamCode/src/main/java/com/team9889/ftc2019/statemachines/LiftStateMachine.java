@@ -25,43 +25,50 @@ public class LiftStateMachine extends StateMachine {
 
     @Override
     public void update(ElapsedTime time) {
-        if (currentState != wantedState) {
-            switch (wantedState) {
-                case DOWN:
-                    if (mLift.getLowerLimitPressed()) {
-                        mLift.setLiftPower(0);
-                        mLift.zeroSensors();
-                        currentState = LiftStates.DOWN;
-                    } else {
-                        mLift.setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                        mLift.setLiftPower(-.7);
-                    }
-                    break;
+        if (currentState != wantedState) switch (wantedState) {
+            case DOWN:
+                if (mLift.getLowerLimitPressed()) {
+                    mLift.setLiftPower(0);
+                    mLift.zeroSensors();
+                    currentState = LiftStates.DOWN;
+                } else {
+                    mLift.setLiftPower(-.7);
+                }
+                break;
 
-                case HOOKHEIGHT:
-                    mLift.setLiftPosition(12);
+            case HANGING:
+                if (mLift.getLowerLimitPressed()) {
+                    mLift.setLiftPower(-0.3);
+                    mLift.zeroSensors();
+                } else {
+                    mLift.setLiftPower(-.7);
+                }
+                break;
+            case HOOKHEIGHT:
+                mLift.setLiftPosition(12);
 
-                    if (mLift.inPosition())
-                        currentState = wantedState;
-                    break;
+                if (mLift.inPosition())
+                    currentState = wantedState;
+                break;
 
-                case SCOREINGHEIGHT:
-                    if (mLift.getUpperLimitPressed()) {
-                        mLift.setLiftPower(0);
-                        currentState = LiftStates.SCOREINGHEIGHT;
-                    } else {
-                        mLift.setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                        mLift.setLiftPower(.7);
-                    }
-                    break;
+            case SCOREINGHEIGHT:
+                if (mLift.getUpperLimitPressed()) {
+                    mLift.setLiftPower(0);
+                    currentState = LiftStates.SCOREINGHEIGHT;
+                } else {
+                    mLift.setLiftPower(.7);
+                }
+                break;
 
-                case READY:
-                    mLift.setLiftPosition(10);
+            case READY:
+                mLift.setLiftPosition(10);
 
-                    if (mLift.inPosition())
-                        currentState = wantedState;
-                    break;
-            }
+                if (mLift.inPosition())
+                    currentState = wantedState;
+                break;
+            case NULL:
+                currentState = LiftStates.NULL;
+                break;
         }
     }
 
