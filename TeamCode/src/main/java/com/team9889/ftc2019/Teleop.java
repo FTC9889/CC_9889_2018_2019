@@ -1,118 +1,125 @@
 package com.team9889.ftc2019;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import android.graphics.Color;
+
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.states.LiftStates;
+import com.team9889.ftc2019.subsystems.Arms;
 import com.team9889.ftc2019.subsystems.Camera;
 import com.team9889.ftc2019.subsystems.Intake;
 
+import java.util.Arrays;
+
 /**
- * Created by joshua9889 on 3/28/2018.
+ * Created by MannoMation on 1/14/2019.
  */
 
-@Disabled
-public class Teleop extends Team9889Linear{
-
-    DriverStation driverStation;
-
-    private double leftClaw = 0;
-    private double rightClaw = 0;
-    private double leftArm = 1;
-    private double rightArm = 1;
-    private double leftBumperState = 0;
-    private double rightBumperState = 0;
-    private double dpadState = 0;
-    private double ClawsClosed = 0;
-    private boolean leftClawState = false;
-    private boolean rightClawState = false;
-
-    private boolean moveMineralsFromHopperToClaws = false;
-    private ElapsedTime armTimer = new ElapsedTime();
-
-    private boolean directLiftControl = false;
-
-
-    private LiftStates wantedLiftState = LiftStates.READY;
-    private Intake.RotatorStates wantedRotatorState = Intake.RotatorStates.UP;
+@TeleOp(name = "Teleop")
+public class Teleop extends Team9889Linear {
+    private Arms.ArmStates wanted = Arms.ArmStates.NULL;
+    private ElapsedTime timer = new ElapsedTime();
 
     @Override
     public void runOpMode() {
-        driverStation = new DriverStation(gamepad1, gamepad2);
+        DriverStation driverStation = new DriverStation(gamepad1, gamepad2);
         waitForStart(false);
 
-        // Init States
-        Robot.getIntake().setIntakeRotatorState(Intake.RotatorStates.UP);
-        Robot.getLift().setLiftState(LiftStates.READY);
+        Robot.getIntake().isAutoIntakeDone = true;
+        Robot.whichMineral = com.team9889.ftc2019.subsystems.Robot.MineralPositions.SILVERGOLD;
 
-        Robot.getArms().setLeftClawOpen(true);
-        Robot.getArms().setRightClawOpen(true);
+        Robot.getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
+        Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.GRABBING);
 
-        // Loop
-        while (opModeIsActive()){
-            // Drivetrain
+        Robot.getCamera().setCameraPosition(Camera.CameraPositions.TELEOP);
+        boolean first = true;
+
+        while (opModeIsActive()) {
+            if(first && Robot.getLift().isCurrentWantedState()) {
+                Robot.getLift().setLiftState(LiftStates.READY);
+                first = false;
+            }
+
+            // Drivetrain (gamepad1)
             Robot.getDrive().setThrottleSteerPower(driverStation.getThrottle(),
                     driverStation.getSteer());
 
-            // Logic for bumper
-            if (driverStation.getReleaseLeftClaw() && leftBumperState == 1) {
-                    Robot.getArms().setLeftClawOpen(leftClawState);
-                    leftBumperState = 0;
-                    leftClawState = !leftClawState;
-            } else if (!driverStation.getReleaseLeftClaw()){
-                leftBumperState = 1;
+            // Lift (gamepad1/2)
+
+            if(Robot.allowOperatorOfGrabbers) {
+                if (driverStation.getReleaseLeftClaw())
+                    Robot.getArms().setLeftClawOpen(true);
+
+
+                if (driverStation.getReleaseRightClaw())
+                    Robot.getArms().setRightClawOpen(true);
             }
 
-            if (driverStation.getReleaseRightClaw() && rightBumperState == 1) {
-                Robot.getArms().setRightClawOpen(rightClawState);
-                rightBumperState = 0;
-                rightClawState = !rightClawState;
-            } else if (!driverStation.getReleaseRightClaw()){
-                rightBumperState = 1;
+            telemetry.addData("", Robot.allowOperatorOfGrabbers);
+
+            if(Robot.liftCruiseControl){
+                if (gamepad2.y) {
+                    Robot.getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
+                    Robot.getLift().setLiftState(LiftStates.HOOKHEIGHT);
+                    Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.ZEROING);
+
+                } else {
+                    Robot.getLift().setLiftPower(-gamepad2.right_stick_y);
+                }
             }
 
-            // Power For Intake
-            if (driverStation.getIntaking())
-                Robot.getIntake().intake();
-            else if (driverStation.getOuttake())
-                Robot.getIntake().outtake();
-            else if (driverStation.getStopIntaking())
-                Robot.getIntake().stop();
+            // End of Bumper
 
-            // Set intake extender power
-            Robot.getIntake().setIntakeExtenderPower(driverStation.getIntakeExtenderPower());
-
-            // Rotator State Controller
-            Robot.getIntake().setIntakeRotatorState(driverStation.getIntakeRotatorState());
-
-            Robot.getLift().setLiftPower(-gamepad2.right_stick_y);
-/*
-            if (gamepad1.b){ // Silver Silver
-                Robot.getArms().setArmsStates(Arms.ArmStates.SILVERSILVER);
+            //Intake (gamepad2)
+            if (Robot.intakeCruiseControl) {
+                Robot.getIntake().setIntakeExtenderPower(driverStation.getIntakeExtenderPower());
+                Robot.isAutoAlreadyDone = false;
             }
 
-            else if (gamepad2.dpad_down) {
-                Robot.getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
+            if (driverStation.getStartIntaking() && !Robot.isAutoAlreadyDone){
+                Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.INTAKING);
             }
-*/
-            if(leftClawState && rightClawState)
-                Robot.getCamera().setCameraPosition(Camera.CameraPositions.UPRIGHT);
-            else
-                Robot.getCamera().setCameraPosition(Camera.CameraPositions.TWO_GOLD);
 
-            if (gamepad2.left_stick_button)
-                Robot.getIntake().setHopperGateDown();
+            // auto/manuel lift arm logic (gamepad2)
+            if (driverStation.getAutomatedMode()) {
+                setBackground(Color.GREEN);
 
-            else if (gamepad2.right_stick_button)
-                Robot.getIntake().setHopperGateUp();
+                if (gamepad2.b) {
+                    Robot.setWantedSuperStructure(Robot.getIntake().updateMineralVote());
+                    Robot.resetTracker();
+                }
+            } else {
+                setBackground(Color.RED);
 
-//            int[] color = new int[3];
-//            color[0] = ((int)(Robot.getIntake().revBackHopper.red() * 1000))/1000;
-//            color[1] = ((int)(Robot.getIntake().revBackHopper.green() * 1000))/1000;
-//            color[2] = ((int)(Robot.getIntake().revBackHopper.blue() * 1000))/1000;
+                if (gamepad2.b) {
+                    wanted = Arms.ArmStates.SILVERSILVER;
+                }
 
-//            setBackground(Robot.getIntake().backColor());
+                Robot.getArms().setArmsStates(wanted);
+            }
 
-            updateTelemetry();
+            double startTime = timer.milliseconds();
+
+            Robot.update(matchTime);
+
+            telemetry.addData("Robot Update dt", timer.milliseconds() - startTime);
+
+            //telemetry
+            telemetry.addData("dt", timer.milliseconds());
+
+            if (gamepad2.dpad_up) {
+                Robot.getIntake().updateMineralVote();
+                telemetry.addData("Minerals in hopper",
+                        Robot.getIntake().getMineralPositions());
+                telemetry.addData("Hsv Back",
+                        Arrays.toString(Robot.getIntake().revBackHopper.hsv()));
+                telemetry.addData("Hsv Front",
+                        Arrays.toString(Robot.getIntake().revFrontHopper.hsv()));
+            }
+
+            //            Robot.outputToTelemetry(telemetry);
+            telemetry.update();
+            timer.reset();
         }
 
         finalAction();

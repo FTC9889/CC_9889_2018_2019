@@ -28,28 +28,14 @@ public class Intake extends Subsystem {
     private ModernRoboticsUltrasonic craterDetector;
     public RevColorDistance revBackHopper, revFrontHopper;
     public boolean isAutoIntakeDone = true;
-    public boolean autoIntakeOveride = false;
 
-    private ElapsedTime autoTimer = new ElapsedTime();
-
-    private int backGoldVote = 0;
-    private int backSilverVote = 0;
-    private int frontGoldVote = 0;
-    private int frontSilverVote = 0;
     private Robot.MineralPositions mineralPositions;
 
     // PID for extending the intake
     private PID extenderPID = new PID(0.004, 0.0, 0.2);
+    private double startTime = 0;
 
-    // Time that the counter should ignore for extraneous presses
-    private double millisecondWatcher = 100;
-    private boolean firstPress = true;
-    private ElapsedTime mineralTimer = new ElapsedTime();
-    public int numberOfMinerals = 0;
-
-    double startTime = 0;
-
-    public enum States {
+    public enum IntakeStates {
         INTAKING, EXTENDING, GRABBING, ZEROING, NULL
     }
 
@@ -61,8 +47,8 @@ public class Intake extends Subsystem {
         GOLD, SILVER, UNKNOWN
     }
 
-    private States currentExtenderState = States.ZEROING;
-    private States wantedExtenderState = States.INTAKING;
+    private IntakeStates currentExtenderState = IntakeStates.ZEROING;
+    private IntakeStates wantedExtenderState = IntakeStates.INTAKING;
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
@@ -86,14 +72,14 @@ public class Intake extends Subsystem {
 
         if (auto) {
             setIntakeRotatorState(RotatorStates.UP);
-            setWantedIntakeState(States.ZEROING);
-            setHopperCoverState(HopperState.CLOSED);
+            setWantedIntakeState(IntakeStates.ZEROING);
+            setHopperCoverState(HopperCoverState.CLOSED);
 
-            setHopperGateUp();
+            setHopperGateState(HopperGateState.UP);
             setIntakeRotatorState(RotatorStates.UP);
         }
 
-        setWantedIntakeState(States.NULL);
+        setWantedIntakeState(IntakeStates.NULL);
         setIntakeRotatorState(RotatorStates.NULL);
     }
 
@@ -125,30 +111,28 @@ public class Intake extends Subsystem {
 
     @Override
     public void update(ElapsedTime time) {
-//        updateMineralVote();
-
         if (currentExtenderState != wantedExtenderState) switch (wantedExtenderState) {
             case ZEROING:
                 if (intakeInSwitchValue()) {
                     setIntakeExtenderPower(0);
                     zeroSensors();
-                    setHopperGateUp();
+                    setHopperGateState(HopperGateState.UP);
                     Robot.getInstance().intakeCruiseControl = true;
-                    currentExtenderState = States.ZEROING;
+                    currentExtenderState = IntakeStates.ZEROING;
                 } else {
                     Robot.getInstance().intakeCruiseControl = false;
                     setIntakeExtenderPower(-.5);
                     setIntakeRotatorState(RotatorStates.UP);
-                    setHopperCoverState(HopperState.CLOSED);
+                    setHopperCoverState(HopperCoverState.CLOSED);
                 }
                 break;
             case GRABBING:
-                if (currentExtenderState == States.ZEROING || currentExtenderState == States.NULL) {
+                if (currentExtenderState == IntakeStates.ZEROING || currentExtenderState == IntakeStates.NULL) {
                     if (intakeGrabbingSwitchValue()) {
-                        currentExtenderState = States.GRABBING;
+                        currentExtenderState = IntakeStates.GRABBING;
                         Robot.getInstance().intakeCruiseControl = true;
 
-                        setHopperCoverState(HopperState.OPEN);
+                        setHopperCoverState(HopperCoverState.OPEN);
                         setIntakeExtenderPower(0);
                         setIntakePower(0);
                         setIntakeRotatorPosition(0.8);
@@ -158,7 +142,7 @@ public class Intake extends Subsystem {
                     }
                 } else {
                     if (intakeGrabbingSwitchValue()) {
-                        currentExtenderState = States.GRABBING;
+                        currentExtenderState = IntakeStates.GRABBING;
                         Robot.getInstance().intakeCruiseControl = true;
 
                         setIntakeExtenderPower(0);
@@ -166,18 +150,18 @@ public class Intake extends Subsystem {
                     } else {
                         Robot.getInstance().intakeCruiseControl = false;
 
-                        if (currentExtenderState == States.INTAKING)
+                        if (currentExtenderState == IntakeStates.INTAKING)
                             outtake();
                         else
                             setIntakePower(0);
 
                         setIntakeExtenderPower(-.3);
                         setIntakeRotatorState(RotatorStates.UP);
-                        setHopperCoverState(HopperState.OPEN);
-                        setHopperGateDown();
+                        setHopperCoverState(HopperCoverState.OPEN);
+                        setHopperGateState(HopperGateState.DOWN);
 
                         if (intakeInSwitchValue())
-                            currentExtenderState = States.ZEROING;
+                            currentExtenderState = IntakeStates.ZEROING;
                     }
                 }
                 break;
@@ -185,17 +169,17 @@ public class Intake extends Subsystem {
                 if (twoMineralsDetected()) {
                     Robot.getInstance().intakeCruiseControl = false;
 
-                    currentExtenderState = States.INTAKING;
-                    setWantedIntakeState(States.GRABBING);
+                    currentExtenderState = IntakeStates.INTAKING;
+                    setWantedIntakeState(IntakeStates.GRABBING);
                     setIntakePower(-0.8);
-                    setHopperGateDown();
+                    setHopperGateState(HopperGateState.DOWN);
                     Robot.getInstance().isAutoAlreadyDone = true;
 
                 } else {
                     Robot.getInstance().intakeCruiseControl = true;
                     setIntakeRotatorState(RotatorStates.DOWN);
-                    setHopperCoverState(HopperState.CLOSED);
-                    setHopperGateUp();
+                    setHopperCoverState(HopperCoverState.CLOSED);
+                    setHopperGateState(HopperGateState.UP);
                     setIntakePower(1);
                     startTime = time.milliseconds();
                 }
@@ -203,7 +187,7 @@ public class Intake extends Subsystem {
             case EXTENDING:
                 break;
             case NULL:
-                currentExtenderState = States.NULL;
+                currentExtenderState = IntakeStates.NULL;
                 break;
         }
     }
@@ -263,7 +247,7 @@ public class Intake extends Subsystem {
     /**
      * @param wantedState Set the wanted state of the Intake
      */
-    public void setWantedIntakeState(States wantedState) {
+    public void setWantedIntakeState(IntakeStates wantedState) {
         this.wantedExtenderState = wantedState;
     }
 
@@ -293,12 +277,19 @@ public class Intake extends Subsystem {
         }
     }
 
-    public void setHopperGateDown() {
-        hopperGate.setPosition(1);
+    public enum HopperGateState {
+        UP, DOWN
     }
 
-    public void setHopperGateUp() {
-        hopperGate.setPosition(0.5);
+    public void setHopperGateState(HopperGateState state) {
+        switch (state) {
+            case UP:
+                hopperGate.setPosition(0.5);
+                break;
+            case DOWN:
+                hopperGate.setPosition(1);
+                break;
+        }
     }
 
     public double getCraterDistance(DistanceUnit distanceUnit) {
@@ -313,11 +304,11 @@ public class Intake extends Subsystem {
         return !scoringSwitch.getState();
     }
 
-    public enum HopperState {
+    public enum HopperCoverState {
         OPEN, CLOSED
     }
 
-    public void setHopperCoverState(HopperState state) {
+    public void setHopperCoverState(HopperCoverState state) {
         switch (state) {
             case OPEN:
                 hopperCover.setPosition(0.6);

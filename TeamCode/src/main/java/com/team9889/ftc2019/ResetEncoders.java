@@ -1,4 +1,4 @@
-package com.team9889;
+package com.team9889.ftc2019;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.team9889.ftc2019.Team9889Linear;

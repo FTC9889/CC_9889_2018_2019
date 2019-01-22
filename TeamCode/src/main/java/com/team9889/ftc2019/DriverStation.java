@@ -24,42 +24,30 @@ public class DriverStation {
     }
 
     public boolean getReleaseLeftClaw(){
-        return gamepad1.right_bumper;
+        return gamepad2.right_bumper || gamepad1.right_bumper;
     }
 
     public boolean getReleaseRightClaw(){
-        return gamepad1.left_bumper;
+        return gamepad2.left_bumper || gamepad1.left_bumper;
     }
 
-    public boolean getIntaking(){
+    public boolean getStartIntaking(){
         return gamepad2.a;
     }
 
-    public boolean getOuttake(){
-       return gamepad2.y;
-    }
+    private boolean autoMode = true;
+    private boolean lastChangeMode;
+    public boolean getAutomatedMode() {
+        boolean changeMode = gamepad2.left_stick_button && gamepad2.right_stick_button;
+        if (changeMode && changeMode != lastChangeMode) {
+            autoMode = !autoMode;
+        }
+        lastChangeMode = changeMode;
 
-    public boolean getStopIntaking(){
-        return gamepad2.b;
+        return autoMode;
     }
 
     public double getIntakeExtenderPower(){
         return -gamepad2.left_stick_y;
     }
-
-    public boolean getIntakeExtendToCrater() {
-        return gamepad2.x;
-    }
-
-    private Intake.RotatorStates wantedState = Intake.RotatorStates.UP;
-    public Intake.RotatorStates getIntakeRotatorState(){
-        if(gamepad2.right_bumper) {
-            wantedState = Intake.RotatorStates.UP;
-        } else if(gamepad2.left_bumper) {
-            wantedState = Intake.RotatorStates.DOWN;
-        }
-        return wantedState;
-    }
-
-
 }

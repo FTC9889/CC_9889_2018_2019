@@ -18,7 +18,7 @@ public class IntakeZeroing extends Action {
 
     @Override
     public void start() {
-        Robot.getInstance().getIntake().setWantedIntakeState(Intake.States.ZEROING);
+        Robot.getInstance().getIntake().setWantedIntakeState(Intake.IntakeStates.ZEROING);
     }
 
     @Override

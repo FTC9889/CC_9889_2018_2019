@@ -28,11 +28,12 @@ public abstract class Team9889Linear extends LinearOpMode {
     // Match Timer
     protected ElapsedTime matchTime = new ElapsedTime();
 
-    private int relativeLayoutId;
+    // Background
     private View relativeLayout;
 
     public void waitForStart(boolean autonomous) {
-        relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
+        int relativeLayoutId = hardwareMap.appContext.getResources().
+                getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
         relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
 
         Date currentData = new Date();

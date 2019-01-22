@@ -31,10 +31,6 @@ public class Lift extends Subsystem {
     private LiftStates currentState = LiftStates.NULL;
     private LiftStates wantedState = LiftStates.NULL;
 
-    private boolean inPosition() {
-        return Math.abs(pid.getError()) < 0.5;
-    }
-
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
         left = hardwareMap.get(DcMotorEx.class, Constants.LiftConstants.kLeftLiftId);
@@ -47,14 +43,14 @@ public class Lift extends Subsystem {
 
         right.setDirection(DcMotorSimple.Direction.REVERSE);
         left.setDirection(DcMotorSimple.Direction.REVERSE);
-        setMode(DcMotor.ZeroPowerBehavior.BRAKE);
+        left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         currentState = LiftStates.NULL;
-        wantedState = LiftStates.DOWN;
+        wantedState = LiftStates.NULL;
 
         if (auto)
             setLiftState(LiftStates.HANGING);
-        zeroSensors();
     }
 
     @Override
@@ -72,9 +68,7 @@ public class Lift extends Subsystem {
     public void outputToTelemetry(Telemetry telemetry) {
         telemetry.addData("Height of lift", getHeight());
         telemetry.addData("Height of lift in ticks", getHeightTicks());
-        telemetry.addData("left", left.getCurrentPosition());
-        telemetry.addData("right", right.getCurrentPosition());
-        telemetry.addData("Lift PID", pid.getOutput());
+        telemetry.addData("Lift PID Output", pid.getOutput());
 
         telemetry.addData("Upper limit pressed", getUpperLimitPressed());
         telemetry.addData("Lower limit pressed", getLowerLimitPressed());
@@ -129,6 +123,7 @@ public class Lift extends Subsystem {
                         currentState = wantedState;
                     }
                     break;
+
                 case HANGING:
                     if (getLowerLimitPressed()) {
                         setLiftPower(-0.2);
@@ -138,7 +133,9 @@ public class Lift extends Subsystem {
                         setLiftPower(-.7);
                     }
                     break;
+
                 case NULL:
+                    setLiftPower(0);
                     currentState = LiftStates.NULL;
                     break;
             }
@@ -152,16 +149,7 @@ public class Lift extends Subsystem {
 
     @Override
     public void stop() {
-        setLiftPower(0);
-        setMode(DcMotor.ZeroPowerBehavior.BRAKE);
-    }
-
-    public double getHeightTicks() {
-        return (left.getCurrentPosition());
-    }
-
-    public double getHeight() {
-        return getHeightTicks() * Constants.LiftConstants.kLiftTicksToHeightRatio;
+        setLiftState(LiftStates.NULL);
     }
 
     public void setLiftPower(double power) {
@@ -169,22 +157,24 @@ public class Lift extends Subsystem {
         right.setPower(power);
     }
 
-    public void setMode(DcMotor.ZeroPowerBehavior zeroPowerBehavior) {
-        left.setZeroPowerBehavior(zeroPowerBehavior);
-        right.setZeroPowerBehavior(zeroPowerBehavior);
-    }
-
-    public double getLiftPower() {
-        return left.getPower();
-    }
-
-
     /**
      * @param wantedHeight In inches
      */
     public void setLiftPosition(double wantedHeight) {
         setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         setLiftPower(pid.update(getHeight(), wantedHeight));
+    }
+
+    private double getHeightTicks() {
+        return left.getCurrentPosition();
+    }
+
+    public double getHeight() {
+        return getHeightTicks() * Constants.LiftConstants.kLiftTicksToHeightRatio;
+    }
+
+    private boolean inPosition() {
+        return Math.abs(pid.getError()) < 0.5;
     }
 
     public boolean getUpperLimitPressed() {
@@ -207,7 +197,7 @@ public class Lift extends Subsystem {
         return wantedState;
     }
 
-    public double getDistanceSensorRange(){
+    public double getDistanceSensorRange() {
         return robotToGround.getDistance(DistanceUnit.INCH);
     }
 

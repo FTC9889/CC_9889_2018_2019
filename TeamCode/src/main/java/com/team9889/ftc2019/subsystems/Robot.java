@@ -18,23 +18,25 @@ import static com.team9889.ftc2019.subsystems.Robot.MineralPositions.NULL;
 
 public class Robot extends Subsystem {
 
+    private static Robot mInstance = null;
     public MineralPositions whichMineral = NULL;
     public boolean intakeCruiseControl = true;
     public boolean liftCruiseControl = true;
-
     public boolean isAutoAlreadyDone = false;
-
-    public boolean clawLeftOpenMode = true;
-    public boolean clawRightOpenMode = true;
-
-    public enum MineralPositions {
-        GOLDGOLD, SILVERSILVER, SILVERGOLD, GOLDSILVER, NULL
-    }
-
-    private static Robot mInstance = null;
+    public boolean allowOperatorOfGrabbers = false;
     private ElapsedTime clawTimer = new ElapsedTime();
     private ElapsedTime liftArmsTimer = new ElapsedTime();
     private ElapsedTime dropTimer = new ElapsedTime();
+    private Drive mDrive = new Drive();
+    private Lift mLift = new Lift();
+    private Intake mIntake = new Intake();
+    private Camera mCamera = new Camera();
+    private Arms mArms = new Arms();
+    private ElapsedTime timer = new ElapsedTime();
+    private List<Subsystem> subsystems = Arrays.asList(
+            mDrive, mLift, mIntake, mCamera, mArms // Add more subsystems here as needed
+    );
+    private int tracker = 8;
 
     public static Robot getInstance() {
         if (mInstance == null)
@@ -42,18 +44,6 @@ public class Robot extends Subsystem {
 
         return mInstance;
     }
-
-    private Drive mDrive = new Drive();
-    private Lift mLift = new Lift();
-    private Intake mIntake = new Intake();
-    private Camera mCamera = new Camera();
-    private Arms mArms = new Arms();
-
-    private ElapsedTime timer = new ElapsedTime();
-
-    private List<Subsystem> subsystems = Arrays.asList(
-            mDrive, mLift, mIntake, mCamera, mArms // Add more subsystems here as needed
-    );
 
     /**
      * @param hardwareMap Hardware Map of the OpMode
@@ -67,6 +57,7 @@ public class Robot extends Subsystem {
             RobotLog.a("=========== Finished Initialing " + subsystem.toString() + " ===========");
         }
 
+        tracker = 8;
         timer.reset();
     }
 
@@ -135,9 +126,6 @@ public class Robot extends Subsystem {
     public Arms getArms() {
         return mArms;
     }
-
-    private int tracker = 8;
-    public boolean allowOperatorOfGrabbers = false;
 
     public void resetTracker() {
         tracker = 0;
@@ -413,5 +401,9 @@ public class Robot extends Subsystem {
         liftCruiseControl = true;
 
         RobotLog.d("scoringStateMachine has been updated");
+    }
+
+    public enum MineralPositions {
+        GOLDGOLD, SILVERSILVER, SILVERGOLD, GOLDSILVER, NULL
     }
 }

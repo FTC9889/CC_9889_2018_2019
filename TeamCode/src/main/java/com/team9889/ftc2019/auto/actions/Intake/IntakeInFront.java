@@ -17,7 +17,7 @@ public class IntakeInFront extends Action {
 
     @Override
     public void start() {
-        Robot.getInstance().getIntake().setWantedIntakeState(Intake.States.GRABBING);
+        Robot.getInstance().getIntake().setWantedIntakeState(Intake.IntakeStates.GRABBING);
 
         timer.reset();
     }

@@ -17,7 +17,7 @@ public class IntakeIn extends AutoModeBase {
 
     @Override
     public void run(AllianceColor allianceColor) {
-        Robot.getIntake().setWantedIntakeState(Intake.States.ZEROING);
+        Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.ZEROING);
         while (opModeIsActive() && Robot.getIntake().isCurrentStateWantedState()){
             Robot.getIntake().update(timer);
         }
