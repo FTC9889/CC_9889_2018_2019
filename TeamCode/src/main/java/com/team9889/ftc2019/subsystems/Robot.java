@@ -21,7 +21,6 @@ public class Robot extends Subsystem {
     private static Robot mInstance = null;
     public MineralPositions whichMineral = NULL;
     public boolean intakeCruiseControl = true;
-    public boolean liftCruiseControl = true;
     public boolean isAutoAlreadyDone = false;
     public boolean allowOperatorOfGrabbers = false;
     private ElapsedTime clawTimer = new ElapsedTime();
@@ -137,7 +136,7 @@ public class Robot extends Subsystem {
 
     private void scoringStateMachine() {
         MineralPositions state = whichMineral;
-        liftCruiseControl = false;
+        getLift().liftCruiseControl = false;
 
         if (tracker <= 1)
             getIntake().updateMineralVote();
@@ -203,6 +202,9 @@ public class Robot extends Subsystem {
                                 tracker++;
                         }
                         break;
+                    case 8:
+                        getLift().liftCruiseControl = true;
+                        break;
                 }
                 break;
 
@@ -264,6 +266,9 @@ public class Robot extends Subsystem {
                             if (getLift().isCurrentWantedState())
                                 tracker++;
                         }
+                        break;
+                    case 8:
+                        getLift().liftCruiseControl = true;
                         break;
                 }
                 break;
@@ -328,6 +333,7 @@ public class Robot extends Subsystem {
                         }
                         break;
                     case 8:
+                        getLift().liftCruiseControl = true;
                         break;
 
                 }
@@ -392,13 +398,13 @@ public class Robot extends Subsystem {
                         }
                         break;
                     case 8:
+                        getLift().liftCruiseControl = true;
                         break;
 
                 }
                 break;
 
         }
-        liftCruiseControl = true;
 
         RobotLog.d("scoringStateMachine has been updated");
     }

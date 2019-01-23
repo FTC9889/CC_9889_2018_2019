@@ -147,6 +147,7 @@ public class Intake extends Subsystem {
 
                         setIntakeExtenderPower(0);
                         setIntakePower(0);
+                        setHopperCoverState(HopperCoverState.OPEN);
                     } else {
                         Robot.getInstance().intakeCruiseControl = false;
 
@@ -155,9 +156,8 @@ public class Intake extends Subsystem {
                         else
                             setIntakePower(0);
 
-                        setIntakeExtenderPower(-.3);
+                        setIntakeExtenderPower(-.6);
                         setIntakeRotatorState(RotatorStates.UP);
-                        setHopperCoverState(HopperCoverState.OPEN);
                         setHopperGateState(HopperGateState.DOWN);
 
                         if (intakeInSwitchValue())
@@ -230,6 +230,10 @@ public class Intake extends Subsystem {
         extender.setPower(power);
     }
 
+    public double getIntakeExtenderPosition(){
+        return extender.getCurrentPosition() * Constants.IntakeConstants.kIntakeTicksToInchRatio;
+    }
+
 
     /**
      * @param position Position that the intake should go to. In Inches
@@ -250,6 +254,9 @@ public class Intake extends Subsystem {
     public void setWantedIntakeState(IntakeStates wantedState) {
         this.wantedExtenderState = wantedState;
     }
+    public void setCurrentExtenderState(IntakeStates currentState){
+        this.currentExtenderState = currentState;
+    }
 
     /**
      * @return If the current state of the intake is equal to the wanted state
@@ -268,7 +275,7 @@ public class Intake extends Subsystem {
     public void setIntakeRotatorState(RotatorStates state) {
         switch (state) {
             case UP:
-                setIntakeRotatorPosition(0.55);
+                setIntakeRotatorPosition(0.4);
                 break;
 
             case DOWN:

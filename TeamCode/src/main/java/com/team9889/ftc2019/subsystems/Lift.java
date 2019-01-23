@@ -27,6 +27,7 @@ public class Lift extends Subsystem {
     private DigitalChannel upperLimit;
     private DistanceSensor robotToGround;
     private PID pid = new PID(.42, 0.005, 0, 50);
+    public boolean liftCruiseControl = true;
 
     private LiftStates currentState = LiftStates.NULL;
     private LiftStates wantedState = LiftStates.NULL;
@@ -87,27 +88,29 @@ public class Lift extends Subsystem {
                     if (getLowerLimitPressed()) {
                         setLiftPower(0);
                         zeroSensors();
+                        liftCruiseControl = false;
                         currentState = LiftStates.DOWN;
                     } else {
                         setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                         setLiftPower(-.7);
+                        liftCruiseControl = false;
                     }
                     break;
 
                 case HOOKHEIGHT:
                     setLiftPosition(11);
-                    Robot.getInstance().liftCruiseControl = false;
+                    liftCruiseControl = false;
                     if (inPosition()) {
-                        Robot.getInstance().liftCruiseControl = true;
+                        liftCruiseControl = true;
                         currentState = LiftStates.HOOKHEIGHT;
                     }
                     break;
 
                 case SCOREINGHEIGHT:
-                    Robot.getInstance().liftCruiseControl = false;
+                    liftCruiseControl = false;
                     if (getUpperLimitPressed()) {
                         setLiftPower(0);
-                        Robot.getInstance().liftCruiseControl = true;
+                        liftCruiseControl = true;
                         currentState = LiftStates.SCOREINGHEIGHT;
                     } else {
                         setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -116,11 +119,14 @@ public class Lift extends Subsystem {
                     break;
 
                 case READY:
-                    setLiftPosition(7);
+                    if (getHeight() < 5) {
 
-                    if (inPosition()) {
-                        setLiftPower(0);
-                        currentState = wantedState;
+                        setLiftPosition(7);
+
+                        if (inPosition()) {
+                            setLiftPower(0);
+                            currentState = wantedState;
+                        }
                     }
                     break;
 

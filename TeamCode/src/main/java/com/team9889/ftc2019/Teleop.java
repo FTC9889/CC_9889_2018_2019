@@ -29,14 +29,17 @@ public class Teleop extends Team9889Linear {
         Robot.whichMineral = com.team9889.ftc2019.subsystems.Robot.MineralPositions.SILVERGOLD;
 
         Robot.getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
-        Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.GRABBING);
+
+        Robot.getIntake().setCurrentExtenderState(Intake.IntakeStates.NULL);
+
+        Robot.getLift().setLiftState(LiftStates.READY);
 
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.TELEOP);
         boolean first = true;
 
         while (opModeIsActive()) {
             if(first && Robot.getLift().isCurrentWantedState()) {
-                Robot.getLift().setLiftState(LiftStates.READY);
+                Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.GRABBING);
                 first = false;
             }
 
@@ -57,7 +60,7 @@ public class Teleop extends Team9889Linear {
 
             telemetry.addData("", Robot.allowOperatorOfGrabbers);
 
-            if(Robot.liftCruiseControl){
+            if(Robot.getLift().liftCruiseControl){
                 if (gamepad2.y) {
                     Robot.getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
                     Robot.getLift().setLiftState(LiftStates.HOOKHEIGHT);
@@ -74,6 +77,9 @@ public class Teleop extends Team9889Linear {
             if (Robot.intakeCruiseControl) {
                 Robot.getIntake().setIntakeExtenderPower(driverStation.getIntakeExtenderPower());
                 Robot.isAutoAlreadyDone = false;
+                if (Robot.getIntake().getIntakeExtenderPosition() < 5.5){
+                    Robot.getIntake().setCurrentExtenderState(Intake.IntakeStates.NULL);
+                }
             }
 
             if (driverStation.getStartIntaking() && !Robot.isAutoAlreadyDone){
