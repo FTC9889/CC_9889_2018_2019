@@ -35,12 +35,11 @@ public class Teleop extends Team9889Linear {
         Robot.getLift().setLiftState(LiftStates.READY);
 
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.TELEOP);
-        boolean first = true;
 
         while (opModeIsActive()) {
-            if(first && Robot.getLift().isCurrentWantedState()) {
+            if(Robot.first && Robot.getLift().isCurrentWantedState()) {
                 Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.GRABBING);
-                first = false;
+                Robot.first = false;
             }
 
             // Drivetrain (gamepad1)
@@ -76,10 +75,11 @@ public class Teleop extends Team9889Linear {
             //Intake (gamepad2)
             if (Robot.intakeCruiseControl) {
                 Robot.getIntake().setIntakeExtenderPower(driverStation.getIntakeExtenderPower());
+
                 Robot.isAutoAlreadyDone = false;
-                if (Robot.getIntake().getIntakeExtenderPosition() < 5.5){
-                    Robot.getIntake().setCurrentExtenderState(Intake.IntakeStates.NULL);
-                }
+//                if (Robot.getIntake().getIntakeExtenderPosition() < 5.5){
+//                    Robot.getIntake().setCurrentExtenderState(Intake.IntakeStates.NULL);
+//                }
             }
 
             if (driverStation.getStartIntaking() && !Robot.isAutoAlreadyDone){
@@ -123,7 +123,11 @@ public class Teleop extends Team9889Linear {
                         Arrays.toString(Robot.getIntake().revFrontHopper.hsv()));
             }
 
-            //            Robot.outputToTelemetry(telemetry);
+//                        Robot.outputToTelemetry(telemetry);
+
+//            telemetry.addData("Is Arms Lift Active", Robot.armsLiftActive);
+//            telemetry.addData("Current Intake State", Robot.getIntake().getCurrentIntakeState());
+//            telemetry.addData("Wanted Intake State", Robot.getIntake().getWantedIntakeState());
             telemetry.update();
             timer.reset();
         }

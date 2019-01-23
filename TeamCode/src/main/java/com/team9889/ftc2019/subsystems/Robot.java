@@ -20,6 +20,11 @@ public class Robot extends Subsystem {
 
     private static Robot mInstance = null;
     public MineralPositions whichMineral = NULL;
+
+    public boolean armsLiftActive = false;
+
+    public boolean first = true;
+
     public boolean intakeCruiseControl = true;
     public boolean isAutoAlreadyDone = false;
     public boolean allowOperatorOfGrabbers = false;
@@ -35,7 +40,7 @@ public class Robot extends Subsystem {
     private List<Subsystem> subsystems = Arrays.asList(
             mDrive, mLift, mIntake, mCamera, mArms // Add more subsystems here as needed
     );
-    private int tracker = 8;
+    private int tracker = 9;
 
     public static Robot getInstance() {
         if (mInstance == null)
@@ -56,7 +61,7 @@ public class Robot extends Subsystem {
             RobotLog.a("=========== Finished Initialing " + subsystem.toString() + " ===========");
         }
 
-        tracker = 8;
+        tracker = 9;
         timer.reset();
     }
 
@@ -138,20 +143,29 @@ public class Robot extends Subsystem {
         MineralPositions state = whichMineral;
         getLift().liftCruiseControl = false;
 
-        if (tracker <= 1)
+        if (tracker <= 1) {
             getIntake().updateMineralVote();
+            RobotLog.a("Running updateMineralVote");
+        }
 
+//        Using the color sensors in the hopper, the code decides which set of logic to run
         switch (state) {
             case GOLDGOLD:
+//                This is the logic if both of the minerals in the hopper are Gold. We use the variable "tracker" to decide which case to run
                 switch (tracker) {
+//                    To start we set some variables, open the claws, and position the arms to grab the minerals. Once that's done, the code adds one to tracker so that the next
+//                    time it loops through it will run case 1
                     case 0:
                         allowOperatorOfGrabbers = false;
+                        armsLiftActive = true;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
                         getArms().setLeftClawOpen(true);
                         getArms().setRightClawOpen(true);
                         if (getArms().isCurrentStateWantedState())
                             tracker++;
                         break;
+
+//                        Next we have the lift to go all the way down. Once the lift gets to the correct position it adds one to tracker and resets the clawTimer
                     case 1:
                         getLift().setLiftState(LiftStates.DOWN);
                         if (getLift().isCurrentWantedState()) {
@@ -159,12 +173,16 @@ public class Robot extends Subsystem {
                             clawTimer.reset();
                         }
                         break;
+
+//                        Now the claws close to grab the minerals. Once the clawTimer is > 1000 milliseconds it will add one to tracker
                     case 2:
                         getArms().setLeftClawOpen(false);
                         getArms().setRightClawOpen(false);
                         if (clawTimer.milliseconds() > 1000)
                             tracker++;
                         break;
+
+//                        Next the lift goes to full height. Once to
                     case 3:
                         getLift().setLiftState(LiftStates.SCOREINGHEIGHT);
                         if (getLift().isCurrentWantedState())
@@ -204,6 +222,10 @@ public class Robot extends Subsystem {
                         break;
                     case 8:
                         getLift().liftCruiseControl = true;
+                        armsLiftActive = false;
+                        tracker++;
+                        break;
+                    case 9:
                         break;
                 }
                 break;
@@ -212,6 +234,7 @@ public class Robot extends Subsystem {
                 switch (tracker) {
                     case 0:
                         allowOperatorOfGrabbers = false;
+                        armsLiftActive = true;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
                         getArms().setLeftClawOpen(true);
                         getArms().setRightClawOpen(true);
@@ -269,6 +292,10 @@ public class Robot extends Subsystem {
                         break;
                     case 8:
                         getLift().liftCruiseControl = true;
+                        armsLiftActive = false;
+                        tracker++;
+                        break;
+                    case 9:
                         break;
                 }
                 break;
@@ -277,6 +304,7 @@ public class Robot extends Subsystem {
                 switch (tracker) {
                     case 0:
                         allowOperatorOfGrabbers = false;
+                        armsLiftActive = true;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
                         getArms().setRightClawOpen(true);
                         getArms().setLeftClawOpen(true);
@@ -334,6 +362,10 @@ public class Robot extends Subsystem {
                         break;
                     case 8:
                         getLift().liftCruiseControl = true;
+                        armsLiftActive = false;
+                        tracker++;
+                        break;
+                    case 9:
                         break;
 
                 }
@@ -342,6 +374,7 @@ public class Robot extends Subsystem {
                 switch (tracker) {
                     case 0:
                         allowOperatorOfGrabbers = false;
+                        armsLiftActive = true;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDSILVER);
                         getArms().setRightClawOpen(true);
                         getArms().setLeftClawOpen(true);
@@ -399,6 +432,10 @@ public class Robot extends Subsystem {
                         break;
                     case 8:
                         getLift().liftCruiseControl = true;
+                        armsLiftActive = false;
+                        tracker++;
+                        break;
+                    case 9:
                         break;
 
                 }

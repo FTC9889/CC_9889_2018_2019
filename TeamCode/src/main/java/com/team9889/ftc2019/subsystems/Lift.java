@@ -119,14 +119,11 @@ public class Lift extends Subsystem {
                     break;
 
                 case READY:
-                    if (getHeight() < 5) {
+                    setLiftPosition(7);
 
-                        setLiftPosition(7);
-
-                        if (inPosition()) {
-                            setLiftPower(0);
-                            currentState = wantedState;
-                        }
+                    if (inPosition()) {
+                        setLiftPower(0);
+                        currentState = wantedState;
                     }
                     break;
 
@@ -193,6 +190,10 @@ public class Lift extends Subsystem {
 
     public void setLiftState(LiftStates state) {
         this.wantedState = state;
+    }
+
+    public void setCurrentLiftState(LiftStates state){
+        this.currentState = state;
     }
 
     public boolean isCurrentWantedState() {

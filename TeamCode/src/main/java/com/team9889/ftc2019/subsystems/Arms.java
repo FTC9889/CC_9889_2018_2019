@@ -106,7 +106,7 @@ public class Arms extends Subsystem {
                         startTime = time.milliseconds();
                         first = false;
                     } else {
-                        if (time.milliseconds() - startTime > 100) {
+                        if (time.milliseconds() - startTime > 1000) {
                             setLeftArm(0.589, 0.813);
                             currentArmsState = ArmStates.GOLDGOLD;
                             first = true;
@@ -155,7 +155,7 @@ public class Arms extends Subsystem {
                                 setRightArm(.954, .882);
                             } else if (time.milliseconds() - startTime > 100
                                     && time.milliseconds() - startTime > 150) {
-                                setLeftArm(.096, .101);
+                                setLeftArm(.096, .18);
                             } else if (time.milliseconds() - startTime > 150) {
                                 currentArmsState = ArmStates.GRABGOLDGOLD;
                                 first = true;
