@@ -1,7 +1,5 @@
 package com.team9889.ftc2019;
 
-import android.graphics.Color;
-
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.states.LiftStates;
@@ -17,7 +15,6 @@ import java.util.Arrays;
 
 @TeleOp(name = "Teleop")
 public class Teleop extends Team9889Linear {
-    private Arms.ArmStates wanted = Arms.ArmStates.NULL;
     private ElapsedTime timer = new ElapsedTime();
 
     @Override
@@ -25,28 +22,18 @@ public class Teleop extends Team9889Linear {
         DriverStation driverStation = new DriverStation(gamepad1, gamepad2);
         waitForStart(false);
 
-        Robot.getIntake().isAutoIntakeDone = true;
-        Robot.whichMineral = com.team9889.ftc2019.subsystems.Robot.MineralPositions.SILVERGOLD;
-
         Robot.getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
-
-        Robot.getIntake().setCurrentExtenderState(Intake.IntakeStates.NULL);
-
         Robot.getLift().setLiftState(LiftStates.READY);
-
-        Robot.getCamera().setCameraPosition(Camera.CameraPositions.TELEOP);
 
         while (opModeIsActive()) {
             if(Robot.first && Robot.getLift().isCurrentWantedState()) {
-                Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.GRABBING);
+                Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.ZEROING);
                 Robot.first = false;
             }
 
             // Drivetrain (gamepad1)
             Robot.getDrive().setThrottleSteerPower(driverStation.getThrottle(),
                     driverStation.getSteer());
-
-            // Lift (gamepad1/2)
 
             if(Robot.allowOperatorOfGrabbers) {
                 if (driverStation.getReleaseLeftClaw())
@@ -57,52 +44,30 @@ public class Teleop extends Team9889Linear {
                     Robot.getArms().setRightClawOpen(true);
             }
 
-            telemetry.addData("", Robot.allowOperatorOfGrabbers);
-
             if(Robot.getLift().liftCruiseControl){
                 if (gamepad2.y) {
                     Robot.getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
                     Robot.getLift().setLiftState(LiftStates.HOOKHEIGHT);
                     Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.ZEROING);
-
                 } else {
                     Robot.getLift().setLiftPower(-gamepad2.right_stick_y);
                 }
             }
 
-            // End of Bumper
-
             //Intake (gamepad2)
-            if (Robot.intakeCruiseControl) {
-                Robot.getIntake().setIntakeExtenderPower(driverStation.getIntakeExtenderPower());
-
-                Robot.isAutoAlreadyDone = false;
-//                if (Robot.getIntake().getIntakeExtenderPosition() < 5.5){
-//                    Robot.getIntake().setCurrentExtenderState(Intake.IntakeStates.NULL);
-//                }
-            }
-
-            if (driverStation.getStartIntaking() && !Robot.isAutoAlreadyDone){
+            if(gamepad1.a)
                 Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.INTAKING);
+            else if(Robot.getIntake().isIntakeOperatorControl())
+                Robot.getIntake().setIntakeExtenderPower(-gamepad1.right_stick_y);
+
+            if (gamepad2.b) {
+                Robot.setWantedSuperStructure(Robot.getIntake().updateMineralVote());
+                Robot.resetTracker();
             }
 
-            // auto/manuel lift arm logic (gamepad2)
-            if (driverStation.getAutomatedMode()) {
-                setBackground(Color.GREEN);
 
-                if (gamepad2.b) {
-                    Robot.setWantedSuperStructure(Robot.getIntake().updateMineralVote());
-                    Robot.resetTracker();
-                }
-            } else {
-                setBackground(Color.RED);
-
-                if (gamepad2.b) {
-                    wanted = Arms.ArmStates.SILVERSILVER;
-                }
-
-                Robot.getArms().setArmsStates(wanted);
-            }
+            // Set Camera Position
+            Robot.getCamera().setCameraPosition(Camera.CameraPositions.TELEOP);
 
             double startTime = timer.milliseconds();
 
@@ -123,11 +88,8 @@ public class Teleop extends Team9889Linear {
                         Arrays.toString(Robot.getIntake().revFrontHopper.hsv()));
             }
 
-//                        Robot.outputToTelemetry(telemetry);
-
-//            telemetry.addData("Is Arms Lift Active", Robot.armsLiftActive);
-//            telemetry.addData("Current Intake State", Robot.getIntake().getCurrentIntakeState());
-//            telemetry.addData("Wanted Intake State", Robot.getIntake().getWantedIntakeState());
+            if(timer.milliseconds() < 15)
+                Robot.outputToTelemetry(telemetry);
             telemetry.update();
             timer.reset();
         }

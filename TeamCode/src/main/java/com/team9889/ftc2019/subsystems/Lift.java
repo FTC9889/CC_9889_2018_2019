@@ -16,8 +16,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 /**
  * Created by joshua9889 on 3/28/2018.
- * <p>
- * Example subsystem
  */
 
 public class Lift extends Subsystem {
@@ -28,6 +26,8 @@ public class Lift extends Subsystem {
     private DistanceSensor robotToGround;
     private PID pid = new PID(.42, 0.005, 0, 50);
     public boolean liftCruiseControl = true;
+
+    private double offset = 0;
 
     private LiftStates currentState = LiftStates.NULL;
     private LiftStates wantedState = LiftStates.NULL;
@@ -47,6 +47,8 @@ public class Lift extends Subsystem {
         left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        offset = 0;
+
         currentState = LiftStates.NULL;
         wantedState = LiftStates.NULL;
 
@@ -56,17 +58,12 @@ public class Lift extends Subsystem {
 
     @Override
     public void zeroSensors() {
-        left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        Thread.yield();
-
-        left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        offset = getHeightTicks();
     }
 
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
+        telemetry.addData("Offset", offset);
         telemetry.addData("Height of lift", getHeight());
         telemetry.addData("Height of lift in ticks", getHeightTicks());
         telemetry.addData("Lift PID Output", pid.getOutput());
@@ -91,7 +88,6 @@ public class Lift extends Subsystem {
                         liftCruiseControl = false;
                         currentState = LiftStates.DOWN;
                     } else {
-                        setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                         setLiftPower(-.7);
                         liftCruiseControl = false;
                     }
@@ -113,7 +109,6 @@ public class Lift extends Subsystem {
                         liftCruiseControl = true;
                         currentState = LiftStates.SCOREINGHEIGHT;
                     } else {
-                        setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                         setLiftPower(1);
                     }
                     break;
@@ -132,7 +127,6 @@ public class Lift extends Subsystem {
                         setLiftPower(-0.2);
                         zeroSensors();
                     } else {
-                        setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                         setLiftPower(-.7);
                     }
                     break;
@@ -146,15 +140,16 @@ public class Lift extends Subsystem {
     }
 
     @Override
-    public void test(Telemetry telemetry) {
-
-    }
+    public void test(Telemetry telemetry) {}
 
     @Override
     public void stop() {
         setLiftState(LiftStates.NULL);
     }
 
+    /**
+     * @param power Power to the motors
+     */
     public void setLiftPower(double power) {
         left.setPower(power);
         right.setPower(power);
@@ -164,7 +159,6 @@ public class Lift extends Subsystem {
      * @param wantedHeight In inches
      */
     public void setLiftPosition(double wantedHeight) {
-        setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         setLiftPower(pid.update(getHeight(), wantedHeight));
     }
 
@@ -173,7 +167,7 @@ public class Lift extends Subsystem {
     }
 
     public double getHeight() {
-        return getHeightTicks() * Constants.LiftConstants.kLiftTicksToHeightRatio;
+        return (getHeightTicks() - offset) * Constants.LiftConstants.kLiftTicksToHeightRatio;
     }
 
     private boolean inPosition() {
@@ -181,11 +175,19 @@ public class Lift extends Subsystem {
     }
 
     public boolean getUpperLimitPressed() {
-        return !upperLimit.getState();
+        boolean upperLimitPressed = !upperLimit.getState();
+        if (upperLimitPressed)
+            offset = 3197 - getHeightTicks();
+
+        return upperLimitPressed;
     }
 
     public boolean getLowerLimitPressed() {
-        return !lowerLimit.getState();
+        boolean lowerLimitPressed = !lowerLimit.getState();
+        if (lowerLimitPressed)
+            zeroSensors();
+
+        return lowerLimitPressed;
     }
 
     public void setLiftState(LiftStates state) {
@@ -211,10 +213,5 @@ public class Lift extends Subsystem {
     @Override
     public String toString() {
         return "Lift";
-    }
-
-    private void setRunMode(DcMotor.RunMode runMode) {
-        left.setMode(runMode);
-        right.setMode(runMode);
     }
 }

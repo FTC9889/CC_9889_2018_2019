@@ -1,4 +1,4 @@
-package com.team9889.ftc2019.test.subsystems;
+package com.team9889.ftc2019.test.subsystems.camera;
 
 import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;

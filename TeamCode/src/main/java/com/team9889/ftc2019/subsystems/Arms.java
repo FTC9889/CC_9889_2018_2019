@@ -19,8 +19,6 @@ public class Arms extends Subsystem {
 
     private boolean leftOpen, rightOpen;
 
-    private ElapsedTime armsTimer = new ElapsedTime();
-
     private ArmStates currentArmsState = ArmStates.NULL;
     private ArmStates wantedArmsState = ArmStates.STORED;
 
@@ -60,9 +58,7 @@ public class Arms extends Subsystem {
     }
 
     @Override
-    public void zeroSensors() {
-
-    }
+    public void zeroSensors() {}
 
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
@@ -106,7 +102,7 @@ public class Arms extends Subsystem {
                         startTime = time.milliseconds();
                         first = false;
                     } else {
-                        if (time.milliseconds() - startTime > 1000) {
+                        if (time.milliseconds() - startTime > 400) {
                             setLeftArm(0.589, 0.813);
                             currentArmsState = ArmStates.GOLDGOLD;
                             first = true;
@@ -226,24 +222,14 @@ public class Arms extends Subsystem {
     }
 
     @Override
-    public void test(Telemetry telemetry) {
-
-    }
+    public void test(Telemetry telemetry) {}
 
     @Override
     public void stop() {
         wantedArmsState = ArmStates.NULL;
     }
 
-    public double getLeftClawPosition() {
-        return leftClaw.getPosition();
-    }
-
-    public double getRightClawPosition() {
-        return rightClaw.getPosition();
-    }
-
-    public void setLeftArm() {
+    private void setLeftArm() {
         leftShoulder.setPosition(leftArmShoulderPosition);
         leftElbow.setPosition(leftArmElbowPosition);
     }
@@ -255,7 +241,7 @@ public class Arms extends Subsystem {
         setLeftArm();
     }
 
-    public void setRightArm() {
+    private void setRightArm() {
         rightShoulder.setPosition(rightArmShoulderPosition);
         rightElbow.setPosition(rightArmElbowPosition);
     }

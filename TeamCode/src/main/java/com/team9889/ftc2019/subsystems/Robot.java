@@ -19,9 +19,7 @@ import static com.team9889.ftc2019.subsystems.Robot.MineralPositions.NULL;
 public class Robot extends Subsystem {
 
     private static Robot mInstance = null;
-    public MineralPositions whichMineral = NULL;
-
-    public boolean armsLiftActive = false;
+    private MineralPositions whichMineral = NULL;
 
     public boolean first = true;
 
@@ -61,6 +59,8 @@ public class Robot extends Subsystem {
             RobotLog.a("=========== Finished Initialing " + subsystem.toString() + " ===========");
         }
 
+        // Scoring State Machine Init
+        whichMineral = com.team9889.ftc2019.subsystems.Robot.MineralPositions.SILVERGOLD;
         tracker = 9;
         timer.reset();
     }
@@ -157,7 +157,6 @@ public class Robot extends Subsystem {
 //                    time it loops through it will run case 1
                     case 0:
                         allowOperatorOfGrabbers = false;
-                        armsLiftActive = true;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
                         getArms().setLeftClawOpen(true);
                         getArms().setRightClawOpen(true);
@@ -222,7 +221,6 @@ public class Robot extends Subsystem {
                         break;
                     case 8:
                         getLift().liftCruiseControl = true;
-                        armsLiftActive = false;
                         tracker++;
                         break;
                     case 9:
@@ -234,7 +232,6 @@ public class Robot extends Subsystem {
                 switch (tracker) {
                     case 0:
                         allowOperatorOfGrabbers = false;
-                        armsLiftActive = true;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
                         getArms().setLeftClawOpen(true);
                         getArms().setRightClawOpen(true);
@@ -292,7 +289,6 @@ public class Robot extends Subsystem {
                         break;
                     case 8:
                         getLift().liftCruiseControl = true;
-                        armsLiftActive = false;
                         tracker++;
                         break;
                     case 9:
@@ -304,7 +300,6 @@ public class Robot extends Subsystem {
                 switch (tracker) {
                     case 0:
                         allowOperatorOfGrabbers = false;
-                        armsLiftActive = true;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
                         getArms().setRightClawOpen(true);
                         getArms().setLeftClawOpen(true);
@@ -362,7 +357,6 @@ public class Robot extends Subsystem {
                         break;
                     case 8:
                         getLift().liftCruiseControl = true;
-                        armsLiftActive = false;
                         tracker++;
                         break;
                     case 9:
@@ -374,7 +368,6 @@ public class Robot extends Subsystem {
                 switch (tracker) {
                     case 0:
                         allowOperatorOfGrabbers = false;
-                        armsLiftActive = true;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDSILVER);
                         getArms().setRightClawOpen(true);
                         getArms().setLeftClawOpen(true);
@@ -432,7 +425,6 @@ public class Robot extends Subsystem {
                         break;
                     case 8:
                         getLift().liftCruiseControl = true;
-                        armsLiftActive = false;
                         tracker++;
                         break;
                     case 9:

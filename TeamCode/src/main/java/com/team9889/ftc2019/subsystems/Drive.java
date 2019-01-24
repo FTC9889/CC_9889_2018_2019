@@ -25,7 +25,7 @@ public class Drive extends Subsystem {
     /**
      * Hardware
      */
-    public DcMotor rightMaster_, leftMaster_, rightSlave_, leftSlave_ = null;
+    private DcMotor rightMaster_, leftMaster_, rightSlave_, leftSlave_ = null;
     private RevIMU imu = null;
 
     /**
@@ -254,7 +254,7 @@ public class Drive extends Subsystem {
         }
     }
 
-    public void DriveZeroPowerState(DcMotor.ZeroPowerBehavior behavior){
+    private void DriveZeroPowerState(DcMotor.ZeroPowerBehavior behavior){
         this.leftMaster_.setZeroPowerBehavior(behavior);
         this.leftSlave_.setZeroPowerBehavior(behavior);
         this.rightMaster_.setZeroPowerBehavior(behavior);
@@ -291,7 +291,7 @@ public class Drive extends Subsystem {
                 rightSlave_.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 Thread.yield();
             }
-        } catch (Exception e) {}
+        } catch (Exception ignored) {}
 
         this.withoutEncoders();
     }

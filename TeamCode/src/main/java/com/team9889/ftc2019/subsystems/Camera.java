@@ -68,11 +68,6 @@ public class Camera extends Subsystem{
 
     }
 
-    public void setXYAxisPosition(double xPos, double yPos) {
-        xAxis.setPosition(xPos);
-        yAxis.setPosition(yPos);
-    }
-
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
         telemetry.addData("X Axis", getXAxis());
@@ -81,19 +76,31 @@ public class Camera extends Subsystem{
 
     @Override
     public void update(ElapsedTime time) {
-
+        setXYAxisPosition();
     }
 
     @Override
-    public void test(Telemetry telemetry) {
+    public void test(Telemetry telemetry) {}
 
+    private double xPosition, yPosition;
+
+    public void setXYAxisPosition(double xPos, double yPos) {
+        xPosition = xPos;
+        yPosition = yPos;
+
+        setXYAxisPosition();
     }
 
-    public double getXAxis(){
+    private void setXYAxisPosition() {
+        xAxis.setPosition(xPosition);
+        yAxis.setPosition(yPosition);
+    }
+
+    private double getXAxis(){
         return (xAxis.getPosition());
     }
 
-    public double getYAxis(){
+    private double getYAxis(){
         return (yAxis.getPosition());
     }
 
