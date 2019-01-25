@@ -10,8 +10,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.team9889.ftc2019.subsystems.Robot.MineralPositions.NULL;
-
 /**
  * Created by joshua9889 on 3/28/2018.
  */
@@ -19,13 +17,7 @@ import static com.team9889.ftc2019.subsystems.Robot.MineralPositions.NULL;
 public class Robot extends Subsystem {
 
     private static Robot mInstance = null;
-    private MineralPositions whichMineral = NULL;
 
-    public boolean first = true;
-
-    public boolean intakeCruiseControl = true;
-    public boolean isAutoAlreadyDone = false;
-    public boolean allowOperatorOfGrabbers = false;
     private ElapsedTime clawTimer = new ElapsedTime();
     private ElapsedTime liftArmsTimer = new ElapsedTime();
     private ElapsedTime dropTimer = new ElapsedTime();
@@ -38,7 +30,10 @@ public class Robot extends Subsystem {
     private List<Subsystem> subsystems = Arrays.asList(
             mDrive, mLift, mIntake, mCamera, mArms // Add more subsystems here as needed
     );
-    private int tracker = 9;
+
+    private MineralPositions whichMineral = Robot.MineralPositions.SILVERGOLD;
+    private int tracker = 8;
+
 
     public static Robot getInstance() {
         if (mInstance == null)
@@ -60,8 +55,8 @@ public class Robot extends Subsystem {
         }
 
         // Scoring State Machine Init
-        whichMineral = com.team9889.ftc2019.subsystems.Robot.MineralPositions.SILVERGOLD;
-        tracker = 9;
+        whichMineral = Robot.MineralPositions.SILVERGOLD;
+        tracker = 8;
         timer.reset();
     }
 
@@ -141,7 +136,7 @@ public class Robot extends Subsystem {
 
     private void scoringStateMachine() {
         MineralPositions state = whichMineral;
-        getLift().liftCruiseControl = false;
+        getLift().liftOperatorControl = false;
 
         if (tracker <= 1) {
             getIntake().updateMineralVote();
@@ -156,7 +151,6 @@ public class Robot extends Subsystem {
 //                    To start we set some variables, open the claws, and position the arms to grab the minerals. Once that's done, the code adds one to tracker so that the next
 //                    time it loops through it will run case 1
                     case 0:
-                        allowOperatorOfGrabbers = false;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
                         getArms().setLeftClawOpen(true);
                         getArms().setRightClawOpen(true);
@@ -199,8 +193,6 @@ public class Robot extends Subsystem {
 
 //                        Once both claws are opened by the driver, dropTimer resets and it adds one to tracker
                     case 5:
-                        allowOperatorOfGrabbers = true;
-
                         if (getArms().bothOpen()) {
                             dropTimer.reset();
                             tracker++;
@@ -210,7 +202,6 @@ public class Robot extends Subsystem {
 //                        Once the dropTimer is > 500 milliseconds, so the minerals fully drop from the claws, then the arms go back to the GRABGOLDGOLD position. Once
 //                        the arms are in position the liftArmsTimer resets and it adds one to tracker
                     case 6:
-                        allowOperatorOfGrabbers = false;
                         if (dropTimer.milliseconds() > 500 && dropTimer.milliseconds() < 1000)
                             getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
                         else if (dropTimer.milliseconds() > 1000) {
@@ -232,11 +223,6 @@ public class Robot extends Subsystem {
                         break;
 
                     case 8:
-                        getLift().liftCruiseControl = true;
-                        tracker++;
-                        break;
-
-                    case 9:
                         break;
                 }
                 break;
@@ -244,7 +230,6 @@ public class Robot extends Subsystem {
             case SILVERSILVER:
                 switch (tracker) {
                     case 0:
-                        allowOperatorOfGrabbers = false;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
                         getArms().setLeftClawOpen(true);
                         getArms().setRightClawOpen(true);
@@ -276,14 +261,12 @@ public class Robot extends Subsystem {
                         }
                         break;
                     case 5:
-                        allowOperatorOfGrabbers = true;
                         if (getArms().bothOpen()) {
                             dropTimer.reset();
                             tracker++;
                         }
                         break;
                     case 6:
-                        allowOperatorOfGrabbers = false;
                         if (dropTimer.milliseconds() > 500 && dropTimer.milliseconds() < 1000)
                             getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
                         else if (dropTimer.milliseconds() > 1000) {
@@ -301,10 +284,6 @@ public class Robot extends Subsystem {
                         }
                         break;
                     case 8:
-                        getLift().liftCruiseControl = true;
-                        tracker++;
-                        break;
-                    case 9:
                         break;
                 }
                 break;
@@ -312,7 +291,6 @@ public class Robot extends Subsystem {
             case SILVERGOLD:
                 switch (tracker) {
                     case 0:
-                        allowOperatorOfGrabbers = false;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
                         getArms().setRightClawOpen(true);
                         getArms().setLeftClawOpen(true);
@@ -344,14 +322,12 @@ public class Robot extends Subsystem {
                         }
                         break;
                     case 5:
-                        allowOperatorOfGrabbers = true;
                         if (getArms().bothOpen()) {
                             dropTimer.reset();
                             tracker++;
                         }
                         break;
                     case 6:
-                        allowOperatorOfGrabbers = false;
                         if (dropTimer.milliseconds() > 500 && dropTimer.milliseconds() < 1000)
                             getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
                         else if (dropTimer.milliseconds() > 1000) {
@@ -369,10 +345,6 @@ public class Robot extends Subsystem {
                         }
                         break;
                     case 8:
-                        getLift().liftCruiseControl = true;
-                        tracker++;
-                        break;
-                    case 9:
                         break;
 
                 }
@@ -380,7 +352,6 @@ public class Robot extends Subsystem {
             case GOLDSILVER:
                 switch (tracker) {
                     case 0:
-                        allowOperatorOfGrabbers = false;
                         getArms().setArmsStates(Arms.ArmStates.GRABGOLDSILVER);
                         getArms().setRightClawOpen(true);
                         getArms().setLeftClawOpen(true);
@@ -412,14 +383,12 @@ public class Robot extends Subsystem {
                         }
                         break;
                     case 5:
-                        allowOperatorOfGrabbers = true;
                         if (getArms().bothOpen()) {
                             dropTimer.reset();
                             tracker++;
                         }
                         break;
                     case 6:
-                        allowOperatorOfGrabbers = false;
                         if (dropTimer.milliseconds() > 500 && dropTimer.milliseconds() < 1000)
                             getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
                         else if (dropTimer.milliseconds() > 1000) {
@@ -437,21 +406,14 @@ public class Robot extends Subsystem {
                         }
                         break;
                     case 8:
-                        getLift().liftCruiseControl = true;
-                        tracker++;
-                        break;
-                    case 9:
                         break;
 
                 }
                 break;
-
         }
-
-        RobotLog.d("scoringStateMachine has been updated");
     }
 
     public enum MineralPositions {
-        GOLDGOLD, SILVERSILVER, SILVERGOLD, GOLDSILVER, NULL
+        GOLDGOLD, SILVERSILVER, SILVERGOLD, GOLDSILVER
     }
 }

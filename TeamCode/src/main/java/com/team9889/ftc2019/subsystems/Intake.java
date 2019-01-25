@@ -20,38 +20,30 @@ import java.util.Arrays;
  */
 
 public class Intake extends Subsystem {
+
+    // Hardware
     private DcMotor intakeMotor, extender;
     private Servo intakeRotator, hopperGate, hopperCover;
     private DigitalChannel scoringSwitch, inSwitch;
-    public RevColorDistance revBackHopper, revFrontHopper;
+    private RevColorDistance revBackHopper, revFrontHopper;
 
     // PID for extending the intake
     private PID extenderPID = new PID(0.5, 0.0, 2);
 
+    // Tracker
     private double maximumPosition = 24; // Inches
     private double offset = 0; // Ticks
 
-    private Robot.MineralPositions mineralPositions;
+    //
     private boolean intakeOperatorControl = true;
+    private IntakeStates currentIntakeState = IntakeStates.NULL;
+    private IntakeStates wantedIntakeState = IntakeStates.ZEROING;
+    private boolean first = true;
+    private double intakeRotatorPosition = 0;
 
     public boolean isIntakeOperatorControl() {
         return intakeOperatorControl;
     }
-
-    public enum IntakeStates {
-        INTAKING, GRABBING, ZEROING, NULL
-    }
-
-    public enum RotatorStates {
-        UP, DOWN
-    }
-
-    public enum MineralType {
-        GOLD, SILVER, UNKNOWN
-    }
-
-    private IntakeStates currentIntakeState = IntakeStates.NULL;
-    private IntakeStates wantedIntakeState = IntakeStates.ZEROING;
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
@@ -72,15 +64,12 @@ public class Intake extends Subsystem {
         revFrontHopper = new RevColorDistance(Constants.IntakeConstants.kFrontIntakeDetectorId, hardwareMap);
 
         offset = 0;
-
-        if (auto) {
-            setWantedIntakeState(IntakeStates.ZEROING);
-        }
+        currentIntakeState = IntakeStates.NULL;
+        setWantedIntakeState(IntakeStates.ZEROING);
     }
 
     @Override
     public void zeroSensors() {
-        offset = getIntakeExtenderPositionTicks();
     }
 
     @Override
@@ -104,14 +93,14 @@ public class Intake extends Subsystem {
         telemetry.addData("Wanted State", wantedIntakeState);
         telemetry.addData("Current State", currentIntakeState);
 
-        telemetry.addData("Intake Cruise Control", Robot.getInstance().intakeCruiseControl);
+        telemetry.addData("Intake Cruise Control", isIntakeOperatorControl());
     }
-
-    private boolean first = true;
 
     @Override
     public void update(ElapsedTime time) {
-        if((getIntakeExtenderPosition() < 4.1 && !CruiseLib.isBetween(offset, -0.1, 0.1))) {
+
+        // This is used to try to prevent the intake cover from not being broken, but it's not that good.
+        if ((getIntakeExtenderPosition() < 4.1 && !CruiseLib.isBetween(offset, -0.1, 0.1))) {
             setHopperCoverState(HopperCoverState.CLOSED);
         }
 
@@ -120,7 +109,6 @@ public class Intake extends Subsystem {
                 if (twoMineralsDetected()) {
                     intakeOperatorControl = false;
                     setIntakePower(-0.8);
-                    Robot.getInstance().isAutoAlreadyDone = true;
 
                     currentIntakeState = IntakeStates.INTAKING;
                     setWantedIntakeState(IntakeStates.GRABBING);
@@ -177,9 +165,9 @@ public class Intake extends Subsystem {
                                 else
                                     first = false;
                             } else {
-                                setIntakeExtenderPower(0.2);
+                                setIntakeExtenderPower(0.3);
 
-                                if(getIntakeExtenderPosition() > 7)
+                                if (getIntakeExtenderPosition() > 7)
                                     first = true;
                             }
 
@@ -204,7 +192,27 @@ public class Intake extends Subsystem {
                         setHopperCoverState(HopperCoverState.CLOSED);
                         setIntakePower(0);
 
-                        setIntakeExtenderPower(-.2);
+                        setIntakeExtenderPower(-0.3);
+                    }
+                }
+                break;
+            case AUTONOMOUS:
+                if (currentIntakeState != wantedIntakeState) {
+                    if (intakeGrabbingSwitchValue()) {
+                        currentIntakeState = IntakeStates.AUTONOMOUS;
+                        intakeOperatorControl = true;
+
+                        setIntakeExtenderPower(0);
+
+                        // Not all the way down in order to prevent the team marker from falling out
+                        setIntakeRotatorPosition(0.8);
+                    } else {
+                        intakeOperatorControl = false;
+                        setIntakePower(0);
+                        setHopperGateState(HopperGateState.UP);
+                        setHopperCoverState(HopperCoverState.CLOSED);
+                        setIntakeRotatorState(RotatorStates.UP);
+                        setIntakeExtenderPower(.3);
                     }
                 }
                 break;
@@ -216,7 +224,8 @@ public class Intake extends Subsystem {
     }
 
     @Override
-    public void test(Telemetry telemetry) {}
+    public void test(Telemetry telemetry) {
+    }
 
     @Override
     public void stop() {
@@ -248,19 +257,15 @@ public class Intake extends Subsystem {
      * @param power Power the extender should go at
      */
     public void setIntakeExtenderPower(double power) {
-        if(offset != 0 && (getIntakeExtenderPosition() > maximumPosition && power>0)
-                || (intakeInSwitchValue() && power<0))
+        if (offset != 0 && (getIntakeExtenderPosition() > maximumPosition && power > 0)
+                || (intakeInSwitchValue() && power < 0))
             extender.setPower(0);
         else
             extender.setPower(power);
     }
 
-    public double getIntakeExtenderPosition(){
+    private double getIntakeExtenderPosition() {
         return (getIntakeExtenderPositionTicks() - offset) * Constants.IntakeConstants.kIntakeTicksToInchRatio;
-    }
-
-    private double getIntakeExtenderPositionTicks() {
-        return extender.getCurrentPosition();
     }
 
     /**
@@ -272,10 +277,14 @@ public class Intake extends Subsystem {
         double currentPosition = getIntakeExtenderPosition();
         double power = extenderPID.update(currentPosition, position);
 
-        if(offset == 0.0 && (getIntakeExtenderPosition() > maximumPosition && power>0) || (intakeInSwitchValue() && power<0))
+        if (offset == 0.0 && (getIntakeExtenderPosition() > maximumPosition && power > 0) || (intakeInSwitchValue() && power < 0))
             extender.setPower(0);
         else
             setIntakeExtenderPower(power);
+    }
+
+    private double getIntakeExtenderPositionTicks() {
+        return extender.getCurrentPosition();
     }
 
     /**
@@ -292,18 +301,21 @@ public class Intake extends Subsystem {
         return (currentIntakeState == wantedIntakeState);
     }
 
+    public IntakeStates getCurrentIntakeState() {
+        return currentIntakeState;
+    }
+
     /**
      * @param position Set the position of the Intake
      */
-    private double intakeRotaterPosition = 0;
     private void setIntakeRotatorPosition(double position) {
-        intakeRotaterPosition = position;
+        intakeRotatorPosition = position;
         setIntakeRotatorPosition();
     }
 
     private void setIntakeRotatorPosition() {
-        if(!CruiseLib.isBetween(intakeRotaterPosition, -1, 0.1))
-            intakeRotator.setPosition(intakeRotaterPosition);
+        if (!CruiseLib.isBetween(intakeRotatorPosition, -1, 0.1))
+            intakeRotator.setPosition(intakeRotatorPosition);
     }
 
     public void setIntakeRotatorState(RotatorStates state) {
@@ -318,11 +330,7 @@ public class Intake extends Subsystem {
         }
     }
 
-    public enum HopperGateState {
-        UP, DOWN
-    }
-
-    public void setHopperGateState(HopperGateState state) {
+    private void setHopperGateState(HopperGateState state) {
         switch (state) {
             case UP:
                 hopperGate.setPosition(0.5);
@@ -334,14 +342,20 @@ public class Intake extends Subsystem {
         }
     }
 
+    /**
+     * @return If the Lift is pressing the Lower Limit Switch
+     */
     private boolean intakeInSwitchValue() {
         boolean intakeInSwitch = !inSwitch.getState();
         if (intakeInSwitch)
-            zeroSensors();
+            offset = getIntakeExtenderPositionTicks();
 
         return intakeInSwitch;
     }
 
+    /**
+     * @return If the Lift is pressing the Upper Limit Switch
+     */
     private boolean intakeGrabbingSwitchValue() {
         boolean intakeGrabbingSwitch = !scoringSwitch.getState();
         if (intakeGrabbingSwitch)
@@ -350,11 +364,10 @@ public class Intake extends Subsystem {
         return intakeGrabbingSwitch;
     }
 
-    public enum HopperCoverState {
-        OPEN, CLOSED
-    }
-
-    public void setHopperCoverState(HopperCoverState state) {
+    /**
+     * @param state Set the state of the Hopper Cover
+     */
+    private void setHopperCoverState(HopperCoverState state) {
         switch (state) {
             case OPEN:
                 hopperCover.setPosition(0.6);
@@ -366,22 +379,30 @@ public class Intake extends Subsystem {
         }
     }
 
+    /**
+     * @return If the front mineral detector sees a mineral
+     */
     private boolean frontHopperDetector() {
         return revFrontHopper.getIN() < 2.2;
     }
 
+    /**
+     * @return If the back mineral detector sees a mineral
+     */
     private boolean backHopperDetector() {
         return revBackHopper.getIN() < 2.2;
     }
 
+    /**
+     * @return If the both mineral detectors see a mineral
+     */
     private boolean twoMineralsDetected() {
         return frontHopperDetector() && backHopperDetector();
     }
 
-    public Robot.MineralPositions getMineralPositions() {
-        return mineralPositions;
-    }
-
+    /**
+     * @return If the type of mineral the back mineral detector sees
+     */
     private MineralType backColor() {
         double[] hueThresholdGold = {30, 39};
         double[] saturationThresholdGold = {0.4, 0.7};
@@ -403,6 +424,9 @@ public class Intake extends Subsystem {
             return MineralType.UNKNOWN;
     }
 
+    /**
+     * @return If the type of mineral the front mineral detector sees
+     */
     private MineralType frontColor() {
         double[] hueThresholdGold = {43, 70};
         double[] saturationThresholdGold = {0.4, 0.6};
@@ -424,10 +448,14 @@ public class Intake extends Subsystem {
             return MineralType.UNKNOWN;
     }
 
+    /**
+     * @return What order the minerals are in, front to back
+     */
     public Robot.MineralPositions updateMineralVote() {
         MineralType front = frontColor();
         MineralType back = backColor();
 
+        Robot.MineralPositions mineralPositions;
         if (front == MineralType.SILVER && back == MineralType.GOLD)
             mineralPositions = Robot.MineralPositions.SILVERGOLD;
         else if (front == MineralType.SILVER && back == MineralType.SILVER)
@@ -445,6 +473,26 @@ public class Intake extends Subsystem {
     @Override
     public String toString() {
         return "Intake";
+    }
+
+    public enum IntakeStates {
+        INTAKING, GRABBING, ZEROING, AUTONOMOUS, NULL
+    }
+
+    private enum RotatorStates {
+        UP, DOWN
+    }
+
+    private enum HopperGateState {
+        UP, DOWN
+    }
+
+    private enum HopperCoverState {
+        OPEN, CLOSED
+    }
+
+    public enum MineralType {
+        GOLD, SILVER, UNKNOWN
     }
 }
 
