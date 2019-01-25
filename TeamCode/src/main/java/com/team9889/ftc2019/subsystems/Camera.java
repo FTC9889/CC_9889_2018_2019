@@ -28,7 +28,7 @@ public class Camera extends Subsystem{
     private GoldPositions gold = GoldPositions.UNKNOWN;
 
     public enum CameraPositions{
-        FRONTCENTER, FRONTRIGHT,
+        FRONTCENTER, FRONTRIGHT, FRONTLEFT,
         FRONTHOPPER, BACKHOPPER,
         STORED, UPRIGHT,
         TWO_GOLD, TELEOP
@@ -141,6 +141,9 @@ public class Camera extends Subsystem{
             case FRONTCENTER:
                 setXYAxisPosition(.175, 0.775);
                 break;
+
+            case FRONTLEFT:
+                setXYAxisPosition(.0, 0.775);
 
             case FRONTHOPPER:
                 setXYAxisPosition(0, 1);
