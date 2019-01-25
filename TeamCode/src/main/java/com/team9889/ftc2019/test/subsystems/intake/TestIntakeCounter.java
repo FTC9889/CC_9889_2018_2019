@@ -18,7 +18,7 @@ public class TestIntakeCounter extends Team9889Linear {
         while (opModeIsActive()){
 //            Robot.getIntake().updateTestCounter();
 
-            Robot.getIntake().setIntakeRotatorState(Intake.RotatorStates.DOWN);
+//            Robot.getIntake().setIntakeRotatorState(Intake.RotatorStates.DOWN);
 
             if(gamepad1.a)
                 Robot.getIntake().intake();

@@ -22,6 +22,8 @@ public class Arms extends Subsystem {
     private ArmStates currentArmsState = ArmStates.NULL;
     private ArmStates wantedArmsState = ArmStates.STORED;
 
+    private boolean allowOperatorOfGrabbers = true;
+
     private double startTime;
     private boolean first = true;
 
@@ -85,6 +87,7 @@ public class Arms extends Subsystem {
                     setLeftArm(0, .131);
                     setRightArm(.998, .844);
                     first = true;
+                    allowOperatorOfGrabbers = false;
 
                     currentArmsState = ArmStates.STORED;
                     break;
@@ -92,6 +95,7 @@ public class Arms extends Subsystem {
                     setLeftArm(0, .131);
                     setRightArm(0.269, 0.42);
                     first = true;
+                    allowOperatorOfGrabbers = false;
 
                     currentArmsState = ArmStates.PARK;
                     break;
@@ -106,6 +110,7 @@ public class Arms extends Subsystem {
                             setLeftArm(0.589, 0.813);
                             currentArmsState = ArmStates.GOLDGOLD;
                             first = true;
+                            allowOperatorOfGrabbers = true;
                         }
                     }
                     break;
@@ -120,6 +125,7 @@ public class Arms extends Subsystem {
                         if (time.milliseconds() - startTime > 100) {
                             currentArmsState = ArmStates.SILVERSILVER;
                             first = true;
+                            allowOperatorOfGrabbers = true;
                         }
                     }
                     break;
@@ -135,10 +141,13 @@ public class Arms extends Subsystem {
                         if (time.milliseconds() - startTime > 100) {
                             currentArmsState = ArmStates.SILVERGOLD;
                             first = true;
+                            allowOperatorOfGrabbers = true;
                         }
                     }
                     break;
                 case GRABGOLDGOLD:
+                    allowOperatorOfGrabbers = false;
+
                     if (currentArmsState == ArmStates.GRABGOLDSILVER) {
                         if (first) {
                             startTime = time.milliseconds();
@@ -177,6 +186,8 @@ public class Arms extends Subsystem {
                     break;
 
                 case GRABGOLDSILVER:
+                    allowOperatorOfGrabbers = false;
+
                     if (currentArmsState == ArmStates.GRABGOLDGOLD) {
                         if (first) {
                             startTime = time.milliseconds();
@@ -273,6 +284,10 @@ public class Arms extends Subsystem {
 
     public boolean bothOpen() {
         return leftOpen && rightOpen;
+    }
+
+    public boolean isAllowOperatorOfGrabbers() {
+        return allowOperatorOfGrabbers;
     }
 
     public boolean isCurrentStateWantedState() {

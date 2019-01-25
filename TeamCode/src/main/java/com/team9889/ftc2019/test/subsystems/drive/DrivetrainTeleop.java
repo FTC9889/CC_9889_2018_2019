@@ -1,7 +1,6 @@
 package com.team9889.ftc2019.test.subsystems.drive;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.team9889.ftc2019.DriverStation;
 import com.team9889.ftc2019.Team9889Linear;
 

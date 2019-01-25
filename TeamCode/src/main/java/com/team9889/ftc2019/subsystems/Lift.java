@@ -24,8 +24,8 @@ public class Lift extends Subsystem {
     private DigitalChannel lowerLimit;
     private DigitalChannel upperLimit;
     private DistanceSensor robotToGround;
-    private PID pid = new PID(.42, 0.005, 0, 50);
-    public boolean liftCruiseControl = true;
+    private PID pid = new PID(.42, 0, 0.3);
+    public boolean liftOperatorControl = true;
 
     private double offset = 0;
 
@@ -54,6 +54,8 @@ public class Lift extends Subsystem {
 
         if (auto)
             setLiftState(LiftStates.HANGING);
+        else
+            setLiftState(LiftStates.SCOREINGHEIGHT);
     }
 
     @Override
@@ -79,49 +81,53 @@ public class Lift extends Subsystem {
 
     @Override
     public void update(ElapsedTime time) {
+        getLowerLimitPressed();
+        getUpperLimitPressed();
+
         if (currentState != wantedState) {
             switch (wantedState) {
                 case DOWN:
                     if (getLowerLimitPressed()) {
                         setLiftPower(0);
-                        zeroSensors();
-                        liftCruiseControl = false;
+                        liftOperatorControl = false;
                         currentState = LiftStates.DOWN;
                     } else {
-                        setLiftPower(-.7);
-                        liftCruiseControl = false;
+                        setLiftPower(-0.7);
+                        liftOperatorControl = false;
                     }
                     break;
-
                 case HOOKHEIGHT:
                     setLiftPosition(11);
-                    liftCruiseControl = false;
+
                     if (inPosition()) {
-                        liftCruiseControl = true;
+                        setLiftPower(0);
+                        liftOperatorControl = true;
                         currentState = LiftStates.HOOKHEIGHT;
+                    } else {
+                        liftOperatorControl = false;
                     }
                     break;
-
                 case SCOREINGHEIGHT:
-                    liftCruiseControl = false;
                     if (getUpperLimitPressed()) {
                         setLiftPower(0);
-                        liftCruiseControl = true;
+                        liftOperatorControl = true;
                         currentState = LiftStates.SCOREINGHEIGHT;
                     } else {
                         setLiftPower(1);
+                        liftOperatorControl = false;
                     }
                     break;
-
                 case READY:
-                    setLiftPosition(7);
+                    setLiftPosition(6.5);
 
                     if (inPosition()) {
                         setLiftPower(0);
-                        currentState = wantedState;
+                        liftOperatorControl = true;
+                        currentState = LiftStates.READY;
+                    } else {
+                        liftOperatorControl = false;
                     }
                     break;
-
                 case HANGING:
                     if (getLowerLimitPressed()) {
                         setLiftPower(-0.2);
@@ -129,8 +135,9 @@ public class Lift extends Subsystem {
                     } else {
                         setLiftPower(-.7);
                     }
-                    break;
 
+                    // Never Set the currentState to Hanging in order to make it still run during init
+                    break;
                 case NULL:
                     setLiftPower(0);
                     currentState = LiftStates.NULL;
@@ -151,14 +158,18 @@ public class Lift extends Subsystem {
      * @param power Power to the motors
      */
     public void setLiftPower(double power) {
-        left.setPower(power);
-        right.setPower(power);
+        double mPower = power;
+        if((getUpperLimitPressed() && mPower>0) || (getLowerLimitPressed() && mPower<0))
+            mPower = 0;
+
+        left.setPower(mPower);
+        right.setPower(mPower);
     }
 
     /**
      * @param wantedHeight In inches
      */
-    public void setLiftPosition(double wantedHeight) {
+    private void setLiftPosition(double wantedHeight) {
         setLiftPower(pid.update(getHeight(), wantedHeight));
     }
 
@@ -174,15 +185,15 @@ public class Lift extends Subsystem {
         return Math.abs(pid.getError()) < 0.5;
     }
 
-    public boolean getUpperLimitPressed() {
+    private boolean getUpperLimitPressed() {
         boolean upperLimitPressed = !upperLimit.getState();
         if (upperLimitPressed)
-            offset = 3197 - getHeightTicks();
+            offset = getHeightTicks() - 5500;
 
         return upperLimitPressed;
     }
 
-    public boolean getLowerLimitPressed() {
+    private boolean getLowerLimitPressed() {
         boolean lowerLimitPressed = !lowerLimit.getState();
         if (lowerLimitPressed)
             zeroSensors();
@@ -194,16 +205,16 @@ public class Lift extends Subsystem {
         this.wantedState = state;
     }
 
-    public void setCurrentLiftState(LiftStates state){
-        this.currentState = state;
-    }
-
     public boolean isCurrentWantedState() {
         return currentState == wantedState;
     }
 
     public LiftStates getWantedState() {
         return wantedState;
+    }
+
+    public LiftStates getCurrentState() {
+        return currentState;
     }
 
     public double getDistanceSensorRange() {
