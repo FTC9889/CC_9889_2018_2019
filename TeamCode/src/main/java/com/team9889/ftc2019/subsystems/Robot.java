@@ -181,18 +181,23 @@ public class Robot extends Subsystem {
                             tracker++;
                         break;
 
-//                        Next the lift goes to full height. Once to
+//                        Next the lift goes to full height. Once the lift gets there it adds one to tracker
                     case 3:
                         getLift().setLiftState(LiftStates.SCOREINGHEIGHT);
                         if (getLift().isCurrentWantedState())
                             tracker++;
                         break;
+
+//                        Now the arms go to a certain position according to which minerals are in the hopper, in this case GOLDGOLD. Once the arms are in position
+//                        it adds 1 to tracker
                     case 4:
                         getArms().setArmsStates(Arms.ArmStates.GOLDGOLD);
                         if (getArms().isCurrentStateWantedState()) {
                             tracker++;
                         }
                         break;
+
+//                        Once both claws are opened by the driver, dropTimer resets and it adds one to tracker
                     case 5:
                         allowOperatorOfGrabbers = true;
 
@@ -201,6 +206,9 @@ public class Robot extends Subsystem {
                             tracker++;
                         }
                         break;
+
+//                        Once the dropTimer is > 500 milliseconds, so the minerals fully drop from the claws, then the arms go back to the GRABGOLDGOLD position. Once
+//                        the arms are in position the liftArmsTimer resets and it adds one to tracker
                     case 6:
                         allowOperatorOfGrabbers = false;
                         if (dropTimer.milliseconds() > 500 && dropTimer.milliseconds() < 1000)
@@ -212,6 +220,9 @@ public class Robot extends Subsystem {
                             }
                         }
                         break;
+
+//                        Once liftArmsTimer is > 2000, to give the arms a chance to get into position, the lift goes to the READY position. Once the lift gets to the
+//                        position it adds one to tracker
                     case 7:
                         if (liftArmsTimer.milliseconds() > 2000) {
                             getLift().setLiftState(LiftStates.READY);
@@ -219,10 +230,12 @@ public class Robot extends Subsystem {
                                 tracker++;
                         }
                         break;
+
                     case 8:
                         getLift().liftCruiseControl = true;
                         tracker++;
                         break;
+
                     case 9:
                         break;
                 }
