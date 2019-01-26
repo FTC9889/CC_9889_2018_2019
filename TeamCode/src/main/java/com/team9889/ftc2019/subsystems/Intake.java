@@ -25,7 +25,7 @@ public class Intake extends Subsystem {
     private DcMotor intakeMotor, extender;
     private Servo intakeRotator, hopperGate, hopperCover;
     private DigitalChannel scoringSwitch, inSwitch;
-    private RevColorDistance revBackHopper, revFrontHopper;
+    public RevColorDistance revBackHopper, revFrontHopper;
 
     // PID for extending the intake
     private PID extenderPID = new PID(0.5, 0.0, 2);
@@ -165,7 +165,7 @@ public class Intake extends Subsystem {
                                 else
                                     first = false;
                             } else {
-                                setIntakeExtenderPower(0.3);
+                                setIntakeExtenderPower(0.2);
 
                                 if (getIntakeExtenderPosition() > 7)
                                     first = true;
@@ -192,33 +192,59 @@ public class Intake extends Subsystem {
                         setHopperCoverState(HopperCoverState.CLOSED);
                         setIntakePower(0);
 
-                        setIntakeExtenderPower(-0.3);
+                        setIntakeExtenderPower(-0.5);
                     }
                 }
                 break;
             case AUTONOMOUS:
                 if (currentIntakeState != wantedIntakeState) {
                     if (intakeGrabbingSwitchValue()) {
-                        currentIntakeState = IntakeStates.AUTONOMOUS;
-                        intakeOperatorControl = true;
-
                         setIntakeExtenderPower(0);
-
-                        // Not all the way down in order to prevent the team marker from falling out
-                        setIntakeRotatorPosition(0.8);
-                    } else {
-                        intakeOperatorControl = false;
                         setIntakePower(0);
+                        setIntakeRotatorPosition(0.9);
+
+                        currentIntakeState = IntakeStates.AUTONOMOUS;
+                        first = true;
+                    } else {
+                        if (first) {
+                            if (getIntakeExtenderPosition() > 9 && !CruiseLib.isBetween(offset, -0.1, 0.1))
+                                setIntakeExtenderPower(-1);
+                            else if (getIntakeExtenderPosition() > 4.75 && !CruiseLib.isBetween(offset, -0.1, 0.1)) {
+                                setIntakeExtenderPower(-0.3);
+                                setIntakeRotatorPosition(0.8);
+                            } else
+                                first = false;
+                        } else {
+                            setIntakeExtenderPower(0.5);
+
+                            if (getIntakeExtenderPosition() > 7)
+                                first = true;
+                        }
+
+
                         setHopperGateState(HopperGateState.UP);
                         setHopperCoverState(HopperCoverState.CLOSED);
                         setIntakeRotatorState(RotatorStates.UP);
-                        setIntakeExtenderPower(.3);
                     }
                 }
                 break;
             case NULL:
                 currentIntakeState = IntakeStates.NULL;
                 intakeOperatorControl = true;
+                break;
+            case EXTENDED:
+                setIntakeExtenderPosition(24);
+                setHopperGateState(HopperGateState.UP);
+                setHopperCoverState(HopperCoverState.CLOSED);
+                setIntakeRotatorState(RotatorStates.UP);
+
+                if(Math.abs(extenderPID.getError()) < 0.5) {
+                    setIntakeExtenderPower(0);
+                    currentIntakeState = IntakeStates.EXTENDED;
+                }
+
+                break;
+            case DRIVER:
                 break;
         }
     }
@@ -476,7 +502,7 @@ public class Intake extends Subsystem {
     }
 
     public enum IntakeStates {
-        INTAKING, GRABBING, ZEROING, AUTONOMOUS, NULL
+        INTAKING, GRABBING, ZEROING, AUTONOMOUS, NULL, EXTENDED, DRIVER
     }
 
     private enum RotatorStates {

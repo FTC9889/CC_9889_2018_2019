@@ -37,9 +37,11 @@ public class AutonomousDepotSide extends AutoModeBase {
 
             runAction(new Outtake());
 
+            runAction(new Wait(1000));
+
             runAction(new Turn(new Rotation2d(90, AngleUnit.DEGREES), 2000));
 
-            runAction(new DriveToDistanceAndAngle(-8, 90, 2500));
+            runAction(new DriveToDistanceAndAngle(-15, 90, 2500));
             runAction(new Turn(new Rotation2d(47, AngleUnit.DEGREES), 2000));
 
             runAction(new Wait(300));
@@ -53,25 +55,24 @@ public class AutonomousDepotSide extends AutoModeBase {
             runAction(new Wait(1000));
 
             if (Robot.getCamera().isGoldInfront()){ //Right
-                runAction(new DriveToDistanceAndAngle(10, 0, 3000));
+                runAction(new DriveToDistanceAndAngle(15, 0, 3000));
                 runAction(new DriveTurn(new Rotation2d(45, AngleUnit.DEGREES), 2000));
-                runAction(new DriveToDistanceAndAngle(35, 45, 3000));
+                runAction(new DriveToDistanceAndAngle(33, 45, 3000));
                 runAction(new DriveTurn(new Rotation2d(-90, AngleUnit.DEGREES), 2000));
-                runAction(new DriveToDistanceAndAngle(20, -45, 2000));
+                runAction(new DriveToDistanceAndAngle(29, -45, 2000));
                 runAction(new Outtake(-1));
                 runAction(new IntakeZeroing());
 
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 1500));
-                runAction(new Wait(1000));
-                runAction(new DriveToDistanceAndAngle(25, -90, 2000));
+                runAction(new DriveToDistanceAndAngle(16, -90, 2000));
                 runAction(new DriveTurn(new Rotation2d(-50, AngleUnit.DEGREES), 1500));
-                runAction(new DriveToDistanceAndAngle(50, -140, 4000));
+                runAction(new DriveToDistanceAndAngle(45, -140, 4000));
                 runAction(new DriveTurn(new Rotation2d(185, AngleUnit.DEGREES), 3000));
-                runAction(new DriveToDistanceAndAngle(5, 45, 1500));
+                runAction(new DriveToDistanceAndAngle(-5, 45, 1500));
                 runAction(new ArmsToPark());
 
-            } else{ //Left
-                runAction(new DriveToDistanceAndAngle(8, 0, 3000));
+            } else{ //Left TODO: TUNE THIS ONE
+                runAction(new DriveToDistanceAndAngle(12, 0, 3000));
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 2000));
                 runAction(new DriveToDistanceAndAngle(35, -45, 3000));
                 runAction(new DriveTurn(new Rotation2d(90, AngleUnit.DEGREES), 2000));
@@ -82,8 +83,6 @@ public class AutonomousDepotSide extends AutoModeBase {
 
                 runAction(new DriveToDistanceAndAngle(-50, 45, 3000));
                 runAction(new ArmsToPark());
-
-
             }
         }
 

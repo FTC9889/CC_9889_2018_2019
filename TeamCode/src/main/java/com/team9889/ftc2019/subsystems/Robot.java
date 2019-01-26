@@ -17,7 +17,6 @@ import java.util.List;
 public class Robot extends Subsystem {
 
     private static Robot mInstance = null;
-
     private ElapsedTime clawTimer = new ElapsedTime();
     private ElapsedTime liftArmsTimer = new ElapsedTime();
     private ElapsedTime dropTimer = new ElapsedTime();
@@ -136,7 +135,6 @@ public class Robot extends Subsystem {
 
     private void scoringStateMachine() {
         MineralPositions state = whichMineral;
-        getLift().liftOperatorControl = false;
 
         if (tracker <= 1) {
             getIntake().updateMineralVote();

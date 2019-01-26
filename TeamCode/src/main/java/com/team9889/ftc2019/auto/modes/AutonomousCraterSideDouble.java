@@ -33,10 +33,10 @@ public class AutonomousCraterSideDouble extends AutoModeBase {
         runAction(new Wait(1500));
 
         if (Robot.getCamera().isGoldInfront()){ // Middle
-            runAction(new DriveToDistanceAndAngle(20, 0, 2000));
+            runAction(new DriveToDistanceAndAngle(23, 0, 2000));
 
             runAction(new IntakeZeroing());
-            runAction(new DriveToDistanceAndAngle(-7, 0, 1500));
+            runAction(new DriveToDistanceAndAngle(-10, 0, 1500));
 
             runAction(new Turn(new Rotation2d(-100, AngleUnit.DEGREES), 3000));
             runAction(new DriveToDistanceAndAngle(55, -100, 3000));
@@ -70,11 +70,11 @@ public class AutonomousCraterSideDouble extends AutoModeBase {
                 runAction(new DriveTurn(new Rotation2d(45, AngleUnit.DEGREES), 2000));
                 runAction(new DriveToDistanceAndAngle(20, 45, 1500));
                 ThreadAction(new IntakeZeroing());
-                runAction(new DriveToDistanceAndAngle(-20, 45, 1500));
+                runAction(new DriveToDistanceAndAngle(-10, 45, 1500));
 
                 // Face Wall
                 runAction(new Turn(new Rotation2d(-90, AngleUnit.DEGREES), 3000));
-                runAction(new DriveToDistanceAndAngle(47.5, -90, 4000));
+                runAction(new DriveToDistanceAndAngle(47, -90, 4000));
 
                 // Turn To Depot
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 2000));
@@ -100,29 +100,32 @@ public class AutonomousCraterSideDouble extends AutoModeBase {
 
             } else{ //Left
 
+                // Drive away from Lander
                 runAction(new DriveToDistanceAndAngle(8, 0, 3000));
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 2000));
                 runAction(new DriveToDistanceAndAngle(30, -45, 3000));
                 ThreadAction(new IntakeZeroing());
+
+                // Turn to wall
                 runAction(new Turn(new Rotation2d(-90, AngleUnit.DEGREES), 3000));
                 runAction(new DriveToDistanceAndAngle(20, -90, 2500));
+
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 1500));
                 ThreadAction(new IntakeInFront());
-                runAction(new DriveToDistanceAndAngle(43, -135, 3000));
+                runAction(new DriveToDistanceAndAngle(43, -135, 3000)); // Distance to Depot TODO: Check this value on field
                 runAction(new Outtake());
 
                 // Knock off second sample
                 runAction(new DriveRightMotor(new Rotation2d(-90, AngleUnit.DEGREES), 1500));
-                runAction(new DriveToDistanceAndAngle(15, 135, 1000));
                 runAction(new Intake());
-                runAction(new Wait(500));
-                runAction(new DriveToDistanceAndAngle(-12, 135, 1000));
+                runAction(new DriveToDistanceAndAngle(16, 135, 1000));
+                runAction(new Wait(250));
+                runAction(new DriveToDistanceAndAngle(-13, 135, 1000));
                 runAction(new DriveRightMotor(new Rotation2d(90, AngleUnit.DEGREES), 1500));
 
                 runAction(new IntakeStop());
                 ThreadAction(new IntakeZeroing());
                 runAction(new DriveToDistanceAndAngle(-70, -135, 4000));
-
             }
         }
     }

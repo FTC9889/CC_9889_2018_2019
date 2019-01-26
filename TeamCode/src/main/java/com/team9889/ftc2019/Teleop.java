@@ -4,6 +4,8 @@ import android.graphics.Color;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.RobotLog;
+import com.team9889.ftc2019.auto.actions.Drive.DriveRelative;
 import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.ftc2019.subsystems.Arms;
 import com.team9889.ftc2019.subsystems.Camera;
@@ -42,14 +44,10 @@ public class Teleop extends Team9889Linear {
                 Robot.getLift().setLiftState(LiftStates.READY);
                 firstRun = false;
             } else if(Robot.getLift().liftOperatorControl){
-                if (gamepad2.y) {
-                    Robot.getArms().setArmsStates(Arms.ArmStates.GRABGOLDGOLD);
-                    Robot.getLift().setLiftState(LiftStates.HOOKHEIGHT);
-                    Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.ZEROING);
-                } else {
-                    Robot.getLift().setLiftPower(-gamepad2.right_stick_y);
-                }
+                Robot.getLift().setLiftPower(-gamepad2.right_stick_y);
             }
+
+            RobotLog.a(String.valueOf(Robot.getLift().liftOperatorControl));
 
             //Intake (gamepad2)
             if(driverStation.getStartIntaking())
@@ -57,24 +55,32 @@ public class Teleop extends Team9889Linear {
             else if(Robot.getIntake().isIntakeOperatorControl())
                 Robot.getIntake().setIntakeExtenderPower(driverStation.getIntakeExtenderPower());
 
-            if (driverStation.getStartScoringSquence() && Robot.getIntake().getCurrentIntakeState() == Intake.IntakeStates.GRABBING) {
+            if (driverStation.getStartScoringSquence() &&
+                    Robot.getIntake().getCurrentIntakeState() == Intake.IntakeStates.GRABBING) {
                 Robot.setWantedSuperStructure(Robot.getIntake().updateMineralVote());
                 Robot.resetTracker();
             }
-
-            // Set Camera Position
-            Robot.getCamera().setCameraPosition(Camera.CameraPositions.TELEOP);
-
 
             if (Robot.getIntake().isIntakeOperatorControl())
                 setBackground(Color.GREEN);
             else
                 setBackground(Color.BLACK);
 
+            // Set Camera Position
+            Robot.getCamera().setCameraPosition(Camera.CameraPositions.TELEOP);
+
             // Update All Robot Subsystems
             Robot.update(matchTime);
 
-            if(false) {
+            telemetry.addData("x", gamepad2.x);
+            telemetry.addData("Driver Lift Control", Robot.getLift().liftOperatorControl);
+
+            if (gamepad2.dpad_up) {
+                telemetry.addData("Hsv Back",
+                        Arrays.toString(Robot.getIntake().revBackHopper.hsv()));
+                telemetry.addData("Hsv Front",
+                        Arrays.toString(Robot.getIntake().revFrontHopper.hsv()));
+
                 Robot.outputToTelemetry(telemetry);
                 telemetry.update();
             }

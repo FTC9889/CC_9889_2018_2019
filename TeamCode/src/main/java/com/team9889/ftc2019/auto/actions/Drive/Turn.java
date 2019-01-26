@@ -1,6 +1,7 @@
 package com.team9889.ftc2019.auto.actions.Drive;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.subsystems.Drive;
 import com.team9889.ftc2019.subsystems.Robot;
@@ -38,9 +39,13 @@ public class Turn extends Action {
 
     @Override
     public void update() {
-        double leftPower = anglePid.update(mDrive.getAngle().getTheda(AngleUnit.DEGREES), angle);
+        double imuAngle = mDrive.getAngle().getTheda(AngleUnit.DEGREES);
+        double leftPower = anglePid.update(imuAngle, angle);
         leftPower = CruiseLib.limitValue(leftPower, .5);
         mDrive.setLeftRightPower(leftPower, -leftPower);
+
+        RobotLog.a("Angle of Gyro: " + String.valueOf(imuAngle));
+
         if (Math.abs(anglePid.getError()) < 2 ){
             counter ++;
         }

@@ -8,6 +8,7 @@ import com.team9889.ftc2019.auto.actions.Drive.Turn;
 import com.team9889.ftc2019.auto.actions.Intake.IntakeInFront;
 import com.team9889.ftc2019.auto.actions.Intake.IntakeZeroing;
 import com.team9889.ftc2019.auto.actions.Intake.Outtake;
+import com.team9889.ftc2019.auto.actions.Lift.Land2;
 import com.team9889.ftc2019.auto.actions.Wait;
 import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.ftc2019.subsystems.Camera;
@@ -24,16 +25,13 @@ public class AutonomousCraterSide extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
-        Robot.getLift().setLiftState(LiftStates.READY);
-        while (!Robot.getLift().isCurrentWantedState()) {
-            Robot.getLift().update(matchTime);
-        }
+        runAction(new Land2());
 
         ThreadAction(new IntakeInFront());
         runAction(new Wait(1500));
 
         if (Robot.getCamera().isGoldInfront()){ // Middle
-            runAction(new DriveToDistanceAndAngle(20, 0, 2000));
+            runAction(new DriveToDistanceAndAngle(25, 0, 2000));
 
             runAction(new IntakeZeroing());
             runAction(new DriveToDistanceAndAngle(-7, 0, 1500));
@@ -57,7 +55,7 @@ public class AutonomousCraterSide extends AutoModeBase {
                 runAction(new DriveToDistanceAndAngle(10, 0, 3000));
                 runAction(new DriveTurn(new Rotation2d(45, AngleUnit.DEGREES), 2000));
                 runAction(new DriveToDistanceAndAngle(20, 45, 1500));
-                runAction(new DriveToDistanceAndAngle(-20, 45, 1500));
+                runAction(new DriveToDistanceAndAngle(-10, 45, 1500));
 
                 ThreadAction(new IntakeZeroing());
 

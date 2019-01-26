@@ -18,6 +18,7 @@ public class IntakeZeroing extends Action {
 
     @Override
     public void start() {
+        intakeTimer.reset();
         Robot.getInstance().getIntake().setWantedIntakeState(Intake.IntakeStates.ZEROING);
     }
 
@@ -28,7 +29,7 @@ public class IntakeZeroing extends Action {
 
     @Override
     public boolean isFinished() {
-        return Robot.getInstance().getIntake().isCurrentStateWantedState();
+        return Robot.getInstance().getIntake().isCurrentStateWantedState() || intakeTimer.milliseconds() > 1750;
     }
 
     @Override

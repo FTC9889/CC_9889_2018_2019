@@ -7,7 +7,10 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.Constants;
+import com.team9889.ftc2019.JudgingRoomTeleop;
+import com.team9889.ftc2019.Teleop;
 import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.lib.control.controllers.PID;
 
@@ -25,7 +28,7 @@ public class Lift extends Subsystem {
     private DigitalChannel upperLimit;
     private DistanceSensor robotToGround;
     private PID pid = new PID(.42, 0, 0.3);
-    public boolean liftOperatorControl = true;
+    public boolean liftOperatorControl = false;
 
     private double offset = 0;
 
@@ -85,36 +88,31 @@ public class Lift extends Subsystem {
         getUpperLimitPressed();
 
         if (currentState != wantedState) {
+            liftOperatorControl = false;
+
             switch (wantedState) {
                 case DOWN:
                     if (getLowerLimitPressed()) {
                         setLiftPower(0);
-                        liftOperatorControl = false;
                         currentState = LiftStates.DOWN;
                     } else {
                         setLiftPower(-0.7);
-                        liftOperatorControl = false;
                     }
                     break;
                 case HOOKHEIGHT:
-                    setLiftPosition(11);
+                    setLiftPosition(13.6);
 
                     if (inPosition()) {
                         setLiftPower(0);
-                        liftOperatorControl = true;
                         currentState = LiftStates.HOOKHEIGHT;
-                    } else {
-                        liftOperatorControl = false;
                     }
                     break;
                 case SCOREINGHEIGHT:
                     if (getUpperLimitPressed()) {
                         setLiftPower(0);
-                        liftOperatorControl = true;
                         currentState = LiftStates.SCOREINGHEIGHT;
                     } else {
                         setLiftPower(1);
-                        liftOperatorControl = false;
                     }
                     break;
                 case READY:
@@ -122,10 +120,7 @@ public class Lift extends Subsystem {
 
                     if (inPosition()) {
                         setLiftPower(0);
-                        liftOperatorControl = true;
                         currentState = LiftStates.READY;
-                    } else {
-                        liftOperatorControl = false;
                     }
                     break;
                 case HANGING:
@@ -143,6 +138,8 @@ public class Lift extends Subsystem {
                     currentState = LiftStates.NULL;
                     break;
             }
+        } else {
+            liftOperatorControl = true;
         }
     }
 
@@ -164,6 +161,7 @@ public class Lift extends Subsystem {
 
         left.setPower(mPower);
         right.setPower(mPower);
+        RobotLog.a("Power to Lift: " + String.valueOf(mPower));
     }
 
     /**

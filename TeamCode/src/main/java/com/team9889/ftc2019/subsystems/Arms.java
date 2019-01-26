@@ -115,8 +115,8 @@ public class Arms extends Subsystem {
                     }
                     break;
                 case SILVERSILVER:
-                    setLeftArm(0.733, 0.63);
-                    setRightArm(0.269, 0.42);
+                    setLeftArm(0.733, 0.7);
+                    setRightArm(0.269, 0.38);
 
                     if (first) {
                         startTime = time.milliseconds();
@@ -170,7 +170,7 @@ public class Arms extends Subsystem {
                         if (first) {
                             startTime = time.milliseconds();
                             first = false;
-                            setLeftArm(.096, .101);
+                            setLeftArm(.096, .12);
 
                         } else {
                             if (time.milliseconds() - startTime > 200 &&
@@ -192,16 +192,18 @@ public class Arms extends Subsystem {
                         if (first) {
                             startTime = time.milliseconds();
                             first = false;
-                            setRightArm(0.847, 0.962);
+                            setRightArm(0.83, 0.9);
 
                         } else {
                             if (time.milliseconds() - startTime > 300
-                                    && time.milliseconds() - startTime < 500) {
-                                setLeftArm(0.090, 0.18);
-                            } else if (time.milliseconds() - startTime > 500
-                                    && time.milliseconds() - startTime < 850) {
-                                setRightArm(0.923, 0.94);
-                            } else if (time.milliseconds() - startTime > 900) {
+                                    && time.milliseconds() - startTime < 600) {
+                                setLeftArm(0.084, 0.185);
+                                setRightArm(0.87, 1);
+                            }else if (time.milliseconds() - startTime > 600
+                                    && time.milliseconds() - startTime < 950) {
+                                setRightArm(0.94, 0.94);
+                                setLeftArm(0.084, .176);
+                            } else if (time.milliseconds() - startTime > 1000) {
                                 currentArmsState = ArmStates.GRABGOLDSILVER;
                                 first = true;
                             }

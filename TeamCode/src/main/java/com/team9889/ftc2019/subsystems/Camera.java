@@ -135,7 +135,7 @@ public class Camera extends Subsystem{
                 break;
 
             case FRONTRIGHT:
-                setXYAxisPosition(.36, .75);
+                setXYAxisPosition(.3, .75);
                 break;
 
             case FRONTCENTER:
@@ -143,7 +143,7 @@ public class Camera extends Subsystem{
                 break;
 
             case FRONTLEFT:
-                setXYAxisPosition(.0, 0.775);
+                setXYAxisPosition(.0, 0.);
 
             case FRONTHOPPER:
                 setXYAxisPosition(0, 1);
