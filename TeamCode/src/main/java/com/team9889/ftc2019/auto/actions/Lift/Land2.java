@@ -1,5 +1,6 @@
 package com.team9889.ftc2019.auto.actions.Lift;
 
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.states.LiftStates;
@@ -10,6 +11,16 @@ import com.team9889.ftc2019.subsystems.Robot;
  */
 public class Land2 extends Action {
 
+    ElapsedTime timer = new ElapsedTime();
+    private double timeOut;
+
+    public Land2(double timeOut){
+        this.timeOut = timeOut;
+    }
+    public Land2(){
+        this.timeOut = 5000;
+    }
+
     @Override
     public void setup(String args) {
 
@@ -18,6 +29,7 @@ public class Land2 extends Action {
     @Override
     public void start() {
         Robot.getInstance().getLift().setLiftState(LiftStates.NULL);
+        timer.reset();
     }
 
     @Override
@@ -30,7 +42,7 @@ public class Land2 extends Action {
         double height = Robot.getInstance().getLift().getHeight();
         RobotLog.a("Height of Lift: " + String.valueOf(height));
 
-        return height > 16;
+        return height > 16 || this.timer.milliseconds() > timeOut;
     }
 
     @Override

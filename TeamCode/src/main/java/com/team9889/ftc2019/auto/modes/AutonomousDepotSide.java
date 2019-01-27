@@ -27,13 +27,13 @@ public class AutonomousDepotSide extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
-        runAction(new Land2());
+        runAction(new Land2(5000));
         
         ThreadAction(new IntakeInFront());
         runAction(new Wait(1500));
 
         if (Robot.getCamera().isGoldInfront()){ // Middle
-            runAction(new DriveToDistanceAndAngle(50, 0, 3000));
+            runAction(new DriveToDistanceAndAngle(55, 0, 3000));
 
             runAction(new Outtake());
 
@@ -64,24 +64,24 @@ public class AutonomousDepotSide extends AutoModeBase {
                 runAction(new IntakeZeroing());
 
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 1500));
-                runAction(new DriveToDistanceAndAngle(16, -90, 2000));
+                runAction(new DriveToDistanceAndAngle(20, -90, 2000));
                 runAction(new DriveTurn(new Rotation2d(-50, AngleUnit.DEGREES), 1500));
-                runAction(new DriveToDistanceAndAngle(45, -140, 4000));
-                runAction(new DriveTurn(new Rotation2d(185, AngleUnit.DEGREES), 3000));
-                runAction(new DriveToDistanceAndAngle(-5, 45, 1500));
-                runAction(new ArmsToPark());
+                runAction(new DriveToDistanceAndAngle(70, -140, 4000));
+//                runAction(new DriveTurn(new Rotation2d(185, AngleUnit.DEGREES), 3000));
+//                runAction(new DriveToDistanceAndAngle(-5, 45, 1500));
+//                runAction(new ArmsToPark());
 
             } else{ //Left TODO: TUNE THIS ONE
                 runAction(new DriveToDistanceAndAngle(12, 0, 3000));
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 2000));
-                runAction(new DriveToDistanceAndAngle(35, -45, 3000));
+                runAction(new DriveToDistanceAndAngle(43, -45, 3000));
                 runAction(new DriveTurn(new Rotation2d(90, AngleUnit.DEGREES), 2000));
                 runAction(new DriveToDistanceAndAngle(20, 45, 2000));
                 runAction(new Outtake(-1));
 
                 runAction(new IntakeZeroing());
 
-                runAction(new DriveToDistanceAndAngle(-50, 45, 3000));
+                runAction(new DriveToDistanceAndAngle(-60, 45, 3000));
                 runAction(new ArmsToPark());
             }
         }

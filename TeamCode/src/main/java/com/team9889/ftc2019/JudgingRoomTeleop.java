@@ -3,14 +3,10 @@ package com.team9889.ftc2019;
 import android.graphics.Color;
 
 import com.qualcomm.ftccommon.SoundPlayer;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.team9889.ftc2019.states.LiftStates;
-import com.team9889.ftc2019.subsystems.Arms;
 import com.team9889.ftc2019.subsystems.Camera;
 import com.team9889.ftc2019.subsystems.Intake;
-import com.team9889.ftc2019.subsystems.Robot;
 
 /**
  * Created by MannoMation on 1/25/2019.
