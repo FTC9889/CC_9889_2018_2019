@@ -50,7 +50,7 @@ public class Constants {
         public final static String kIntakeMotorId = "li";
         public final static String kIntakeExtenderId = "intakeextender";
         public final static String kIntakeRotatorId = "intakerotator";
-        public final static String kHopperGateId = "hoppergate";
+//        public final static String kHopperGateId = "hoppergate";
         public final static String kHopperCoverID = "hoppercover";
         public final static String kIntakeSwitchId = "intakescoringswitch";
         public final static String kIntakeInSwitchId = "intakeinswitch";
@@ -81,6 +81,20 @@ public class Constants {
         public final static String kRightClawId = "rightclaw";
     }
 
+
+
+    /*---------------------
+    |                     |
+    |       Dumper!       |
+    |                     |
+    ---------------------*/
+
+    //Settings for Dumper
+    public static class DumperConstants {
+        public final static String kRightDumperShoulderId = "rightdumpershoulder";
+        public final static String kLeftDumperShoulderId = "leftdumpershoulder";
+        public final static String kDumperRotatorId = "dumperrotator";
+    }
 
 
     /*---------------------

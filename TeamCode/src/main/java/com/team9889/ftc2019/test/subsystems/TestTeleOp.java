@@ -19,11 +19,6 @@ public class TestTeleOp extends Team9889Linear {
 
         while (opModeIsActive()){
 
-            if (gamepad2.b) {
-                Robot.setWantedSuperStructure(Robot.getIntake().updateMineralVote());
-                Robot.resetTracker();
-            }
-
             if (Robot.getLift().liftOperatorControl)
                 Robot.getLift().setLiftPower(gamepad2.right_stick_y);
 

@@ -2,12 +2,10 @@ package com.team9889.ftc2019;
 
 import android.graphics.Color;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
-import com.team9889.ftc2019.auto.actions.Drive.DriveRelative;
 import com.team9889.ftc2019.states.LiftStates;
-import com.team9889.ftc2019.subsystems.Arms;
 import com.team9889.ftc2019.subsystems.Camera;
 import com.team9889.ftc2019.subsystems.Intake;
 
@@ -17,6 +15,7 @@ import java.util.Arrays;
  * Created by MannoMation on 1/14/2019.
  */
 
+@Disabled
 @TeleOp(name = "Teleop")
 public class Teleop extends Team9889Linear {
 
@@ -30,14 +29,6 @@ public class Teleop extends Team9889Linear {
             // Drivetrain (gamepad1)
             Robot.getDrive().setThrottleSteerPower(driverStation.getThrottle(),
                     driverStation.getSteer());
-
-            if(Robot.getArms().isAllowOperatorOfGrabbers()) {
-                if (driverStation.getReleaseLeftClaw())
-                    Robot.getArms().setLeftClawOpen(true);
-
-                if (driverStation.getReleaseRightClaw())
-                    Robot.getArms().setRightClawOpen(true);
-            }
 
             // Lift Controller
             if(firstRun && Robot.getLift().getCurrentState() == LiftStates.SCOREINGHEIGHT) {
@@ -54,12 +45,6 @@ public class Teleop extends Team9889Linear {
                 Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.INTAKING);
             else if(Robot.getIntake().isIntakeOperatorControl())
                 Robot.getIntake().setIntakeExtenderPower(driverStation.getIntakeExtenderPower());
-
-            if (driverStation.getStartScoringSquence() &&
-                    Robot.getIntake().getCurrentIntakeState() == Intake.IntakeStates.GRABBING) {
-                Robot.setWantedSuperStructure(Robot.getIntake().updateMineralVote());
-                Robot.resetTracker();
-            }
 
             if (Robot.getIntake().isIntakeOperatorControl())
                 setBackground(Color.GREEN);

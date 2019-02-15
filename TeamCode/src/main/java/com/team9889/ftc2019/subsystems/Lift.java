@@ -108,15 +108,15 @@ public class Lift extends Subsystem {
                     }
                     break;
                 case SCOREINGHEIGHT:
-                    if (getUpperLimitPressed()) {
+                    setLiftPosition(15.1);
+
+                    if (inPosition()) {
                         setLiftPower(0);
                         currentState = LiftStates.SCOREINGHEIGHT;
-                    } else {
-                        setLiftPower(1);
                     }
                     break;
                 case READY:
-                    setLiftPosition(6.5);
+                    setLiftPosition(5.5);
 
                     if (inPosition()) {
                         setLiftPower(0);

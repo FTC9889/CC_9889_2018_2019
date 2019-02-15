@@ -2,7 +2,6 @@ package com.team9889.ftc2019.auto.modes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.team9889.ftc2019.auto.AutoModeBase;
-import com.team9889.ftc2019.auto.actions.Arms.ArmsToPark;
 import com.team9889.ftc2019.auto.actions.Drive.DriveToDistanceAndAngle;
 import com.team9889.ftc2019.auto.actions.Drive.DriveTurn;
 import com.team9889.ftc2019.auto.actions.Drive.Turn;
@@ -10,9 +9,7 @@ import com.team9889.ftc2019.auto.actions.Intake.IntakeInFront;
 import com.team9889.ftc2019.auto.actions.Intake.IntakeZeroing;
 import com.team9889.ftc2019.auto.actions.Intake.Outtake;
 import com.team9889.ftc2019.auto.actions.Lift.Land2;
-import com.team9889.ftc2019.auto.actions.Lift.LiftLand;
 import com.team9889.ftc2019.auto.actions.Wait;
-import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.ftc2019.subsystems.Camera;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
 
@@ -47,7 +44,6 @@ public class AutonomousDepotSide extends AutoModeBase {
             runAction(new Wait(300));
 
             runAction(new DriveToDistanceAndAngle(-52, 90 - 47, 5000));
-            runAction(new ArmsToPark());
 
         } else{
             Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTRIGHT);
@@ -82,7 +78,6 @@ public class AutonomousDepotSide extends AutoModeBase {
                 runAction(new IntakeZeroing());
 
                 runAction(new DriveToDistanceAndAngle(-60, 45, 3000));
-                runAction(new ArmsToPark());
             }
         }
 

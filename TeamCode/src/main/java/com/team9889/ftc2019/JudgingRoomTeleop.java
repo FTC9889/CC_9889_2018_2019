@@ -45,11 +45,6 @@ public class JudgingRoomTeleop extends Team9889Linear {
             else if(Robot.getIntake().isIntakeOperatorControl())
                 Robot.getIntake().setIntakeExtenderPower(-gamepad1.right_stick_y);
 
-//            Lift Arms Logic
-            if (gamepad2.y) {
-                Robot.setWantedSuperStructure(Robot.getIntake().updateMineralVote());
-                Robot.resetTracker();
-            }
 
             else if(Robot.getIntake().isIntakeOperatorControl())
                 Robot.getIntake().setIntakeExtenderPower(driverStation.getIntakeExtenderPower());

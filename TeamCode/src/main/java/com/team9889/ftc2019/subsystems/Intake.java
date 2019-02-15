@@ -54,7 +54,7 @@ public class Intake extends Subsystem {
         extender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         intakeRotator = hardwareMap.get(Servo.class, Constants.IntakeConstants.kIntakeRotatorId);
-        hopperGate = hardwareMap.get(Servo.class, Constants.IntakeConstants.kHopperGateId);
+//        hopperGate = hardwareMap.get(Servo.class, Constants.IntakeConstants.kHopperGateId);
         hopperCover = hardwareMap.get(Servo.class, Constants.IntakeConstants.kHopperCoverID);
 
         scoringSwitch = hardwareMap.get(DigitalChannel.class, Constants.IntakeConstants.kIntakeSwitchId);
@@ -75,10 +75,10 @@ public class Intake extends Subsystem {
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
         telemetry.addData("PID Output", extenderPID.getOutput());
-        telemetry.addData("Back Detected", backHopperDetector());
-        telemetry.addData("Front Detected", frontHopperDetector());
-        telemetry.addData("Hsv Back", Arrays.toString(revBackHopper.hsv()));
-        telemetry.addData("Hsv Front", Arrays.toString(revFrontHopper.hsv()));
+//        telemetry.addData("Back Detected", backHopperDetector());
+//        telemetry.addData("Front Detected", frontHopperDetector());
+//        telemetry.addData("Hsv Back", Arrays.toString(revBackHopper.hsv()));
+//        telemetry.addData("Hsv Front", Arrays.toString(revFrontHopper.hsv()));
 
         telemetry.addData("IntakePower", intakeMotor.getPower());
         telemetry.addData("Intake Extender Real Position", getIntakeExtenderPosition());
@@ -112,12 +112,10 @@ public class Intake extends Subsystem {
 
                     currentIntakeState = IntakeStates.INTAKING;
                     setWantedIntakeState(IntakeStates.GRABBING);
-                    setHopperGateState(HopperGateState.DOWN);
                 } else {
                     intakeOperatorControl = true;
 
                     intake();
-                    setHopperGateState(HopperGateState.UP);
                     setHopperCoverState(HopperCoverState.CLOSED);
                     setIntakeRotatorState(RotatorStates.DOWN);
                 }
@@ -135,7 +133,6 @@ public class Intake extends Subsystem {
                         } else {
                             intakeOperatorControl = false;
                             setIntakePower(0);
-                            setHopperGateState(HopperGateState.UP);
                             setHopperCoverState(HopperCoverState.CLOSED);
                             setIntakeRotatorState(RotatorStates.UP);
                             setIntakeExtenderPower(.3);
@@ -172,7 +169,6 @@ public class Intake extends Subsystem {
                             }
 
 
-                            setHopperGateState(HopperGateState.DOWN);
                             setHopperCoverState(HopperCoverState.CLOSED);
                         }
 
@@ -187,7 +183,6 @@ public class Intake extends Subsystem {
                         currentIntakeState = IntakeStates.ZEROING;
                     } else {
                         intakeOperatorControl = false;
-                        setHopperGateState(HopperGateState.UP);
                         setIntakeRotatorState(RotatorStates.UP);
                         setHopperCoverState(HopperCoverState.CLOSED);
                         setIntakePower(0);
@@ -222,7 +217,6 @@ public class Intake extends Subsystem {
                         }
 
 
-                        setHopperGateState(HopperGateState.UP);
                         setHopperCoverState(HopperCoverState.CLOSED);
                         setIntakeRotatorState(RotatorStates.UP);
                     }
@@ -234,7 +228,6 @@ public class Intake extends Subsystem {
                 break;
             case EXTENDED:
                 setIntakeExtenderPosition(24);
-                setHopperGateState(HopperGateState.UP);
                 setHopperCoverState(HopperCoverState.CLOSED);
                 setIntakeRotatorState(RotatorStates.UP);
 
@@ -356,18 +349,6 @@ public class Intake extends Subsystem {
         }
     }
 
-    private void setHopperGateState(HopperGateState state) {
-        switch (state) {
-            case UP:
-                hopperGate.setPosition(0.5);
-                break;
-
-            case DOWN:
-                hopperGate.setPosition(1);
-                break;
-        }
-    }
-
     /**
      * @return If the Lift is pressing the Lower Limit Switch
      */
@@ -472,28 +453,6 @@ public class Intake extends Subsystem {
                 return MineralType.SILVER;
         } else
             return MineralType.UNKNOWN;
-    }
-
-    /**
-     * @return What order the minerals are in, front to back
-     */
-    public Robot.MineralPositions updateMineralVote() {
-        MineralType front = frontColor();
-        MineralType back = backColor();
-
-        Robot.MineralPositions mineralPositions;
-        if (front == MineralType.SILVER && back == MineralType.GOLD)
-            mineralPositions = Robot.MineralPositions.SILVERGOLD;
-        else if (front == MineralType.SILVER && back == MineralType.SILVER)
-            mineralPositions = (Robot.MineralPositions.SILVERSILVER);
-        else if (front == MineralType.GOLD && back == MineralType.GOLD)
-            mineralPositions = (Robot.MineralPositions.GOLDGOLD);
-        else if (front == MineralType.GOLD && back == MineralType.SILVER)
-            mineralPositions = (Robot.MineralPositions.GOLDSILVER);
-        else
-            mineralPositions = Robot.MineralPositions.SILVERSILVER;
-
-        return mineralPositions;
     }
 
     @Override
