@@ -61,11 +61,6 @@ public class Teleop extends Team9889Linear {
             telemetry.addData("Driver Lift Control", Robot.getLift().liftOperatorControl);
 
             if (gamepad2.dpad_up) {
-                telemetry.addData("Hsv Back",
-                        Arrays.toString(Robot.getIntake().revBackHopper.hsv()));
-                telemetry.addData("Hsv Front",
-                        Arrays.toString(Robot.getIntake().revFrontHopper.hsv()));
-
                 Robot.outputToTelemetry(telemetry);
                 telemetry.update();
             }

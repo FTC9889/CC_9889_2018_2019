@@ -6,6 +6,7 @@ import com.team9889.ftc2019.Team9889Linear;
 import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.ftc2019.subsystems.Camera;
 import com.team9889.ftc2019.subsystems.Dumper;
+import com.team9889.ftc2019.subsystems.Intake;
 import com.team9889.ftc2019.subsystems.Robot;
 
 /**
@@ -37,9 +38,19 @@ public class TestDumperPositions extends Team9889Linear {
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.STORED);
             else if (gamepad1.x){
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.DUMP);
+                Robot.getDumper().collectingTimer.reset();
             }
 
-            Robot.getIntake().setIntakeExtenderPower(gamepad1.right_stick_y);
+            Robot.getIntake().setIntakeExtenderPower(-gamepad1.right_stick_y);
+
+            if (gamepad1.right_bumper){
+                Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.INTAKING);
+            }else if (gamepad1.left_bumper){
+                Robot.getIntake().setHopperDumperState(Intake.HopperDumperStates.HOLDING);
+            }else if (gamepad1.dpad_down){
+                Robot.getIntake().trasitionTimer.reset();
+                Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.TRANSITION);
+            }
 
             Robot.update(matchTime);
             Robot.outputToTelemetry(telemetry);

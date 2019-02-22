@@ -116,7 +116,7 @@ public class Lift extends Subsystem {
                     }
                     break;
                 case READY:
-                    setLiftPosition(5.5);
+                    setLiftPosition(6.25);
 
                     if (inPosition()) {
                         setLiftPower(0);
@@ -132,6 +132,13 @@ public class Lift extends Subsystem {
                     }
 
                     // Never Set the currentState to Hanging in order to make it still run during init
+                    break;
+                case UP:
+                    if (getUpperLimitPressed()){
+                        setLiftPower(0);
+                        currentState = LiftStates.UP;
+                    }
+                    setLiftPower(.5);
                     break;
                 case NULL:
                     setLiftPower(0);

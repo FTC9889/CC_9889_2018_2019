@@ -50,13 +50,13 @@ public class Constants {
         public final static String kIntakeMotorId = "li";
         public final static String kIntakeExtenderId = "intakeextender";
         public final static String kIntakeRotatorId = "intakerotator";
-//        public final static String kHopperGateId = "hoppergate";
-        public final static String kHopperCoverID = "hoppercover";
+        public final static String kHopperDumperId = "hopperdumper";
+        public final static String kHopperHardStopID = "hopperhardstop";
         public final static String kIntakeSwitchId = "intakescoringswitch";
         public final static String kIntakeInSwitchId = "intakeinswitch";
 
-        public final static String kBackIntakeDetectorId = "backRev";
-        public final static String kFrontIntakeDetectorId = "frontRev";
+        public final static String kLeftIntakeDetectorId = "leftrev";
+        public final static String kRightIntakeDetectorId = "rightrev";
 
         final static double kIntakeTicksPerRev = 537.6;  //NeveRest Orbital 20
         final static double kIntakeSpoolDiameter = 1.5;

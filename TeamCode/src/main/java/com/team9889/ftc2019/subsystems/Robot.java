@@ -17,9 +17,6 @@ import java.util.List;
 public class Robot extends Subsystem {
 
     private static Robot mInstance = null;
-    private ElapsedTime clawTimer = new ElapsedTime();
-    private ElapsedTime liftArmsTimer = new ElapsedTime();
-    private ElapsedTime dropTimer = new ElapsedTime();
     private Drive mDrive = new Drive();
     private Lift mLift = new Lift();
     private Intake mIntake = new Intake();
@@ -28,6 +25,7 @@ public class Robot extends Subsystem {
     private ElapsedTime timer = new ElapsedTime();
     private ElapsedTime scoringTimer = new ElapsedTime();
     private boolean timerReset = true;
+    private boolean firstIntaking = true;
     private List<Subsystem> subsystems = Arrays.asList(
             mDrive, mLift, mIntake, mCamera, mDumper// Add more subsystems here as needed
     );
@@ -43,7 +41,12 @@ public class Robot extends Subsystem {
         COLLECTING, STORED, SCORING, DUMP, NULL
     }
 
+    public enum intakeStates{
+        COLLECTING, HARDSTOP, TRANSITION, NULL
+    }
+
     public scorerStates wantedScorerState = scorerStates.NULL;
+    public intakeStates wantedIntakeState = intakeStates.NULL;
 
 
     /**
@@ -95,7 +98,7 @@ public class Robot extends Subsystem {
             case SCORING:
                 getLift().setLiftState(LiftStates.SCOREINGHEIGHT);
 
-                if (getLift().getHeight() > 8) {
+                if (getLift().getHeight() > 10) {
                     getDumper().wantedDumperState = Dumper.dumperStates.SCORING;
                 }
                 timerReset = true;
@@ -103,11 +106,9 @@ public class Robot extends Subsystem {
 
             case COLLECTING:
                 getDumper().wantedDumperState = Dumper.dumperStates.COLLECTING;
+                getLift().setLiftState(LiftStates.UP);
 
-                if (timerReset) {
-                    scoringTimer.reset();
-                    timerReset = false;
-                } else if (scoringTimer.milliseconds() > 500)
+                if (getLift().isCurrentWantedState())
                     getLift().setLiftState(LiftStates.READY);
                 break;
 
@@ -120,6 +121,21 @@ public class Robot extends Subsystem {
             case NULL:
                 getDumper().wantedDumperState = Dumper.dumperStates.NULL;
                 timerReset = true;
+                break;
+        }
+
+        switch (wantedIntakeState){
+            case COLLECTING:
+                getIntake().setWantedIntakeState(Intake.IntakeStates.INTAKING);
+                break;
+
+            case HARDSTOP:
+                break;
+
+            case TRANSITION:
+                break;
+
+            case NULL:
                 break;
         }
 
@@ -136,6 +152,9 @@ public class Robot extends Subsystem {
 
     public void setScorerStates(scorerStates states){
         this.wantedScorerState = states;
+    }
+    public void setIntakeStates(intakeStates states){
+        this.wantedIntakeState = states;
     }
 
     @Override
