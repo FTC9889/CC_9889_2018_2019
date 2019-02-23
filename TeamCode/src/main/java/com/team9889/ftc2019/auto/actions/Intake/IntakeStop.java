@@ -1,6 +1,7 @@
 package com.team9889.ftc2019.auto.actions.Intake;
 
 import com.team9889.ftc2019.auto.actions.Action;
+import com.team9889.ftc2019.subsystems.Intake;
 import com.team9889.ftc2019.subsystems.Robot;
 
 /**
@@ -15,6 +16,7 @@ public class IntakeStop extends Action {
     @Override
     public void start() {
         Robot.getInstance().getIntake().stop();
+        Robot.getInstance().getIntake().setHopperDumperState(Intake.HopperDumperStates.HOLDING);
     }
 
     @Override

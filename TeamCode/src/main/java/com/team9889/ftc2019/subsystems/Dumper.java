@@ -18,6 +18,7 @@ public class Dumper extends Subsystem{
     private ElapsedTime timer = new ElapsedTime();
     private boolean timerReset = true;
     public ElapsedTime collectingTimer = new ElapsedTime();
+    public ElapsedTime dumperTimer = new ElapsedTime();
 
     public enum dumperStates{
         COLLECTING, STORED, SCORING, DUMP, NULL
@@ -34,6 +35,8 @@ public class Dumper extends Subsystem{
         rightShoulder.setDirection(Servo.Direction.REVERSE);
 
         if (auto){
+            setDumperStates(dumperStates.STORED);
+        }else{
             setDumperStates(dumperStates.STORED);
         }
     }
@@ -80,9 +83,10 @@ public class Dumper extends Subsystem{
             case DUMP:
                 setArmPosition(.7);
                 setDumperRotatorPosition(.45);
-                if (collectingTimer.milliseconds() > 1500)
+                if (collectingTimer.milliseconds() > 1500) {
                     Robot.getInstance().setScorerStates(Robot.scorerStates.COLLECTING);
-                timerReset = true;
+                    dumperTimer.reset();
+                }
                 break;
 
             case NULL:

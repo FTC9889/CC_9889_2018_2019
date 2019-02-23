@@ -26,6 +26,7 @@ public class Robot extends Subsystem {
     private ElapsedTime scoringTimer = new ElapsedTime();
     private boolean timerReset = true;
     private boolean firstIntaking = true;
+    private boolean upperLimitWasPressed = false;
     private List<Subsystem> subsystems = Arrays.asList(
             mDrive, mLift, mIntake, mCamera, mDumper// Add more subsystems here as needed
     );
@@ -38,7 +39,7 @@ public class Robot extends Subsystem {
     }
 
     public enum scorerStates{
-        COLLECTING, STORED, SCORING, DUMP, NULL
+        COLLECTING, STORED, SCORING, DUMP, NULL, AUTONOMOUS
     }
 
     public enum intakeStates{
@@ -93,7 +94,7 @@ public class Robot extends Subsystem {
                 getDumper().wantedDumperState = Dumper.dumperStates.STORED;
                 getLift().setLiftState(LiftStates.DOWN);
                 timerReset = true;
-                break;
+            break;
 
             case SCORING:
                 getLift().setLiftState(LiftStates.SCOREINGHEIGHT);
@@ -106,9 +107,7 @@ public class Robot extends Subsystem {
 
             case COLLECTING:
                 getDumper().wantedDumperState = Dumper.dumperStates.COLLECTING;
-                getLift().setLiftState(LiftStates.UP);
-
-                if (getLift().isCurrentWantedState())
+                if (getDumper().dumperTimer.milliseconds() > 1000)
                     getLift().setLiftState(LiftStates.READY);
                 break;
 
@@ -116,6 +115,10 @@ public class Robot extends Subsystem {
                 getDumper().wantedDumperState = Dumper.dumperStates.DUMP;
                 getLift().setLiftState(LiftStates.SCOREINGHEIGHT);
                 timerReset = true;
+                break;
+
+            case AUTONOMOUS:
+
                 break;
 
             case NULL:

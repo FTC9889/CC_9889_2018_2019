@@ -5,8 +5,10 @@ import com.team9889.ftc2019.auto.AutoModeBase;
 import com.team9889.ftc2019.auto.actions.Drive.DriveToDistanceAndAngle;
 import com.team9889.ftc2019.auto.actions.Drive.DriveTurn;
 import com.team9889.ftc2019.auto.actions.Drive.Turn;
+import com.team9889.ftc2019.auto.actions.Intake.Intake;
 import com.team9889.ftc2019.auto.actions.Intake.IntakeInFront;
 import com.team9889.ftc2019.auto.actions.Intake.IntakeStop;
+import com.team9889.ftc2019.auto.actions.Intake.IntakeUp;
 import com.team9889.ftc2019.auto.actions.Intake.IntakeZeroing;
 import com.team9889.ftc2019.auto.actions.Intake.Outtake;
 import com.team9889.ftc2019.auto.actions.Lift.Land2;
@@ -27,31 +29,33 @@ public class AutonomousCraterSide extends AutoModeBase {
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
         runAction(new Land2(5000));
 
-        ThreadAction(new IntakeInFront());
-        runAction(new Wait(1500));
+        runAction(new IntakeInFront());
 
         if (Robot.getCamera().isGoldInfront()){ // Middle
-            runAction(new DriveToDistanceAndAngle(25, 0, 2000));
+//            Grab Gold Block
+            ThreadAction(new Intake());
+            runAction(new DriveToDistanceAndAngle(20, 0, 2000));
 
-            runAction(new IntakeZeroing());
             runAction(new DriveToDistanceAndAngle(-5, 0, 1500));
+            runAction(new IntakeStop());
+            runAction(new IntakeUp());
 
-            runAction(new Turn(new Rotation2d(-100, AngleUnit.DEGREES), 3000));
-            runAction(new DriveToDistanceAndAngle(59, -100, 3000));
+//            Drive to Wall
+            runAction(new Turn(new Rotation2d(100, AngleUnit.DEGREES), 3000));
+            runAction(new DriveToDistanceAndAngle(-40, 100, 3000));
 
+//            Turn towards Depot
             runAction(new DriveTurn(new Rotation2d(-35, AngleUnit.DEGREES), 1500));
 
-            ThreadAction(new IntakeInFront());
-
-            runAction(new DriveToDistanceAndAngle(25, -135, 3000));
-
-            runAction(new Outtake(-.8));
-
-            runAction(new DriveToDistanceAndAngle(-70, -137, 4000));
-            runAction(new IntakeStop());
-
-            runAction(new Wait(400));
-
+            runAction(new DriveToDistanceAndAngle(-25, -55, 3000));
+//
+//            runAction(new Outtake(-.8));
+//
+//            runAction(new DriveToDistanceAndAngle(-70, -137, 4000));
+//            runAction(new IntakeStop());
+//
+//            runAction(new Wait(400));
+//
         } else{
             Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTRIGHT);
 

@@ -3,6 +3,7 @@ package com.team9889.ftc2019.auto.actions.Lift;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.subsystems.Drive;
+import com.team9889.ftc2019.subsystems.Dumper;
 import com.team9889.ftc2019.subsystems.Lift;
 import com.team9889.ftc2019.subsystems.Robot;
 
@@ -23,6 +24,7 @@ public class LiftLand extends Action {
     @Override
     public void start() {
         timer.reset();
+        Robot.getInstance().getDumper().setDumperStates(Dumper.dumperStates.STORED);
     }
 
     @Override
@@ -32,7 +34,9 @@ public class LiftLand extends Action {
         else
             mLift.setLiftPower(0);
 
-            mDrive.setThrottleSteerPower(-0.2, 0);
+        mDrive.setThrottleSteerPower(-0.2, 0);
+
+        Robot.getInstance().getDumper().update(timer);
     }
 
     @Override

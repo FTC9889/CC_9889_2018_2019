@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.ftc2019.subsystems.Camera;
 import com.team9889.ftc2019.subsystems.Intake;
+import com.team9889.ftc2019.subsystems.Robot;
 
 import java.util.Arrays;
 
@@ -15,7 +16,6 @@ import java.util.Arrays;
  * Created by MannoMation on 1/14/2019.
  */
 
-@Disabled
 @TeleOp(name = "Teleop")
 public class Teleop extends Team9889Linear {
 
@@ -32,7 +32,7 @@ public class Teleop extends Team9889Linear {
 
             // Lift Controller
             if(firstRun && Robot.getLift().getCurrentState() == LiftStates.SCOREINGHEIGHT) {
-                Robot.getLift().setLiftState(LiftStates.READY);
+                Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.COLLECTING);
                 firstRun = false;
             } else if(Robot.getLift().liftOperatorControl){
                 Robot.getLift().setLiftPower(-gamepad2.right_stick_y);
@@ -45,6 +45,22 @@ public class Teleop extends Team9889Linear {
                 Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.INTAKING);
             else if(Robot.getIntake().isIntakeOperatorControl())
                 Robot.getIntake().setIntakeExtenderPower(driverStation.getIntakeExtenderPower());
+
+            //Dumper
+            if (gamepad2.b){
+                Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.SCORING);
+            }else if (gamepad1.right_bumper && Robot.getLift().getCurrentState() == LiftStates.SCOREINGHEIGHT){
+                Robot.getDumper().collectingTimer.reset();
+                Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.DUMP);
+            }else if (gamepad2.y){
+                Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.COLLECTING);
+            }
+
+            if (gamepad2.right_bumper){
+                Robot.getIntake().setIntakeRotatorState(Intake.RotatorStates.UP);
+            }else if (gamepad2.left_bumper){
+                Robot.getIntake().setIntakeRotatorState(Intake.RotatorStates.DOWN);
+            }
 
             if (Robot.getIntake().isIntakeOperatorControl())
                 setBackground(Color.GREEN);

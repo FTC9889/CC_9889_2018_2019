@@ -39,7 +39,7 @@ public class DriverStation {
     }
 
     public double getIntakeExtenderPower(){
-        return -gamepad2.left_stick_y / 2;
+        return -gamepad2.left_stick_y;
     }
 
     public boolean getLiftStick(){

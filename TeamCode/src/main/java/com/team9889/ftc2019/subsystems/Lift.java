@@ -27,7 +27,7 @@ public class Lift extends Subsystem {
     private DigitalChannel lowerLimit;
     private DigitalChannel upperLimit;
     private DistanceSensor robotToGround;
-    private PID pid = new PID(.42, 0, 0.3);
+    private PID pid = new PID(.52, 0, 0.3);
     public boolean liftOperatorControl = false;
 
     private double offset = 0;
@@ -187,10 +187,10 @@ public class Lift extends Subsystem {
     }
 
     private boolean inPosition() {
-        return Math.abs(pid.getError()) < 0.5;
+        return Math.abs(pid.getError()) < 0.75;
     }
 
-    private boolean getUpperLimitPressed() {
+    public boolean getUpperLimitPressed() {
         boolean upperLimitPressed = !upperLimit.getState();
         if (upperLimitPressed)
             offset = getHeightTicks() - 5500;
@@ -198,7 +198,7 @@ public class Lift extends Subsystem {
         return upperLimitPressed;
     }
 
-    private boolean getLowerLimitPressed() {
+    public boolean getLowerLimitPressed() {
         boolean lowerLimitPressed = !lowerLimit.getState();
         if (lowerLimitPressed)
             zeroSensors();

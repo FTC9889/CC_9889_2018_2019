@@ -1,9 +1,18 @@
 package com.team9889.ftc2019.auto.actions.Intake;
 
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.auto.actions.Action;
+import com.team9889.ftc2019.subsystems.Intake;
 import com.team9889.ftc2019.subsystems.Robot;
 
-public class Intake extends Action {
+/**
+ * Created by MannoMation on 2/23/2019.
+ */
+
+public class IntakeUp extends Action {
+
+    private ElapsedTime timer = new ElapsedTime();
+
     @Override
     public void setup(String args) {
 
@@ -11,8 +20,8 @@ public class Intake extends Action {
 
     @Override
     public void start() {
-        Robot.getInstance().getIntake().intake();
-        Robot.getInstance().getIntake().setHopperDumperState(com.team9889.ftc2019.subsystems.Intake.HopperDumperStates.OPEN);
+        timer.reset();
+        Robot.getInstance().getIntake().setIntakeRotatorState(Intake.RotatorStates.UP);
     }
 
     @Override
@@ -22,7 +31,7 @@ public class Intake extends Action {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return timer.milliseconds() > 200;
     }
 
     @Override

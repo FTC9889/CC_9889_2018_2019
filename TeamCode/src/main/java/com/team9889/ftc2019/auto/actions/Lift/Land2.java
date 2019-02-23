@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.states.LiftStates;
+import com.team9889.ftc2019.subsystems.Dumper;
 import com.team9889.ftc2019.subsystems.Robot;
 
 /**
@@ -29,12 +30,14 @@ public class Land2 extends Action {
     @Override
     public void start() {
         Robot.getInstance().getLift().setLiftState(LiftStates.NULL);
+        Robot.getInstance().getDumper().setDumperStates(Dumper.dumperStates.STORED);
         timer.reset();
     }
 
     @Override
     public void update() {
         Robot.getInstance().getLift().setLiftPower(0.75);
+        Robot.getInstance().getDumper().update(timer);
     }
 
     @Override

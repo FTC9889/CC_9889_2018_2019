@@ -1,9 +1,12 @@
-package com.team9889.ftc2019.auto.actions.Intake;
+package com.team9889.ftc2019.auto.actions.Dumper;
 
 import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.subsystems.Robot;
 
-public class Intake extends Action {
+/**
+ * Created by MannoMation on 2/23/2019.
+ */
+public class DumpMarker extends Action {
     @Override
     public void setup(String args) {
 
@@ -11,8 +14,7 @@ public class Intake extends Action {
 
     @Override
     public void start() {
-        Robot.getInstance().getIntake().intake();
-        Robot.getInstance().getIntake().setHopperDumperState(com.team9889.ftc2019.subsystems.Intake.HopperDumperStates.OPEN);
+        Robot.getInstance().setScorerStates(Robot.scorerStates.AUTONOMOUS);
     }
 
     @Override
@@ -22,7 +24,7 @@ public class Intake extends Action {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 
     @Override
