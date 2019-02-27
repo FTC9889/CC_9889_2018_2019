@@ -34,6 +34,7 @@ public class IntakeZeroing extends Action {
 
     @Override
     public void done() {
-
+        Robot.getInstance().getIntake().setIntakePower(0);
+        Robot.getInstance().update(intakeTimer);
     }
 }

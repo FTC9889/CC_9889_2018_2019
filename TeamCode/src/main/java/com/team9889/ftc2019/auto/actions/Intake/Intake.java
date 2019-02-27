@@ -17,7 +17,6 @@ public class Intake extends Action {
 
     @Override
     public void update() {
-
     }
 
     @Override

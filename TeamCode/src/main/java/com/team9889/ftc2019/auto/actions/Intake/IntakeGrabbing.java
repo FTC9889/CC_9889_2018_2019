@@ -1,14 +1,14 @@
-package com.team9889.ftc2019.auto.actions.Dumper;
+package com.team9889.ftc2019.auto.actions.Intake;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.auto.actions.Action;
-import com.team9889.ftc2019.subsystems.Dumper;
+import com.team9889.ftc2019.subsystems.Intake;
 import com.team9889.ftc2019.subsystems.Robot;
 
 /**
- * Created by MannoMation on 2/23/2019.
+ * Created by MannoMation on 2/27/2019.
  */
-public class DumpMarker extends Action {
+public class IntakeGrabbing extends Action {
 
     private ElapsedTime timer = new ElapsedTime();
 
@@ -19,18 +19,17 @@ public class DumpMarker extends Action {
 
     @Override
     public void start() {
-        Robot.getInstance().getDumper().setDumperStates(Dumper.dumperStates.DUMPTEAMMARKER);
-        timer.reset();
+        Robot.getInstance().getIntake().setWantedIntakeState(Intake.IntakeStates.GRABBING);
     }
 
     @Override
     public void update() {
-        Robot.getInstance().getDumper().update(timer);
+        Robot.getInstance().update(timer);
     }
 
     @Override
     public boolean isFinished() {
-        return timer.milliseconds() > 2000;
+        return Robot.getInstance().getIntake().getCurrentIntakeState() == Intake.IntakeStates.TRANSITION;
     }
 
     @Override

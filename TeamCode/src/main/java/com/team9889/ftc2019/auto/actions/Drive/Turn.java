@@ -20,7 +20,7 @@ public class Turn extends Action {
     private ElapsedTime timer = new ElapsedTime();
     private Drive mDrive = Robot.getInstance().getDrive();
     private double angle;
-    private PID anglePid = new PID(0.07, 0, 1.8);
+    private PID anglePid = new PID(0.07, 0, 1.9);
 
     public Turn(Rotation2d rotation2d, double timeOut){
         angle = rotation2d.getTheda(AngleUnit.DEGREES);

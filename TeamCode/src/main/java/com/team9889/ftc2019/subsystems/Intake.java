@@ -180,64 +180,21 @@ public class Intake extends Subsystem {
                     } else {
                         intakeOperatorControl = false;
                         setIntakeRotatorState(RotatorStates.UP);
-                        setIntakePower(0);
                         setIntakeHardStopState(IntakeHardStop.DOWN);
+                        setHopperDumperState(HopperDumperStates.HOLDING);
 
                         setIntakeExtenderPower(-0.5);
                     }
                 }
                 break;
 
-//            case AUTONOMOUS:
-//                if (currentIntakeState != wantedIntakeState) {
-//                    if (intakeGrabbingSwitchValue()) {
-//                        setIntakeExtenderPower(0);
-//                        setIntakePower(0);
-//                        setIntakeRotatorPosition(0.9);
-//
-//                        currentIntakeState = IntakeStates.AUTONOMOUS;
-//                        first = true;
-//                    } else {
-//                        if (first) {
-//                            if (getIntakeExtenderPosition() > 9 && !CruiseLib.isBetween(offset, -0.1, 0.1))
-//                                setIntakeExtenderPower(-1);
-//                            else if (getIntakeExtenderPosition() > 4.75 && !CruiseLib.isBetween(offset, -0.1, 0.1)) {
-//                                setIntakeExtenderPower(-0.3);
-//                                setIntakeRotatorPosition(0.8);
-//                            } else
-//                                first = false;
-//                        } else {
-//                            setIntakeExtenderPower(0.5);
-//
-//                            if (getIntakeExtenderPosition() > 7)
-//                                first = true;
-//                        }
-//
-//
-//                        setIntakeRotatorState(RotatorStates.UP);
-//                    }
-//                }
-//                break;
-
             case AUTONOMOUS:
-                if (getIntakeExtenderPosition() >= 10){
+                if (getIntakeExtenderPosition() >= 22){
                     setIntakeExtenderPower(0);
-                    setIntakeHardStopState(IntakeHardStop.UP);
-                    if (autonomousFirst){
-                        autonomousTimer.reset();
-                        autonomousFirst = false;
-                    }else if (autonomousTimer.milliseconds() > 1000){
-                        if (intakeGrabbingSwitchValue() || collectingTimer.milliseconds() > 1500){
-                            setIntakeExtenderPower(0);
-                            setIntakePower(0);
-                            currentIntakeState = IntakeStates.AUTONOMOUS;
-                        }else {
-                            setIntakeRotatorState(RotatorStates.DOWN);
-                            setIntakeHardStopState(IntakeHardStop.UP);
-                        }
-                    }
+                    setIntakeRotatorState(RotatorStates.DOWN);
+                    currentIntakeState = IntakeStates.AUTONOMOUS;
                 }else {
-                    setIntakeExtenderPower(.7);
+                    setIntakeExtenderPower(1);
                     setIntakeHardStopState(IntakeHardStop.DOWN);
                     autonomousFirst = true;
                 }
@@ -265,6 +222,7 @@ public class Intake extends Subsystem {
                         if (transitionExtender) {
                             setIntakeExtenderPower(0);
                             transitionExtender = false;
+                            currentIntakeState = IntakeStates.TRANSITION;
                         }
                         intakeOperatorControl = true;
                     }else {

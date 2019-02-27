@@ -36,7 +36,7 @@ public class Land2 extends Action {
 
     @Override
     public void update() {
-        Robot.getInstance().getLift().setLiftPower(0.75);
+        Robot.getInstance().getLift().setLiftPower(1);
         Robot.getInstance().getDumper().update(timer);
     }
 

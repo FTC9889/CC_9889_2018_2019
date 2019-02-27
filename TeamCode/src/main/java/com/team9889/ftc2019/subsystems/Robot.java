@@ -85,10 +85,6 @@ public class Robot extends Subsystem {
 
     @Override
     public void update(ElapsedTime time) {
-        for (Subsystem subsystem : subsystems) {
-            subsystem.update(timer);
-        }
-
         switch (wantedScorerState) {
             case STORED:
                 getDumper().wantedDumperState = Dumper.dumperStates.STORED;
@@ -118,7 +114,10 @@ public class Robot extends Subsystem {
                 break;
 
             case AUTONOMOUS:
-
+                getLift().setLiftState(LiftStates.READY);
+                if (getLift().isCurrentWantedState())
+                    getDumper().setDumperStates(Dumper.dumperStates.SCORING);
+                timerReset = true;
                 break;
 
             case NULL:
@@ -127,21 +126,9 @@ public class Robot extends Subsystem {
                 break;
         }
 
-        switch (wantedIntakeState){
-            case COLLECTING:
-                getIntake().setWantedIntakeState(Intake.IntakeStates.INTAKING);
-                break;
-
-            case HARDSTOP:
-                break;
-
-            case TRANSITION:
-                break;
-
-            case NULL:
-                break;
+        for (Subsystem subsystem : subsystems) {
+            subsystem.update(timer);
         }
-
     }
 
     @Override
@@ -155,9 +142,6 @@ public class Robot extends Subsystem {
 
     public void setScorerStates(scorerStates states){
         this.wantedScorerState = states;
-    }
-    public void setIntakeStates(intakeStates states){
-        this.wantedIntakeState = states;
     }
 
     @Override

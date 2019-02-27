@@ -30,9 +30,9 @@ public class CruiseLib {
 
     public static double limitValue(double val, double max) {
         if(val > Math.abs(max)) {
-            return max;
+            return Math.abs(max);
         } else if(val < -Math.abs(max)) {
-            return -max;
+            return -Math.abs(max);
         } else {
             return val;
         }

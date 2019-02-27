@@ -1,6 +1,7 @@
 package com.team9889.ftc2019.auto.actions.Drive;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.subsystems.Drive;
 import com.team9889.ftc2019.subsystems.Robot;
@@ -18,6 +19,9 @@ public class DriveToDistanceAndAngle extends Action {
     private Drive mDrive = Robot.getInstance().getDrive();
     private PID drivePid, anglePid;
     private double distance, angle;
+
+    private double currentMax = 0.1;
+    private double maxIncrement = 0.08;
 
     private double timeOut;
     private ElapsedTime Timer = new ElapsedTime();
@@ -47,7 +51,10 @@ public class DriveToDistanceAndAngle extends Action {
     public void update() {
         double currentPosition = getAverageDistance();
         double throttle = drivePid.update(currentPosition, distance);
-        throttle = CruiseLib.limitValue(throttle, .6);
+        throttle = CruiseLib.limitValue(throttle, currentMax);
+
+        if(currentMax < .8)
+            currentMax += maxIncrement;
 
         double currentAngle = mDrive.getAngle().getTheda(AngleUnit.DEGREES);
         double steer = anglePid.update(currentAngle, angle);

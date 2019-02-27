@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.Constants;
+import com.team9889.ftc2019.auto.Autonomous;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -21,7 +22,7 @@ public class Dumper extends Subsystem{
     public ElapsedTime dumperTimer = new ElapsedTime();
 
     public enum dumperStates{
-        COLLECTING, STORED, SCORING, DUMP, NULL
+        COLLECTING, STORED, SCORING, DUMP,DUMPTEAMMARKER, NULL
     }
 
     public dumperStates wantedDumperState = dumperStates.NULL;
@@ -87,6 +88,12 @@ public class Dumper extends Subsystem{
                     Robot.getInstance().setScorerStates(Robot.scorerStates.COLLECTING);
                     dumperTimer.reset();
                 }
+                break;
+
+            case DUMPTEAMMARKER:
+                setArmPosition(1);
+                setDumperRotatorPosition(.65);
+                timerReset = true;
                 break;
 
             case NULL:

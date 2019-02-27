@@ -2,13 +2,12 @@ package com.team9889.ftc2019.auto.actions.Dumper;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.auto.actions.Action;
-import com.team9889.ftc2019.subsystems.Dumper;
 import com.team9889.ftc2019.subsystems.Robot;
 
 /**
- * Created by MannoMation on 2/23/2019.
+ * Created by MannoMation on 2/27/2019.
  */
-public class DumpMarker extends Action {
+public class DumperCollecting extends Action {
 
     private ElapsedTime timer = new ElapsedTime();
 
@@ -19,13 +18,13 @@ public class DumpMarker extends Action {
 
     @Override
     public void start() {
-        Robot.getInstance().getDumper().setDumperStates(Dumper.dumperStates.DUMPTEAMMARKER);
+        Robot.getInstance().setScorerStates(Robot.scorerStates.COLLECTING);
         timer.reset();
     }
 
     @Override
     public void update() {
-        Robot.getInstance().getDumper().update(timer);
+        Robot.getInstance().update(timer);
     }
 
     @Override
