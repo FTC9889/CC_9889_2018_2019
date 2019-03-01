@@ -10,6 +10,7 @@ import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.ftc2019.subsystems.Camera;
 import com.team9889.ftc2019.subsystems.Intake;
 import com.team9889.ftc2019.subsystems.Robot;
+import com.team9889.lib.android.FileWriter;
 
 import java.util.Arrays;
 
@@ -24,10 +25,16 @@ public class Teleop extends Team9889Linear {
     private boolean shaker = false;
     private boolean shakerFirst = false;
 
+    private ElapsedTime cycleTime = new ElapsedTime();
+    private FileWriter writer;
+    private boolean first = true;
+
     @Override
     public void runOpMode() {
         boolean firstRun = true;
         DriverStation driverStation = new DriverStation(gamepad1, gamepad2);
+        writer = new FileWriter("CycleTime.csv");
+        cycleTime.reset();
         waitForStart(false);
 
         while (opModeIsActive()) {
@@ -36,14 +43,12 @@ public class Teleop extends Team9889Linear {
                     driverStation.getSteer());
 
             // Lift Controller
-            if(firstRun && Robot.getLift().getCurrentState() == LiftStates.SCOREINGHEIGHT) {
+            if(firstRun && Robot.getLift().getCurrentState() == LiftStates.UP) {
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.COLLECTING);
                 firstRun = false;
             } else if(Robot.getLift().liftOperatorControl){
                 Robot.getLift().setLiftPower(-gamepad2.right_stick_y);
             }
-
-            RobotLog.a(String.valueOf(Robot.getLift().liftOperatorControl));
 
             //Intake (gamepad2)
             if(driverStation.getStartIntaking())
@@ -52,17 +57,26 @@ public class Teleop extends Team9889Linear {
                 Robot.getIntake().setIntakeExtenderPower(driverStation.getIntakeExtenderPower());
 
             //Dumper
-            if (gamepad2.y){
+            if (gamepad2.y && Robot.getIntake().currentHopperDumperState != Intake.HopperDumperStates.PUSHING){
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.SCORING);
+                first = true;
             }else if (gamepad1.right_bumper && Robot.getLift().getCurrentState() == LiftStates.SCOREINGHEIGHT){
                 Robot.getDumper().collectingTimer.reset();
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.DUMP);
+
+                if(first) {
+                    writer.write(String.valueOf(cycleTime.seconds()));
+                    cycleTime.reset();
+                    first = false;
+                }
             }else if (gamepad2.b){
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.COLLECTING);
+                first = true;
             }else if (gamepad1.left_bumper){
                 shaker = true;
                 shakerFirst = true;
                 timer.reset();
+                first = true;
             }
 
             if (gamepad2.right_bumper){
@@ -104,5 +118,6 @@ public class Teleop extends Team9889Linear {
         }
 
         finalAction();
+        writer.close();
     }
 }
