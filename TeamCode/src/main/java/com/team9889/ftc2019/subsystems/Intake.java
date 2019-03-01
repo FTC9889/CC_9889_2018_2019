@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.team9889.ftc2019.Constants;
-import com.team9889.ftc2019.auto.Autonomous;
+import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.lib.CruiseLib;
 import com.team9889.lib.control.controllers.PID;
 import com.team9889.lib.hardware.RevColorDistance;
@@ -31,7 +31,7 @@ public class Intake extends Subsystem {
     private PID extenderPID = new PID(0.5, 0.0, 2);
 
     // Tracker
-    private double maximumPosition = 24; // Inches
+    private double maximumPosition = 23; // Inches
     private double offset = 0; // Ticks
 
     //
@@ -53,6 +53,8 @@ public class Intake extends Subsystem {
 
     public ElapsedTime autonomousTimer = new ElapsedTime();
     public boolean autonomousFirst = true;
+
+    public HopperDumperStates currentHopperDumperState;
 
     public boolean isIntakeOperatorControl() {
         return intakeOperatorControl;
@@ -81,13 +83,18 @@ public class Intake extends Subsystem {
         offset = 0;
         if (auto){
             setIntakeHardStopState(IntakeHardStop.DOWN);
-            setWantedIntakeState(IntakeStates.ZEROING);
+            zeroSensors();
+            wantedIntakeState = IntakeStates.ZEROING;
+            currentIntakeState = IntakeStates.ZEROING;
+        }else {
+            wantedIntakeState = IntakeStates.NULL;
         }
-        currentIntakeState = IntakeStates.NULL;
+
     }
 
     @Override
     public void zeroSensors() {
+        offset = getIntakeExtenderPositionTicks();
     }
 
     @Override
@@ -95,8 +102,8 @@ public class Intake extends Subsystem {
         telemetry.addData("PID Output", extenderPID.getOutput());
         telemetry.addData("Left Rev Distance", revLeftHopper.getIN());
         telemetry.addData("Right Rev Distance", revRightHopper.getIN());
-        telemetry.addData("Left Rev Color", revLeftHopper.hsv());
-        telemetry.addData("Right Rev Color", revRightHopper.hsv());
+        telemetry.addData("Minerals Detected", twoMineralsDetected());
+        telemetry.addData("Width", width);
 
         telemetry.addData("IntakePower", intakeMotor.getPower());
         telemetry.addData("Intake Extender Real Position", getIntakeExtenderPosition());
@@ -125,18 +132,19 @@ public class Intake extends Subsystem {
                     if (firstSettle) {
                         settleTimer.reset();
                         firstSettle = false;
-                    }else if (settleTimer.milliseconds() > 100) {
+                    }else if (settleTimer.milliseconds() > 150) {
                         intakeOperatorControl = false;
                         setIntakePower(-0.8);
-
-                        if (!firstIntaking)
-                            setHopperDumperState(HopperDumperStates.HOLDING);
 
                         currentIntakeState = IntakeStates.INTAKING;
                         hardStopTimer.reset();
                         collectingTimer.reset();
                         setWantedIntakeState(IntakeStates.GRABBING);
                         firstIntaking = true;
+                    }else if (settleTimer.milliseconds() > 50){
+                        setIntakePower(0);
+                        if (!firstIntaking)
+                            setHopperDumperState(HopperDumperStates.HOLDING);
                     }
                 } else {
                     firstSettle = true;
@@ -159,7 +167,6 @@ public class Intake extends Subsystem {
                     trasitionTimer.reset();
                     currentIntakeState = IntakeStates.GRABBING;
                     wantedIntakeState = IntakeStates.TRANSITION;
-
                 }else{
                     intakeOperatorControl = false;
                     setIntakeRotatorState(RotatorStates.UP);
@@ -189,7 +196,7 @@ public class Intake extends Subsystem {
                 break;
 
             case AUTONOMOUS:
-                if (getIntakeExtenderPosition() >= 22){
+                if (getIntakeExtenderPosition() >= 20){
                     setIntakeExtenderPower(0);
                     setIntakeRotatorState(RotatorStates.DOWN);
                     currentIntakeState = IntakeStates.AUTONOMOUS;
@@ -216,23 +223,26 @@ public class Intake extends Subsystem {
                 break;
 
             case TRANSITION:
-                if (trasitionTimer.milliseconds() > 1000) {
-                    setHopperDumperState(HopperDumperStates.OPEN);
-                    if (trasitionTimer.milliseconds() > 1200){
-                        if (transitionExtender) {
-                            setIntakeExtenderPower(0);
-                            transitionExtender = false;
-                            currentIntakeState = IntakeStates.TRANSITION;
+                if (Robot.getInstance().getLift().getCurrentState() == LiftStates.READY) {
+
+                    if (trasitionTimer.milliseconds() > 1000) {
+                        setHopperDumperState(HopperDumperStates.OPEN);
+                        if (trasitionTimer.milliseconds() > 1200) {
+                            if (transitionExtender) {
+                                setIntakeExtenderPower(0);
+                                transitionExtender = false;
+                                currentIntakeState = IntakeStates.TRANSITION;
+                            }
+                            intakeOperatorControl = true;
+                        } else {
+                            intakeOperatorControl = false;
+                            setIntakeExtenderPower(1);
+                            transitionExtender = true;
                         }
-                        intakeOperatorControl = true;
                     }else {
-                        intakeOperatorControl = false;
-                        setIntakeExtenderPower(1);
-                        transitionExtender = true;
+                        setHopperDumperState(HopperDumperStates.PUSHING);
                     }
                 }
-                else
-                    setHopperDumperState(HopperDumperStates.PUSHING);
                 break;
 
             case DRIVER:
@@ -358,15 +368,18 @@ public class Intake extends Subsystem {
     public void setHopperDumperState(HopperDumperStates state){
         switch (state){
             case OPEN:
-                setHopperDumperPosition(0.35);
+                setHopperDumperPosition(0.4);
+                currentHopperDumperState = HopperDumperStates.OPEN;
                 break;
 
             case HOLDING:
-                setHopperDumperPosition(.45);
+                setHopperDumperPosition(.5);
+                currentHopperDumperState = HopperDumperStates.HOLDING;
                 break;
 
             case PUSHING:
                 setHopperDumperPosition(0.8);
+                currentHopperDumperState = HopperDumperStates.PUSHING;
                 break;
         }
     }
@@ -414,25 +427,12 @@ public class Intake extends Subsystem {
     }
 
     /**
-     * @return If the front mineral detector sees a mineral
-     */
-    private boolean frontHopperDetector() {
-        return revRightHopper.getIN() < 3.5 && revLeftHopper.getIN() > 2;
-    }
-
-    /**
-     * @return If the back mineral detector sees a mineral
-     */
-    private boolean backHopperDetector() {
-        return revLeftHopper.getIN() < 3.5 && revRightHopper.getIN() > 2;
-    }
-
-    /**
      * @return If the both mineral detectors see a mineral
      */
-    //TODO When New Color Sensor Is On Uncomment This
+    private double width = 0;
     private boolean twoMineralsDetected() {
-        return frontHopperDetector() && backHopperDetector();
+        width = (6 - (revLeftHopper.getIN() + revRightHopper.getIN()));
+        return width > 1.5;
     }
 
     @Override

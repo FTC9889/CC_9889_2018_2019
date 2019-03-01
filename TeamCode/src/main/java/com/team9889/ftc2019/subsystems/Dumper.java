@@ -65,13 +65,13 @@ public class Dumper extends Subsystem{
                 break;
 
             case SCORING:
-                setArmPosition(.7);
+                setArmPosition(.65);
 
                 if (timerReset) {
                     timer.reset();
                     timerReset = false;
                 } else if (timer.milliseconds() > 400) {
-                    setDumperRotatorPosition(.65);
+                    setDumperRotatorPosition(.7);
                 }
                 break;
 

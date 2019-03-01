@@ -27,7 +27,7 @@ public class Lift extends Subsystem {
     private DigitalChannel lowerLimit;
     private DigitalChannel upperLimit;
     private DistanceSensor robotToGround;
-    private PID pid = new PID(.52, 0, 0.3);
+    private PID pid = new PID(.6, 0, 0.3);
     public boolean liftOperatorControl = false;
 
     private double offset = 0;
@@ -58,7 +58,7 @@ public class Lift extends Subsystem {
         if (auto)
             setLiftState(LiftStates.HANGING);
         else
-            setLiftState(LiftStates.SCOREINGHEIGHT);
+            setLiftState(LiftStates.UP);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class Lift extends Subsystem {
                     }
                     break;
                 case READY:
-                    setLiftPosition(6.25);
+                    setLiftPosition(6);
 
                     if (inPosition()) {
                         setLiftPower(0);
@@ -137,8 +137,9 @@ public class Lift extends Subsystem {
                     if (getUpperLimitPressed()){
                         setLiftPower(0);
                         currentState = LiftStates.UP;
+                    }else {
+                        setLiftPower(1);
                     }
-                    setLiftPower(.5);
                     break;
                 case NULL:
                     setLiftPower(0);

@@ -27,6 +27,10 @@ public class Robot extends Subsystem {
     private boolean timerReset = true;
     private boolean firstIntaking = true;
     private boolean upperLimitWasPressed = false;
+
+    private int scoringCounter = 2;
+    private boolean scoringCounterFirst = true;
+
     private List<Subsystem> subsystems = Arrays.asList(
             mDrive, mLift, mIntake, mCamera, mDumper// Add more subsystems here as needed
     );
@@ -95,16 +99,31 @@ public class Robot extends Subsystem {
             case SCORING:
                 getLift().setLiftState(LiftStates.SCOREINGHEIGHT);
 
-                if (getLift().getHeight() > 10) {
+                if (getLift().getHeight() > 8) {
                     getDumper().wantedDumperState = Dumper.dumperStates.SCORING;
                 }
                 timerReset = true;
+
+                if (scoringCounterFirst) {
+                    scoringCounter++;
+                    scoringCounterFirst = false;
+                }
                 break;
 
             case COLLECTING:
-                getDumper().wantedDumperState = Dumper.dumperStates.COLLECTING;
-                if (getDumper().dumperTimer.milliseconds() > 1000)
-                    getLift().setLiftState(LiftStates.READY);
+                if (scoringCounter < 3) {
+                    getDumper().wantedDumperState = Dumper.dumperStates.COLLECTING;
+                    if (getDumper().dumperTimer.milliseconds() > 700)
+                        getLift().setLiftState(LiftStates.READY);
+                }else {
+                    getDumper().wantedDumperState = Dumper.dumperStates.COLLECTING;
+                    getLift().setLiftState(LiftStates.UP);
+                    if (getLift().getCurrentState() == LiftStates.UP) {
+                        getLift().setLiftState(LiftStates.READY);
+                        scoringCounter = 0;
+                    }
+                }
+                scoringCounterFirst = true;
                 break;
 
             case DUMP:
