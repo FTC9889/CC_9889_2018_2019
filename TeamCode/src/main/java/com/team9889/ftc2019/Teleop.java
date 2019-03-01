@@ -4,6 +4,7 @@ import android.graphics.Color;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.ftc2019.subsystems.Camera;
@@ -18,6 +19,10 @@ import java.util.Arrays;
 
 @TeleOp(name = "Teleop")
 public class Teleop extends Team9889Linear {
+
+    private ElapsedTime timer = new ElapsedTime();
+    private boolean shaker = false;
+    private boolean shakerFirst = false;
 
     @Override
     public void runOpMode() {
@@ -47,13 +52,17 @@ public class Teleop extends Team9889Linear {
                 Robot.getIntake().setIntakeExtenderPower(driverStation.getIntakeExtenderPower());
 
             //Dumper
-            if (gamepad2.b){
+            if (gamepad2.y){
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.SCORING);
             }else if (gamepad1.right_bumper && Robot.getLift().getCurrentState() == LiftStates.SCOREINGHEIGHT){
                 Robot.getDumper().collectingTimer.reset();
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.DUMP);
-            }else if (gamepad2.y){
+            }else if (gamepad2.b){
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.COLLECTING);
+            }else if (gamepad1.left_bumper){
+                shaker = true;
+                shakerFirst = true;
+                timer.reset();
             }
 
             if (gamepad2.right_bumper){
@@ -66,6 +75,18 @@ public class Teleop extends Team9889Linear {
                 setBackground(Color.GREEN);
             else
                 setBackground(Color.BLACK);
+
+
+            if (shaker == true) {
+                if(shakerFirst){
+                    Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.SCORING);
+                    shakerFirst = false;
+                }else if (timer.milliseconds() > 200){
+                    Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.DUMP);
+                    shakerFirst = true;
+                    shaker = false;
+                }
+            }
 
             // Set Camera Position
             Robot.getCamera().setCameraPosition(Camera.CameraPositions.TELEOP);

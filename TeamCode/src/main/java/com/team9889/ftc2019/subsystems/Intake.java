@@ -81,9 +81,9 @@ public class Intake extends Subsystem {
         offset = 0;
         if (auto){
             setIntakeHardStopState(IntakeHardStop.DOWN);
+            setWantedIntakeState(IntakeStates.ZEROING);
         }
         currentIntakeState = IntakeStates.NULL;
-        setWantedIntakeState(IntakeStates.ZEROING);
     }
 
     @Override
@@ -125,7 +125,7 @@ public class Intake extends Subsystem {
                     if (firstSettle) {
                         settleTimer.reset();
                         firstSettle = false;
-                    }else if (settleTimer.milliseconds() > 500) {
+                    }else if (settleTimer.milliseconds() > 100) {
                         intakeOperatorControl = false;
                         setIntakePower(-0.8);
 
@@ -173,7 +173,7 @@ public class Intake extends Subsystem {
 
             case ZEROING:
                 if (currentIntakeState != wantedIntakeState) {
-                    if (intakeInSwitchValue()) {
+                    if (intakeInSwitchValue() || intakeGrabbingSwitchValue()) {
                         setIntakeExtenderPower(0);
                         intakeOperatorControl = true;
                         currentIntakeState = IntakeStates.ZEROING;
@@ -417,14 +417,14 @@ public class Intake extends Subsystem {
      * @return If the front mineral detector sees a mineral
      */
     private boolean frontHopperDetector() {
-        return revRightHopper.getIN() < 3;
+        return revRightHopper.getIN() < 3.5 && revLeftHopper.getIN() > 2;
     }
 
     /**
      * @return If the back mineral detector sees a mineral
      */
     private boolean backHopperDetector() {
-        return revLeftHopper.getIN() < 3;
+        return revLeftHopper.getIN() < 3.5 && revRightHopper.getIN() > 2;
     }
 
     /**
@@ -432,7 +432,7 @@ public class Intake extends Subsystem {
      */
     //TODO When New Color Sensor Is On Uncomment This
     private boolean twoMineralsDetected() {
-        return frontHopperDetector() /*&& backHopperDetector()*/;
+        return frontHopperDetector() && backHopperDetector();
     }
 
     @Override
