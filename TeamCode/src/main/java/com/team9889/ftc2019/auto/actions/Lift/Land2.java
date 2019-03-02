@@ -12,7 +12,7 @@ import com.team9889.ftc2019.subsystems.Robot;
  */
 public class Land2 extends Action {
 
-    ElapsedTime timer = new ElapsedTime();
+    private ElapsedTime timer = new ElapsedTime();
     private double timeOut;
 
     public Land2(double timeOut){

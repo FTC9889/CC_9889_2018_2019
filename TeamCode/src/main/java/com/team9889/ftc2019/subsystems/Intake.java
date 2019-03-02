@@ -432,7 +432,7 @@ public class Intake extends Subsystem {
     private double width = 0;
     private boolean twoMineralsDetected() {
         width = (6 - (revLeftHopper.getIN() + revRightHopper.getIN()));
-        return width > 1.0;
+        return width > 1.5;
     }
 
     @Override
