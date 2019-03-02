@@ -11,6 +11,13 @@ import com.team9889.ftc2019.subsystems.Robot;
 public class IntakeZeroing extends Action {
     private ElapsedTime intakeTimer = new ElapsedTime();
 
+    public IntakeZeroing(boolean intakeZeroingHardstop){
+        Robot.getInstance().getIntake().intakeZeroingHardstop = intakeZeroingHardstop;
+    }
+    public IntakeZeroing(){
+        Robot.getInstance().getIntake().intakeZeroingHardstop = true;
+    }
+
     @Override
     public void setup(String args) {
 
@@ -36,5 +43,6 @@ public class IntakeZeroing extends Action {
     public void done() {
         Robot.getInstance().getIntake().setIntakePower(0);
         Robot.getInstance().update(intakeTimer);
+        Robot.getInstance().getIntake().currentIntakeState = Intake.IntakeStates.ZEROING;
     }
 }

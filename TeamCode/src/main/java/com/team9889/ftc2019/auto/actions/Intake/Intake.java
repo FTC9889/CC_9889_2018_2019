@@ -21,7 +21,7 @@ public class Intake extends Action {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return Robot.getInstance().getIntake().revLeftHopper.getIN() < 5;
     }
 
     @Override

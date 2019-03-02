@@ -28,7 +28,7 @@ public class Robot extends Subsystem {
     private boolean firstIntaking = true;
     private boolean upperLimitWasPressed = false;
 
-    private int scoringCounter = 2;
+    private int scoringCounter = 1;
     private boolean scoringCounterFirst = true;
 
     private List<Subsystem> subsystems = Arrays.asList(

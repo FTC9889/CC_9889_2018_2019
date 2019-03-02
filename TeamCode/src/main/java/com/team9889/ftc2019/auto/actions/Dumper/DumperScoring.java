@@ -34,6 +34,6 @@ public class DumperScoring extends Action {
 
     @Override
     public void done() {
-
+        Robot.getInstance().getDumper().collectingTimer.reset();
     }
 }

@@ -47,7 +47,7 @@ public class AutonomousCraterSideDouble extends AutoModeBase {
 
             runAction(new DriveToDistanceAndAngle(25, -135, 3000));
 
-            runAction(new Outtake(-.8));
+            runAction(new Outtake(-.8, 1));
 
             runAction(new DriveRightMotor(new Rotation2d(-110, AngleUnit.DEGREES), 2000));
 
@@ -85,7 +85,7 @@ public class AutonomousCraterSideDouble extends AutoModeBase {
                 runAction(new DriveToDistanceAndAngle(30, -135, 3000));
 
                 // Score Marker
-                runAction(new Outtake(-.5));
+                runAction(new Outtake(-.5, 1));
 
                 ThreadAction(new IntakeZeroing());
 

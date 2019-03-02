@@ -10,9 +10,11 @@ import com.team9889.ftc2019.subsystems.Robot;
 public class Outtake extends Action {
     private ElapsedTime time;
     private double power = -1;
+    private double timeOut = 1;
 
-    public Outtake(double setPower){
+    public Outtake(double setPower, double timeOut) {
         this.power = setPower;
+        this.timeOut = timeOut;
     }
     public Outtake(){}
 
@@ -34,7 +36,7 @@ public class Outtake extends Action {
 
     @Override
     public boolean isFinished() {
-        return time.milliseconds()>1000;
+        return time.milliseconds()>timeOut;
     }
 
     @Override

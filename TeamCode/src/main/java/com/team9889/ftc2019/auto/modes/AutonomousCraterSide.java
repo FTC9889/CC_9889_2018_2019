@@ -34,23 +34,25 @@ public class AutonomousCraterSide extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
-        runAction(new Land2(5000));
-
+        runAction(new Land2(2500));
+        runAction(new Wait(1000));
 
         if (Robot.getCamera().isGoldInfront()){ // Middle
 //            Grab Gold Block
             runAction(new Wait(1000));
-            ThreadAction(new DriveToDistanceAndAngle(10, 0, 1000));
             runAction(new IntakeInFront());
             runAction(new Intake());
+            telemetry.addData("Intake", Robot.getIntake().getIntakeExtenderPosition());
+            telemetry.update();
             runAction(new Wait(1000));
             ThreadAction(new IntakeZeroing());
+            runAction(new DriveToDistanceAndAngle(10, 0, 1000));
 
 //            runAction(new DriveToDistanceAndAngle(5, 0, 1000));
 
 //            Drive to Wall
             runAction(new Turn(new Rotation2d(100, AngleUnit.DEGREES), 3000));
-            runAction(new DriveToDistanceAndAngle(-46, 100, 3000));
+            runAction(new DriveToDistanceAndAngle(-40, 100, 3000));
             Robot.getCamera().setCameraPosition(Camera.CameraPositions.TELEOP);
 
 //            Turn towards Depot
@@ -62,21 +64,23 @@ public class AutonomousCraterSide extends AutoModeBase {
             runAction(new Wait(500));
             runAction(new DumpMarker());
 
-            runAction(new DriveToDistanceAndAngle(50, 45, 4000));
+            ThreadAction(new DumperInit(2000));
+            runAction(new DriveToDistanceAndAngle(50, 55, 4000));
             runAction(new IntakeInFront());
 
-            ThreadAction(new DumperCollecting());
             runAction(new IntakeCollecting());
 
-            ThreadAction(new IntakeGrabbing());
-            runAction(new DriveToDistanceAndAngle(-12, 45, 1000));
+            if (matchTime.milliseconds() < 25) {
+                ThreadAction(new IntakeGrabbing());
+                runAction(new DriveToDistanceAndAngle(-12, 45, 1000));
 
-            runAction(new Turn(new Rotation2d(105, AngleUnit.DEGREES), 1500));
-            runAction(new DriveToDistanceAndAngle(35, 105, 2000));
-            runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 2000));
+                runAction(new Turn(new Rotation2d(105, AngleUnit.DEGREES), 1500));
+                runAction(new DriveToDistanceAndAngle(35, 105, 2000));
+                runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 2000));
 
-            runAction(new DumperScoring());
-            runAction(new DumperDump());
+                runAction(new DumperScoring());
+                runAction(new DumperDump());
+            }
         } else{
             Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTRIGHT);
 
@@ -102,7 +106,7 @@ public class AutonomousCraterSide extends AutoModeBase {
                 runAction(new DriveToDistanceAndAngle(30, -135, 3000));
 
                 // Score Marker
-                runAction(new Outtake(-.5));
+                runAction(new Outtake(-.5, 2));
 
                 ThreadAction(new IntakeZeroing());
 
@@ -132,5 +136,7 @@ public class AutonomousCraterSide extends AutoModeBase {
                 runAction(new DriveToDistanceAndAngle(-70, -135, 4000));
             }
         }
+
+//        thread.interrupt();
     }
 }

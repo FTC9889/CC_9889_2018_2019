@@ -36,10 +36,14 @@ public class Intake extends Subsystem {
 
     //
     private boolean intakeOperatorControl = true;
-    private IntakeStates currentIntakeState = IntakeStates.NULL;
+    public IntakeStates currentIntakeState = IntakeStates.NULL;
     private IntakeStates wantedIntakeState = IntakeStates.ZEROING;
     private boolean first = true;
     private double intakeRotatorPosition = 0;
+
+    public boolean intakeZeroingHardstop;
+
+    public double autoIntakeOut;
 
     private boolean firstIntaking = true;
     public ElapsedTime trasitionTimer = new ElapsedTime();
@@ -187,7 +191,9 @@ public class Intake extends Subsystem {
                     } else {
                         intakeOperatorControl = false;
                         setIntakeRotatorState(RotatorStates.UP);
-                        setIntakeHardStopState(IntakeHardStop.DOWN);
+                        if (intakeZeroingHardstop) {
+                            setIntakeHardStopState(IntakeHardStop.DOWN);
+                        }
                         setHopperDumperState(HopperDumperStates.HOLDING);
 
                         setIntakeExtenderPower(-0.5);
@@ -196,13 +202,14 @@ public class Intake extends Subsystem {
                 break;
 
             case AUTONOMOUS:
-                if (getIntakeExtenderPosition() >= 20){
+                setIntakeExtenderPosition(autoIntakeOut);
+                if (Math.abs(extenderPID.getError()) < .5){
                     setIntakeExtenderPower(0);
                     setIntakeRotatorState(RotatorStates.DOWN);
                     currentIntakeState = IntakeStates.AUTONOMOUS;
                 }else {
-                    setIntakeExtenderPower(1);
-                    setIntakeHardStopState(IntakeHardStop.DOWN);
+//                    setIntakeHardStopState(IntakeHardStop.DOWN);
+                    setIntakeRotatorState(RotatorStates.UP);
                     autonomousFirst = true;
                 }
                 break;
@@ -271,6 +278,7 @@ public class Intake extends Subsystem {
      */
     public void intake() {
         setIntakePower(1);
+        setIntakeRotatorState(RotatorStates.DOWN);
     }
 
     /**
@@ -433,6 +441,10 @@ public class Intake extends Subsystem {
     private boolean twoMineralsDetected() {
         width = (6 - (revLeftHopper.getIN() + revRightHopper.getIN()));
         return width > 1.5;
+    }
+
+    public boolean inPosition(){
+        return Math.abs(extenderPID.getError()) < .5;
     }
 
     @Override

@@ -20,6 +20,7 @@ public class IntakeGrabbing extends Action {
     @Override
     public void start() {
         Robot.getInstance().getIntake().setWantedIntakeState(Intake.IntakeStates.GRABBING);
+        Robot.getInstance().getIntake().collectingTimer.reset();
     }
 
     @Override

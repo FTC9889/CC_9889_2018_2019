@@ -74,7 +74,7 @@ public class AutonomousCraterSideOutdated extends AutoModeBase {
                 runAction(new DriveToDistanceAndAngle(30, -135, 3000));
 
                 // Score Marker
-                runAction(new Outtake(-.5));
+                runAction(new Outtake());
 
                 ThreadAction(new IntakeZeroing());
                 runAction(new DriveToDistanceAndAngle(-70, -137, 4000));
@@ -90,7 +90,7 @@ public class AutonomousCraterSideOutdated extends AutoModeBase {
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 1500));
                 ThreadAction(new IntakeInFront());
                 runAction(new DriveToDistanceAndAngle(50, -135, 3000));
-                runAction(new Outtake(-.5));
+                runAction(new Outtake());
                 ThreadAction(new IntakeZeroing());
                 runAction(new DriveToDistanceAndAngle(-70, -135, 4000));
 

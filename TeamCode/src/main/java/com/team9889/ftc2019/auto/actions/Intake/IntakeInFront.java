@@ -10,6 +10,14 @@ import com.team9889.ftc2019.subsystems.Robot;
  */
 public class IntakeInFront extends Action {
     private ElapsedTime timer = new ElapsedTime();
+
+    public IntakeInFront(double intakeOutDistance){
+        Robot.getInstance().getIntake().autoIntakeOut = intakeOutDistance;
+    }
+    public IntakeInFront(){
+        Robot.getInstance().getIntake().autoIntakeOut = 20;
+    }
+
     @Override
     public void setup(String args) {
 
@@ -29,7 +37,7 @@ public class IntakeInFront extends Action {
 
     @Override
     public boolean isFinished() {
-        return Robot.getInstance().getIntake().isCurrentStateWantedState();
+        return Robot.getInstance().getIntake().isCurrentStateWantedState() && Robot.getInstance().getIntake().inPosition();
     }
 
     @Override
