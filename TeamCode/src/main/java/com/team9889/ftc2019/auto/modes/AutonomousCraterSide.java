@@ -35,108 +35,50 @@ public class AutonomousCraterSide extends AutoModeBase {
     public void run(AllianceColor allianceColor) {
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
         runAction(new Land2(2500));
-        runAction(new Wait(1000));
+        runAction(new Wait(500));
 
         if (Robot.getCamera().isGoldInfront()){ // Middle
 //            Grab Gold Block
-            runAction(new Wait(1000));
-            runAction(new IntakeInFront());
+            runAction(new IntakeInFront(20, 2000, false));
+            Robot.getIntake().setIntakeHardStopState(com.team9889.ftc2019.subsystems.Intake.IntakeHardStop.UP);
             runAction(new Intake());
-            telemetry.addData("Intake", Robot.getIntake().getIntakeExtenderPosition());
-            telemetry.update();
-            runAction(new Wait(1000));
-            ThreadAction(new IntakeZeroing());
-            runAction(new DriveToDistanceAndAngle(10, 0, 1000));
-
-//            runAction(new DriveToDistanceAndAngle(5, 0, 1000));
-
-//            Drive to Wall
-            runAction(new Turn(new Rotation2d(100, AngleUnit.DEGREES), 3000));
-            runAction(new DriveToDistanceAndAngle(-40, 100, 3000));
-            Robot.getCamera().setCameraPosition(Camera.CameraPositions.TELEOP);
-
-//            Turn towards Depot
-            runAction(new Turn(new Rotation2d(45, AngleUnit.DEGREES), 1500));
-
-            ThreadAction(new DumperInit(2000));
-            runAction(new DriveToDistanceAndAngle(-25, 45, 2000));
-
-            runAction(new Wait(500));
-            runAction(new DumpMarker());
-
-            ThreadAction(new DumperInit(2000));
-            runAction(new DriveToDistanceAndAngle(50, 55, 4000));
-            runAction(new IntakeInFront());
-
-            runAction(new IntakeCollecting());
-
-            if (matchTime.milliseconds() < 25) {
-                ThreadAction(new IntakeGrabbing());
-                runAction(new DriveToDistanceAndAngle(-12, 45, 1000));
-
-                runAction(new Turn(new Rotation2d(105, AngleUnit.DEGREES), 1500));
-                runAction(new DriveToDistanceAndAngle(35, 105, 2000));
-                runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 2000));
-
-                runAction(new DumperScoring());
-                runAction(new DumperDump());
-            }
+            ThreadAction(new IntakeZeroing(false, 2000));
         } else{
             Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTRIGHT);
-
-            runAction(new Wait(1000));
+            runAction(new Wait(500));
 
             if (Robot.getCamera().isGoldInfront()){ //Right
-                runAction(new DriveToDistanceAndAngle(10, 0, 3000));
-                runAction(new DriveTurn(new Rotation2d(45, AngleUnit.DEGREES), 2000));
-                runAction(new DriveToDistanceAndAngle(20, 45, 1500));
-                ThreadAction(new IntakeZeroing());
-                runAction(new DriveToDistanceAndAngle(-8, 45, 1500));
-
-                // Face Wall
-                runAction(new Turn(new Rotation2d(-90, AngleUnit.DEGREES), 3000));
-                runAction(new DriveToDistanceAndAngle(58, -90, 4000));
-
-                // Turn To Depot
-                runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 2000));
-
-                ThreadAction(new IntakeInFront());
-
-                // Drive closer to depot
-                runAction(new DriveToDistanceAndAngle(30, -135, 3000));
-
-                // Score Marker
-                runAction(new Outtake(-.5, 2));
-
-                ThreadAction(new IntakeZeroing());
-
-                // Drive to crater
-                runAction(new DriveToDistanceAndAngle(-70, -137, 4000));
-
+                runAction(new Turn(new Rotation2d(45, AngleUnit.DEGREES), 2000));
+                runAction(new IntakeInFront(21, 2000, false));
+                runAction(new Intake());
+                ThreadAction(new IntakeZeroing(false, 2000));
+                runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 2000));
             } else{ //Left
-
-                // Drive away from Lander
-                // Drive away from Lander
-                runAction(new DriveToDistanceAndAngle(8, 0, 3000));
-                runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 2000));
-                runAction(new DriveToDistanceAndAngle(30, -45, 3000));
-                ThreadAction(new IntakeZeroing());
-
-                // Turn to wall
-                runAction(new Turn(new Rotation2d(-90, AngleUnit.DEGREES), 3000));
-                runAction(new DriveToDistanceAndAngle(20, -90, 2500));
-
-                runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 1500));
-                ThreadAction(new IntakeInFront());
-                runAction(new DriveToDistanceAndAngle(43, -135, 3000)); // Distance to Depot TODO: Check this value on field
-                runAction(new Outtake());
-
-                runAction(new IntakeStop());
-                ThreadAction(new IntakeZeroing());
-                runAction(new DriveToDistanceAndAngle(-70, -135, 4000));
+                runAction(new Turn(new Rotation2d(-45, AngleUnit.DEGREES), 2000));
+                runAction(new IntakeInFront(21, 2000, false));
+                runAction(new Intake());
+                ThreadAction(new IntakeZeroing(false, 2000));
+                runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 2000));
             }
         }
 
-//        thread.interrupt();
+//        Drive to Wall
+        runAction(new DriveToDistanceAndAngle(12, 0, 1000));
+        runAction(new Turn(new Rotation2d(90, AngleUnit.DEGREES), 2000));
+        runAction(new DriveToDistanceAndAngle(-40, 90, 3000));
+        runAction(new Turn(new Rotation2d(135, AngleUnit.DEGREES), 3000));
+
+//        Drive to Depot
+        runAction(new DriveToDistanceAndAngle(-30, 135, 1000));
+
+//        Dump Marker
+        runAction(new DumperInit(2000));
+        runAction(new DumpMarker());
+        runAction(new Wait(1000));
+
+//        Park in Crater
+        ThreadAction(new DumperScoring());
+        runAction(new DriveToDistanceAndAngle(50, 135, 4000));
+
     }
 }

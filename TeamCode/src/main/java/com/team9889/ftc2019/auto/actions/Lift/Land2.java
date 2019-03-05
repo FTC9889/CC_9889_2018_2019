@@ -45,7 +45,7 @@ public class Land2 extends Action {
         double height = Robot.getInstance().getLift().getHeight();
         RobotLog.a("Height of Lift: " + String.valueOf(height));
 
-        return height > 16 || this.timer.milliseconds() > timeOut;
+        return height > 17 || this.timer.milliseconds() > timeOut;
     }
 
     @Override

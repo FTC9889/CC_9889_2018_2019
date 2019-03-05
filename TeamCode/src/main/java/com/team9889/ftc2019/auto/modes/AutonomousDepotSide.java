@@ -29,75 +29,82 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @Autonomous(group = "Competition Autonomous")
 public class AutonomousDepotSide extends AutoModeBase {
+
+    private boolean middle = false;
+    private boolean right = false;
+
     @Override
     public void run(AllianceColor allianceColor) {
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
         runAction(new Land2(2500));
 
-
-        ThreadAction(new IntakeInFront(25));
-        runAction(new DriveToDistanceAndAngle(18, 0, 1000));
-        Robot.getIntake().setIntakeHardStopState(com.team9889.ftc2019.subsystems.Intake.IntakeHardStop.UP);
-        ThreadAction(new DumperCollecting());
-        runAction(new Outtake(-.5, 500));
-        runAction(new IntakeUp());
-
-        runAction(new Wait(1000));
-
-        ThreadAction(new IntakeZeroing(false));
-
-        if (Robot.getCamera().isGoldInfront()){ // Middle
-
-            runAction(new Wait(1000));
-
-            runAction(new IntakeUp());
-            runAction(new Intake());
-        } else{
-
-//            Scan Right Mineral
+//        Scan Mineral
+        runAction(new Wait(500));
+        if (Robot.getCamera().isGoldInfront())
+            middle = true;
+        else{
             Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTRIGHT);
-            runAction(new Wait(1000));
+            runAction(new Wait(500));
 
-            if (Robot.getCamera().isGoldInfront()){ //Right
-                runAction(new Turn(new Rotation2d(45, AngleUnit.DEGREES), 1000));
-                runAction(new IntakeInFront(15));
-                runAction(new Intake());
-                runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
-
-            } else{ //Left
-                runAction(new Turn(new Rotation2d(-45, AngleUnit.DEGREES), 1000));
-                runAction(new IntakeInFront(15));
-                runAction(new Intake());
-                runAction(new Turn(new Rotation2d(45, AngleUnit.DEGREES), 1000));
-
-            }
+            if (Robot.getCamera().isGoldInfront())
+                right = true;
         }
 
+        runAction(new IntakeUp());
+        runAction(new DriveToDistanceAndAngle(24, 0, 1000));
+        runAction(new IntakeInFront(22, 5000, true));
+        runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
+        Robot.getIntake().setIntakeHardStopState(com.team9889.ftc2019.subsystems.Intake.IntakeHardStop.UP);
+        ThreadAction(new DumperCollecting());
+        runAction(new Outtake(-1, 1000));
+        runAction(new IntakeUp());
+        Robot.getCamera().setCameraPosition(Camera.CameraPositions.TELEOP);
+
+//        runAction(new Wait(1000));
+
+        ThreadAction(new DriveToDistanceAndAngle(-8, 0, 1000));
+        runAction(new IntakeZeroing(false, 1000));
+
+        if (middle){ // Middle
+            runAction(new DriveToDistanceAndAngle(-5, 0, 1000));
+            runAction(new Intake());
+            runAction(new Intake());
+            runAction(new Intake());
+        } else if (right){ //Right
+                runAction(new Turn(new Rotation2d(35, AngleUnit.DEGREES), 1000));
+                runAction(new IntakeInFront(10, 5000, false));
+                runAction(new Intake());
+                runAction(new Intake());
+                runAction(new Intake());
+        } else{ //Left
+                runAction(new Turn(new Rotation2d(-45, AngleUnit.DEGREES), 1000));
+                runAction(new IntakeInFront(12, 5000, false));
+                runAction(new Intake());
+                runAction(new Intake());
+                runAction(new Intake());
+            }
+
 //        Score Sample
-        runAction(new DriveToDistanceAndAngle(-12, 0, 1000));
-        runAction(new IntakeGrabbing());
-        runAction(new Wait(500));
-        runAction(new DumperScoring());
-        runAction(new DumperDump());
+        if (Robot.autoSampled) {
+            runAction(new IntakeGrabbing());
+            runAction(new Wait(500));
+            runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
+            runAction(new DriveToDistanceAndAngle(-2, 0, 1000));
+            runAction(new DumperScoring());
+            runAction(new DumperDump());
+        }
 
 
 //            Drive to Crater
-        runAction(new IntakeZeroing(false));
-        runAction(new DriveToDistanceAndAngle(8, 0, 1000));
-        runAction(new Turn(new Rotation2d(-90, AngleUnit.DEGREES), 2000));
-        ThreadAction(new DumperCollecting());
-        runAction(new DriveToDistanceAndAngle(35, -90, 3000));
-        runAction(new Turn(new Rotation2d(-135, AngleUnit.DEGREES), 2000));
-
-//            Intake in Crater
-        runAction(new IntakeInFront(15));
-        runAction(new IntakeCollecting());
-
-//        Go to Scoring Location
-        ThreadAction(new IntakeGrabbing());
-        runAction(new Turn(new Rotation2d(-90, AngleUnit.DEGREES), 2000));
-        runAction(new DriveToDistanceAndAngle(-50, -90, 3000));
-        runAction(new Turn(new Rotation2d(-90, AngleUnit.DEGREES), 2000));
-        runAction(new DumperDump());
+        runAction(new IntakeUp());
+        ThreadAction(new IntakeZeroing(false, 1500));
+        if (middle)
+            runAction(new DriveToDistanceAndAngle(8, 0, 1000));
+        else
+            runAction(new DriveToDistanceAndAngle(4, 0, 1000));
+        runAction(new Turn(new Rotation2d(-90, AngleUnit.DEGREES), 1000));
+        runAction(new DriveToDistanceAndAngle(36, -90, 3000));
+        runAction(new Turn(new Rotation2d(-120, AngleUnit.DEGREES), 2000));
+        runAction(new IntakeInFront(20, 5000, true));
     }
 }

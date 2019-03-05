@@ -29,6 +29,10 @@ public class Teleop extends Team9889Linear {
     private FileWriter writer;
     private boolean first = true;
 
+    private boolean gamepad2Intake = false;
+    private boolean gamepad1IntakeFowards = false;
+    private boolean gamepad1IntakeBackwards = false;
+
     @Override
     public void runOpMode() {
         boolean firstRun = true;
@@ -44,6 +48,7 @@ public class Teleop extends Team9889Linear {
 
             // Lift Controller
             if(firstRun && Robot.getLift().getCurrentState() == LiftStates.UP) {
+                Robot.getDumper().dumperTimer.reset();
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.COLLECTING);
                 firstRun = false;
             } else if(Robot.getLift().liftOperatorControl){
@@ -53,8 +58,19 @@ public class Teleop extends Team9889Linear {
             //Intake (gamepad2)
             if(driverStation.getStartIntaking())
                 Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.INTAKING);
-            else if(Robot.getIntake().isIntakeOperatorControl())
+            else if(Robot.getIntake().isIntakeOperatorControl() && !gamepad1IntakeFowards && !gamepad1IntakeBackwards)
                 Robot.getIntake().setIntakeExtenderPower(driverStation.getIntakeExtenderPower());
+            else if (Robot.getIntake().isIntakeOperatorControl() && !gamepad1IntakeBackwards)
+                Robot.getIntake().setIntakeExtenderPower(gamepad1.right_trigger);
+            else if (Robot.getIntake().isIntakeOperatorControl() && gamepad1IntakeFowards)
+                Robot.getIntake().setIntakeExtenderPower(-gamepad1.left_trigger);
+
+            if (gamepad1.right_trigger > .1)
+                gamepad1IntakeFowards = true;
+            else if (gamepad1.left_trigger > .1)
+                gamepad1IntakeBackwards = true;
+            else if (gamepad2.left_stick_y > .1 || gamepad2.left_stick_y < -.1)
+                gamepad2Intake = true;
 
             //Dumper
             if (gamepad2.y && Robot.getIntake().currentHopperDumperState != Intake.HopperDumperStates.PUSHING){
@@ -100,6 +116,10 @@ public class Teleop extends Team9889Linear {
                     shakerFirst = true;
                     shaker = false;
                 }
+            }
+
+            if (gamepad2.left_stick_button && gamepad2.right_stick_button){
+                Robot.overrideIntake = true;
             }
 
             // Set Camera Position

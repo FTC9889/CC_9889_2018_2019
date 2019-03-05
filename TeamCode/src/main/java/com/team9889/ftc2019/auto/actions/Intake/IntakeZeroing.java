@@ -10,9 +10,11 @@ import com.team9889.ftc2019.subsystems.Robot;
  */
 public class IntakeZeroing extends Action {
     private ElapsedTime intakeTimer = new ElapsedTime();
+    public double timeOut = 1750;
 
-    public IntakeZeroing(boolean intakeZeroingHardstop){
+    public IntakeZeroing(boolean intakeZeroingHardstop, double timeOut){
         Robot.getInstance().getIntake().intakeZeroingHardstop = intakeZeroingHardstop;
+        this.timeOut = timeOut;
     }
     public IntakeZeroing(){
         Robot.getInstance().getIntake().intakeZeroingHardstop = true;
@@ -36,7 +38,7 @@ public class IntakeZeroing extends Action {
 
     @Override
     public boolean isFinished() {
-        return Robot.getInstance().getIntake().isCurrentStateWantedState() || intakeTimer.milliseconds() > 1750;
+        return Robot.getInstance().getIntake().isCurrentStateWantedState() || intakeTimer.milliseconds() > timeOut;
     }
 
     @Override

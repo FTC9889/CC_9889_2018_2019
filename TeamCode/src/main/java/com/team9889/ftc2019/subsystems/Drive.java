@@ -240,7 +240,7 @@ public class Drive extends Subsystem {
                 this.DriveZeroPowerState(DcMotor.ZeroPowerBehavior.BRAKE);
                 break;
             case POSITION:
-                this.runToPosition();
+                this.withoutEncoders();
                 this.DriveZeroPowerState(DcMotor.ZeroPowerBehavior.BRAKE);
                 break;
             case OPERATOR_CONTROL:

@@ -31,6 +31,10 @@ public class Robot extends Subsystem {
     private int scoringCounter = 1;
     private boolean scoringCounterFirst = true;
 
+    public boolean overrideIntake = false;
+
+    public boolean autoSampled = true;
+
     private List<Subsystem> subsystems = Arrays.asList(
             mDrive, mLift, mIntake, mCamera, mDumper// Add more subsystems here as needed
     );

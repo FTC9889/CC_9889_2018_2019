@@ -11,6 +11,7 @@ import com.team9889.ftc2019.subsystems.Robot;
 public class IntakeGrabbing extends Action {
 
     private ElapsedTime timer = new ElapsedTime();
+    private boolean first = false;
 
     @Override
     public void setup(String args) {
@@ -26,6 +27,10 @@ public class IntakeGrabbing extends Action {
     @Override
     public void update() {
         Robot.getInstance().update(timer);
+        if (Robot.getInstance().getIntake().currentIntakeState == Intake.IntakeStates.GRABBING && first) {
+            Robot.getInstance().getIntake().trasitionTimer.reset();
+            first = false;
+        }
     }
 
     @Override

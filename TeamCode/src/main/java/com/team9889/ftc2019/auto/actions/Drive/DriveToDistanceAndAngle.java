@@ -39,10 +39,12 @@ public class DriveToDistanceAndAngle extends Action {
 
     @Override
     public void start() {
-        drivePid = new PID(0.07, 0, 0.25);
+        drivePid = new PID(0.07, 0, 0.65);
         anglePid = new PID(0.03, 0, 0.001);
 
         distance = getAverageDistance() + distance;
+
+        mDrive.DriveControlState(Drive.DriveControlStates.POSITION);
 
         Timer.reset();
     }
@@ -72,6 +74,7 @@ public class DriveToDistanceAndAngle extends Action {
     @Override
     public void done() {
         mDrive.setThrottleSteerPower(0,0);
+        mDrive.DriveControlState(Drive.DriveControlStates.OPERATOR_CONTROL);
     }
 
     private double getAverageDistance(){
