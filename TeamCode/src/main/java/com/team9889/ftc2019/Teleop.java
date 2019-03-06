@@ -56,26 +56,47 @@ public class Teleop extends Team9889Linear {
             }
 
             //Intake (gamepad2)
-            if(driverStation.getStartIntaking())
+            if(driverStation.getStartIntaking()) {
                 Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.INTAKING);
+                Robot.getIntake().setIntakeRotatorState(Intake.RotatorStates.DOWN);
+            }
             else if(Robot.getIntake().isIntakeOperatorControl() && !gamepad1IntakeFowards && !gamepad1IntakeBackwards)
                 Robot.getIntake().setIntakeExtenderPower(driverStation.getIntakeExtenderPower());
             else if (Robot.getIntake().isIntakeOperatorControl() && !gamepad1IntakeBackwards)
-                Robot.getIntake().setIntakeExtenderPower(gamepad1.right_trigger);
-            else if (Robot.getIntake().isIntakeOperatorControl() && gamepad1IntakeFowards)
-                Robot.getIntake().setIntakeExtenderPower(-gamepad1.left_trigger);
+                Robot.getIntake().setIntakeExtenderPower(-gamepad1.right_trigger);
+            else if (Robot.getIntake().isIntakeOperatorControl() && !gamepad1IntakeFowards)
+                Robot.getIntake().setIntakeExtenderPower(gamepad1.left_trigger);
 
-            if (gamepad1.right_trigger > .1)
+            if (gamepad1.right_trigger > .1) {
                 gamepad1IntakeFowards = true;
-            else if (gamepad1.left_trigger > .1)
+                gamepad1IntakeBackwards = false;
+                gamepad2Intake = false;
+            }
+            else if (gamepad1.left_trigger > .1) {
                 gamepad1IntakeBackwards = true;
-            else if (gamepad2.left_stick_y > .1 || gamepad2.left_stick_y < -.1)
+                gamepad1IntakeFowards = false;
+                gamepad2Intake = false;
+            }
+            else if (gamepad2.left_stick_y > .1 || gamepad2.left_stick_y < -.1) {
                 gamepad2Intake = true;
+                gamepad1IntakeFowards = false;
+                gamepad1IntakeBackwards = false;
+            }
+
+            telemetry.addData("right", gamepad1.right_trigger);
+            telemetry.addData("left", gamepad1.left_trigger);
+            telemetry.addData("2", gamepad2.left_stick_y);
+            telemetry.addData("fowards", gamepad1IntakeFowards);
+            telemetry.addData("back", gamepad1IntakeBackwards);
+            telemetry.addData("2", gamepad2Intake);
+            telemetry.update();
+
 
             //Dumper
-            if (gamepad2.y && Robot.getIntake().currentHopperDumperState != Intake.HopperDumperStates.PUSHING){
+            if (gamepad2.y && Robot.getIntake().currentHopperDumperState != Intake.HopperDumperStates.PUSHING || gamepad1.y && Robot.getIntake().currentHopperDumperState != Intake.HopperDumperStates.PUSHING){
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.SCORING);
                 first = true;
+                Robot.transitionDone = false;
             }else if (gamepad1.right_bumper && Robot.getLift().getCurrentState() == LiftStates.SCOREINGHEIGHT){
                 Robot.getDumper().collectingTimer.reset();
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.DUMP);
@@ -95,16 +116,27 @@ public class Teleop extends Team9889Linear {
                 first = true;
             }
 
-            if (gamepad2.right_bumper){
+            if (gamepad2.right_bumper || gamepad1.dpad_up){
                 Robot.getIntake().setIntakeRotatorState(Intake.RotatorStates.UP);
-            }else if (gamepad2.left_bumper){
+            }else if (gamepad2.left_bumper || gamepad1.dpad_down){
                 Robot.getIntake().setIntakeRotatorState(Intake.RotatorStates.DOWN);
             }
 
-            if (Robot.getIntake().isIntakeOperatorControl())
+            if (Robot.transitionDone){
+                setBackground(Color.YELLOW);
+                setBackground(Color.WHITE);
+                setBackground(Color.YELLOW);
+                setBackground(Color.WHITE);
+                setBackground(Color.YELLOW);
+                setBackground(Color.WHITE);
+                setBackground(Color.YELLOW);
+                setBackground(Color.WHITE);
+            }else if (Robot.getIntake().isIntakeOperatorControl() && !Robot.transitionDone)
                 setBackground(Color.GREEN);
             else
                 setBackground(Color.BLACK);
+
+
 
 
             if (shaker == true) {
@@ -112,6 +144,7 @@ public class Teleop extends Team9889Linear {
                     Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.SCORING);
                     shakerFirst = false;
                 }else if (timer.milliseconds() > 200){
+                    Robot.getDumper().collectingTimer.reset();
                     Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.DUMP);
                     shakerFirst = true;
                     shaker = false;

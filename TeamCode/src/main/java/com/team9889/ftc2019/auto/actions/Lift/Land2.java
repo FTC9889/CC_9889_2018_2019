@@ -52,6 +52,7 @@ public class Land2 extends Action {
     public void done() {
         Robot.getInstance().getLift().setLiftPower(0);
         Robot.getInstance().getDrive().setThrottleSteerPower(0, 0);
+        Robot.getInstance().setScorerStates(Robot.scorerStates.NULL);
         RobotLog.a("Finished Lowering");
     }
 }

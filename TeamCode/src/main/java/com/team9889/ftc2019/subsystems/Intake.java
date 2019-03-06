@@ -60,6 +60,7 @@ public class Intake extends Subsystem {
     public boolean autonomousFirst = true;
 
     public HopperDumperStates currentHopperDumperState;
+    public RotatorStates currentIntakeRotatorState;
 
     public boolean isIntakeOperatorControl() {
         return intakeOperatorControl;
@@ -127,6 +128,8 @@ public class Intake extends Subsystem {
         telemetry.addData("Intake Cruise Control", isIntakeOperatorControl());
 
         telemetry.addData("Hopper Dumper Position", getHopperDumperPosition());
+
+        telemetry.addData("Current Rotator State", currentIntakeRotatorState);
     }
 
     @Override
@@ -159,10 +162,10 @@ public class Intake extends Subsystem {
                     setHopperDumperState(HopperDumperStates.OPEN);
                     intake();
 
-                    if (firstIntaking) {
-                        setIntakeRotatorState(RotatorStates.DOWN);
-                        firstIntaking = false;
-                    }
+//                    if (firstIntaking) {
+//                        setIntakeRotatorState(RotatorStates.DOWN);
+//                        firstIntaking = false;
+//                    }
                 }
                 break;
             case GRABBING:
@@ -236,9 +239,9 @@ public class Intake extends Subsystem {
                 if (Robot.getInstance().getLift().getCurrentState() == LiftStates.READY) {
 
                     if (trasitionTimer.milliseconds() > 300) {
-                        setHopperDumperState(HopperDumperStates.OPEN);
                         if (trasitionTimer.milliseconds() > 500) {
                             if (transitionExtender) {
+                                setHopperDumperState(HopperDumperStates.OPEN);
                                 setIntakeExtenderPower(0);
                                 transitionExtender = false;
                                 Robot.getInstance().overrideIntake = false;
@@ -249,6 +252,7 @@ public class Intake extends Subsystem {
                             intakeOperatorControl = false;
                             setIntakeExtenderPower(1);
                             transitionExtender = true;
+                            Robot.getInstance().transitionDone = true;
                         }
                     }else {
                         setHopperDumperState(HopperDumperStates.PUSHING);
@@ -282,7 +286,8 @@ public class Intake extends Subsystem {
      */
     public void intake() {
         setIntakePower(1);
-        setIntakeRotatorState(RotatorStates.DOWN);
+        if (auto)
+            setIntakeRotatorState(RotatorStates.DOWN);
         setHopperDumperState(HopperDumperStates.OPEN);
     }
 
@@ -369,10 +374,12 @@ public class Intake extends Subsystem {
                     setIntakeRotatorPosition(0.4);
                 else
                     setIntakeRotatorPosition(0.35);
+                currentIntakeRotatorState = RotatorStates.UP;
                 break;
 
             case DOWN:
                 setIntakeRotatorPosition(.9);
+                currentIntakeRotatorState = RotatorStates.DOWN;
                 break;
         }
     }

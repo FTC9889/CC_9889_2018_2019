@@ -39,8 +39,8 @@ public class DriveToDistanceAndAngle extends Action {
 
     @Override
     public void start() {
-        drivePid = new PID(0.07, 0, 0.65);
-        anglePid = new PID(0.03, 0, 0.001);
+        drivePid = new PID(0.3, 0, 10);
+        anglePid = new PID(0.03, 0, 0.05);
 
         distance = getAverageDistance() + distance;
 
@@ -55,6 +55,9 @@ public class DriveToDistanceAndAngle extends Action {
         double throttle = drivePid.update(currentPosition, distance);
         throttle = CruiseLib.limitValue(throttle, currentMax);
 
+//        if(Math.abs(distance - getAverageDistance()) < Math.abs(2*distance/3) && currentMax > 0.25)
+//            currentMax -= maxIncrement/2;
+//        else
         if(currentMax < .8)
             currentMax += maxIncrement;
 

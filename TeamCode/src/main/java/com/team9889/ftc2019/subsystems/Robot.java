@@ -28,6 +28,8 @@ public class Robot extends Subsystem {
     private boolean firstIntaking = true;
     private boolean upperLimitWasPressed = false;
 
+    public boolean transitionDone = false;
+
     private int scoringCounter = 1;
     private boolean scoringCounterFirst = true;
 

@@ -31,7 +31,7 @@ public class DriverStation {
     }
 
     public boolean getStartIntaking(){
-        return gamepad2.a;
+        return gamepad2.a || gamepad1.x;
     }
 
     public boolean getStartScoringSquence() {

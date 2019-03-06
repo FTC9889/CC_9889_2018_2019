@@ -39,6 +39,11 @@ public class Constants {
         public final static double AngleToInchRatio = (Math.PI / 180.) * (WheelbaseWidth / 2.);
     }
 
+    public static void main(String[] args) {
+        double kp = 0.1168;
+        System.out.println(kp * 1);
+    }
+
    /*---------------------
     |                     |
     |       Intake        |
