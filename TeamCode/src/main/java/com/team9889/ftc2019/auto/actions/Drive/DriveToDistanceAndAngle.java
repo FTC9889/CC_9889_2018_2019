@@ -39,7 +39,7 @@ public class DriveToDistanceAndAngle extends Action {
 
     @Override
     public void start() {
-        drivePid = new PID(0.3, 0, 10);
+        drivePid = new PID(0.03, 0, .1);
         anglePid = new PID(0.03, 0, 0.05);
 
         distance = getAverageDistance() + distance;

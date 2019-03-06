@@ -29,7 +29,7 @@ public class DumperDump extends Action {
 
     @Override
     public boolean isFinished() {
-        return timer.milliseconds() > 1000;
+        return timer.milliseconds() > 400;
     }
 
     @Override

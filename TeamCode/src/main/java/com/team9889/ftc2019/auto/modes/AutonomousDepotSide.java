@@ -67,21 +67,15 @@ public class AutonomousDepotSide extends AutoModeBase {
 
         if (middle){ // Middle
             runAction(new DriveToDistanceAndAngle(-5, 0, 1000));
-            runAction(new Intake());
-            runAction(new Intake());
-            runAction(new Intake());
+            runAction(new Intake(3000));
         } else if (right){ //Right
                 runAction(new Turn(new Rotation2d(35, AngleUnit.DEGREES), 1000));
                 runAction(new IntakeInFront(10, 5000, false));
-                runAction(new Intake());
-                runAction(new Intake());
-                runAction(new Intake());
+                runAction(new Intake(3000));
         } else{ //Left
                 runAction(new Turn(new Rotation2d(-45, AngleUnit.DEGREES), 1000));
                 runAction(new IntakeInFront(12, 5000, false));
-                runAction(new Intake());
-                runAction(new Intake());
-                runAction(new Intake());
+                runAction(new Intake(3000));
             }
 
 //        Score Sample

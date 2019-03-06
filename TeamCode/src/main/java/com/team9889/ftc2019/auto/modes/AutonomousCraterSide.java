@@ -46,43 +46,40 @@ public class AutonomousCraterSide extends AutoModeBase {
 //            Grab Gold Block
             runAction(new IntakeInFront(20, 2000, false));
             Robot.getIntake().setIntakeHardStopState(com.team9889.ftc2019.subsystems.Intake.IntakeHardStop.UP);
-            runAction(new Intake());
+            runAction(new Intake(3000));
             ThreadAction(new IntakeZeroing(false, 2000));
-            runAction(new DriveToDistanceAndAngle(12.5, 0, 1000));
+            runAction(new DriveToDistanceAndAngle(30, 0, 1000));
         } else{
             Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTRIGHT);
             runAction(new Wait(500));
 
             if (Robot.getCamera().isGoldInfront()){ //Right
-                runAction(new DriveToDistanceAndAngle(5, 0, 1000));
+                runAction(new DriveToDistanceAndAngle(20, 0, 1000));
                 runAction(new Turn(new Rotation2d(45, AngleUnit.DEGREES), 2000));
-                runAction(new IntakeInFront(21, 2000, false));
+                runAction(new Turn(new Rotation2d(45, AngleUnit.DEGREES), 2000));
+                runAction(new IntakeInFront(18, 2000, false));
                 Robot.getIntake().setIntakeHardStopState(com.team9889.ftc2019.subsystems.Intake.IntakeHardStop.UP);
-                runAction(new Intake());
+                runAction(new Intake(3000));
                 runAction(new IntakeUp());
                 ThreadAction(new IntakeZeroing(false, 2000));
-                runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 2000));
-                runAction(new DriveToDistanceAndAngle(15, 0, 1000));
             } else{ //Left
-                runAction(new DriveToDistanceAndAngle(10, 0, 2000));
+                runAction(new DriveToDistanceAndAngle(15, 0, 2000));
                 runAction(new Turn(new Rotation2d(-45, AngleUnit.DEGREES), 2000));
-                runAction(new IntakeInFront(21, 2000, false));
+                runAction(new IntakeInFront(18, 2000, false));
                 Robot.getIntake().setIntakeHardStopState(com.team9889.ftc2019.subsystems.Intake.IntakeHardStop.UP);
-                runAction(new Intake());
+                runAction(new Intake(3000));
                 runAction(new IntakeUp());
                 ThreadAction(new IntakeZeroing(false, 2000));
-                runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 2000));
-                runAction(new DriveToDistanceAndAngle(15, 0, 1000));
             }
         }
 
 //        Drive to Wall
         runAction(new Turn(new Rotation2d(90, AngleUnit.DEGREES), 2000));
-        runAction(new DriveToDistanceAndAngle(-40, 90, 4000));
-        runAction(new Turn(new Rotation2d(45, AngleUnit.DEGREES), 3000));
+        runAction(new DriveToDistanceAndAngle(-45, 90, 3000));
+        runAction(new Turn(new Rotation2d(40, AngleUnit.DEGREES), 3000));
 
 //        Drive to Depot
-        runAction(new DriveToDistanceAndAngle(-45, 45, 1000));
+        runAction(new DriveToDistanceAndAngle(-30, 40, 1000));
 
 //        Dump Marker
         runAction(new DumperScoring());
@@ -90,8 +87,11 @@ public class AutonomousCraterSide extends AutoModeBase {
         runAction(new DumpMarker());
 
 //        Park in Crater
+
         ThreadAction(new DumperScoring());
-        runAction(new DriveToDistanceAndAngle(30, 45, 4000));
+        runAction(new DriveToDistanceAndAngle(40, 45, 4000));
+        Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.STORED);
+        Robot.update(matchTime);
         runAction(new IntakeInFront(20, 2000, true));
 
     }

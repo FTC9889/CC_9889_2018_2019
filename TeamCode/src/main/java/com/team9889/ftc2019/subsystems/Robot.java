@@ -28,6 +28,8 @@ public class Robot extends Subsystem {
     private boolean firstIntaking = true;
     private boolean upperLimitWasPressed = false;
 
+    private boolean auto;
+
     public boolean transitionDone = false;
 
     private int scoringCounter = 1;
@@ -71,6 +73,8 @@ public class Robot extends Subsystem {
             subsystem.init(hardwareMap, autonomous);
             RobotLog.a("=========== Finished Initialing " + subsystem.toString() + " ===========");
         }
+
+        this.auto = autonomous;
     }
 
     @Override

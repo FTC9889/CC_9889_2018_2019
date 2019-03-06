@@ -51,7 +51,7 @@ public class AutonomousCraterSideDouble extends AutoModeBase {
 
             runAction(new DriveRightMotor(new Rotation2d(-110, AngleUnit.DEGREES), 2000));
 
-            runAction(new Intake());
+            runAction(new Intake(3000));
             runAction(new Wait(500));
 
             runAction(new DriveRightMotor(new Rotation2d(105, AngleUnit.DEGREES), 3000));
@@ -117,7 +117,7 @@ public class AutonomousCraterSideDouble extends AutoModeBase {
 
                 // Knock off second sample
                 runAction(new DriveRightMotor(new Rotation2d(-90, AngleUnit.DEGREES), 1500));
-                runAction(new Intake());
+                runAction(new Intake(3000));
                 runAction(new DriveToDistanceAndAngle(16, 135, 1000));
                 runAction(new Wait(250));
                 runAction(new DriveToDistanceAndAngle(-13, 135, 1000));

@@ -21,6 +21,8 @@ public class Dumper extends Subsystem{
     public ElapsedTime collectingTimer = new ElapsedTime();
     public ElapsedTime dumperTimer = new ElapsedTime();
 
+    private boolean auto;
+
     public enum dumperStates{
         COLLECTING, STORED, SCORING, DUMP,DUMPTEAMMARKER, NULL
     }
@@ -34,6 +36,8 @@ public class Dumper extends Subsystem{
         dumperRotator = hardwareMap.get(Servo.class, Constants.DumperConstants.kDumperRotatorId);
 
         rightShoulder.setDirection(Servo.Direction.REVERSE);
+
+        this.auto = auto;
 
         if (auto){
             setDumperStates(dumperStates.STORED);
@@ -70,7 +74,7 @@ public class Dumper extends Subsystem{
                 if (timerReset) {
                     timer.reset();
                     timerReset = false;
-                } else if (timer.milliseconds() > 400) {
+                } else if (timer.milliseconds() > 400 || auto) {
                     setDumperRotatorPosition(.7);
                 }
                 break;

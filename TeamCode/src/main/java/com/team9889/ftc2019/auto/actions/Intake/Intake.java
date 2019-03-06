@@ -7,6 +7,11 @@ import com.team9889.ftc2019.subsystems.Robot;
 public class Intake extends Action {
 
     private ElapsedTime timer = new ElapsedTime();
+    private double timeOut;
+
+    public Intake(double timeOut){
+        this.timeOut = timeOut;
+    }
 
     @Override
     public void setup(String args) {
@@ -28,7 +33,7 @@ public class Intake extends Action {
 
     @Override
     public boolean isFinished() {
-        return Robot.getInstance().getIntake().revLeftHopper.getIN() < 2.5 || Robot.getInstance().getIntake().revRightHopper.getIN() < 2.5;
+        return Robot.getInstance().getIntake().revLeftHopper.getIN() < 2.5 || Robot.getInstance().getIntake().revRightHopper.getIN() < 2.5 || timer.milliseconds() > timeOut;
     }
 
     @Override
