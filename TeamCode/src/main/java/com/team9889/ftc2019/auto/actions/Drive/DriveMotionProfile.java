@@ -1,74 +1,165 @@
 package com.team9889.ftc2019.auto.actions.Drive;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.team9889.ftc2019.Constants;
 import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.subsystems.Drive;
 import com.team9889.ftc2019.subsystems.Robot;
+import com.team9889.lib.CruiseLib;
 import com.team9889.lib.android.FileWriter;
 import com.team9889.lib.control.controllers.MotionProfileFollower;
+import com.team9889.lib.control.controllers.PID;
+import com.team9889.lib.control.math.cartesian.Rotation2d;
 import com.team9889.lib.control.motion.MotionProfile;
+import com.team9889.lib.control.motion.MotionProfileSegment;
 import com.team9889.lib.control.motion.ProfileParameters;
 import com.team9889.lib.control.motion.TrapezoidalMotionProfile;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
 /**
  * Created by joshua9889 on 12/27/2018.
+ *
+ * Follow a straight line using a motion profile, pvda and pid controllers. PDVA is used on the
+ * motors and PID is used for gyro correction.
  */
 public class DriveMotionProfile extends Action {
 
+    // Test Locally
+    public static void main(String[] args) {
+       DriveMotionProfile driveMotionProfile =  new DriveMotionProfile(-5, new Rotation2d(0, AngleUnit.DEGREES));
+
+       driveMotionProfile.start();
+
+       while (!driveMotionProfile.isFinished())
+           driveMotionProfile.update();
+
+       driveMotionProfile.done();
+    }
+
+    // Drivetrain Object
     private Drive mDrive = Robot.getInstance().getDrive();
 
-    private ElapsedTime timer = new ElapsedTime();
-    private double leftOffset, rightOffset;
-    FileWriter fileWriter;
+    // File Writer to log all the things/
+    private FileWriter log;
 
+    // Wanted Distance (Inches)
     private double distance;
-    private ProfileParameters parameters = new ProfileParameters(1.745, 0.002522365);
-    private MotionProfile profile = new TrapezoidalMotionProfile();
-    private MotionProfileFollower motionProfileFollower =
-            new MotionProfileFollower(0, 0, 0.7306, 0.2);
 
-    public DriveMotionProfile(double distance) {
-        this.distance = distance / Constants.DriveConstants.ENCODER_TO_DISTANCE_RATIO;
+    //(Inches)
+    private double leftOffset = 0, rightOffset = 0;
+
+    // Parameters for the motion profile
+    // max_v = ((2 * PI * ((MotorFreeSpeed)/20)) / 60) * 0.8 (Inches / Second)
+    // timeToMaxSpeed = 3 (Seconds)
+    // max_a = max_v / timeToMaxSpeed (Inches / Second^2)
+    // max_a = [(((2 * Math.PI * ((5475.764) / 20)) / 60.0) * 0.8) / 3.0]
+    // lol just throw out the max_a calculation
+    // https://github.com/TeamOverdrive/Relic_Main/blob/master/TeamCode/src/main/java/com/team2753/Constants.java#L44
+    private ProfileParameters parameters = new ProfileParameters(
+            ((2 * Math.PI * ((5475.764) / 20)) / 60.0) * 0.8,
+            50
+    );
+
+    // Our profile we are following
+    private MotionProfile profile = new TrapezoidalMotionProfile();
+
+    // Our profile following controller
+    // v = 1 / (max_v * 0.8) = 0.034878408
+    // a = 1 / (max_a * 0.8) = 0.002635224
+    // See https://github.com/TeamOverdrive/Relic_Main/blob/master/TeamCode/src/main/java/com/team2753/Constants.java#L28
+    // Current v and a values based on ratio from above site
+    // TODO: CONFIRM THESE VALUES WORK. IN THEORY THEY ARE CORRECT
+    private MotionProfileFollower leftMotionProfileFollower =
+            new MotionProfileFollower(0.00118, 0, 0.0243, 3.8931E-7);
+    private MotionProfileFollower rightMotionProfileFollower =
+            new MotionProfileFollower(0.00118, 0, 0.0243, 3.8931E-7);
+
+    private ElapsedTime timer = new ElapsedTime();
+
+    // Wanted Angle
+    private Rotation2d angle;
+
+    // Angle is in radians
+    private PID angleCorrection = new PID(0.1/Math.PI, 0, 0.05);
+
+    private boolean simulation = false;
+
+    /**
+     * @param distance Distance to travel in Inches
+     * @param angle Angle to maintain
+     */
+    public DriveMotionProfile(double distance, Rotation2d angle) {
+        this.distance = distance;
+        this.angle = angle;
     }
 
     @Override
-    public void setup(String args) {
-
-    }
+    public void setup(String args) {}
 
     @Override
     public void start() {
-        fileWriter = new FileWriter("output.csv");
 
-        leftOffset = mDrive.getLeftTicks();
-        rightOffset = mDrive.getRightTicks();
+        // We can graph this data using the command >python plotMP.py driveMotionProfile.
+        // Requires py +3.6 i think and matplotlib
+        log = new FileWriter("driveMotionProfile.csv");
+
+        // Check if we are running in a simulation
+        try {
+            mDrive.DriveControlState(Drive.DriveControlStates.MOTION_PROFILE);
+            leftOffset = mDrive.getLeftDistance();
+            rightOffset = mDrive.getRightDistance();
+            simulation = false;
+        } catch (Exception e) {
+            simulation = true;
+        }
 
         profile.calculate(distance, parameters);
-        motionProfileFollower.setProfile(profile);
+
+        leftMotionProfileFollower.setProfile(profile);
+        rightMotionProfileFollower.setProfile(profile);
 
         timer.reset();
     }
 
     @Override
     public void update() {
-        double leftPosition = mDrive.getLeftTicks() - leftOffset;
-        double rightPosition = mDrive.getRightTicks() - rightOffset;
-        double currentDistance = (leftPosition + rightPosition)/2.0;
 
-        double speed = motionProfileFollower.update(currentDistance, timer.milliseconds());
-        fileWriter.write(speed);
-        mDrive.setThrottleSteerPower(speed, 0);
+        double leftPosition = 0, rightPosition = 0, currentDistance = 0;
+        double currentAngle, steer = 0;
+
+        if(!simulation) {
+            leftPosition = mDrive.getLeftDistance() - leftOffset;
+            rightPosition = mDrive.getRightDistance() - rightOffset;
+
+            currentAngle = mDrive.getAngle().getTheda(AngleUnit.DEGREES);
+            steer = angleCorrection.update(currentAngle, angle.getTheda(AngleUnit.RADIANS));
+        }
+
+        double leftSpeed = leftMotionProfileFollower.update(leftPosition, timer.seconds());
+        double rightSpeed = rightMotionProfileFollower.update(rightPosition, timer.seconds());
+
+        if(!simulation) {
+            mDrive.setLeftRightPower(leftSpeed + steer, rightSpeed - steer);
+            log.write(leftPosition + "," + rightPosition + "," +
+                    currentDistance + "," + CruiseLib.Average(leftSpeed, rightSpeed) + "," + steer);
+        } else {
+            MotionProfileSegment segment = profile.getOutput(timer.seconds());
+            log.write((leftSpeed*10) + "," + segment.getPosition() + "," +
+                    segment.getVelocity() + "," + segment.getAcceleration());
+        }
     }
 
     @Override
     public boolean isFinished() {
-        return motionProfileFollower.isFinished();
+        return (!leftMotionProfileFollower.isFinished() && !rightMotionProfileFollower.isFinished())
+                || timer.seconds() > profile.getTotalTime() * 1.2;
     }
 
     @Override
     public void done() {
-        mDrive.setLeftRightPower(0,0);
-        fileWriter.close();
+        if(!simulation)
+            mDrive.setLeftRightPower(0,0);
+
+        log.close();
     }
 }

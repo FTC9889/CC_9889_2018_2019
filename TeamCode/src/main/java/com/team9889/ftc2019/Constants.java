@@ -40,8 +40,9 @@ public class Constants {
     }
 
     public static void main(String[] args) {
-        double kp = 0.1168;
-        System.out.println(kp * 1);
+        double test = 1/DriveConstants.ENCODER_TO_DISTANCE_RATIO;
+        double ratio = test/59.417845420974258687049938325739;
+        System.out.println(0.00085 / ratio);
     }
 
    /*---------------------

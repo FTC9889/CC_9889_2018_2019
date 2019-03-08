@@ -24,7 +24,7 @@ public class TrapezoidalMotionProfile implements MotionProfile {
     // Demo
     public static void main(String... args){
         TrapezoidalMotionProfile profile =
-                new TrapezoidalMotionProfile(5, new ProfileParameters(2, 4));
+                new TrapezoidalMotionProfile(-48, new ProfileParameters(22.937, 15.646));
         FileWriter log = new FileWriter(profile.getClass().getSimpleName() + ".csv");
 
         int step = 1000;
@@ -51,13 +51,29 @@ public class TrapezoidalMotionProfile implements MotionProfile {
             direction = 1.0;
 
         this.setpoint = Math.abs(setpoint);
-        this.max_v = profileParameters.getMaxV();
-        this.max_a = profileParameters.getMaxA();
+        this.max_v = Math.abs(profileParameters.getMaxV());
+        this.max_a = Math.abs(profileParameters.getMaxA());
 
-        // This is in absolute time
-        timeToAcc = (max_v/max_a);
-        totalTime = (max_v/max_a)+(this.setpoint/max_v);
-        timeToCruise = totalTime-timeToAcc;
+        // This is used to prevent not continuous profiles
+        boolean invalidTimes = true;
+        while(invalidTimes) {
+            // This is in absolute time
+            timeToAcc = (max_v / max_a);
+            totalTime = (max_v / max_a) + (this.setpoint / max_v);
+            timeToCruise = totalTime - timeToAcc;
+
+            if (totalTime - 2 * timeToAcc < totalTime/10) {
+                max_v -= 0.01;
+            } else {
+                invalidTimes = false;
+            }
+
+            if(false) {
+                System.out.println("Acceleration Time: " + timeToAcc);
+                System.out.println("Cruise Time: " + timeToCruise);
+                System.out.println("Total Time: " + totalTime);
+            }
+        }
     }
 
     @Override

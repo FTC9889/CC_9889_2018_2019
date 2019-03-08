@@ -14,13 +14,13 @@ import com.team9889.lib.android.FileWriter;
 @Disabled
 public class MeasureMaxSpeedAndAccel extends Team9889Linear {
 
-    double LastLPosition = 0;
-    double LastRPosition = 0;
-    double LastLSpeed = 0;
-    double LastRSpeed = 0;
+    private double LastLPosition = 0;
+    private double LastRPosition = 0;
+    private double LastLSpeed = 0;
+    private double LastRSpeed = 0;
 
-    ElapsedTime dt = new ElapsedTime();
-    ElapsedTime timer = new ElapsedTime();
+    private ElapsedTime dt = new ElapsedTime();
+    private ElapsedTime timer = new ElapsedTime();
     @Override
     public void runOpMode() {
         waitForStart(true);
@@ -30,7 +30,7 @@ public class MeasureMaxSpeedAndAccel extends Team9889Linear {
         Robot.getDrive().setLeftRightPower(1, 1);
 
         timer.reset();
-        while (opModeIsActive() && timer.seconds()<3){
+        while (opModeIsActive() && timer.seconds()<3 && Robot.getDrive().getRightDistance() < 50){
             double leftPos = Robot.getDrive().getLeftTicks();
             double rightPos = Robot.getDrive().getRightTicks();
             double dr = dt.milliseconds();
