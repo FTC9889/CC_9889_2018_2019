@@ -74,7 +74,7 @@ public class Dumper extends Subsystem{
                 if (timerReset) {
                     timer.reset();
                     timerReset = false;
-                } else if (timer.milliseconds() > 400 || auto) {
+                } else if (timer.milliseconds() > 400/* || auto */) {
                     setDumperRotatorPosition(.7);
                 }
                 break;

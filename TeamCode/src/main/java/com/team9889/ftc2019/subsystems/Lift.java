@@ -122,7 +122,7 @@ public class Lift extends Subsystem {
                     break;
                 case READY:
                     if (auto)
-                        setLiftPosition(7);
+                        setLiftPosition(6);
                     else
                         setLiftPosition(6);
 

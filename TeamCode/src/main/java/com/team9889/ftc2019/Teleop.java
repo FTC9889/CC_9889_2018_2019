@@ -164,10 +164,10 @@ public class Teleop extends Team9889Linear {
             telemetry.addData("x", gamepad2.x);
             telemetry.addData("Driver Lift Control", Robot.getLift().liftOperatorControl);
 
-//            if (gamepad2.dpad_up) {
+            if (gamepad2.dpad_up) {
                 Robot.outputToTelemetry(telemetry);
                 telemetry.update();
-//            }
+            }
         }
 
         finalAction();

@@ -17,8 +17,10 @@ import com.team9889.ftc2019.auto.actions.Intake.IntakeUp;
 import com.team9889.ftc2019.auto.actions.Intake.IntakeZeroing;
 import com.team9889.ftc2019.auto.actions.Intake.Outtake;
 import com.team9889.ftc2019.auto.actions.Lift.Land2;
+import com.team9889.ftc2019.auto.actions.RobotUpdate;
 import com.team9889.ftc2019.auto.actions.Wait;
 import com.team9889.ftc2019.subsystems.Camera;
+import com.team9889.ftc2019.subsystems.Robot;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -83,8 +85,13 @@ public class AutonomousDepotSide extends AutoModeBase {
             runAction(new IntakeGrabbing());
             runAction(new Wait(500));
             runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
-            runAction(new DriveToDistanceAndAngle(-2, 0, 1000));
+//            runAction(new DriveToDistanceAndAngle(-2, 0, 1000));
             runAction(new DumperScoring());
+//            runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
+            ThreadAction(new RobotUpdate(1900));
+            ThreadAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
+            runAction(new Wait(2000));
+            Robot.getDumper().collectingTimer.reset();
             runAction(new DumperDump());
         }
 
@@ -92,13 +99,12 @@ public class AutonomousDepotSide extends AutoModeBase {
 //            Drive to Crater
         runAction(new IntakeUp());
         ThreadAction(new IntakeZeroing(false, 1500));
-        if (middle)
-            runAction(new DriveToDistanceAndAngle(8, 0, 1000));
-        else
-            runAction(new DriveToDistanceAndAngle(4, 0, 1000));
+        runAction(new DriveToDistanceAndAngle(10, 0, 1000));
         runAction(new Turn(new Rotation2d(-90, AngleUnit.DEGREES), 1000));
-        runAction(new DriveToDistanceAndAngle(36, -90, 3000));
+        runAction(new DriveToDistanceAndAngle(40, -90, 3000));
         runAction(new Turn(new Rotation2d(-120, AngleUnit.DEGREES), 2000));
+        Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.STORED);
+        Robot.update(matchTime);
         runAction(new IntakeInFront(20, 5000, true));
     }
 }

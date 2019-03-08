@@ -75,11 +75,11 @@ public class AutonomousCraterSide extends AutoModeBase {
 
 //        Drive to Wall
         runAction(new Turn(new Rotation2d(90, AngleUnit.DEGREES), 2000));
-        runAction(new DriveToDistanceAndAngle(-45, 90, 3000));
-        runAction(new Turn(new Rotation2d(40, AngleUnit.DEGREES), 3000));
+        runAction(new DriveToDistanceAndAngle(-48, 90, 3000));
+        runAction(new Turn(new Rotation2d(45, AngleUnit.DEGREES), 3000));
 
 //        Drive to Depot
-        runAction(new DriveToDistanceAndAngle(-30, 40, 1000));
+        runAction(new DriveToDistanceAndAngle(-25, 45, 1000));
 
 //        Dump Marker
         runAction(new DumperScoring());
