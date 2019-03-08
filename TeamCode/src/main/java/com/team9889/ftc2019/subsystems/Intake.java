@@ -47,7 +47,7 @@ public class Intake extends Subsystem {
     private boolean auto;
 
     private boolean firstIntaking = true;
-    public ElapsedTime trasitionTimer = new ElapsedTime();
+    public ElapsedTime transitionTimer = new ElapsedTime();
 
     public ElapsedTime hardStopTimer = new ElapsedTime();
     public ElapsedTime collectingTimer = new ElapsedTime();
@@ -161,11 +161,6 @@ public class Intake extends Subsystem {
 
                     setHopperDumperState(HopperDumperStates.OPEN);
                     intake();
-
-//                    if (firstIntaking) {
-//                        setIntakeRotatorState(RotatorStates.DOWN);
-//                        firstIntaking = false;
-//                    }
                 }
                 break;
             case GRABBING:
@@ -173,7 +168,7 @@ public class Intake extends Subsystem {
                     setIntakeExtenderPower(0);
                     setIntakePower(0);
                     intakeOperatorControl = true;
-                    trasitionTimer.reset();
+                    transitionTimer.reset();
                     currentIntakeState = IntakeStates.GRABBING;
                     wantedIntakeState = IntakeStates.TRANSITION;
                 }else{
@@ -215,7 +210,6 @@ public class Intake extends Subsystem {
                     currentIntakeState = IntakeStates.AUTONOMOUS;
                 }else {
                     setIntakeExtenderPower(1);
-//                    setIntakeHardStopState(IntakeHardStop.DOWN);
                     autonomousFirst = true;
                 }
                 break;
@@ -232,30 +226,24 @@ public class Intake extends Subsystem {
                     setIntakeExtenderPower(0);
                     currentIntakeState = IntakeStates.EXTENDED;
                 }
-
                 break;
 
             case TRANSITION:
                 if (Robot.getInstance().getLift().getCurrentState() == LiftStates.READY) {
-
-                    if (trasitionTimer.milliseconds() > 300) {
-                        if (trasitionTimer.milliseconds() > 500) {
-                            if (transitionExtender) {
-                                setHopperDumperState(HopperDumperStates.OPEN);
-                                setIntakeExtenderPower(0);
-                                transitionExtender = false;
-                                Robot.getInstance().overrideIntake = false;
-                                currentIntakeState = IntakeStates.TRANSITION;
-                            }
-                            intakeOperatorControl = true;
-                        } else {
-                            intakeOperatorControl = false;
-                            setIntakeExtenderPower(1);
-                            transitionExtender = true;
-                            Robot.getInstance().transitionDone = true;
-                        }
-                    }else {
+                    if(transitionTimer.milliseconds() < 300)
                         setHopperDumperState(HopperDumperStates.PUSHING);
+                    else if(transitionTimer.milliseconds() < 500) {
+                        intakeOperatorControl = false;
+                        setIntakeExtenderPower(1);
+                        transitionExtender = true;
+                        Robot.getInstance().transitionDone = true;
+                    } else if(transitionTimer.milliseconds() > 500 && transitionTimer.milliseconds() < 1000) {
+                        setHopperDumperState(HopperDumperStates.OPEN);
+                        setIntakeExtenderPower(0);
+                        transitionExtender = false;
+                        Robot.getInstance().overrideIntake = false;
+                        currentIntakeState = IntakeStates.TRANSITION;
+                        intakeOperatorControl = true;
                     }
                 }
                 break;

@@ -19,7 +19,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 /**
  * Created by joshua9889 on 12/27/2018.
  *
- * Follow a straight line using a motion profile, pvda and pid controllers. PDVA is used on the
+ * Follow a straight line using a motion profile, PDVA and PID controllers. PDVA is used on the
  * motors and PID is used for gyro correction.
  */
 public class DriveMotionProfile extends Action {
@@ -70,9 +70,9 @@ public class DriveMotionProfile extends Action {
     // Current v and a values based on ratio from above site
     // TODO: CONFIRM THESE VALUES WORK. IN THEORY THEY ARE CORRECT
     private MotionProfileFollower leftMotionProfileFollower =
-            new MotionProfileFollower(0.00118, 0, 0.0243, 3.8931E-7);
+            new MotionProfileFollower(0.00118, 0, 0.0243, 0.00000038931);
     private MotionProfileFollower rightMotionProfileFollower =
-            new MotionProfileFollower(0.00118, 0, 0.0243, 3.8931E-7);
+            new MotionProfileFollower(0.00118, 0, 0.0243, 0.00000038931);
 
     private ElapsedTime timer = new ElapsedTime();
 
@@ -82,6 +82,7 @@ public class DriveMotionProfile extends Action {
     // Angle is in radians
     private PID angleCorrection = new PID(0.1/Math.PI, 0, 0.05);
 
+    // Run on computer?
     private boolean simulation = false;
 
     /**

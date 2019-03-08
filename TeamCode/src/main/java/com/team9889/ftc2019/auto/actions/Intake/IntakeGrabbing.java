@@ -28,7 +28,7 @@ public class IntakeGrabbing extends Action {
     public void update() {
         Robot.getInstance().update(timer);
         if (Robot.getInstance().getIntake().currentIntakeState == Intake.IntakeStates.GRABBING && first) {
-            Robot.getInstance().getIntake().trasitionTimer.reset();
+            Robot.getInstance().getIntake().transitionTimer.reset();
             first = false;
         }
     }

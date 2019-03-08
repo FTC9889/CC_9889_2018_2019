@@ -7,7 +7,6 @@ import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.ftc2019.subsystems.Camera;
 import com.team9889.ftc2019.subsystems.Dumper;
 import com.team9889.ftc2019.subsystems.Intake;
-import com.team9889.ftc2019.subsystems.Robot;
 
 /**
  * Created by MannoMation on 2/15/2019.
@@ -48,7 +47,7 @@ public class TestDumperPositions extends Team9889Linear {
             }else if (gamepad1.left_bumper){
                 Robot.getIntake().setHopperDumperState(Intake.HopperDumperStates.HOLDING);
             }else if (gamepad1.dpad_down){
-                Robot.getIntake().trasitionTimer.reset();
+                Robot.getIntake().transitionTimer.reset();
                 Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.TRANSITION);
             }
 

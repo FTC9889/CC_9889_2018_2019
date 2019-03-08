@@ -9,8 +9,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.Constants;
-import com.team9889.ftc2019.JudgingRoomTeleop;
-import com.team9889.ftc2019.Teleop;
 import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.lib.control.controllers.PID;
 
@@ -196,7 +194,7 @@ public class Lift extends Subsystem {
     }
 
     private boolean inPosition() {
-        return Math.abs(pid.getError()) < 0.75;
+        return Math.abs(pid.getError()) < 0.5;
     }
 
     public boolean getUpperLimitPressed() {

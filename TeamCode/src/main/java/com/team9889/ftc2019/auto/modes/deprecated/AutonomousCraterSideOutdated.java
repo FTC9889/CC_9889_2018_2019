@@ -1,4 +1,4 @@
-package com.team9889.ftc2019.auto.modes;
+package com.team9889.ftc2019.auto.modes.deprecated;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -11,7 +11,6 @@ import com.team9889.ftc2019.auto.actions.Intake.IntakeZeroing;
 import com.team9889.ftc2019.auto.actions.Intake.Outtake;
 import com.team9889.ftc2019.auto.actions.Lift.Land2;
 import com.team9889.ftc2019.auto.actions.Wait;
-import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.ftc2019.subsystems.Camera;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
 
@@ -23,6 +22,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @Disabled
 @Autonomous(group = "Competition Autonomous")
+@Deprecated
 public class AutonomousCraterSideOutdated extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {
