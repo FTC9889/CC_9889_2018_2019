@@ -144,7 +144,7 @@ public class Intake extends Subsystem {
                     }else if (settleTimer.milliseconds() > 150) {
                         intakeOperatorControl = false;
                         setIntakePower(-0.8);
-
+                        Robot.getInstance().overrideIntake = false;
                         currentIntakeState = IntakeStates.INTAKING;
                         hardStopTimer.reset();
                         collectingTimer.reset();

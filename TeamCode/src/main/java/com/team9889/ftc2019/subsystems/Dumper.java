@@ -79,7 +79,7 @@ public class Dumper extends Subsystem{
 
             case COLLECTING:
                 setArmPosition(0);
-                setDumperRotatorPosition(.15);
+                setDumperRotatorPosition(0.15);
                 timerReset = true;
                 break;
 
