@@ -1,6 +1,7 @@
 package com.team9889.ftc2019.test.subsystems.drive;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.team9889.ftc2019.DriverStation;
 import com.team9889.ftc2019.Team9889Linear;
 
@@ -9,6 +10,7 @@ import com.team9889.ftc2019.Team9889Linear;
  */
 
 @Autonomous(group = "Tests")
+@Disabled
 public class DrivetrainTeleop extends Team9889Linear {
     private DriverStation driverStation;
 

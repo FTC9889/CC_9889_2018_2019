@@ -2,6 +2,7 @@ package com.team9889.ftc2019.auto.modes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.team9889.ftc2019.auto.AutoModeBase;
+import com.team9889.ftc2019.auto.actions.Drive.DriveMotionProfile;
 import com.team9889.ftc2019.auto.actions.Drive.DriveToDistanceAndAngle;
 import com.team9889.ftc2019.auto.actions.Drive.Turn;
 import com.team9889.ftc2019.auto.actions.Dumper.DumpMarker;
@@ -12,8 +13,10 @@ import com.team9889.ftc2019.auto.actions.Intake.IntakeInFront;
 import com.team9889.ftc2019.auto.actions.Intake.IntakeUp;
 import com.team9889.ftc2019.auto.actions.Intake.IntakeZeroing;
 import com.team9889.ftc2019.auto.actions.Lift.Land2;
+import com.team9889.ftc2019.auto.actions.LiftReady;
 import com.team9889.ftc2019.auto.actions.Wait;
 import com.team9889.ftc2019.subsystems.Camera;
+import com.team9889.ftc2019.subsystems.Dumper;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -22,8 +25,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
  * Created by MannoMation on 1/26/2019.
  */
 
-@Autonomous(group = "Standard")
-public class AutonomousCraterSide extends AutoModeBase {
+@Autonomous(group = "Motion Profiled : Competition Autonomous")
+public class AutonomousCraterSideMotionProfile extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {
         Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.STORED);
@@ -41,13 +44,15 @@ public class AutonomousCraterSide extends AutoModeBase {
             runAction(new Intake(3000));
 
             ThreadAction(new IntakeZeroing(false, 2000));
-            runAction(new DriveToDistanceAndAngle(30, 0, 1000));
+            runAction(new DriveMotionProfile(20, 0));
+//            runAction(new DriveToDistanceAndAngle(30, 0, 1000));
         } else{
             Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTRIGHT);
             runAction(new Wait(500));
 
             if (Robot.getCamera().isGoldInfront()){ //Right
-                runAction(new DriveToDistanceAndAngle(20, 0, 1000));
+                runAction(new DriveMotionProfile(20, 0));
+//                runAction(new DriveToDistanceAndAngle(20, 0, 1000));
                 runAction(new Turn(new Rotation2d(45, AngleUnit.DEGREES), 2000));
                 runAction(new Turn(new Rotation2d(45, AngleUnit.DEGREES), 2000));
                 runAction(new IntakeInFront(18, 2000, false));
@@ -55,6 +60,7 @@ public class AutonomousCraterSide extends AutoModeBase {
                 runAction(new Intake(3000));
                 runAction(new IntakeUp());
                 ThreadAction(new IntakeZeroing(false, 2000));
+                runAction(new DriveMotionProfile(-5, 45));
             } else{ //Left
                 runAction(new DriveToDistanceAndAngle(15, 0, 2000));
                 runAction(new Turn(new Rotation2d(-45, AngleUnit.DEGREES), 2000));
@@ -68,25 +74,25 @@ public class AutonomousCraterSide extends AutoModeBase {
 
         // Drive to Wall
         runAction(new Turn(new Rotation2d(90, AngleUnit.DEGREES), 2000));
-        runAction(new DriveToDistanceAndAngle(-48, 90, 3000));
+        runAction(new DriveMotionProfile(-48, 90));
+//        runAction(new DriveToDistanceAndAngle(-48, 90, 3000));
         runAction(new Turn(new Rotation2d(45, AngleUnit.DEGREES), 3000));
 
         // Drive to Depot
-        runAction(new DriveToDistanceAndAngle(-25, 45, 1000));
+        runAction(new DriveMotionProfile(-30, 45));
+//        runAction(new DriveToDistanceAndAngle(-25, 45, 1000));
 
         // Dump Marker
-        runAction(new DumperScoring());
+        Robot.getDumper().setDumperStates(Dumper.dumperStates.DUMPAUTO);
         runAction(new DumperInit(2000));
         runAction(new DumpMarker());
 
         // Park in Crater
         ThreadAction(new DumperScoring());
-        runAction(new DriveToDistanceAndAngle(40, 45, 4000));
-
-        Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.STORED);
-        Robot.update(matchTime);
-
-        runAction(new IntakeInFront(20, 2000, true));
+        runAction(new DriveMotionProfile(40, 45));
+        ThreadAction(new IntakeInFront(20, 2000, true));
+//        runAction(new DriveToDistanceAndAngle(40, 45, 4000));
+        runAction(new LiftReady());
 
     }
 }

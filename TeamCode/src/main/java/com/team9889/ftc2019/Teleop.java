@@ -2,17 +2,12 @@ package com.team9889.ftc2019;
 
 import android.graphics.Color;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.ftc2019.subsystems.Camera;
 import com.team9889.ftc2019.subsystems.Intake;
-import com.team9889.ftc2019.subsystems.Robot;
 import com.team9889.lib.android.FileWriter;
-
-import java.util.Arrays;
 
 /**
  * Created by MannoMation on 1/14/2019.
@@ -154,6 +149,9 @@ public class Teleop extends Team9889Linear {
             if (gamepad2.x){
                 Robot.overrideIntake = true;
             }
+
+            if(gamepad2.right_trigger > 0.3)
+                Robot.getIntake().setIntakeHardStopState(Intake.IntakeHardStop.DOWN);
 
             // Set Camera Position
             Robot.getCamera().setCameraPosition(Camera.CameraPositions.TELEOP);

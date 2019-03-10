@@ -23,7 +23,7 @@ public class Dumper extends Subsystem{
     private boolean auto;
 
     public enum dumperStates{
-        COLLECTING, STORED, SCORING, DUMP,DUMPTEAMMARKER, NULL
+        COLLECTING, STORED, SCORING, DUMP,DUMPAUTO, DUMPTEAMMARKER, NULL
     }
 
     public dumperStates wantedDumperState = dumperStates.NULL;
@@ -77,9 +77,19 @@ public class Dumper extends Subsystem{
                 }
                 break;
 
+            case DUMPAUTO:
+                setArmPosition(.65);
+                setDumperRotatorPosition(.7);
+
+                if (timerReset) {
+                    timer.reset();
+                    timerReset = false;
+                }
+                break;
+
             case COLLECTING:
                 setArmPosition(0);
-                setDumperRotatorPosition(.15);
+                setDumperRotatorPosition(.22);
                 timerReset = true;
                 break;
 

@@ -13,6 +13,7 @@ public class MotionProfileFollower {
     private MotionProfile profileToFollow;
     private double lastTime, lastError;
 
+    private double currentTime = 0;
     private double currentPosition = 0;
 
     public MotionProfileFollower(double p, double d, double v, double a){
@@ -28,6 +29,7 @@ public class MotionProfileFollower {
 
     public double update(double currentPosition, double currentTime) {
         this.currentPosition = currentPosition;
+        this.currentTime = currentTime;
 
         MotionProfileSegment profile = profileToFollow.getOutput(currentTime);
 
@@ -46,6 +48,6 @@ public class MotionProfileFollower {
     }
 
     public boolean isFinished(){
-        return currentPosition >= profileToFollow.getOutput(profileToFollow.getTotalTime()).getPosition();
+        return currentTime >= profileToFollow.getTotalTime();
     }
 }

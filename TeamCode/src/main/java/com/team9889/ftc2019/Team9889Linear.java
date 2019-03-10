@@ -52,6 +52,7 @@ public abstract class Team9889Linear extends LinearOpMode {
             // Autonomous Init Loop code
             while(isInInitLoop()){
                 telemetry.addData("Waiting for Start","");
+                Robot.outputToTelemetry(telemetry);
                 telemetry.update();
 
                 Robot.getLift().update(matchTime);

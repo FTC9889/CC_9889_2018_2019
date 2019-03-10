@@ -1,5 +1,6 @@
 package com.team9889.ftc2019.test.subsystems.dumper;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.Team9889Linear;
@@ -13,6 +14,7 @@ import com.team9889.ftc2019.subsystems.Intake;
  */
 
 @TeleOp
+@Disabled
 public class TestDumperPositions extends Team9889Linear {
 
     private ElapsedTime loopTimer = new ElapsedTime();

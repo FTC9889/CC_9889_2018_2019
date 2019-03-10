@@ -110,7 +110,7 @@ public class Intake extends Subsystem {
         telemetry.addData("Left Rev Distance", revLeftHopper.getIN());
         telemetry.addData("Right Rev Distance", revRightHopper.getIN());
         telemetry.addData("Minerals Detected", twoMineralsDetected());
-        telemetry.addData("Width", width);
+        telemetry.addData("Width", getWidth());
 
         telemetry.addData("IntakePower", intakeMotor.getPower());
         telemetry.addData("Intake Extender Real Position", getIntakeExtenderPosition());
@@ -144,6 +144,7 @@ public class Intake extends Subsystem {
                     }else if (settleTimer.milliseconds() > 150) {
                         intakeOperatorControl = false;
                         setIntakePower(-0.8);
+                        Robot.getInstance().overrideIntake = false;
 
                         currentIntakeState = IntakeStates.INTAKING;
                         hardStopTimer.reset();
@@ -361,7 +362,7 @@ public class Intake extends Subsystem {
                 if (!auto)
                     setIntakeRotatorPosition(0.4);
                 else
-                    setIntakeRotatorPosition(0.35);
+                    setIntakeRotatorPosition(0.32);
                 currentIntakeRotatorState = RotatorStates.UP;
                 break;
 
@@ -440,10 +441,12 @@ public class Intake extends Subsystem {
     /**
      * @return If the both mineral detectors see a mineral
      */
-    private double width = 0;
     private boolean twoMineralsDetected() {
-        width = (6 - (revLeftHopper.getIN() + revRightHopper.getIN()));
-        return width > 1.5;
+        return getWidth() > 1.5;
+    }
+
+    public double getWidth() {
+        return (6 - (revLeftHopper.getIN() + revRightHopper.getIN()));
     }
 
     public boolean inPosition(){

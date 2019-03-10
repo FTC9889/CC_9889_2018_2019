@@ -10,7 +10,7 @@ import com.team9889.ftc2019.subsystems.Camera;
  * Created by MannoMation on 1/19/2019.
  */
 
-@Autonomous
+@Autonomous(group = "Test")
 public class TestLand extends AutoModeBase {
     @Override
     public void run(AllianceColor allianceColor) {

@@ -2,6 +2,7 @@ package com.team9889.ftc2019.auto.modes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.team9889.ftc2019.auto.AutoModeBase;
+import com.team9889.ftc2019.auto.actions.Drive.DriveMotionProfile;
 import com.team9889.ftc2019.auto.actions.Drive.DriveToDistanceAndAngle;
 import com.team9889.ftc2019.auto.actions.Drive.Turn;
 import com.team9889.ftc2019.auto.actions.Dumper.DumperCollecting;
@@ -25,8 +26,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
  * Created by MannoMation on 1/5/2019.
  */
 
-@Autonomous(group = "Standard")
-public class AutonomousDepotSide extends AutoModeBase {
+@Autonomous(group = "Motion Profiled : Competition Autonomous")
+public class AutonomousDepotSideMotionProfile extends AutoModeBase {
 
     private boolean middle = false;
     private boolean right = false;
@@ -49,7 +50,7 @@ public class AutonomousDepotSide extends AutoModeBase {
         }
 
         runAction(new IntakeUp());
-        runAction(new DriveToDistanceAndAngle(24, 0, 1000));
+        runAction(new DriveMotionProfile(24, 0));
         runAction(new IntakeInFront(22, 5000, true));
         runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
         Robot.getIntake().setIntakeHardStopState(com.team9889.ftc2019.subsystems.Intake.IntakeHardStop.UP);
@@ -60,30 +61,41 @@ public class AutonomousDepotSide extends AutoModeBase {
 
 //        runAction(new Wait(1000));
 
-        ThreadAction(new DriveToDistanceAndAngle(-8, 0, 1000));
-        runAction(new IntakeZeroing(false, 1000));
+
 
         if (middle){ // Middle
-            runAction(new DriveToDistanceAndAngle(-5, 0, 1000));
+            ThreadAction(new DriveMotionProfile(-17, 0));
+            runAction(new IntakeZeroing(false, 1000));
             runAction(new Intake(3000));
         } else if (right){ //Right
-                runAction(new Turn(new Rotation2d(35, AngleUnit.DEGREES), 1000));
-                runAction(new IntakeInFront(10, 5000, false));
-                runAction(new Intake(3000));
-        } else{ //Left
-                runAction(new Turn(new Rotation2d(-45, AngleUnit.DEGREES), 1000));
-                runAction(new IntakeInFront(12, 5000, false));
-                runAction(new Intake(3000));
-            }
+            ThreadAction(new DriveMotionProfile(-10, 0));
+            runAction(new IntakeZeroing(false, 1000));
 
-//        Score Sample
+            runAction(new Turn(new Rotation2d(35, AngleUnit.DEGREES), 1000));
+            runAction(new IntakeInFront(6, 5000, false));
+            runAction(new Intake(3000));
+        } else{ //Left
+            ThreadAction(new DriveMotionProfile(-10, 0));
+            runAction(new IntakeZeroing(false, 1000));
+
+            runAction(new Turn(new Rotation2d(-45, AngleUnit.DEGREES), 1000));
+            runAction(new IntakeInFront(6, 5000, false));
+            runAction(new Intake(3000));
+        }
+
+        // Score Sample
         if (Robot.autoSampled) {
             runAction(new IntakeGrabbing());
-            runAction(new Wait(500));
+            runAction(new Wait(250));
             runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
-//            runAction(new DriveToDistanceAndAngle(-2, 0, 1000));
+
+            if(middle)
+                runAction(new DriveToDistanceAndAngle(-5, 0, 2000));
+            else
+                runAction(new DriveToDistanceAndAngle(-8, 0, 2000));
+
+            runAction(new Wait(250));
             runAction(new DumperScoring());
-//            runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
             ThreadAction(new RobotUpdate(1900));
             ThreadAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
             runAction(new Wait(2000));
@@ -92,13 +104,17 @@ public class AutonomousDepotSide extends AutoModeBase {
         }
 
 
-//            Drive to Crater
+        // Drive to Crater
         runAction(new IntakeUp());
         ThreadAction(new IntakeZeroing(false, 1500));
-        runAction(new DriveToDistanceAndAngle(10, 0, 1000));
+
+        runAction(new DriveMotionProfile(7, 0));
         runAction(new Turn(new Rotation2d(-90, AngleUnit.DEGREES), 1000));
-        runAction(new DriveToDistanceAndAngle(40, -90, 3000));
+
+        runAction(new DriveMotionProfile(40, -90));
+
         runAction(new Turn(new Rotation2d(-120, AngleUnit.DEGREES), 2000));
+
         Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.STORED);
         Robot.update(matchTime);
         runAction(new IntakeInFront(20, 5000, true));

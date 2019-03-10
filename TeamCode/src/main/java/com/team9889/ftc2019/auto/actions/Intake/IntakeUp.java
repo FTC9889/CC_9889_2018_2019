@@ -31,7 +31,7 @@ public class IntakeUp extends Action {
 
     @Override
     public boolean isFinished() {
-        return timer.milliseconds() > 1000;
+        return timer.milliseconds() > 500;
     }
 
     @Override

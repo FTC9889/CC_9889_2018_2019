@@ -1,5 +1,6 @@
 package com.team9889.ftc2019.test.subsystems.intake;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.team9889.ftc2019.Team9889Linear;
 
@@ -8,6 +9,7 @@ import com.team9889.ftc2019.Team9889Linear;
  */
 
 @TeleOp
+@Disabled
 public class TestHardStopPosition extends Team9889Linear {
     @Override
     public void runOpMode() throws InterruptedException {
