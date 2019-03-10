@@ -146,7 +146,7 @@ public class Teleop extends Team9889Linear {
                 }
             }
 
-            if (gamepad2.x){
+            if (gamepad2.left_trigger > .1){
                 Robot.overrideIntake = true;
             }
 
