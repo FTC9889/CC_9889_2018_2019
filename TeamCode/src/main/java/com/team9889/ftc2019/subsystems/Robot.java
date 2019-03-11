@@ -28,6 +28,9 @@ public class Robot extends Subsystem {
     private boolean firstIntaking = true;
     private boolean upperLimitWasPressed = false;
 
+    private ElapsedTime liftUpTimer = new ElapsedTime();
+    private boolean liftUpFirst = true;
+
     private boolean auto;
 
     public boolean transitionDone = false;
@@ -103,6 +106,7 @@ public class Robot extends Subsystem {
             case STORED:
                 getDumper().wantedDumperState = Dumper.dumperStates.STORED;
                 getLift().setLiftState(LiftStates.DOWN);
+                liftUpTimer.reset();
                 timerReset = true;
             break;
 
@@ -113,6 +117,7 @@ public class Robot extends Subsystem {
                     getDumper().wantedDumperState = Dumper.dumperStates.SCORING;
                 }
                 timerReset = true;
+                liftUpTimer.reset();
 
                 if (scoringCounterFirst) {
                     scoringCounter++;
@@ -128,7 +133,7 @@ public class Robot extends Subsystem {
                 }else {
                     getDumper().wantedDumperState = Dumper.dumperStates.COLLECTING;
                     getLift().setLiftState(LiftStates.UP);
-                    if (getLift().getCurrentState() == LiftStates.UP) {
+                    if (getLift().getCurrentState() == LiftStates.UP || liftUpTimer.milliseconds() > 5000) {
                         getLift().setLiftState(LiftStates.READY);
                         scoringCounter = 0;
                     }
@@ -139,6 +144,7 @@ public class Robot extends Subsystem {
             case DUMP:
                 getDumper().wantedDumperState = Dumper.dumperStates.DUMP;
                 getLift().setLiftState(LiftStates.SCOREINGHEIGHT);
+                liftUpTimer.reset();
                 timerReset = true;
                 break;
 
@@ -146,11 +152,13 @@ public class Robot extends Subsystem {
                 getLift().setLiftState(LiftStates.READY);
                 if (getLift().isCurrentWantedState())
                     getDumper().setDumperStates(Dumper.dumperStates.SCORING);
+                liftUpTimer.reset();
                 timerReset = true;
                 break;
 
             case NULL:
                 getDumper().wantedDumperState = Dumper.dumperStates.NULL;
+                liftUpTimer.reset();
                 timerReset = true;
                 break;
         }

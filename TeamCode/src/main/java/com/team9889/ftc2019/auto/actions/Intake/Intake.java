@@ -28,7 +28,10 @@ public class Intake extends Action {
     @Override
     public void update() {
         Robot.getInstance().update(timer);
-        Robot.getInstance().getIntake().setIntakeExtenderPower(.3);
+        if (Robot.getInstance().getIntake().getIntakeExtenderPosition() < 20){
+            Robot.getInstance().getIntake().setIntakeExtenderPower(.3);
+        }else
+            Robot.getInstance().getIntake().setIntakeExtenderPower(0);
     }
 
     @Override

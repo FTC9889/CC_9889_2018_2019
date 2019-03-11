@@ -360,10 +360,10 @@ public class Intake extends Subsystem {
     public void setIntakeRotatorState(RotatorStates state) {
         switch (state) {
             case UP:
-                if (!auto)
+                if (auto)
                     setIntakeRotatorPosition(0.4);
                 else
-                    setIntakeRotatorPosition(0.32);
+                    setIntakeRotatorPosition(0.46);
                 currentIntakeRotatorState = RotatorStates.UP;
                 break;
 

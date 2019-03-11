@@ -44,14 +44,14 @@ public class AutonomousCraterSideMotionProfile extends AutoModeBase {
             runAction(new Intake(3000));
 
             ThreadAction(new IntakeZeroing(false, 2000));
-            runAction(new DriveMotionProfile(20, 0));
+            runAction(new DriveMotionProfile(17, 0));
 //            runAction(new DriveToDistanceAndAngle(30, 0, 1000));
         } else{
             Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTRIGHT);
             runAction(new Wait(500));
 
             if (Robot.getCamera().isGoldInfront()){ //Right
-                runAction(new DriveMotionProfile(20, 0));
+                runAction(new DriveMotionProfile(17, 0));
 //                runAction(new DriveToDistanceAndAngle(20, 0, 1000));
                 runAction(new Turn(new Rotation2d(45, AngleUnit.DEGREES), 2000));
                 runAction(new Turn(new Rotation2d(45, AngleUnit.DEGREES), 2000));
@@ -60,9 +60,9 @@ public class AutonomousCraterSideMotionProfile extends AutoModeBase {
                 runAction(new Intake(3000));
                 runAction(new IntakeUp());
                 ThreadAction(new IntakeZeroing(false, 2000));
-                runAction(new DriveMotionProfile(-5, 45));
+                runAction(new DriveMotionProfile(-3, 45));
             } else{ //Left
-                runAction(new DriveToDistanceAndAngle(15, 0, 2000));
+                runAction(new DriveToDistanceAndAngle(13, 0, 2000));
                 runAction(new Turn(new Rotation2d(-45, AngleUnit.DEGREES), 2000));
                 runAction(new IntakeInFront(18, 2000, false));
                 Robot.getIntake().setIntakeHardStopState(com.team9889.ftc2019.subsystems.Intake.IntakeHardStop.UP);
@@ -74,12 +74,12 @@ public class AutonomousCraterSideMotionProfile extends AutoModeBase {
 
         // Drive to Wall
         runAction(new Turn(new Rotation2d(90, AngleUnit.DEGREES), 2000));
-        runAction(new DriveMotionProfile(-48, 90));
+        runAction(new DriveMotionProfile(-55, 90));
 //        runAction(new DriveToDistanceAndAngle(-48, 90, 3000));
         runAction(new Turn(new Rotation2d(45, AngleUnit.DEGREES), 3000));
 
         // Drive to Depot
-        runAction(new DriveMotionProfile(-30, 45));
+        runAction(new DriveMotionProfile(-25, 45));
 //        runAction(new DriveToDistanceAndAngle(-25, 45, 1000));
 
         // Dump Marker
