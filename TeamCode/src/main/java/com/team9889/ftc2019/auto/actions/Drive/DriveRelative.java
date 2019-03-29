@@ -26,9 +26,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
  */
 public class DriveRelative extends Action {
 
+    public static void main(String[] args){
+        DriveRelative driveRelative = new DriveRelative(10, new Rotation2d(90, AngleUnit.DEGREES));
+        driveRelative.start();
+    }
+
     // Drive object
     private Drive mDrive = Robot.getInstance().getDrive();
-    private boolean simulation = false;
+    private boolean simulation = true;
 
     // Distance to travel and final angle
     private double forward;
@@ -91,15 +96,10 @@ public class DriveRelative extends Action {
         rightFollower.setProfile(rightProfile);
 
         // Check if we are running on a computer
-        try {
+        if(!simulation) {
             leftOffset = mDrive.getLeftDistance();
             rightOffset = mDrive.getRightDistance();
-        } catch (NullPointerException e){
-            simulation = true;
-        }
-
-        // Graph the data
-        if(simulation){
+        } else {
             FileWriter log = new FileWriter(this.getClass().getSimpleName() + ".csv");
 
             int step = 1000;
@@ -136,12 +136,13 @@ public class DriveRelative extends Action {
 
     @Override
     public boolean isFinished() {
-        return !simulation && leftFollower.isFinished() && rightFollower.isFinished();
+        return !simulation && (leftFollower.isFinished() && rightFollower.isFinished());
     }
 
     @Override
     public void done() {
         // Check if we are running this code in a simulation
-        try {mDrive.setLeftRightPower(0,0);} catch (NullPointerException ignored){}
+        if (simulation)
+            mDrive.setLeftRightPower(0,0);
     }
 }

@@ -28,9 +28,7 @@ public class Turn extends Action {
     }
 
     @Override
-    public void setup(String args) {
-
-    }
+    public void setup(String args) {}
 
     @Override
     public void start() {

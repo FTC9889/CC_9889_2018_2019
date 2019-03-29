@@ -29,7 +29,7 @@ public class TrapezoidalMotionProfile implements MotionProfile {
 
         int step = 1000;
         for (int i = 0; i < step; i++) {
-            double currentTime = i/(step/profile.totalTime);
+            double currentTime = i/(step/profile.getTotalTime());
             MotionProfileSegment segment = profile.getOutput(currentTime);
             System.out.println("Time: " + currentTime +
                     " | Position: " + segment.getPosition() +
@@ -54,7 +54,7 @@ public class TrapezoidalMotionProfile implements MotionProfile {
         this.max_v = Math.abs(profileParameters.getMaxV());
         this.max_a = Math.abs(profileParameters.getMaxA());
 
-        // This is used to prevent not continuous profiles
+        // This is used to prevent non-continuous profiles
         boolean invalidTimes = true;
         while(invalidTimes) {
             // This is in absolute time
