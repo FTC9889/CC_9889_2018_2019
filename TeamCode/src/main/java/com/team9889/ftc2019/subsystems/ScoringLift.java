@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
@@ -13,18 +12,15 @@ import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.lib.control.controllers.PID;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 /**
  * Created by joshua9889 on 3/28/2018.
  */
 
-public class Lift extends Subsystem {
+public class ScoringLift extends Subsystem {
 
-    private DcMotorEx left, right;
+    private DcMotorEx liftMotor;
     private DigitalChannel lowerLimit;
-    private DigitalChannel upperLimit;
-    private DistanceSensor robotToGround;
     private boolean auto;
     private PID pid = new PID(.6, 0, 0.3);
     public boolean liftOperatorControl = false;
@@ -36,29 +32,17 @@ public class Lift extends Subsystem {
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
-        left = hardwareMap.get(DcMotorEx.class, Constants.LiftConstants.kLeftLiftId);
-        right = hardwareMap.get(DcMotorEx.class, Constants.LiftConstants.kRightLiftId);
+        liftMotor = hardwareMap.get(DcMotorEx.class, Constants.LiftConstants.kLeftLiftId);
 
         lowerLimit = hardwareMap.get(DigitalChannel.class, Constants.LiftConstants.kLiftLowerLimitSensorId);
-        upperLimit = hardwareMap.get(DigitalChannel.class, Constants.LiftConstants.kLiftUpperLimitSensorId);
 
-        robotToGround = hardwareMap.get(DistanceSensor.class, Constants.LiftConstants.kRobotToGround);
-
-        right.setDirection(DcMotorSimple.Direction.REVERSE);
-        left.setDirection(DcMotorSimple.Direction.REVERSE);
-        left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        liftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         offset = 0;
 
         currentState = LiftStates.NULL;
         wantedState = LiftStates.NULL;
-
-        this.auto = auto;
-        if (auto)
-            setLiftState(LiftStates.HANGING);
-        else
-            setLiftState(LiftStates.UP);
     }
 
     @Override
@@ -71,12 +55,11 @@ public class Lift extends Subsystem {
         telemetry.addData("Offset", offset);
         telemetry.addData("Height of lift", getHeight());
         telemetry.addData("Height of lift in ticks", getHeightTicks());
-        telemetry.addData("Lift PID Output", pid.getOutput());
+        telemetry.addData("ScoringLift PID Output", pid.getOutput());
 
-        telemetry.addData("Upper limit pressed", getUpperLimitPressed());
         telemetry.addData("Lower limit pressed", getLowerLimitPressed());
 
-        telemetry.addData("Is Lift in position", isCurrentWantedState());
+        telemetry.addData("Is ScoringLift in position", isCurrentWantedState());
 
         telemetry.addData("Wanted State", wantedState);
         telemetry.addData("Current State", currentState);
@@ -85,7 +68,6 @@ public class Lift extends Subsystem {
     @Override
     public void update(ElapsedTime time) {
         getLowerLimitPressed();
-        getUpperLimitPressed();
 
         if (currentState != wantedState) {
             liftOperatorControl = false;
@@ -99,15 +81,8 @@ public class Lift extends Subsystem {
                         setLiftPower(-0.7);
                     }
                     break;
-                case HOOKHEIGHT:
-                    setLiftPosition(13.6);
 
-                    if (inPosition()) {
-                        setLiftPower(0);
-                        currentState = LiftStates.HOOKHEIGHT;
-                    }
-                    break;
-                case SCOREINGHEIGHT:
+                case UP:
                     if (auto)
                         setLiftPosition(17);
                     else
@@ -115,38 +90,10 @@ public class Lift extends Subsystem {
 
                     if (inPosition()) {
                         setLiftPower(0);
-                        currentState = LiftStates.SCOREINGHEIGHT;
-                    }
-                    break;
-                case READY:
-                    if (auto)
-                        setLiftPosition(6);
-                    else
-                        setLiftPosition(6);
-
-                    if (inPosition()) {
-                        setLiftPower(0);
-                        currentState = LiftStates.READY;
-                    }
-                    break;
-                case HANGING:
-                    if (getLowerLimitPressed()) {
-                        setLiftPower(-0.2);
-                        zeroSensors();
-                    } else {
-                        setLiftPower(-.7);
-                    }
-
-                    // Never Set the currentState to Hanging in order to make it still run during init
-                    break;
-                case UP:
-                    if (getUpperLimitPressed()){
-                        setLiftPower(0);
                         currentState = LiftStates.UP;
-                    }else {
-                        setLiftPower(1);
                     }
                     break;
+
                 case NULL:
                     setLiftPower(0);
                     currentState = LiftStates.NULL;
@@ -170,12 +117,11 @@ public class Lift extends Subsystem {
      */
     public void setLiftPower(double power) {
         double mPower = power;
-        if((getUpperLimitPressed() && mPower>0) || (getLowerLimitPressed() && mPower<0))
+        if((getLowerLimitPressed() && mPower<0))
             mPower = 0;
 
-        left.setPower(mPower);
-        right.setPower(mPower);
-        RobotLog.a("Power to Lift: " + String.valueOf(mPower));
+        liftMotor.setPower(mPower);
+        RobotLog.a("Power to ScoringLift: " + String.valueOf(mPower));
     }
 
     /**
@@ -186,23 +132,15 @@ public class Lift extends Subsystem {
     }
 
     private double getHeightTicks() {
-        return left.getCurrentPosition();
+        return liftMotor.getCurrentPosition();
     }
 
     public double getHeight() {
-        return (getHeightTicks() - offset) * Constants.LiftConstants.kLiftTicksToHeightRatio;
+        return (getHeightTicks() - offset);
     }
 
     private boolean inPosition() {
         return Math.abs(pid.getError()) < 0.5;
-    }
-
-    public boolean getUpperLimitPressed() {
-        boolean upperLimitPressed = !upperLimit.getState();
-        if (upperLimitPressed)
-            offset = getHeightTicks() - 5500;
-
-        return upperLimitPressed;
     }
 
     public boolean getLowerLimitPressed() {
@@ -229,12 +167,8 @@ public class Lift extends Subsystem {
         return currentState;
     }
 
-    public double getDistanceSensorRange() {
-        return robotToGround.getDistance(DistanceUnit.INCH);
-    }
-
     @Override
     public String toString() {
-        return "Lift";
+        return "ScoringLift";
     }
 }

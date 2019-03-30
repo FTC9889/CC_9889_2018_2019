@@ -12,7 +12,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  */
 public class Dumper extends Subsystem{
 
-    private Servo rightShoulder, leftShoulder;
     private Servo dumperRotator;
 
     private ElapsedTime timer = new ElapsedTime();
@@ -23,25 +22,21 @@ public class Dumper extends Subsystem{
     private boolean auto;
 
     public enum dumperStates{
-        COLLECTING, STORED, SCORING, DUMP,DUMPAUTO, DUMPTEAMMARKER, NULL
+        COLLECTING, SCORING, DUMP, DUMPAUTO, NULL
     }
 
     public dumperStates wantedDumperState = dumperStates.NULL;
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
-        rightShoulder = hardwareMap.get(Servo.class, Constants.DumperConstants.kRightDumperShoulderId);
-        leftShoulder = hardwareMap.get(Servo.class, Constants.DumperConstants.kLeftDumperShoulderId);
         dumperRotator = hardwareMap.get(Servo.class, Constants.DumperConstants.kDumperRotatorId);
-
-        rightShoulder.setDirection(Servo.Direction.REVERSE);
 
         this.auto = auto;
 
         if (auto){
-            setDumperStates(dumperStates.STORED);
+            setDumperStates(dumperStates.COLLECTING);
         }else{
-            setDumperStates(dumperStates.STORED);
+            setDumperStates(dumperStates.COLLECTING);
         }
     }
 
@@ -52,7 +47,6 @@ public class Dumper extends Subsystem{
 
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
-        telemetry.addData("Arm Position", getArmPosition());
         telemetry.addData("Dumper Rotator Position", getDumperRotatorPosition());
         telemetry.addData("Wanted Dumper Position", wantedDumperState);
     }
@@ -60,15 +54,7 @@ public class Dumper extends Subsystem{
     @Override
     public void update(ElapsedTime time) {
         switch (wantedDumperState) {
-            case STORED:
-                setArmPosition(.2);
-                setDumperRotatorPosition(.1);
-                timerReset = true;
-                break;
-
             case SCORING:
-                setArmPosition(.65);
-
                 if (timerReset) {
                     timer.reset();
                     timerReset = false;
@@ -78,7 +64,6 @@ public class Dumper extends Subsystem{
                 break;
 
             case DUMPAUTO:
-                setArmPosition(.65);
                 setDumperRotatorPosition(.7);
 
                 if (timerReset) {
@@ -88,24 +73,16 @@ public class Dumper extends Subsystem{
                 break;
 
             case COLLECTING:
-                setArmPosition(0);
                 setDumperRotatorPosition(.22);
                 timerReset = true;
                 break;
 
             case DUMP:
-                setArmPosition(.7);
                 setDumperRotatorPosition(.5);
                 if (collectingTimer.milliseconds() > 1500) {
                     Robot.getInstance().setScorerStates(Robot.scorerStates.COLLECTING);
                     dumperTimer.reset();
                 }
-                break;
-
-            case DUMPTEAMMARKER:
-                setArmPosition(1);
-                setDumperRotatorPosition(.65);
-                timerReset = true;
                 break;
 
             case NULL:
@@ -119,21 +96,12 @@ public class Dumper extends Subsystem{
 
     }
 
-    public void setArmPosition(double armPosition){
-        leftShoulder.setPosition(armPosition - .01);
-        rightShoulder.setPosition(armPosition);
-    }
-
     public void setDumperRotatorPosition(double dumperPosition){
         dumperRotator.setPosition(dumperPosition);
     }
 
     public void setDumperStates(dumperStates states){
         this.wantedDumperState = states;
-    }
-
-    public double getArmPosition(){
-        return (leftShoulder.getPosition() + rightShoulder.getPosition())/2;
     }
 
     public double getDumperRotatorPosition() {

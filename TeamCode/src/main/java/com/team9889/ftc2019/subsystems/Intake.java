@@ -23,7 +23,7 @@ public class Intake extends Subsystem {
 
     // Hardware
     private DcMotor intakeMotor, extender;
-    private Servo intakeRotator, hopperDumper, intakeHardStop;
+    private Servo intakeRotator, intakeGate;
     private DigitalChannel scoringSwitch, inSwitch;
     public RevColorDistance revLeftHopper, revRightHopper;
 
@@ -59,7 +59,6 @@ public class Intake extends Subsystem {
     public ElapsedTime autonomousTimer = new ElapsedTime();
     public boolean autonomousFirst = true;
 
-    public HopperDumperStates currentHopperDumperState;
     public RotatorStates currentIntakeRotatorState;
 
     public boolean isIntakeOperatorControl() {
@@ -77,19 +76,13 @@ public class Intake extends Subsystem {
         extender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         intakeRotator = hardwareMap.get(Servo.class, Constants.IntakeConstants.kIntakeRotatorId);
-        hopperDumper = hardwareMap.get(Servo.class, Constants.IntakeConstants.kHopperDumperId);
-        intakeHardStop = hardwareMap.get(Servo.class, Constants.IntakeConstants.kHopperHardStopID);
+        intakeGate = hardwareMap.get(Servo.class, Constants.IntakeConstants.kIntakeGate);
 
-        scoringSwitch = hardwareMap.get(DigitalChannel.class, Constants.IntakeConstants.kIntakeSwitchId);
         inSwitch = hardwareMap.get(DigitalChannel.class, Constants.IntakeConstants.kIntakeInSwitchId);
-
-        revLeftHopper = new RevColorDistance(Constants.IntakeConstants.kLeftIntakeDetectorId, hardwareMap);
-        revRightHopper = new RevColorDistance(Constants.IntakeConstants.kRightIntakeDetectorId, hardwareMap);
 
         offset = 0;
         this.auto = auto;
         if (auto){
-            setIntakeHardStopState(IntakeHardStop.DOWN);
             zeroSensors();
             wantedIntakeState = IntakeStates.ZEROING;
             currentIntakeState = IntakeStates.ZEROING;
@@ -109,8 +102,6 @@ public class Intake extends Subsystem {
         telemetry.addData("PID Output", extenderPID.getOutput());
         telemetry.addData("Left Rev Distance", revLeftHopper.getIN());
         telemetry.addData("Right Rev Distance", revRightHopper.getIN());
-        telemetry.addData("Minerals Detected", twoMineralsDetected());
-        telemetry.addData("Width", getWidth());
 
         telemetry.addData("IntakePower", intakeMotor.getPower());
         telemetry.addData("Intake Extender Real Position", getIntakeExtenderPosition());
@@ -120,14 +111,12 @@ public class Intake extends Subsystem {
 
         telemetry.addData("Angle of Intake", intakeRotator.getPosition());
         telemetry.addData("Fully In Intake Switch", intakeInSwitchValue());
-        telemetry.addData("Grabbing Intake Switch", intakeGrabbingSwitchValue());
 
         telemetry.addData("Wanted State", wantedIntakeState);
         telemetry.addData("Current State", currentIntakeState);
 
         telemetry.addData("Intake Cruise Control", isIntakeOperatorControl());
 
-        telemetry.addData("Hopper Dumper Position", getHopperDumperPosition());
 
         telemetry.addData("Current Rotator State", currentIntakeRotatorState);
     }
@@ -137,38 +126,20 @@ public class Intake extends Subsystem {
 
         switch (wantedIntakeState) {
             case INTAKING:
-                if (twoMineralsDetected() || Robot.getInstance().overrideIntake) {
-                    if (firstSettle) {
-                        settleTimer.reset();
-                        firstSettle = false;
-                    }else if (settleTimer.milliseconds() > 150) {
+                if (Robot.getInstance().stopIntake) {
                         intakeOperatorControl = false;
-                        setIntakePower(-0.8);
-                        Robot.getInstance().overrideIntake = false;
-                        Robot.getInstance().overrideIntake = false;
 
                         currentIntakeState = IntakeStates.INTAKING;
-                        hardStopTimer.reset();
-                        collectingTimer.reset();
                         setWantedIntakeState(IntakeStates.GRABBING);
                         firstIntaking = true;
-                    }else if (settleTimer.milliseconds() > 50){
-                        setIntakePower(0);
-                        if (!firstIntaking)
-                            setHopperDumperState(HopperDumperStates.HOLDING);
-                    }
                 } else {
-                    firstSettle = true;
                     intakeOperatorControl = true;
-
-                    setHopperDumperState(HopperDumperStates.OPEN);
                     intake();
                 }
                 break;
             case GRABBING:
-                if (intakeGrabbingSwitchValue() || collectingTimer.milliseconds() > 1500){
+                if (intakeInSwitchValue()){
                     setIntakeExtenderPower(0);
-                    setIntakePower(0);
                     intakeOperatorControl = true;
                     transitionTimer.reset();
                     currentIntakeState = IntakeStates.GRABBING;
@@ -176,30 +147,20 @@ public class Intake extends Subsystem {
                 }else{
                     intakeOperatorControl = false;
                     setIntakeRotatorState(RotatorStates.UP);
-                    setIntakeHardStopState(IntakeHardStop.UP);
-                    setHopperDumperState(HopperDumperStates.HOLDING);
-                    if (!auto) {
-                        outtake();
-                    }
-                    if (hardStopTimer.milliseconds() > 500) {
-                        setIntakeExtenderPower(-1);
-                    }
+
+                    setIntakeExtenderPower(-1);
                 }
                 break;
 
             case ZEROING:
                 if (currentIntakeState != wantedIntakeState) {
-                    if (intakeInSwitchValue() || intakeGrabbingSwitchValue()) {
+                    if (intakeInSwitchValue()) {
                         setIntakeExtenderPower(0);
                         intakeOperatorControl = true;
                         currentIntakeState = IntakeStates.ZEROING;
                     } else {
                         intakeOperatorControl = false;
                         setIntakeRotatorState(RotatorStates.UP);
-                        if (intakeZeroingHardstop) {
-                            setIntakeHardStopState(IntakeHardStop.DOWN);
-                        }
-                        setHopperDumperState(HopperDumperStates.HOLDING);
 
                         setIntakeExtenderPower(-0.5);
                     }
@@ -220,30 +181,20 @@ public class Intake extends Subsystem {
                 currentIntakeState = IntakeStates.NULL;
                 intakeOperatorControl = true;
                 break;
-            case EXTENDED:
-                setIntakeExtenderPosition(24);
-                setIntakeRotatorState(RotatorStates.UP);
-
-                if(Math.abs(extenderPID.getError()) < 0.5) {
-                    setIntakeExtenderPower(0);
-                    currentIntakeState = IntakeStates.EXTENDED;
-                }
-                break;
 
             case TRANSITION:
                 if (Robot.getInstance().getLift().getCurrentState() == LiftStates.READY) {
-                    if(transitionTimer.milliseconds() < 300)
-                        setHopperDumperState(HopperDumperStates.PUSHING);
-                    else if(transitionTimer.milliseconds() < 500) {
+                    if (transitionTimer.milliseconds() < 300){
+                        setIntakeGateState(IntakeGateStates.UP);
+                    }else if(transitionTimer.milliseconds() > 300 && transitionTimer.milliseconds() < 500) {
                         intakeOperatorControl = false;
                         setIntakeExtenderPower(1);
                         transitionExtender = true;
                         Robot.getInstance().transitionDone = true;
-                    } else if(transitionTimer.milliseconds() > 500 && transitionTimer.milliseconds() < 1000) {
-                        setHopperDumperState(HopperDumperStates.OPEN);
+                    } else if(transitionTimer.milliseconds() > 500 && transitionTimer.milliseconds() < 700) {
                         setIntakeExtenderPower(0);
                         transitionExtender = false;
-                        Robot.getInstance().overrideIntake = false;
+                        Robot.getInstance().stopIntake = false;
                         currentIntakeState = IntakeStates.TRANSITION;
                         intakeOperatorControl = true;
                     }
@@ -278,7 +229,6 @@ public class Intake extends Subsystem {
         setIntakePower(1);
         if (auto)
             setIntakeRotatorState(RotatorStates.DOWN);
-        setHopperDumperState(HopperDumperStates.OPEN);
     }
 
     /**
@@ -322,10 +272,6 @@ public class Intake extends Subsystem {
         return extender.getCurrentPosition();
     }
 
-    public double getHopperDumperPosition(){
-        return hopperDumper.getPosition();
-    }
-
     /**
      * @param wantedState Set the wanted state of the Intake
      */
@@ -357,6 +303,10 @@ public class Intake extends Subsystem {
             intakeRotator.setPosition(intakeRotatorPosition);
     }
 
+    private void setIntakeGatePosition(double position) {
+        intakeGate.setPosition(position);
+    }
+
     public void setIntakeRotatorState(RotatorStates state) {
         switch (state) {
             case UP:
@@ -374,51 +324,20 @@ public class Intake extends Subsystem {
         }
     }
 
-    public void setHopperDumperPosition(double position){
-        hopperDumper.setPosition(position);
-    }
-
-    public void setHopperDumperState(HopperDumperStates state){
+    public void setIntakeGateState(IntakeGateStates state){
         switch (state){
-            case OPEN:
-                setHopperDumperPosition(0.38);
-                currentHopperDumperState = HopperDumperStates.OPEN;
-                break;
-
-            case HOLDING:
-                setHopperDumperPosition(.5);
-                currentHopperDumperState = HopperDumperStates.HOLDING;
-                break;
-
-            case PUSHING:
-                setHopperDumperPosition(0.8);
-                currentHopperDumperState = HopperDumperStates.PUSHING;
-                break;
-        }
-    }
-
-    public void setIntakeHardStopState(IntakeHardStop state){
-        switch (state){
-            case DOWN:
-                setIntakeHardStopPosition(.9);
-                break;
-
             case UP:
-                setIntakeHardStopPosition(.4);
+                setIntakeGatePosition(1);
+                break;
+
+            case DOWN:
+                setIntakeGatePosition(0.5);
                 break;
         }
-    }
-
-    public void setIntakeHardStopPosition(double position){
-        intakeHardStop.setPosition(position);
-    }
-
-    public double getIntakeHardStopPosition(){
-        return intakeHardStop.getPosition();
     }
 
     /**
-     * @return If the Lift is pressing the Lower Limit Switch
+     * @return If the ScoringLift is pressing the Lower Limit Switch
      */
     private boolean intakeInSwitchValue() {
         boolean intakeInSwitch = !inSwitch.getState();
@@ -426,28 +345,6 @@ public class Intake extends Subsystem {
             offset = getIntakeExtenderPositionTicks();
 
         return intakeInSwitch;
-    }
-
-    /**
-     * @return If the Lift is pressing the Upper Limit Switch
-     */
-    private boolean intakeGrabbingSwitchValue() {
-        boolean intakeGrabbingSwitch = !scoringSwitch.getState();
-        if (intakeGrabbingSwitch)
-            offset = getIntakeExtenderPositionTicks() - (594);
-
-        return intakeGrabbingSwitch;
-    }
-
-    /**
-     * @return If the both mineral detectors see a mineral
-     */
-    private boolean twoMineralsDetected() {
-        return getWidth() > 1.5;
-    }
-
-    public double getWidth() {
-        return (6 - (revLeftHopper.getIN() + revRightHopper.getIN()));
     }
 
     public boolean inPosition(){
@@ -467,12 +364,8 @@ public class Intake extends Subsystem {
         UP, DOWN
     }
 
-    public enum HopperDumperStates {
-        OPEN, HOLDING, PUSHING
-    }
-
-    public enum IntakeHardStop {
-        DOWN, UP
+    public enum IntakeGateStates {
+        UP, DOWN
     }
 }
 

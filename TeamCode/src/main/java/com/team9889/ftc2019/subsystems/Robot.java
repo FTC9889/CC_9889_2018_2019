@@ -18,7 +18,7 @@ public class Robot extends Subsystem {
 
     private static Robot mInstance = null;
     private Drive mDrive = new Drive();
-    private Lift mLift = new Lift();
+    private ScoringLift mLift = new ScoringLift();
     private Intake mIntake = new Intake();
     private Camera mCamera = new Camera();
     private Dumper mDumper = new Dumper();
@@ -38,7 +38,7 @@ public class Robot extends Subsystem {
     private int scoringCounter = 1;
     private boolean scoringCounterFirst = true;
 
-    public boolean overrideIntake = false;
+    public boolean stopIntake = false;
 
     public boolean autoSampled = true;
 
@@ -111,7 +111,7 @@ public class Robot extends Subsystem {
             break;
 
             case SCORING:
-                getLift().setLiftState(LiftStates.SCOREINGHEIGHT);
+                getLift().setLiftState(LiftStates.UP);
 
                 if (getLift().getHeight() > 8) {
                     getDumper().wantedDumperState = Dumper.dumperStates.SCORING;
@@ -143,7 +143,7 @@ public class Robot extends Subsystem {
 
             case DUMP:
                 getDumper().wantedDumperState = Dumper.dumperStates.DUMP;
-                getLift().setLiftState(LiftStates.SCOREINGHEIGHT);
+                getLift().setLiftState(LiftStates.UP);
                 liftUpTimer.reset();
                 timerReset = true;
                 break;
@@ -199,7 +199,7 @@ public class Robot extends Subsystem {
         return mIntake;
     }
 
-    public Lift getLift() {
+    public ScoringLift getLift() {
         return mLift;
     }
 

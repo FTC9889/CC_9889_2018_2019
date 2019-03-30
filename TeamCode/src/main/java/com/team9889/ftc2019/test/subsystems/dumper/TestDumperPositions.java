@@ -23,7 +23,7 @@ public class TestDumperPositions extends Team9889Linear {
     public void runOpMode() throws InterruptedException {
         waitForStart(false);
 
-        Robot.getLift().setLiftState(LiftStates.SCOREINGHEIGHT);
+        Robot.getLift().setLiftState(LiftStates.UP);
         Robot.getDumper().setDumperStates(Dumper.dumperStates.STORED);
 
         while (opModeIsActive()){

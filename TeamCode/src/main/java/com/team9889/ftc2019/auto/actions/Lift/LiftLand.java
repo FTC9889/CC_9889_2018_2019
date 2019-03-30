@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.subsystems.Drive;
 import com.team9889.ftc2019.subsystems.Dumper;
-import com.team9889.ftc2019.subsystems.Lift;
+import com.team9889.ftc2019.subsystems.ScoringLift;
 import com.team9889.ftc2019.subsystems.Robot;
 
 /**
@@ -12,7 +12,7 @@ import com.team9889.ftc2019.subsystems.Robot;
  */
 public class LiftLand extends Action {
 
-    private Lift mLift = Robot.getInstance().getLift();
+    private ScoringLift mLift = Robot.getInstance().getLift();
     private Drive mDrive = Robot.getInstance().getDrive();
     private ElapsedTime timer = new ElapsedTime();
 

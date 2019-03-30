@@ -3,7 +3,7 @@ package com.team9889.ftc2019.test.subsystems.lift;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.team9889.ftc2019.subsystems.Lift;
+import com.team9889.ftc2019.subsystems.ScoringLift;
 
 /**
  * Created by joshua9889 on 1/24/2019.
@@ -13,7 +13,7 @@ import com.team9889.ftc2019.subsystems.Lift;
 public class TestLift extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        Lift mLift = new Lift();
+        ScoringLift mLift = new ScoringLift();
         mLift.init(hardwareMap, false);
 
         waitForStart();

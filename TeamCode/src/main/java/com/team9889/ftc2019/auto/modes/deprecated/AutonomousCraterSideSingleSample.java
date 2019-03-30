@@ -23,7 +23,7 @@ public class AutonomousCraterSideSingleSample extends AutoModeBase {
 
             Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
 //            while(opModeIsActive() && !Robot.getLift().inPosition()) {
-//                Robot.getLift().setLiftState(Lift.LiftStates.READY);
+//                Robot.getLift().setLiftState(ScoringLift.LiftStates.READY);
 //            }
 
             runAction(new Wait(1250));

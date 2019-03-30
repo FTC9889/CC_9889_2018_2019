@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.ftc2019.subsystems.Intake;
-import com.team9889.ftc2019.subsystems.Lift;
+import com.team9889.ftc2019.subsystems.ScoringLift;
 
 /**
  * Created by joshua9889 on 1/24/2019.
@@ -20,7 +20,7 @@ public class TestIntake extends LinearOpMode {
         Intake mIntake = new Intake();
         mIntake.init(hardwareMap, false);
 
-        Lift mLift = new Lift();
+        ScoringLift mLift = new ScoringLift();
         mLift.init(hardwareMap, false);
 
         ElapsedTime time = new ElapsedTime();
@@ -34,7 +34,7 @@ public class TestIntake extends LinearOpMode {
                 mIntake.setIntakeExtenderPower(-gamepad1.left_stick_y);
 
 
-            if(first && mLift.getCurrentState() == LiftStates.SCOREINGHEIGHT) {
+            if(first && mLift.getCurrentState() == LiftStates.UP) {
                 mLift.setLiftState(LiftStates.READY);
                 first = false;
             } else if(mLift.liftOperatorControl){

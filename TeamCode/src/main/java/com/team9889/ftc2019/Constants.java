@@ -56,13 +56,8 @@ public class Constants {
         public final static String kIntakeMotorId = "li";
         public final static String kIntakeExtenderId = "intakeextender";
         public final static String kIntakeRotatorId = "intakerotator";
-        public final static String kHopperDumperId = "hopperdumper";
-        public final static String kHopperHardStopID = "hopperhardstop";
-        public final static String kIntakeSwitchId = "intakescoringswitch";
+        public final static String kIntakeGate = "intakegate";
         public final static String kIntakeInSwitchId = "intakeinswitch";
-
-        public final static String kLeftIntakeDetectorId = "leftrev";
-        public final static String kRightIntakeDetectorId = "rightrev";
 
         final static double kIntakeTicksPerRev = 537.6;  //NeveRest Orbital 20
         final static double kIntakeSpoolDiameter = 1.5;
@@ -105,20 +100,14 @@ public class Constants {
 
     /*---------------------
     |                     |
-    |        Lift!        |
+    |     ScoringLift!    |
     |                     |
     ---------------------*/
 
-    //Settings for Lift
+    //Settings for ScoringLift
     public static class LiftConstants {
         public final static String kLeftLiftId = "leftlift";
-        public final static String kRightLiftId = "rightlift";
-        public final static String kLiftUpperLimitSensorId = "liftupperlimitsensor";
         public final static String kLiftLowerLimitSensorId = "liftlowerlimitsensor";
-        public final static String kRobotToGround = "liftdistancesensor";
-        final static double kLiftTicksPerRev = 1120; // ticks
-        final static double kLiftSpoolDiameter = 1.25; // in
-        public final static double kLiftTicksToHeightRatio = kLiftSpoolDiameter * Math.PI / kLiftTicksPerRev; // in
     }
 
 

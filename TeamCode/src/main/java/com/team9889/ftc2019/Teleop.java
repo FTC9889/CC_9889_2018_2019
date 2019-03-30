@@ -41,7 +41,7 @@ public class Teleop extends Team9889Linear {
             Robot.getDrive().setThrottleSteerPower(driverStation.getThrottle(),
                     driverStation.getSteer());
 
-            // Lift Controller
+            // ScoringLift Controller
             if(firstRun && Robot.getLift().getCurrentState() == LiftStates.UP) {
                 Robot.getDumper().dumperTimer.reset();
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.COLLECTING);
@@ -92,7 +92,7 @@ public class Teleop extends Team9889Linear {
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.SCORING);
                 first = true;
                 Robot.transitionDone = false;
-            }else if (gamepad1.right_bumper && Robot.getLift().getCurrentState() == LiftStates.SCOREINGHEIGHT){
+            }else if (gamepad1.right_bumper && Robot.getLift().getCurrentState() == LiftStates.UP){
                 Robot.getDumper().collectingTimer.reset();
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.DUMP);
 
@@ -147,7 +147,7 @@ public class Teleop extends Team9889Linear {
             }
 
             if (gamepad2.left_trigger > .1){
-                Robot.overrideIntake = true;
+                Robot.stopIntake = true;
             }
 
             if(gamepad2.right_trigger > 0.3)
@@ -160,7 +160,7 @@ public class Teleop extends Team9889Linear {
             Robot.update(matchTime);
 
             telemetry.addData("x", gamepad2.x);
-            telemetry.addData("Driver Lift Control", Robot.getLift().liftOperatorControl);
+            telemetry.addData("Driver ScoringLift Control", Robot.getLift().liftOperatorControl);
 
             if (gamepad2.dpad_up) {
                 Robot.outputToTelemetry(telemetry);
