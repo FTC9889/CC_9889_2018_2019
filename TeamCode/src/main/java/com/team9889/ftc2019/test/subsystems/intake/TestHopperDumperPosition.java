@@ -16,9 +16,7 @@ public class TestHopperDumperPosition extends Team9889Linear {
        waitForStart(false);
 
        while (opModeIsActive()){
-           Robot.getIntake().setHopperDumperPosition(gamepad1.right_stick_y);
 
-           telemetry.addData("Intake Dumper Position", Robot.getIntake().getHopperDumperPosition());
            telemetry.update();
        }
     }

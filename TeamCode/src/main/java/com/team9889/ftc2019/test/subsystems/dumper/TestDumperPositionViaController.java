@@ -17,7 +17,6 @@ public class TestDumperPositionViaController extends Team9889Linear {
 
        while (opModeIsActive()){
            Robot.getDumper().setDumperRotatorPosition(gamepad1.right_stick_y);
-           Robot.getDumper().setArmPosition(gamepad1.left_stick_y);
 
            Robot.outputToTelemetry(telemetry);
            telemetry.update();

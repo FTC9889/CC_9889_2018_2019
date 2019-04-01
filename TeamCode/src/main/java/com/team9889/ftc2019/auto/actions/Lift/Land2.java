@@ -30,7 +30,7 @@ public class Land2 extends Action {
     @Override
     public void start() {
         Robot.getInstance().getLift().setLiftState(LiftStates.NULL);
-        Robot.getInstance().getDumper().setDumperStates(Dumper.dumperStates.STORED);
+        Robot.getInstance().getDumper().setDumperStates(Dumper.dumperStates.COLLECTING);
         timer.reset();
     }
 

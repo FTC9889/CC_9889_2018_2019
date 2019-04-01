@@ -24,7 +24,6 @@ public class LiftLand extends Action {
     @Override
     public void start() {
         timer.reset();
-        Robot.getInstance().getDumper().setDumperStates(Dumper.dumperStates.STORED);
     }
 
     @Override

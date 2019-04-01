@@ -58,8 +58,6 @@ public class Drive extends Subsystem {
         this.leftMaster_.setDirection(DcMotorSimple.Direction.REVERSE);
         this.leftSlave_.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        this.rightMaster_.setDirection(DcMotorSimple.Direction.REVERSE);
-
         this.DriveControlState(DriveControlStates.POWER);
         zeroSensors();
 

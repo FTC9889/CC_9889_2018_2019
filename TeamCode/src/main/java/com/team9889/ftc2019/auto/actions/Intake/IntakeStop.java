@@ -19,7 +19,7 @@ public class IntakeStop extends Action {
 
     @Override
     public void start() {
-        Robot.getInstance().getIntake().setHopperDumperState(Intake.HopperDumperStates.HOLDING);
+        Robot.getInstance().getIntake().setIntakeGateState(Intake.IntakeGateStates.DOWN);
         hopperDumperTimer.reset();
     }
 

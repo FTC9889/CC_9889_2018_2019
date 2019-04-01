@@ -21,7 +21,7 @@ public class Intake extends Action {
     @Override
     public void start() {
         Robot.getInstance().getIntake().intake();
-        Robot.getInstance().getIntake().setHopperDumperState(com.team9889.ftc2019.subsystems.Intake.HopperDumperStates.OPEN);
+        Robot.getInstance().getIntake().setIntakeGateState(com.team9889.ftc2019.subsystems.Intake.IntakeGateStates.DOWN);
         timer.reset();
     }
 
@@ -41,7 +41,6 @@ public class Intake extends Action {
 
     @Override
     public void done() {
-        Robot.getInstance().getIntake().setHopperDumperState(com.team9889.ftc2019.subsystems.Intake.HopperDumperStates.HOLDING);
         Robot.getInstance().getIntake().update(timer);
         Robot.getInstance().getIntake().setIntakeExtenderPower(0);
         Robot.getInstance().getIntake().setIntakePower(0);

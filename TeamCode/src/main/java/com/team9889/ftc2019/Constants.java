@@ -105,9 +105,22 @@ public class Constants {
     ---------------------*/
 
     //Settings for ScoringLift
-    public static class LiftConstants {
-        public final static String kLeftLiftId = "leftlift";
-        public final static String kLiftLowerLimitSensorId = "liftlowerlimitsensor";
+    public static class ScoringLiftConstants {
+        public final static String kLeftLiftId = "slift";
+        public final static String kLiftLowerLimitSensorId = "scoringliftlowerlimitsensor";
+    }
+
+
+    /*---------------------
+    |                     |
+    |     HangingLift!    |
+    |                     |
+    ---------------------*/
+
+    //Settings for ScoringLift
+    public static class HangingLiftConstants {
+        public final static String kLiftId = "hlift";
+        public final static String kLiftLowerLimitSensorId = "hangingliftlowerlimitsensor";
     }
 
 

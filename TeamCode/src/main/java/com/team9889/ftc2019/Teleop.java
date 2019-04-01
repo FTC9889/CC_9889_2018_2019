@@ -47,7 +47,7 @@ public class Teleop extends Team9889Linear {
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.COLLECTING);
                 firstRun = false;
             } else if(Robot.getLift().liftOperatorControl){
-                Robot.getLift().setLiftPower(-gamepad2.right_stick_y);
+                Robot.getHangingLift().setLiftPower(-gamepad2.right_stick_y);
             }
 
             //Intake (gamepad2)
@@ -84,11 +84,12 @@ public class Teleop extends Team9889Linear {
             telemetry.addData("fowards", gamepad1IntakeFowards);
             telemetry.addData("back", gamepad1IntakeBackwards);
             telemetry.addData("2", gamepad2Intake);
+            telemetry.addData("sLift", Robot.getLift().getHeight());
             telemetry.update();
 
 
             //Dumper
-            if (gamepad2.y && Robot.getIntake().currentHopperDumperState != Intake.HopperDumperStates.PUSHING || gamepad1.y && Robot.getIntake().currentHopperDumperState != Intake.HopperDumperStates.PUSHING){
+            if (gamepad2.y){
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.SCORING);
                 first = true;
                 Robot.transitionDone = false;
@@ -150,9 +151,6 @@ public class Teleop extends Team9889Linear {
                 Robot.stopIntake = true;
             }
 
-            if(gamepad2.right_trigger > 0.3)
-                Robot.getIntake().setIntakeHardStopState(Intake.IntakeHardStop.DOWN);
-
             // Set Camera Position
             Robot.getCamera().setCameraPosition(Camera.CameraPositions.TELEOP);
 
@@ -166,6 +164,12 @@ public class Teleop extends Team9889Linear {
                 Robot.outputToTelemetry(telemetry);
                 telemetry.update();
             }
+
+            if (Robot.getLift().liftOperatorControl){
+                Robot.getLift().setLiftPower(gamepad2.left_trigger);
+                Robot.getLift().setLiftPower(-gamepad2.right_trigger);
+            }
+
         }
 
         finalAction();

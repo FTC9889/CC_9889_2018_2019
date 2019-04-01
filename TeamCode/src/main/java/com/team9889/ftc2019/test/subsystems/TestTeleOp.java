@@ -34,7 +34,6 @@ public class TestTeleOp extends Team9889Linear {
                 Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.INTAKING);
             }
 
-            telemetry.addData("Distance Sensor", Robot.getLift().getDistanceSensorRange());
             telemetry.addData("Intake Cruise Control", Robot.getIntake().isIntakeOperatorControl());
             telemetry.update();
         }

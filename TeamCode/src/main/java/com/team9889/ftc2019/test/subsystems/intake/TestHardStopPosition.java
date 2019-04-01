@@ -16,9 +16,7 @@ public class TestHardStopPosition extends Team9889Linear {
        waitForStart(false);
 
        while (opModeIsActive()){
-           Robot.getIntake().setIntakeHardStopPosition(Math.abs(gamepad1.right_stick_y));
 
-           telemetry.addData("Hard Stop Position", Robot.getIntake().getIntakeHardStopPosition());
            telemetry.update();
        }
     }

@@ -18,7 +18,8 @@ public class Robot extends Subsystem {
 
     private static Robot mInstance = null;
     private Drive mDrive = new Drive();
-    private ScoringLift mLift = new ScoringLift();
+    private ScoringLift mScoringLift = new ScoringLift();
+    private HangingLift mHangingLift = new HangingLift();
     private Intake mIntake = new Intake();
     private Camera mCamera = new Camera();
     private Dumper mDumper = new Dumper();
@@ -43,7 +44,7 @@ public class Robot extends Subsystem {
     public boolean autoSampled = true;
 
     private List<Subsystem> subsystems = Arrays.asList(
-            mDrive, mLift, mIntake, mCamera, mDumper// Add more subsystems here as needed
+            mDrive, mScoringLift, mHangingLift, mIntake, mCamera, mDumper// Add more subsystems here as needed
     );
 
     public static Robot getInstance() {
@@ -103,13 +104,6 @@ public class Robot extends Subsystem {
     @Override
     public void update(ElapsedTime time) {
         switch (wantedScorerState) {
-            case STORED:
-                getDumper().wantedDumperState = Dumper.dumperStates.STORED;
-                getLift().setLiftState(LiftStates.DOWN);
-                liftUpTimer.reset();
-                timerReset = true;
-            break;
-
             case SCORING:
                 getLift().setLiftState(LiftStates.UP);
 
@@ -118,27 +112,12 @@ public class Robot extends Subsystem {
                 }
                 timerReset = true;
                 liftUpTimer.reset();
-
-                if (scoringCounterFirst) {
-                    scoringCounter++;
-                    scoringCounterFirst = false;
-                }
                 break;
 
             case COLLECTING:
-                if (scoringCounter < 3) {
                     getDumper().wantedDumperState = Dumper.dumperStates.COLLECTING;
                     if (getDumper().dumperTimer.milliseconds() > 700)
-                        getLift().setLiftState(LiftStates.READY);
-                }else {
-                    getDumper().wantedDumperState = Dumper.dumperStates.COLLECTING;
-                    getLift().setLiftState(LiftStates.UP);
-                    if (getLift().getCurrentState() == LiftStates.UP || liftUpTimer.milliseconds() > 5000) {
-                        getLift().setLiftState(LiftStates.READY);
-                        scoringCounter = 0;
-                    }
-                }
-                scoringCounterFirst = true;
+                        getLift().setLiftState(LiftStates.DOWN);
                 break;
 
             case DUMP:
@@ -200,7 +179,11 @@ public class Robot extends Subsystem {
     }
 
     public ScoringLift getLift() {
-        return mLift;
+        return mScoringLift;
+    }
+
+    public HangingLift getHangingLift() {
+        return mHangingLift;
     }
 
     public Camera getCamera() {

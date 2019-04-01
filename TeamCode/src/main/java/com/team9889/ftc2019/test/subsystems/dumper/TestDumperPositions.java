@@ -24,7 +24,6 @@ public class TestDumperPositions extends Team9889Linear {
         waitForStart(false);
 
         Robot.getLift().setLiftState(LiftStates.UP);
-        Robot.getDumper().setDumperStates(Dumper.dumperStates.STORED);
 
         while (opModeIsActive()){
             loopTimer.reset();
@@ -47,7 +46,6 @@ public class TestDumperPositions extends Team9889Linear {
             if (gamepad1.right_bumper){
                 Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.INTAKING);
             }else if (gamepad1.left_bumper){
-                Robot.getIntake().setHopperDumperState(Intake.HopperDumperStates.HOLDING);
             }else if (gamepad1.dpad_down){
                 Robot.getIntake().transitionTimer.reset();
                 Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.TRANSITION);

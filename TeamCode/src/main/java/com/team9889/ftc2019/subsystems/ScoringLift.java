@@ -32,9 +32,9 @@ public class ScoringLift extends Subsystem {
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
-        liftMotor = hardwareMap.get(DcMotorEx.class, Constants.LiftConstants.kLeftLiftId);
+        liftMotor = hardwareMap.get(DcMotorEx.class, Constants.ScoringLiftConstants.kLeftLiftId);
 
-        lowerLimit = hardwareMap.get(DigitalChannel.class, Constants.LiftConstants.kLiftLowerLimitSensorId);
+        lowerLimit = hardwareMap.get(DigitalChannel.class, Constants.ScoringLiftConstants.kLiftLowerLimitSensorId);
 
         liftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -84,9 +84,9 @@ public class ScoringLift extends Subsystem {
 
                 case UP:
                     if (auto)
-                        setLiftPosition(17);
+                        setLiftPosition(-600);
                     else
-                        setLiftPosition(15.1);
+                        setLiftPosition(-600);
 
                     if (inPosition()) {
                         setLiftPower(0);

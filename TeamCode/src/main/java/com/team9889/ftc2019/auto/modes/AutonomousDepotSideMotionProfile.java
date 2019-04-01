@@ -54,7 +54,6 @@ public class AutonomousDepotSideMotionProfile extends AutoModeBase {
         runAction(new DriveMotionProfile(17, 0));
         runAction(new IntakeInFront(22, 5000, true));
         runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
-        Robot.getIntake().setIntakeHardStopState(com.team9889.ftc2019.subsystems.Intake.IntakeHardStop.UP);
         ThreadAction(new DumperCollecting());
         runAction(new Outtake(-1, 1000));
         runAction(new IntakeUp());

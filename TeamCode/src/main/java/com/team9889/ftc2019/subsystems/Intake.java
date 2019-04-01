@@ -72,6 +72,7 @@ public class Intake extends Subsystem {
 
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        extender.setDirection(DcMotorSimple.Direction.REVERSE);
         extender.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         extender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -134,6 +135,7 @@ public class Intake extends Subsystem {
                         firstIntaking = true;
                 } else {
                     intakeOperatorControl = true;
+                    setIntakeGateState(IntakeGateStates.DOWN);
                     intake();
                 }
                 break;
@@ -142,11 +144,13 @@ public class Intake extends Subsystem {
                     setIntakeExtenderPower(0);
                     intakeOperatorControl = true;
                     transitionTimer.reset();
+                    setIntakeRotatorState(RotatorStates.DUMPING);
                     currentIntakeState = IntakeStates.GRABBING;
                     wantedIntakeState = IntakeStates.TRANSITION;
                 }else{
                     intakeOperatorControl = false;
                     setIntakeRotatorState(RotatorStates.UP);
+                    setIntakePower(-.5);
 
                     setIntakeExtenderPower(-1);
                 }
@@ -183,7 +187,7 @@ public class Intake extends Subsystem {
                 break;
 
             case TRANSITION:
-                if (Robot.getInstance().getLift().getCurrentState() == LiftStates.READY) {
+//                if (Robot.getInstance().getLift().getCurrentState() == LiftStates.DOWN) {
                     if (transitionTimer.milliseconds() < 300){
                         setIntakeGateState(IntakeGateStates.UP);
                     }else if(transitionTimer.milliseconds() > 300 && transitionTimer.milliseconds() < 500) {
@@ -198,7 +202,7 @@ public class Intake extends Subsystem {
                         currentIntakeState = IntakeStates.TRANSITION;
                         intakeOperatorControl = true;
                     }
-                }
+//                }
                 break;
 
             case DRIVER:
@@ -226,7 +230,7 @@ public class Intake extends Subsystem {
      * Turn On Intake
      */
     public void intake() {
-        setIntakePower(1);
+        setIntakePower(-1);
         if (auto)
             setIntakeRotatorState(RotatorStates.DOWN);
     }
@@ -235,7 +239,7 @@ public class Intake extends Subsystem {
      * Outtake
      */
     public void outtake() {
-        setIntakePower(-1);
+        setIntakePower(1);
     }
 
     /**
@@ -311,15 +315,20 @@ public class Intake extends Subsystem {
         switch (state) {
             case UP:
                 if (auto)
-                    setIntakeRotatorPosition(0.4);
+                    setIntakeRotatorPosition(0.7);
                 else
-                    setIntakeRotatorPosition(0.46);
+                    setIntakeRotatorPosition(0.7);
                 currentIntakeRotatorState = RotatorStates.UP;
                 break;
 
             case DOWN:
-                setIntakeRotatorPosition(.9);
+                setIntakeRotatorPosition(1);
                 currentIntakeRotatorState = RotatorStates.DOWN;
+                break;
+
+            case DUMPING:
+                setIntakeRotatorPosition(0.5);
+                currentIntakeRotatorState = RotatorStates.DUMPING;
                 break;
         }
     }
@@ -327,11 +336,11 @@ public class Intake extends Subsystem {
     public void setIntakeGateState(IntakeGateStates state){
         switch (state){
             case UP:
-                setIntakeGatePosition(1);
+                setIntakeGatePosition(0.25);
                 break;
 
             case DOWN:
-                setIntakeGatePosition(0.5);
+                setIntakeGatePosition(0);
                 break;
         }
     }
@@ -361,7 +370,7 @@ public class Intake extends Subsystem {
     }
 
     public enum RotatorStates {
-        UP, DOWN
+        UP, DOWN, DUMPING
     }
 
     public enum IntakeGateStates {
