@@ -107,7 +107,7 @@ public class Robot extends Subsystem {
             case SCORING:
                 getLift().setLiftState(LiftStates.UP);
 
-                if (getLift().getHeight() > 8) {
+                if (getLift().getHeight() < -600) {
                     getDumper().wantedDumperState = Dumper.dumperStates.SCORING;
                 }
                 timerReset = true;
@@ -116,7 +116,7 @@ public class Robot extends Subsystem {
 
             case COLLECTING:
                     getDumper().wantedDumperState = Dumper.dumperStates.COLLECTING;
-                    if (getDumper().dumperTimer.milliseconds() > 700)
+                    if (getDumper().dumperTimer.milliseconds() > 300)
                         getLift().setLiftState(LiftStates.DOWN);
                 break;
 

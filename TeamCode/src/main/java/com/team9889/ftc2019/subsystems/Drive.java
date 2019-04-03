@@ -9,10 +9,12 @@ import com.team9889.ftc2019.Constants;
 import com.team9889.lib.CruiseLib;
 import com.team9889.lib.control.math.cartesian.Pose;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
+import com.team9889.lib.hardware.ModernRoboticsUltrasonic;
 import com.team9889.lib.hardware.RevIMU;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import static com.team9889.ftc2019.Constants.DriveConstants.ENCODER_TO_DISTANCE_RATIO;
 
@@ -26,6 +28,7 @@ public class Drive extends Subsystem {
      * Hardware
      */
     private DcMotor rightMaster_, leftMaster_, rightSlave_, leftSlave_ = null;
+    private ModernRoboticsUltrasonic ultrasonic;
     private RevIMU imu = null;
 
     /**
@@ -55,6 +58,8 @@ public class Drive extends Subsystem {
         this.leftSlave_ = hardwareMap.get(DcMotor.class, Constants.DriveConstants.kLeftDriveSlaveId);
         this.rightSlave_ = hardwareMap.get(DcMotor.class, Constants.DriveConstants.getkRightDriveSlaveId);
 
+        this.ultrasonic = new ModernRoboticsUltrasonic(Constants.DriveConstants.kUltrasonic, hardwareMap);
+
         this.leftMaster_.setDirection(DcMotorSimple.Direction.REVERSE);
         this.leftSlave_.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -78,6 +83,8 @@ public class Drive extends Subsystem {
         telemetry.addData("Left Power", this.leftMaster_.getPower());
         telemetry.addData("Right Power", this.rightMaster_.getPower());
         telemetry.addData("Gyro Angle", this.getAngle().getTheda(AngleUnit.DEGREES));
+
+        telemetry.addData("Ultrasonic", this.getBackDistance());
     }
 
     @Override
@@ -292,6 +299,14 @@ public class Drive extends Subsystem {
         } catch (Exception ignored) {}
 
         this.withoutEncoders();
+    }
+
+    public double getBackDistance(){
+        return ultrasonic.getDistance(DistanceUnit.INCH);
+    }
+
+    public boolean isRobotInScoringPosition(){
+        return CruiseLib.isBetween(getBackDistance(), 10, 20);
     }
 
 }

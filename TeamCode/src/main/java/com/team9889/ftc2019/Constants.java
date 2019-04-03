@@ -27,6 +27,8 @@ public class Constants {
         public final static String kLeftDriveSlaveId = "lb";
         public final static String getkRightDriveSlaveId = "rb";
 
+        public final static String kUltrasonic = "u";
+
 
         public final static double WheelbaseWidth = 16;
         public final static double WheelDiameter = 4;

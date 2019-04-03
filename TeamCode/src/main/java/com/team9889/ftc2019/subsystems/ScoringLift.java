@@ -40,6 +40,7 @@ public class ScoringLift extends Subsystem {
         liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         offset = 0;
+        getLowerLimitPressed();
 
         currentState = LiftStates.NULL;
         wantedState = LiftStates.NULL;
@@ -69,39 +70,32 @@ public class ScoringLift extends Subsystem {
     public void update(ElapsedTime time) {
         getLowerLimitPressed();
 
-        if (currentState != wantedState) {
-            liftOperatorControl = false;
+        switch (wantedState) {
+            case DOWN:
+                setLiftPosition(0);
 
-            switch (wantedState) {
-                case DOWN:
-                    if (getLowerLimitPressed()) {
-                        setLiftPower(0);
-                        currentState = LiftStates.DOWN;
-                    } else {
-                        setLiftPower(-0.7);
-                    }
-                    break;
-
-                case UP:
-                    if (auto)
-                        setLiftPosition(-600);
-                    else
-                        setLiftPosition(-600);
-
-                    if (inPosition()) {
-                        setLiftPower(0);
-                        currentState = LiftStates.UP;
-                    }
-                    break;
-
-                case NULL:
+                if (inPosition()) {
                     setLiftPower(0);
-                    currentState = LiftStates.NULL;
-                    break;
-            }
-        } else {
-            liftOperatorControl = true;
+                    currentState = LiftStates.DOWN;
+                }
+                break;
+
+            case UP:
+                setLiftPosition(-1150);
+
+                if (getHeight() < -1150) {
+                    setLiftPower(0);
+                    currentState = LiftStates.UP;
+                }
+                break;
+
+            case NULL:
+                setLiftPower(0);
+                currentState = LiftStates.NULL;
+                break;
         }
+
+        liftOperatorControl = currentState == wantedState;
     }
 
     @Override
@@ -117,7 +111,7 @@ public class ScoringLift extends Subsystem {
      */
     public void setLiftPower(double power) {
         double mPower = power;
-        if((getLowerLimitPressed() && mPower<0))
+        if((getLowerLimitPressed() && mPower>0))
             mPower = 0;
 
         liftMotor.setPower(mPower);
@@ -128,7 +122,12 @@ public class ScoringLift extends Subsystem {
      * @param wantedHeight In inches
      */
     private void setLiftPosition(double wantedHeight) {
-        setLiftPower(pid.update(getHeight(), wantedHeight));
+        double power = pid.update(getHeight(), wantedHeight);
+
+        if (power>0.5)
+            power = 0.5;
+
+        setLiftPower(power);
     }
 
     private double getHeightTicks() {

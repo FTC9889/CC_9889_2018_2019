@@ -42,10 +42,9 @@ public class Teleop extends Team9889Linear {
                     driverStation.getSteer());
 
             // ScoringLift Controller
-            if(firstRun && Robot.getLift().getCurrentState() == LiftStates.UP) {
+            if(firstRun) {
                 Robot.getDumper().dumperTimer.reset();
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.COLLECTING);
-                firstRun = false;
             } else if(Robot.getLift().liftOperatorControl){
                 Robot.getHangingLift().setLiftPower(-gamepad2.right_stick_y);
             }
@@ -129,7 +128,9 @@ public class Teleop extends Team9889Linear {
                 setBackground(Color.WHITE);
             }else if (Robot.getIntake().isIntakeOperatorControl() && !Robot.transitionDone)
                 setBackground(Color.GREEN);
-            else
+            else if (Robot.getDrive().isRobotInScoringPosition()){
+                setBackground(Color.BLUE);
+            } else
                 setBackground(Color.BLACK);
 
 
@@ -169,6 +170,8 @@ public class Teleop extends Team9889Linear {
                 Robot.getLift().setLiftPower(gamepad2.left_trigger);
                 Robot.getLift().setLiftPower(-gamepad2.right_trigger);
             }
+
+            firstRun = false;
 
         }
 

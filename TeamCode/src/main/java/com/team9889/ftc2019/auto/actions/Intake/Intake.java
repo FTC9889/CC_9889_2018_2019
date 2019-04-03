@@ -36,7 +36,7 @@ public class Intake extends Action {
 
     @Override
     public boolean isFinished() {
-        return Robot.getInstance().getIntake().revLeftHopper.getIN() < 2.5 || Robot.getInstance().getIntake().revRightHopper.getIN() < 2.5 || timer.milliseconds() > timeOut;
+        return timer.milliseconds() > timeOut;
     }
 
     @Override

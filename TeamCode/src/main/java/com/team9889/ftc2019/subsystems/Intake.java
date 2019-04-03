@@ -25,7 +25,6 @@ public class Intake extends Subsystem {
     private DcMotor intakeMotor, extender;
     private Servo intakeRotator, intakeGate;
     private DigitalChannel scoringSwitch, inSwitch;
-    public RevColorDistance revLeftHopper, revRightHopper;
 
     // PID for extending the intake
     private PID extenderPID = new PID(0.5, 0.0, 2);
@@ -51,12 +50,7 @@ public class Intake extends Subsystem {
 
     public ElapsedTime hardStopTimer = new ElapsedTime();
     public ElapsedTime collectingTimer = new ElapsedTime();
-    private boolean transitionExtender = true;
 
-    public ElapsedTime settleTimer = new ElapsedTime();
-    public Boolean firstSettle = true;
-
-    public ElapsedTime autonomousTimer = new ElapsedTime();
     public boolean autonomousFirst = true;
 
     public RotatorStates currentIntakeRotatorState;
@@ -101,8 +95,6 @@ public class Intake extends Subsystem {
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
         telemetry.addData("PID Output", extenderPID.getOutput());
-        telemetry.addData("Left Rev Distance", revLeftHopper.getIN());
-        telemetry.addData("Right Rev Distance", revRightHopper.getIN());
 
         telemetry.addData("IntakePower", intakeMotor.getPower());
         telemetry.addData("Intake Extender Real Position", getIntakeExtenderPosition());
@@ -193,11 +185,10 @@ public class Intake extends Subsystem {
                     }else if(transitionTimer.milliseconds() > 300 && transitionTimer.milliseconds() < 500) {
                         intakeOperatorControl = false;
                         setIntakeExtenderPower(1);
-                        transitionExtender = true;
                         Robot.getInstance().transitionDone = true;
                     } else if(transitionTimer.milliseconds() > 500 && transitionTimer.milliseconds() < 700) {
                         setIntakeExtenderPower(0);
-                        transitionExtender = false;
+                        setIntakePower(0);
                         Robot.getInstance().stopIntake = false;
                         currentIntakeState = IntakeStates.TRANSITION;
                         intakeOperatorControl = true;
