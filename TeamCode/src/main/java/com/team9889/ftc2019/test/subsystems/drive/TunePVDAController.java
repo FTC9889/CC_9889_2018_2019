@@ -17,7 +17,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 @Disabled
 public class TunePVDAController extends AutoModeBase {
     @Override
-    public void run(AllianceColor allianceColor) {
+    public void run(AutoModeBase.Side side, boolean doubleSample, boolean scoreSample) {
         runAction(new DriveMotionProfile(15, 0));
         runAction(new Wait(1000));
         runAction(new Turn(new Rotation2d(-45, AngleUnit.DEGREES), 5000));

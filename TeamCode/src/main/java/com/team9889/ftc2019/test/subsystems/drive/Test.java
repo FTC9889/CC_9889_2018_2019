@@ -13,7 +13,7 @@ import com.team9889.ftc2019.auto.actions.Drive.DriveToPosition;
 @Disabled
 public class Test extends AutoModeBase {
     @Override
-    public void run(AllianceColor allianceColor) {
+    public void run(AutoModeBase.Side side, boolean doubleSample, boolean scoreSample) {
         runAction(new DriveToPosition(10, 10, 2000));
     }
 }

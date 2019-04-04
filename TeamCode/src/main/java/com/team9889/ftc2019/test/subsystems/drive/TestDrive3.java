@@ -15,7 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 @Disabled
 public class TestDrive3 extends AutoModeBase {
     @Override
-    public void run(AllianceColor allianceColor) {
+    public void run(AutoModeBase.Side side, boolean doubleSample, boolean scoreSample) {
 
         telemetry.addData("Angle", Robot.getDrive().getAngle().getTheda(AngleUnit.DEGREES));
         telemetry.update();

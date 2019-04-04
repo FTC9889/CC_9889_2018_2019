@@ -13,7 +13,7 @@ import com.team9889.ftc2019.subsystems.Camera;
 @Autonomous(group = "Test")
 public class TestLand extends AutoModeBase {
     @Override
-    public void run(AllianceColor allianceColor) {
+    public void run(AutoModeBase.Side side, boolean doubleSample, boolean scoreSample) {
         waitForStart(true);
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
         runAction(new Land2());

@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 @Disabled
 public class Autonomous extends AutoModeBase {
     @Override
-    public void run(AllianceColor allianceColor) {
-
+    public void run(AutoModeBase.Side side, boolean doubleSample, boolean scoreSample) {
+        
     }
 }

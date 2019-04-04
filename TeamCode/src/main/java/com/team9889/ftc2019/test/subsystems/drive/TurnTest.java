@@ -16,7 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 @Disabled
 public class TurnTest extends AutoModeBase {
     @Override
-    public void run(AllianceColor allianceColor) {
+    public void run(AutoModeBase.Side side, boolean doubleSample, boolean scoreSample) {
 //        final double AngleToInches =  -90 * 0.13955556;
 //        runAction(new Drive(AngleToInches, -AngleToInches));
         runAction(new DriveTurn(new Rotation2d(90, AngleUnit.DEGREES), 4000));

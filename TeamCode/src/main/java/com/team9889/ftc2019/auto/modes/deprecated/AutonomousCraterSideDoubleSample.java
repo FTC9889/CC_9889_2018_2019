@@ -21,7 +21,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 @Deprecated
 public class AutonomousCraterSideDoubleSample extends AutoModeBase {
     @Override
-    public void run(AllianceColor allianceColor) {
+    public void run(AutoModeBase.Side side, boolean doubleSample, boolean scoreSample) {
 //        Robot.getLift().setStopperPosition(0.3);
         runAction(new Wait(1000));
         Robot.getDrive().setLeftRightPower(.1, .1);

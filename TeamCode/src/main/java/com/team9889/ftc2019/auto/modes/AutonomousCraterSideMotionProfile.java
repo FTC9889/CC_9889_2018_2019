@@ -27,7 +27,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 @Autonomous(group = "Motion Profiled : Competition Autonomous")
 public class AutonomousCraterSideMotionProfile extends AutoModeBase {
     @Override
-    public void run(AllianceColor allianceColor) {
+    public void run(AutoModeBase.Side side, boolean doubleSample, boolean scoreSample) {
         Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.STORED);
         Robot.update(matchTime);
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
