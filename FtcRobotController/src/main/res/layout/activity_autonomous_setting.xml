@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Autonomous Settings"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/red_side_image"
+        android:layout_width="wrap_content"
+        android:layout_height="196dp"
+        android:layout_marginTop="14dp"
+        android:src="@drawable/rr2_above_view_of_field_red_side"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@+id/header"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/depot_side_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="110dp"
+        android:minHeight="60dp"
+        android:minWidth="60dp"
+        android:rotation="-45"
+        app:layout_constraintBottom_toBottomOf="@+id/red_side_image"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/crater_side_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="110dp"
+        android:minHeight="60dp"
+        android:minWidth="60dp"
+        android:rotation="45"
+        app:layout_constraintBottom_toBottomOf="@+id/red_side_image"
+        app:layout_constraintEnd_toEndOf="@+id/red_side_image" />
+
+    <ToggleButton
+        android:id="@+id/double_sample_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="ToggleButton"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/red_side_image" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Double Sample"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.Button"
+        app:layout_constraintBottom_toBottomOf="@+id/double_sample_switch"
+        app:layout_constraintStart_toEndOf="@+id/double_sample_switch"
+        app:layout_constraintTop_toTopOf="@+id/double_sample_switch" />
+
+    <ToggleButton
+        android:id="@+id/score_collected_mineral_switch"
+        android:layout_width="89dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="ToggleButton"
+        app:layout_constraintEnd_toEndOf="@+id/double_sample_switch"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="@+id/double_sample_switch"
+        app:layout_constraintTop_toBottomOf="@+id/double_sample_switch" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Score Sample In Lander"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.Button"
+        app:layout_constraintBottom_toBottomOf="@+id/score_collected_mineral_switch"
+        app:layout_constraintStart_toEndOf="@+id/score_collected_mineral_switch"
+        app:layout_constraintTop_toTopOf="@+id/score_collected_mineral_switch" />
+
+    <Button
+        android:id="@+id/save_and_exit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Save and Exit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
