@@ -22,7 +22,7 @@ public class ScoringLift extends Subsystem {
     private DcMotorEx liftMotor;
     private DigitalChannel lowerLimit;
     private boolean auto;
-    private PID pid = new PID(.6, 0, 0.3);
+    private PID pid = new PID(.6, 0, 0.6);
     public boolean liftOperatorControl = false;
 
     private double offset = 0;
@@ -81,7 +81,7 @@ public class ScoringLift extends Subsystem {
                 break;
 
             case UP:
-                setLiftPosition(-1150);
+                setLiftPosition(-1500);
 
                 if (getHeight() < -1150) {
                     setLiftPower(0);
@@ -124,8 +124,8 @@ public class ScoringLift extends Subsystem {
     private void setLiftPosition(double wantedHeight) {
         double power = pid.update(getHeight(), wantedHeight);
 
-        if (power>0.5)
-            power = 0.5;
+        if (power>0.3)
+            power = 0.3;
 
         setLiftPower(power);
     }

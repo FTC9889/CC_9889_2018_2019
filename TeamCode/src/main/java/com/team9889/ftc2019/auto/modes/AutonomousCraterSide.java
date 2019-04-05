@@ -1,6 +1,7 @@
 package com.team9889.ftc2019.auto.modes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.team9889.ftc2019.auto.AutoModeBase;
 import com.team9889.ftc2019.auto.actions.Drive.DriveToDistanceAndAngle;
 import com.team9889.ftc2019.auto.actions.Drive.Turn;
@@ -22,6 +23,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
  */
 
 @Autonomous(group = "Standard")
+@Disabled
 public class AutonomousCraterSide extends AutoModeBase {
     @Override
     public void run(AutoModeBase.Side side, boolean doubleSample, boolean scoreSample) {

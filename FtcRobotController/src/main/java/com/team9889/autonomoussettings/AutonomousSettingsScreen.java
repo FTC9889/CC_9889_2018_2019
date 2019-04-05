@@ -108,7 +108,7 @@ public class AutonomousSettingsScreen extends Activity {
         if (file.exists())
             file.delete();
 
-        String output = current + "," + String.valueOf(doubleSample.isChecked()) + "," +
+        String output = current + "\n" + String.valueOf(doubleSample.isChecked()) + "\n" +
                 String.valueOf(scoreCollectedSample.isChecked());
 
         setSide(current);
@@ -142,10 +142,10 @@ public class AutonomousSettingsScreen extends Activity {
                 text += (char)content;
             }
 
-            String[] lines = text.split(",");
+            String[] lines = text.split("\n");
 
             for (int i = 0; i < lines.length; i++) {
-                lines[i] = lines[i].replace(",", "");
+                lines[i] = lines[i].replace("\n", "");
             }
 
             current = String.valueOf(lines[0]);

@@ -92,7 +92,7 @@ public class Teleop extends Team9889Linear {
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.SCORING);
                 first = true;
                 Robot.transitionDone = false;
-            }else if (gamepad1.right_bumper && Robot.getLift().getCurrentState() == LiftStates.UP){
+            }else if (gamepad1.right_bumper && Robot.getLift().getCurrentState() == LiftStates.UP && Robot.getLift().getHeight() > 1000){
                 Robot.getDumper().collectingTimer.reset();
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.DUMP);
 
@@ -148,7 +148,7 @@ public class Teleop extends Team9889Linear {
                 }
             }
 
-            if (gamepad2.left_trigger > .1){
+            if (gamepad2.left_trigger > .1 && Robot.getLift().getHeight() < 50){
                 Robot.stopIntake = true;
             }
 

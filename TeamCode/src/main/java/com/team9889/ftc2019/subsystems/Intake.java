@@ -30,7 +30,7 @@ public class Intake extends Subsystem {
     private PID extenderPID = new PID(0.5, 0.0, 2);
 
     // Tracker
-    private double maximumPosition = 23; // Inches
+    private double maximumPosition = 35; // Inches
     private double offset = 0; // Ticks
 
     //
@@ -79,6 +79,8 @@ public class Intake extends Subsystem {
         this.auto = auto;
         if (auto){
             zeroSensors();
+            setIntakeRotatorState(RotatorStates.UP);
+            setIntakeGateState(IntakeGateStates.HOLDINGMARKER);
             wantedIntakeState = IntakeStates.ZEROING;
             currentIntakeState = IntakeStates.ZEROING;
         }else {
@@ -180,15 +182,16 @@ public class Intake extends Subsystem {
 
             case TRANSITION:
 //                if (Robot.getInstance().getLift().getCurrentState() == LiftStates.DOWN) {
-                    if (transitionTimer.milliseconds() < 300){
+                    if (transitionTimer.milliseconds() < 800){
                         setIntakeGateState(IntakeGateStates.UP);
-                    }else if(transitionTimer.milliseconds() > 300 && transitionTimer.milliseconds() < 500) {
+                    }else if(transitionTimer.milliseconds() > 800 && transitionTimer.milliseconds() < 1000) {
                         intakeOperatorControl = false;
                         setIntakeExtenderPower(1);
                         Robot.getInstance().transitionDone = true;
-                    } else if(transitionTimer.milliseconds() > 500 && transitionTimer.milliseconds() < 700) {
+                    } else if(transitionTimer.milliseconds() > 1000 && transitionTimer.milliseconds() < 1200) {
                         setIntakeExtenderPower(0);
                         setIntakePower(0);
+                        setIntakeRotatorState(RotatorStates.UP);
                         Robot.getInstance().stopIntake = false;
                         currentIntakeState = IntakeStates.TRANSITION;
                         intakeOperatorControl = true;
@@ -333,6 +336,10 @@ public class Intake extends Subsystem {
             case DOWN:
                 setIntakeGatePosition(0);
                 break;
+
+            case HOLDINGMARKER:
+                setIntakeGatePosition(0.05);
+                break;
         }
     }
 
@@ -365,7 +372,7 @@ public class Intake extends Subsystem {
     }
 
     public enum IntakeGateStates {
-        UP, DOWN
+        UP, DOWN, HOLDINGMARKER
     }
 }
 
