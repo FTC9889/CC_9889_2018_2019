@@ -25,7 +25,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 @Deprecated
 public class AutonomousCraterSideOutdated extends AutoModeBase {
     @Override
-    public void run(AllianceColor allianceColor) {
+    public void run(AutoModeBase.Side side, boolean doubleSample, boolean scoreSample) {
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
         runAction(new Land2(5000));
 

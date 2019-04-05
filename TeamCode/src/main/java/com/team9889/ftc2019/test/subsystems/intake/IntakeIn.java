@@ -16,7 +16,7 @@ public class IntakeIn extends AutoModeBase {
     ElapsedTime timer = new ElapsedTime();
 
     @Override
-    public void run(AllianceColor allianceColor) {
+    public void run(AutoModeBase.Side side, boolean doubleSample, boolean scoreSample) {
         Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.ZEROING);
         while (opModeIsActive() && Robot.getIntake().isCurrentStateWantedState()){
             Robot.getIntake().update(timer);

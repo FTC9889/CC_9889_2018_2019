@@ -18,7 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 @Disabled
 public class SamplingTest extends AutoModeBase {
     @Override
-    public void run(AllianceColor allianceColor) {
+    public void run(AutoModeBase.Side side, boolean doubleSample, boolean scoreSample) {
 
         Robot.getCamera().setXYAxisPosition(0, .75);
 

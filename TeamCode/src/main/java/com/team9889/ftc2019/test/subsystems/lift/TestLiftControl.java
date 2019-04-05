@@ -13,7 +13,7 @@ import com.team9889.ftc2019.states.LiftStates;
 @Disabled
 public class TestLiftControl extends AutoModeBase {
     @Override
-    public void run(AllianceColor allianceColor) {
+    public void run(AutoModeBase.Side side, boolean doubleSample, boolean scoreSample) {
 
         Robot.getLift().setLiftState(LiftStates.DOWN);
         while (opModeIsActive()){

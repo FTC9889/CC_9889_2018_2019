@@ -21,7 +21,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 @Deprecated
 public class AutonomousDepotSideSingleSample extends AutoModeBase {
     @Override
-    public void run(AllianceColor allianceColor) {
+    public void run(AutoModeBase.Side side, boolean doubleSample, boolean scoreSample) {
         ElapsedTime timer = new ElapsedTime();
 
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);

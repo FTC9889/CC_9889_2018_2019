@@ -27,7 +27,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 @Disabled
 public class AutonomousCraterSideDouble extends AutoModeBase {
     @Override
-    public void run(AllianceColor allianceColor) {
+    public void run(Side side, boolean doubleSample, boolean scoreSample) {
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
         runAction(new Land2(5000));
 

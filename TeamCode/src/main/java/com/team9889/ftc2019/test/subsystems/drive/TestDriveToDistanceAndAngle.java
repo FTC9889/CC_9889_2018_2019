@@ -13,7 +13,7 @@ import com.team9889.ftc2019.auto.actions.Drive.DriveToDistanceAndAngle;
 @Disabled
 public class TestDriveToDistanceAndAngle extends AutoModeBase {
     @Override
-    public void run(AllianceColor allianceColor) {
+    public void run(AutoModeBase.Side side, boolean doubleSample, boolean scoreSample) {
         runAction(new DriveToDistanceAndAngle(50, 0, 7000));
     }
 }
