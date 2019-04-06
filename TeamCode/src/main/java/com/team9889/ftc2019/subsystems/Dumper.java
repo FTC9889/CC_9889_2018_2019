@@ -19,8 +19,6 @@ public class Dumper extends Subsystem{
     public ElapsedTime collectingTimer = new ElapsedTime();
     public ElapsedTime dumperTimer = new ElapsedTime();
 
-    private boolean auto;
-
     public enum dumperStates{
         COLLECTING, SCORING, DUMP, DUMPAUTO, NULL
     }
@@ -31,11 +29,7 @@ public class Dumper extends Subsystem{
     public void init(HardwareMap hardwareMap, boolean auto) {
         dumperRotator = hardwareMap.get(Servo.class, Constants.DumperConstants.kDumperRotatorId);
 
-        this.auto = auto;
-
         if (auto){
-            setDumperStates(dumperStates.COLLECTING);
-        }else{
             setDumperStates(dumperStates.COLLECTING);
         }
     }

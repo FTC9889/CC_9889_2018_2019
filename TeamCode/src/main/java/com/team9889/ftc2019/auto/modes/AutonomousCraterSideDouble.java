@@ -31,7 +31,7 @@ public class AutonomousCraterSideDouble extends AutoModeBase {
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
         runAction(new Land2(5000));
 
-        ThreadAction(new IntakeInFront());
+        ThreadAction(new IntakeInFront(20, 2000, true));
         runAction(new Wait(1500));
 
         if (Robot.getCamera().isGoldInfront()){ // Middle
@@ -45,7 +45,7 @@ public class AutonomousCraterSideDouble extends AutoModeBase {
 
             runAction(new DriveTurn(new Rotation2d(-35, AngleUnit.DEGREES), 1500));
 
-            ThreadAction(new IntakeInFront());
+            ThreadAction(new IntakeInFront(20, 2000, true));
 
             runAction(new DriveToDistanceAndAngle(25, -135, 3000));
 
@@ -81,7 +81,7 @@ public class AutonomousCraterSideDouble extends AutoModeBase {
                 // Turn To Depot
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 2000));
 
-                ThreadAction(new IntakeInFront());
+                ThreadAction(new IntakeInFront(20, 2000, true));
 
                 // Drive closer to depot
                 runAction(new DriveToDistanceAndAngle(30, -135, 3000));
@@ -113,7 +113,7 @@ public class AutonomousCraterSideDouble extends AutoModeBase {
                 runAction(new DriveToDistanceAndAngle(20, -90, 2500));
 
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 1500));
-                ThreadAction(new IntakeInFront());
+                ThreadAction(new IntakeInFront(20, 2000, true));
                 runAction(new DriveToDistanceAndAngle(43, -135, 3000)); // Distance to Depot TODO: Check this value on field
                 runAction(new Outtake());
 

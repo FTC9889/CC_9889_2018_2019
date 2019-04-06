@@ -1,6 +1,7 @@
 package com.team9889.ftc2019.auto.actions;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.ftc2019.subsystems.Robot;
 
 /**
@@ -10,9 +11,16 @@ public class RobotUpdate extends Action{
 
     private ElapsedTime timer = new ElapsedTime();
     private double timeOut;
+    private boolean liftReset;
+
+    public RobotUpdate(double timeOut, boolean liftReset){
+        this.timeOut = timeOut;
+        this.liftReset = liftReset;
+    }
 
     public RobotUpdate(double timeOut){
         this.timeOut = timeOut;
+        this.liftReset = false;
     }
 
     @Override
@@ -37,6 +45,8 @@ public class RobotUpdate extends Action{
 
     @Override
     public void done() {
-
+        if (liftReset){
+            Robot.getInstance().getLift().setLiftState(LiftStates.NULL);
+        }
     }
 }

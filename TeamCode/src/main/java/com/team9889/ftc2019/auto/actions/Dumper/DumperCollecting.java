@@ -2,6 +2,7 @@ package com.team9889.ftc2019.auto.actions.Dumper;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.auto.actions.Action;
+import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.ftc2019.subsystems.Robot;
 
 /**
@@ -29,7 +30,7 @@ public class DumperCollecting extends Action {
 
     @Override
     public boolean isFinished() {
-        return timer.milliseconds() > 2000;
+        return timer.milliseconds() > 3000 && Robot.getInstance().getLift().getCurrentState() == LiftStates.DOWN;
     }
 
     @Override

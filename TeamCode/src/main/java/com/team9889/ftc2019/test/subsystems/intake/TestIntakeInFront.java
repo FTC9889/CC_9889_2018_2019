@@ -14,6 +14,6 @@ import com.team9889.ftc2019.auto.actions.Intake.IntakeInFront;
 public class TestIntakeInFront extends AutoModeBase {
     @Override
     public void run(AutoModeBase.Side side, boolean doubleSample, boolean scoreSample) {
-        runAction(new IntakeInFront());
+        runAction(new IntakeInFront(20, 2000, true));
     }
 }

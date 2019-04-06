@@ -18,9 +18,9 @@ public class IntakeInFront extends Action {
         this.timeOut = timeOut;
         this.intakeRotator = intakeRotatorUp;
     }
-    public IntakeInFront(){
-        Robot.getInstance().getIntake().autoIntakeOut = 20;
-    }
+//    public IntakeInFront(){
+//        Robot.getInstance().getIntake().autoIntakeOut = 20;
+//    }
 
     @Override
     public void setup(String args) {

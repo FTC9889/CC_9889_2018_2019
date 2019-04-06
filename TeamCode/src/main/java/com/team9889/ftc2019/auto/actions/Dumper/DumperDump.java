@@ -18,6 +18,7 @@ public class DumperDump extends Action {
 
     @Override
     public void start() {
+        Robot.getInstance().getDumper().collectingTimer.reset();
         Robot.getInstance().setScorerStates(Robot.scorerStates.DUMP);
         timer.reset();
     }
@@ -29,7 +30,7 @@ public class DumperDump extends Action {
 
     @Override
     public boolean isFinished() {
-        return timer.milliseconds() > 400;
+        return timer.milliseconds() > 1400;
     }
 
     @Override

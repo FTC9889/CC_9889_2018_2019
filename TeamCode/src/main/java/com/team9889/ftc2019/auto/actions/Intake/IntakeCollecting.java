@@ -10,11 +10,17 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 /**
  * Created by MannoMation on 2/27/2019.
  */
+
 public class IntakeCollecting extends Action {
 
     private ElapsedTime timer = new ElapsedTime();
     private Boolean left = false;
     private Boolean right = true;
+    private double timeOut;
+
+    public IntakeCollecting(double timeOut){
+        this.timeOut = timeOut;
+    }
 
     @Override
     public void setup(String args) {
@@ -24,6 +30,7 @@ public class IntakeCollecting extends Action {
     @Override
     public void start() {
         Robot.getInstance().getIntake().setWantedIntakeState(Intake.IntakeStates.INTAKING);
+        timer.reset();
     }
 
     @Override
@@ -46,7 +53,7 @@ public class IntakeCollecting extends Action {
 
     @Override
     public boolean isFinished() {
-        return Robot.getInstance().getIntake().getCurrentIntakeState() == Intake.IntakeStates.INTAKING;
+        return timer.milliseconds() > timeOut;
     }
 
     @Override

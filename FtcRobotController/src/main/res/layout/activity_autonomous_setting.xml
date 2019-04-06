@@ -27,8 +27,8 @@
         android:layout_marginTop="14dp"
         android:src="@drawable/rr2_above_view_of_field_red_side"
         android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@+id/header"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
 
     <Button
         android:id="@+id/depot_side_button"
@@ -58,8 +58,8 @@
         android:id="@+id/double_sample_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="284dp"
+        android:layout_marginTop="24dp"
         android:text="ToggleButton"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,23 +69,24 @@
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:text="Double Sample"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.Button"
         app:layout_constraintBottom_toBottomOf="@+id/double_sample_switch"
-        app:layout_constraintStart_toEndOf="@+id/double_sample_switch"
-        app:layout_constraintTop_toTopOf="@+id/double_sample_switch" />
+        app:layout_constraintEnd_toStartOf="@+id/double_sample_switch"
+        app:layout_constraintTop_toTopOf="@+id/double_sample_switch"
+        app:layout_constraintVertical_bias="0.538" />
 
     <ToggleButton
         android:id="@+id/score_collected_mineral_switch"
-        android:layout_width="89dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="ToggleButton"
         app:layout_constraintEnd_toEndOf="@+id/double_sample_switch"
-        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/double_sample_switch"
         app:layout_constraintTop_toBottomOf="@+id/double_sample_switch" />
 
@@ -93,14 +94,15 @@
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:text="Score Sample In Lander"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.Button"
         app:layout_constraintBottom_toBottomOf="@+id/score_collected_mineral_switch"
-        app:layout_constraintStart_toEndOf="@+id/score_collected_mineral_switch"
-        app:layout_constraintTop_toTopOf="@+id/score_collected_mineral_switch" />
+        app:layout_constraintEnd_toStartOf="@+id/score_collected_mineral_switch"
+        app:layout_constraintTop_toTopOf="@+id/score_collected_mineral_switch"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/save_and_exit_button"

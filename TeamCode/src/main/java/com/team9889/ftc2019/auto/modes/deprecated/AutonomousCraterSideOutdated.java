@@ -29,7 +29,7 @@ public class AutonomousCraterSideOutdated extends AutoModeBase {
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
         runAction(new Land2(5000));
 
-        ThreadAction(new IntakeInFront());
+        ThreadAction(new IntakeInFront(20, 2000, true));
         runAction(new Wait(1500));
 
         if (Robot.getCamera().isGoldInfront()){ // Middle
@@ -41,7 +41,7 @@ public class AutonomousCraterSideOutdated extends AutoModeBase {
             runAction(new Turn(new Rotation2d(-100, AngleUnit.DEGREES), 3000));
             runAction(new DriveToDistanceAndAngle(55, -100, 3000));
             runAction(new DriveTurn(new Rotation2d(-35, AngleUnit.DEGREES), 1500));
-            ThreadAction(new IntakeInFront());
+            ThreadAction(new IntakeInFront(20, 2000, true));
             runAction(new Wait(300));
             runAction(new DriveToDistanceAndAngle(20, -135, 3000));
             runAction(new Outtake());
@@ -68,7 +68,7 @@ public class AutonomousCraterSideOutdated extends AutoModeBase {
                 // Turn To Depot
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 2000));
 
-                ThreadAction(new IntakeInFront());
+                ThreadAction(new IntakeInFront(20, 2000, true));
 
                 // Drive closer to depot
                 runAction(new DriveToDistanceAndAngle(30, -135, 3000));
@@ -88,7 +88,7 @@ public class AutonomousCraterSideOutdated extends AutoModeBase {
                 runAction(new Turn(new Rotation2d(-90, AngleUnit.DEGREES), 2000));
                 runAction(new DriveToDistanceAndAngle(25, -90, 2500));
                 runAction(new DriveTurn(new Rotation2d(-45, AngleUnit.DEGREES), 1500));
-                ThreadAction(new IntakeInFront());
+                ThreadAction(new IntakeInFront(20, 2000, true));
                 runAction(new DriveToDistanceAndAngle(50, -135, 3000));
                 runAction(new Outtake());
                 ThreadAction(new IntakeZeroing());

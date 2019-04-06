@@ -1,6 +1,5 @@
 package com.team9889.ftc2019.auto;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.team9889.ftc2019.auto.actions.Drive.DriveMotionProfile;
 import com.team9889.ftc2019.auto.actions.Drive.DriveToDistanceAndAngle;
 import com.team9889.ftc2019.auto.actions.Drive.Turn;
@@ -13,11 +12,8 @@ import com.team9889.ftc2019.auto.actions.Intake.IntakeInFront;
 import com.team9889.ftc2019.auto.actions.Intake.IntakeUp;
 import com.team9889.ftc2019.auto.actions.Intake.IntakeZeroing;
 import com.team9889.ftc2019.auto.actions.Intake.Outtake;
-import com.team9889.ftc2019.auto.actions.Lift.Land2;
-import com.team9889.ftc2019.auto.actions.RobotUpdate;
 import com.team9889.ftc2019.auto.actions.Wait;
 import com.team9889.ftc2019.subsystems.Camera;
-import com.team9889.ftc2019.subsystems.Robot;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -40,7 +36,7 @@ public class Autonomous extends AutoModeBase {
                 break;
 
             case CRATER:
-                craterSingle();
+                craterSingle(scoreSample);
                 break;
         }
         
@@ -98,48 +94,28 @@ public class Autonomous extends AutoModeBase {
         }
     }
 
-    public void craterSingle() {
+    public void craterSingle(boolean scoreSample) {
         Robot.getIntake().setIntakeGateState(com.team9889.ftc2019.subsystems.Intake.IntakeGateStates.HOLDINGMARKER);
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
 //                Land Here
-        runAction(new Wait(1000));
+        runAction(new Wait(1300));
         Robot.getIntake().setIntakeGateState(com.team9889.ftc2019.subsystems.Intake.IntakeGateStates.DOWN);
 
 
 //                Collect Sample
         if (Robot.getCamera().isGoldInfront()){ // Middle
             // Grab Gold Block
+            Robot.getCamera().setCameraPosition(Camera.CameraPositions.TELEOP);
             runAction(new IntakeInFront(17, 2000, false));
 
             runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
-            runAction(new Intake(3000));
-
-            runAction(new IntakeUp());
-            runAction(new IntakeInFront(25, 2000, true));
-            runAction(new Intake(2000));
-
-            runAction(new IntakeGrabbing());
-            runAction(new Wait(250));
-
-            runAction(new DumperScoring());
-            ThreadAction(new RobotUpdate(1900));
-            runAction(new Wait(2000));
-            Robot.getDumper().collectingTimer.reset();
-            runAction(new DumperDump());
-            runAction(new Wait(500));
-            Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.COLLECTING);
-            ThreadAction(new RobotUpdate(2000));
-
-            ThreadAction(new IntakeZeroing(false, 2000));
-            runAction(new DriveMotionProfile(17, 0));
-//            runAction(new DriveToDistanceAndAngle(30, 0, 1000));
+            runAction(new Intake(1000));
         } else{
             Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTRIGHT);
             runAction(new Wait(500));
 
             if (Robot.getCamera().isGoldInfront()){ //Right
                 runAction(new DriveMotionProfile(17, 0));
-//                runAction(new DriveToDistanceAndAngle(20, 0, 1000));
                 runAction(new Turn(new Rotation2d(45, AngleUnit.DEGREES), 2000));
                 runAction(new Turn(new Rotation2d(45, AngleUnit.DEGREES), 2000));
                 runAction(new IntakeInFront(18, 2000, false));
@@ -158,7 +134,35 @@ public class Autonomous extends AutoModeBase {
         }
 
 
-        // Drive to Wall
+//        Collect and Score
+        if (scoreSample){
+            runAction(new IntakeUp());
+            ThreadAction(new IntakeInFront(30, 2000, true));
+            runAction(new DriveMotionProfile(15, 0));
+            runAction(new Intake(1500));
+
+            ThreadAction(new IntakeGrabbing());
+
+            runAction(new DriveMotionProfile(-12, 0));
+
+            runAction(new Turn(new Rotation2d(20, AngleUnit.DEGREES), 1000));
+
+            runAction(new DriveMotionProfile(-8, 25));
+
+            runAction(new DumperScoring());
+
+            runAction(new DumperDump());
+
+            runAction(new DriveMotionProfile(8, 25));
+
+            ThreadAction(new DumperCollecting());
+
+            runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1500));
+            ThreadAction(new IntakeZeroing());
+            runAction(new DriveMotionProfile(16, 0));
+        }
+
+//         Drive to Wall
         runAction(new Turn(new Rotation2d(-90, AngleUnit.DEGREES), 2000));
         runAction(new DriveMotionProfile(55, -90));
         runAction(new Turn(new Rotation2d(-135, AngleUnit.DEGREES), 3000));
@@ -166,10 +170,14 @@ public class Autonomous extends AutoModeBase {
 
         // Drive to Depot
         ThreadAction(new DriveMotionProfile(15, -135));
+        runAction(new IntakeInFront(20, 2000, true));
+        runAction(new Wait(1000));
+//        ThreadAction(new IntakeZeroing());
+        runAction(new DriveMotionProfile(-52, -135));
 
 
-//                Dump Marker in Depot
+//        Dump Marker in Depot
 
-        
+
     }
 }

@@ -21,8 +21,7 @@ public class ScoringLift extends Subsystem {
 
     private DcMotorEx liftMotor;
     private DigitalChannel lowerLimit;
-    private boolean auto;
-    private PID pid = new PID(.6, 0, 0.6);
+    private PID pid;
     public boolean liftOperatorControl = false;
 
     private double offset = 0;
@@ -39,11 +38,16 @@ public class ScoringLift extends Subsystem {
         liftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        offset = 0;
-        getLowerLimitPressed();
+        pid = new PID(.6, 0, 0.6);
 
-        currentState = LiftStates.NULL;
-        wantedState = LiftStates.NULL;
+        if(auto) {
+            zeroSensors();
+            currentState = LiftStates.DOWN;
+            wantedState = LiftStates.DOWN;
+        } else {
+            getLowerLimitPressed();
+            wantedState = LiftStates.NULL;
+        }
     }
 
     @Override
@@ -68,31 +72,39 @@ public class ScoringLift extends Subsystem {
 
     @Override
     public void update(ElapsedTime time) {
+        RobotLog.e( time.seconds() + " | "
+                + currentState.toString() + " | " + wantedState.toString() + " | "
+                + String.valueOf(getHeight()) + " | " + String.valueOf(liftMotor.getPower()));
+
         getLowerLimitPressed();
 
-        switch (wantedState) {
-            case DOWN:
-                setLiftPosition(0);
+        if(currentState != wantedState) {
+            switch (wantedState) {
+                case DOWN:
+                    setLiftPosition(0);
 
-                if (inPosition()) {
+                    if (inPosition()) {
+                        setLiftPower(0);
+                        currentState = LiftStates.DOWN;
+                    }
+                    break;
+
+                case UP:
+                    setLiftPosition(-1500);
+
+                    if (getHeight() < -1219.0) {
+                        setLiftPower(0);
+                        currentState = LiftStates.UP;
+                    }
+                    break;
+
+                case NULL:
                     setLiftPower(0);
-                    currentState = LiftStates.DOWN;
-                }
-                break;
-
-            case UP:
-                setLiftPosition(-1500);
-
-                if (getHeight() < -1150) {
-                    setLiftPower(0);
-                    currentState = LiftStates.UP;
-                }
-                break;
-
-            case NULL:
-                setLiftPower(0);
-                currentState = LiftStates.NULL;
-                break;
+                    currentState = LiftStates.NULL;
+                    break;
+            }
+        } else {
+            setLiftPower(0);
         }
 
         liftOperatorControl = currentState == wantedState;
@@ -139,7 +151,7 @@ public class ScoringLift extends Subsystem {
     }
 
     private boolean inPosition() {
-        return Math.abs(pid.getError()) < 0.5;
+        return Math.abs(pid.getError()) < 5;
     }
 
     public boolean getLowerLimitPressed() {

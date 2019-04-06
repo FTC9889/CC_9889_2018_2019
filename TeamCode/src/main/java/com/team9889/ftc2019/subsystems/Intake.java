@@ -8,10 +8,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.team9889.ftc2019.Constants;
-import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.lib.CruiseLib;
 import com.team9889.lib.control.controllers.PID;
-import com.team9889.lib.hardware.RevColorDistance;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -144,7 +142,10 @@ public class Intake extends Subsystem {
                 }else{
                     intakeOperatorControl = false;
                     setIntakeRotatorState(RotatorStates.UP);
-                    setIntakePower(-.5);
+                    if (auto)
+                        setIntakePower(-.25);
+                    else
+                        setIntakePower(-.5);
 
                     setIntakeExtenderPower(-1);
                 }
@@ -160,6 +161,7 @@ public class Intake extends Subsystem {
                         intakeOperatorControl = false;
                         setIntakeRotatorState(RotatorStates.UP);
 
+//                        TODO speed this up
                         setIntakeExtenderPower(-0.5);
                     }
                 }
@@ -184,11 +186,12 @@ public class Intake extends Subsystem {
 //                if (Robot.getInstance().getLift().getCurrentState() == LiftStates.DOWN) {
                     if (transitionTimer.milliseconds() < 800){
                         setIntakeGateState(IntakeGateStates.UP);
-                    }else if(transitionTimer.milliseconds() > 800 && transitionTimer.milliseconds() < 1000) {
+                    }else if(transitionTimer.milliseconds() > 800 && transitionTimer.milliseconds() < 1300) {
                         intakeOperatorControl = false;
+                        setIntakeRotatorState(RotatorStates.UP);
                         setIntakeExtenderPower(1);
                         Robot.getInstance().transitionDone = true;
-                    } else if(transitionTimer.milliseconds() > 1000 && transitionTimer.milliseconds() < 1200) {
+                    } else if(transitionTimer.milliseconds() > 1300 && transitionTimer.milliseconds() < 1500) {
                         setIntakeExtenderPower(0);
                         setIntakePower(0);
                         setIntakeRotatorState(RotatorStates.UP);
