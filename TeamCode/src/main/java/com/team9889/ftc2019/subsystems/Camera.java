@@ -79,9 +79,6 @@ public class Camera extends Subsystem{
         setXYAxisPosition();
     }
 
-    @Override
-    public void test(Telemetry telemetry) {}
-
     private double xPosition, yPosition;
 
     public void setXYAxisPosition(double xPos, double yPos) {

@@ -49,12 +49,7 @@ public class Dumper extends Subsystem{
     public void update(ElapsedTime time) {
         switch (wantedDumperState) {
             case SCORING:
-//                if (timerReset) {
-//                    timer.reset();
-//                    timerReset = false;
-//                } else if (timer.milliseconds() > 400/* || auto */) {
                     setDumperRotatorPosition(.25);
-//                }
                 break;
 
             case DUMPAUTO:
@@ -85,11 +80,6 @@ public class Dumper extends Subsystem{
         }
     }
 
-    @Override
-    public void test(Telemetry telemetry) {
-
-    }
-
     public void setDumperRotatorPosition(double dumperPosition){
         dumperRotator.setPosition(dumperPosition);
     }
@@ -98,12 +88,10 @@ public class Dumper extends Subsystem{
         this.wantedDumperState = states;
     }
 
-    public double getDumperRotatorPosition() {
+    private double getDumperRotatorPosition() {
         return dumperRotator.getPosition();
     }
 
     @Override
-    public void stop() {
-
-    }
+    public void stop() {}
 }

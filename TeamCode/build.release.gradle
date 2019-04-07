@@ -8,4 +8,6 @@ dependencies {
     implementation (name: 'tensorflow-lite-0.0.0-nightly', ext:'aar')
     implementation project(':DogeCV')
     implementation project(':openCVLibrary3')
+
+    compile 'org.openftc:rev-extensions-2:1.1'
 }

@@ -1,17 +1,16 @@
 package com.team9889.ftc2019.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.Constants;
 import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.lib.control.controllers.PID;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.openftc.revextensions2.ExpansionHubMotor;
 
 /**
  * Created by joshua9889 on 3/28/2018.
@@ -19,9 +18,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class HangingLift extends Subsystem {
 
-    private DcMotorEx liftMotor;
+    private ExpansionHubMotor liftMotor;
     private DigitalChannel lowerLimit;
-    private boolean auto;
     private PID pid = new PID(.6, 0, 0.3);
     public boolean liftOperatorControl = false;
 
@@ -32,7 +30,7 @@ public class HangingLift extends Subsystem {
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
-        liftMotor = hardwareMap.get(DcMotorEx.class, Constants.HangingLiftConstants.kLiftId);
+        liftMotor = (ExpansionHubMotor) hardwareMap.dcMotor.get(Constants.HangingLiftConstants.kLiftId);
 
         lowerLimit = hardwareMap.get(DigitalChannel.class, Constants.HangingLiftConstants.kLiftLowerLimitSensorId);
 
@@ -44,7 +42,6 @@ public class HangingLift extends Subsystem {
         currentState = LiftStates.NULL;
         wantedState = LiftStates.NULL;
 
-        this.auto = auto;
         if (auto)
             setLiftState(LiftStates.HANGING);
     }
@@ -117,9 +114,6 @@ public class HangingLift extends Subsystem {
     }
 
     @Override
-    public void test(Telemetry telemetry) {}
-
-    @Override
     public void stop() {
         setLiftState(LiftStates.NULL);
     }
@@ -133,7 +127,6 @@ public class HangingLift extends Subsystem {
             mPower = 0;
 
         liftMotor.setPower(mPower);
-        RobotLog.a("Power to Lift: " + String.valueOf(mPower));
     }
 
     /**
@@ -144,7 +137,7 @@ public class HangingLift extends Subsystem {
     }
 
     private double getHeightTicks() {
-        return liftMotor.getCurrentPosition();
+        return RevHub.getInstance().getMotorPosition(liftMotor);
     }
 
     public double getHeight() {
@@ -156,7 +149,7 @@ public class HangingLift extends Subsystem {
     }
 
     public boolean getLowerLimitPressed() {
-        boolean lowerLimitPressed = !lowerLimit.getState();
+        boolean lowerLimitPressed = !RevHub.getInstance().getDigitalState(lowerLimit);
         if (lowerLimitPressed)
             zeroSensors();
 

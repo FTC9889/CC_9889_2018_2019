@@ -12,6 +12,7 @@ import com.team9889.lib.CruiseLib;
 import com.team9889.lib.control.controllers.PID;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.openftc.revextensions2.ExpansionHubMotor;
 
 /**
  * Created by licorice17 on 9/14/2018.
@@ -20,9 +21,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Intake extends Subsystem {
 
     // Hardware
-    private DcMotor intakeMotor, extender;
+    private ExpansionHubMotor intakeMotor, extender;
     private Servo intakeRotator, intakeGate;
-    private DigitalChannel scoringSwitch, inSwitch;
+    private DigitalChannel inSwitch;
 
     // PID for extending the intake
     private PID extenderPID = new PID(0.5, 0.0, 2);
@@ -31,11 +32,9 @@ public class Intake extends Subsystem {
     private double maximumPosition = 35; // Inches
     private double offset = 0; // Ticks
 
-    //
     private boolean intakeOperatorControl = true;
     public IntakeStates currentIntakeState = IntakeStates.NULL;
     private IntakeStates wantedIntakeState = IntakeStates.ZEROING;
-    private boolean first = true;
     private double intakeRotatorPosition = 0;
 
     public boolean intakeZeroingHardstop;
@@ -43,15 +42,10 @@ public class Intake extends Subsystem {
     public double autoIntakeOut;
     private boolean auto;
 
-    private boolean firstIntaking = true;
     public ElapsedTime transitionTimer = new ElapsedTime();
-
-    public ElapsedTime hardStopTimer = new ElapsedTime();
     public ElapsedTime collectingTimer = new ElapsedTime();
 
-    public boolean autonomousFirst = true;
-
-    public RotatorStates currentIntakeRotatorState;
+    private RotatorStates currentIntakeRotatorState;
 
     public boolean isIntakeOperatorControl() {
         return intakeOperatorControl;
@@ -59,8 +53,8 @@ public class Intake extends Subsystem {
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
-        intakeMotor = hardwareMap.get(DcMotor.class, Constants.IntakeConstants.kIntakeMotorId);
-        extender = hardwareMap.get(DcMotor.class, Constants.IntakeConstants.kIntakeExtenderId);
+        intakeMotor = (ExpansionHubMotor) hardwareMap.dcMotor.get(Constants.IntakeConstants.kIntakeMotorId);
+        extender = (ExpansionHubMotor) hardwareMap.dcMotor.get(Constants.IntakeConstants.kIntakeExtenderId);
 
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -98,7 +92,6 @@ public class Intake extends Subsystem {
 
         telemetry.addData("IntakePower", intakeMotor.getPower());
         telemetry.addData("Intake Extender Real Position", getIntakeExtenderPosition());
-        telemetry.addData("Intake Extender Position", extender.getCurrentPosition());
         telemetry.addData("Offset", offset);
         telemetry.addData("Offset is true", !CruiseLib.isBetween(offset, -0.1, 0.1));
 
@@ -124,7 +117,6 @@ public class Intake extends Subsystem {
 
                         currentIntakeState = IntakeStates.INTAKING;
                         setWantedIntakeState(IntakeStates.GRABBING);
-                        firstIntaking = true;
                 } else {
                     intakeOperatorControl = true;
                     setIntakeGateState(IntakeGateStates.DOWN);
@@ -173,7 +165,6 @@ public class Intake extends Subsystem {
                     currentIntakeState = IntakeStates.AUTONOMOUS;
                 }else {
                     setIntakeExtenderPower(1);
-                    autonomousFirst = true;
                 }
                 break;
 
@@ -183,7 +174,6 @@ public class Intake extends Subsystem {
                 break;
 
             case TRANSITION:
-//                if (Robot.getInstance().getLift().getCurrentState() == LiftStates.DOWN) {
                     if (transitionTimer.milliseconds() < 800){
                         setIntakeGateState(IntakeGateStates.UP);
                     }else if(transitionTimer.milliseconds() > 800 && transitionTimer.milliseconds() < 1300) {
@@ -199,16 +189,11 @@ public class Intake extends Subsystem {
                         currentIntakeState = IntakeStates.TRANSITION;
                         intakeOperatorControl = true;
                     }
-//                }
                 break;
 
             case DRIVER:
                 break;
         }
-    }
-
-    @Override
-    public void test(Telemetry telemetry) {
     }
 
     @Override
@@ -254,6 +239,10 @@ public class Intake extends Subsystem {
         return (getIntakeExtenderPositionTicks() - offset) * Constants.IntakeConstants.kIntakeTicksToInchRatio;
     }
 
+    private double getIntakeExtenderPositionTicks() {
+        return RevHub.getInstance().getMotorPosition(extender);
+    }
+
     /**
      * @param position Position that the intake should go to. In Inches
      */
@@ -267,10 +256,6 @@ public class Intake extends Subsystem {
             extender.setPower(0);
         else
             setIntakeExtenderPower(power);
-    }
-
-    private double getIntakeExtenderPositionTicks() {
-        return extender.getCurrentPosition();
     }
 
     /**
@@ -352,13 +337,8 @@ public class Intake extends Subsystem {
     private boolean intakeInSwitchValue() {
         boolean intakeInSwitch = !inSwitch.getState();
         if (intakeInSwitch)
-            offset = getIntakeExtenderPositionTicks();
-
+            zeroSensors();
         return intakeInSwitch;
-    }
-
-    public boolean inPosition(){
-        return Math.abs(extenderPID.getError()) < .5;
     }
 
     @Override

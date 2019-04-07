@@ -18,8 +18,6 @@ public abstract class Subsystem {
 
     public abstract void update(ElapsedTime time);
 
-    public abstract void test(Telemetry telemetry);
-
     public abstract void stop();
 
     protected void sleep(long milliseconds){
