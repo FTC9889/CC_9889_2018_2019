@@ -79,7 +79,7 @@ public class Teleop extends Team9889Linear {
             else if (gamepad2.left_bumper || gamepad1.dpad_down)
                 Robot.getIntake().setIntakeRotatorState(Intake.RotatorStates.DOWN);
 
-            if (gamepad2.left_trigger > .1 && Robot.getLift().getHeight() < 50){
+            if (gamepad2.left_bumper && Robot.getLift().getHeight() < 50){
                 Robot.stopIntake = true;
             }
 

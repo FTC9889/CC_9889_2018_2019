@@ -174,26 +174,28 @@ public class Intake extends Subsystem {
                 break;
 
             case TRANSITION:
-                    if (transitionTimer.milliseconds() < 800){
-                        setIntakeGateState(IntakeGateStates.UP);
-                    }else if(transitionTimer.milliseconds() > 800 && transitionTimer.milliseconds() < 1300) {
-                        intakeOperatorControl = false;
-                        setIntakeRotatorState(RotatorStates.UP);
-                        setIntakeExtenderPower(1);
-                        Robot.getInstance().transitionDone = true;
-                    } else if(transitionTimer.milliseconds() > 1300 && transitionTimer.milliseconds() < 1500) {
-                        setIntakeExtenderPower(0);
-                        setIntakePower(0);
-                        setIntakeRotatorState(RotatorStates.UP);
-                        Robot.getInstance().stopIntake = false;
-                        currentIntakeState = IntakeStates.TRANSITION;
-                        intakeOperatorControl = true;
-                    }
+                setIntakeGateState(IntakeGateStates.UP);
+
+                if(transitionTimer.milliseconds() > 800 && transitionTimer.milliseconds() < 1300) {
+                    intakeOperatorControl = false;
+                    setIntakeRotatorState(RotatorStates.UP);
+                    setIntakeExtenderPower(1);
+                    Robot.getInstance().transitionDone = true;
+                } else if(transitionTimer.milliseconds() > 1300 && transitionTimer.milliseconds() < 1500) {
+                    setIntakeExtenderPower(0);
+                    setIntakePower(0);
+                    setIntakeRotatorState(RotatorStates.UP);
+                    Robot.getInstance().stopIntake = false;
+                    currentIntakeState = IntakeStates.TRANSITION;
+                    intakeOperatorControl = true;
+                }
                 break;
 
             case DRIVER:
                 break;
         }
+
+        setIntakeGatePosition();
     }
 
     @Override
@@ -289,10 +291,6 @@ public class Intake extends Subsystem {
             intakeRotator.setPosition(intakeRotatorPosition);
     }
 
-    private void setIntakeGatePosition(double position) {
-        intakeGate.setPosition(position);
-    }
-
     public void setIntakeRotatorState(RotatorStates state) {
         switch (state) {
             case UP:
@@ -313,6 +311,16 @@ public class Intake extends Subsystem {
                 currentIntakeRotatorState = RotatorStates.DUMPING;
                 break;
         }
+    }
+
+    private double intakeGatePosition = 0;
+
+    private void setIntakeGatePosition(double position) {
+        intakeGatePosition = position;
+    }
+
+    private void setIntakeGatePosition() {
+        intakeGate.setPosition(intakeGatePosition);
     }
 
     public void setIntakeGateState(IntakeGateStates state){
