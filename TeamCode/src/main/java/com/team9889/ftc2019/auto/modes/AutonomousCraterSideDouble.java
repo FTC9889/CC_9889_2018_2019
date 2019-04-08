@@ -29,7 +29,7 @@ public class AutonomousCraterSideDouble extends AutoModeBase {
     @Override
     public void run(Side side, boolean doubleSample, boolean scoreSample) {
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
-        runAction(new Land2(5000));
+        runAction(new Land2());
 
         ThreadAction(new IntakeInFront(20, 2000, true));
         runAction(new Wait(1500));

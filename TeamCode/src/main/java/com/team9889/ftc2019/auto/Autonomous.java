@@ -12,6 +12,7 @@ import com.team9889.ftc2019.auto.actions.Intake.IntakeInFront;
 import com.team9889.ftc2019.auto.actions.Intake.IntakeUp;
 import com.team9889.ftc2019.auto.actions.Intake.IntakeZeroing;
 import com.team9889.ftc2019.auto.actions.Intake.Outtake;
+import com.team9889.ftc2019.auto.actions.Lift.Land2;
 import com.team9889.ftc2019.auto.actions.Wait;
 import com.team9889.ftc2019.subsystems.Camera;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
@@ -30,6 +31,8 @@ public class Autonomous extends AutoModeBase {
 
     @Override
     public void run(AutoModeBase.Side side, boolean doubleSample, boolean scoreSample) {
+//        runAction(new Land2());
+
         switch (side){
             case DEPOT:
                 depotSingle();
@@ -97,7 +100,6 @@ public class Autonomous extends AutoModeBase {
     public void craterSingle(boolean scoreSample) {
         Robot.getIntake().setIntakeGateState(com.team9889.ftc2019.subsystems.Intake.IntakeGateStates.HOLDINGMARKER);
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
-//                Land Here
         runAction(new Wait(1300));
         Robot.getIntake().setIntakeGateState(com.team9889.ftc2019.subsystems.Intake.IntakeGateStates.DOWN);
 
@@ -136,14 +138,14 @@ public class Autonomous extends AutoModeBase {
 
 //        Collect and Score
         if (scoreSample){
-            runAction(new IntakeUp());
-            ThreadAction(new IntakeInFront(30, 2000, true));
-            runAction(new DriveMotionProfile(15, 0));
-            runAction(new Intake(1500));
+//            runAction(new IntakeUp());
+//            ThreadAction(new IntakeInFront(30, 2000, true));
+//            runAction(new DriveMotionProfile(15, 0));
+//            runAction(new Intake(1500));
 
             ThreadAction(new IntakeGrabbing());
 
-            runAction(new DriveMotionProfile(-12, 0));
+//            runAction(new DriveMotionProfile(-12, 0));
 
             runAction(new Turn(new Rotation2d(20, AngleUnit.DEGREES), 1000));
 

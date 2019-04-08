@@ -30,7 +30,7 @@ public class AutonomousCraterSide extends AutoModeBase {
         Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.STORED);
         Robot.update(matchTime);
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
-        runAction(new Land2(2500));
+//        runAction(new Land2(2500));
         runAction(new Wait(500));
         Robot.getIntake().setIntakeGateState(com.team9889.ftc2019.subsystems.Intake.IntakeGateStates.DOWN);
 

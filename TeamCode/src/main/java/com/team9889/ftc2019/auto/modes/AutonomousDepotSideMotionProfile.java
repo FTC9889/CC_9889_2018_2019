@@ -38,7 +38,7 @@ public class AutonomousDepotSideMotionProfile extends AutoModeBase {
     @Override
     public void run(AutoModeBase.Side side, boolean doubleSample, boolean scoreSample) {
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
-        runAction(new Land2(2500));
+//        runAction(new Land2(2500));
 
 //        Scan Mineral
         runAction(new Wait(500));

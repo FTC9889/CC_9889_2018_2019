@@ -9,5 +9,5 @@ dependencies {
     implementation project(':DogeCV')
     implementation project(':openCVLibrary3')
 
-    compile 'org.openftc:rev-extensions-2:1.1'
+    implementation 'org.openftc:rev-extensions-2:1.1'
 }

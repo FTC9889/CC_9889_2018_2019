@@ -3,6 +3,7 @@ package com.team9889.ftc2019.auto;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.Team9889Linear;
 import com.team9889.ftc2019.auto.actions.Action;
+import com.team9889.ftc2019.subsystems.RevHub;
 import com.team9889.lib.android.FileReader;
 
 /**
@@ -57,8 +58,10 @@ public abstract class AutoModeBase extends Team9889Linear {
         if(opModeIsActive())
             action.start();
 
-        while (!action.isFinished() && opModeIsActive())
+        while (!action.isFinished() && opModeIsActive()) {
+            RevHub.getInstance().update();
             action.update();
+        }
 
         if(opModeIsActive())
             action.done();

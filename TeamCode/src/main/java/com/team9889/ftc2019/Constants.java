@@ -59,6 +59,7 @@ public class Constants {
         public final static String kIntakeExtenderId = "intakeextender";
         public final static String kIntakeRotatorId = "intakerotator";
         public final static String kIntakeGate = "intakegate";
+        public final static String kMarkerDumper = "markerdumper";
         public final static String kIntakeInSwitchId = "intakeinswitch";
 
         final static double kIntakeTicksPerRev = 537.6;  //NeveRest Orbital 20
@@ -122,6 +123,7 @@ public class Constants {
     //Settings for ScoringLift
     public static class HangingLiftConstants {
         public final static String kLiftId = "hlift";
+        public final static String kHookId = "hook";
         public final static String kLiftLowerLimitSensorId = "hangingliftlowerlimitsensor";
     }
 

@@ -1,5 +1,6 @@
 package com.team9889.ftc2019.subsystems;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
@@ -23,6 +24,7 @@ public class Intake extends Subsystem {
     // Hardware
     private ExpansionHubMotor intakeMotor, extender;
     private Servo intakeRotator, intakeGate;
+    private CRServo markerDumper;
     private DigitalChannel inSwitch;
 
     // PID for extending the intake
@@ -64,6 +66,7 @@ public class Intake extends Subsystem {
 
         intakeRotator = hardwareMap.get(Servo.class, Constants.IntakeConstants.kIntakeRotatorId);
         intakeGate = hardwareMap.get(Servo.class, Constants.IntakeConstants.kIntakeGate);
+        markerDumper = hardwareMap.crservo.get(Constants.IntakeConstants.kMarkerDumper);
 
         inSwitch = hardwareMap.get(DigitalChannel.class, Constants.IntakeConstants.kIntakeInSwitchId);
 
@@ -176,12 +179,12 @@ public class Intake extends Subsystem {
             case TRANSITION:
                 setIntakeGateState(IntakeGateStates.UP);
 
-                if(transitionTimer.milliseconds() > 800 && transitionTimer.milliseconds() < 1300) {
+                if(transitionTimer.milliseconds() > 800 && transitionTimer.milliseconds() < 900) {
                     intakeOperatorControl = false;
                     setIntakeRotatorState(RotatorStates.UP);
                     setIntakeExtenderPower(1);
                     Robot.getInstance().transitionDone = true;
-                } else if(transitionTimer.milliseconds() > 1300 && transitionTimer.milliseconds() < 1500) {
+                } else if(transitionTimer.milliseconds() > 900 && transitionTimer.milliseconds() < 1200) {
                     setIntakeExtenderPower(0);
                     setIntakePower(0);
                     setIntakeRotatorState(RotatorStates.UP);
@@ -308,6 +311,7 @@ public class Intake extends Subsystem {
 
             case DUMPING:
                 setIntakeRotatorPosition(0.5);
+                setIntakeGateState(IntakeGateStates.UP);
                 currentIntakeRotatorState = RotatorStates.DUMPING;
                 break;
         }

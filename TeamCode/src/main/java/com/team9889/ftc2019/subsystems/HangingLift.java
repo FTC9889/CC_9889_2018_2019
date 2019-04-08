@@ -1,9 +1,11 @@
 package com.team9889.ftc2019.subsystems;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.Constants;
 import com.team9889.ftc2019.states.LiftStates;
@@ -19,6 +21,7 @@ import org.openftc.revextensions2.ExpansionHubMotor;
 public class HangingLift extends Subsystem {
 
     private ExpansionHubMotor liftMotor;
+    private CRServo hook;
     private DigitalChannel lowerLimit;
     private PID pid = new PID(.6, 0, 0.3);
     public boolean liftOperatorControl = false;
@@ -31,6 +34,8 @@ public class HangingLift extends Subsystem {
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
         liftMotor = (ExpansionHubMotor) hardwareMap.dcMotor.get(Constants.HangingLiftConstants.kLiftId);
+
+        hook = hardwareMap.crservo.get(Constants.HangingLiftConstants.kHookId);
 
         lowerLimit = hardwareMap.get(DigitalChannel.class, Constants.HangingLiftConstants.kLiftLowerLimitSensorId);
 
@@ -84,7 +89,7 @@ public class HangingLift extends Subsystem {
                     break;
 
                 case HOOKHEIGHT:
-                    setLiftPosition(13.6);
+                    setLiftPosition(3200);
 
                     if (inPosition()) {
                         setLiftPower(0);
@@ -134,6 +139,10 @@ public class HangingLift extends Subsystem {
      */
     private void setLiftPosition(double wantedHeight) {
         setLiftPower(pid.update(getHeight(), wantedHeight));
+    }
+
+    public void setHookPower(double power){
+        hook.setPower(power);
     }
 
     private double getHeightTicks() {

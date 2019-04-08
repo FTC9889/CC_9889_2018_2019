@@ -13,14 +13,7 @@ import com.team9889.ftc2019.subsystems.Robot;
 public class Land2 extends Action {
 
     private ElapsedTime timer = new ElapsedTime();
-    private double timeOut;
-
-    public Land2(double timeOut){
-        this.timeOut = timeOut;
-    }
-    public Land2(){
-        this.timeOut = 5000;
-    }
+    private boolean first = true;
 
     @Override
     public void setup(String args) {
@@ -29,30 +22,31 @@ public class Land2 extends Action {
 
     @Override
     public void start() {
-        Robot.getInstance().getLift().setLiftState(LiftStates.NULL);
-        Robot.getInstance().getDumper().setDumperStates(Dumper.dumperStates.COLLECTING);
-        timer.reset();
+        Robot.getInstance().getHangingLift().setLiftState(LiftStates.HOOKHEIGHT);
     }
 
     @Override
     public void update() {
-        Robot.getInstance().getLift().setLiftPower(1);
-        Robot.getInstance().getDumper().update(timer);
+        Robot.getInstance().getHangingLift().update(timer);
+        if (Robot.getInstance().getHangingLift().getCurrentState() == LiftStates.HOOKHEIGHT && first){
+            Robot.getInstance().getHangingLift().setHookPower(1);
+            timer.reset();
+            first = false;
+
+        }else if (!first){
+
+        }else
+            timer.reset();
     }
 
     @Override
     public boolean isFinished() {
-        double height = Robot.getInstance().getLift().getHeight();
-        RobotLog.a("Height of ScoringLift: " + String.valueOf(height));
-
-        return height > 15.75 || this.timer.milliseconds() > timeOut;
+        return timer.milliseconds() > 500;
     }
 
     @Override
     public void done() {
-        Robot.getInstance().getLift().setLiftPower(0);
-        Robot.getInstance().getDrive().setThrottleSteerPower(0, 0);
-        Robot.getInstance().setScorerStates(Robot.scorerStates.NULL);
-        RobotLog.a("Finished Lowering");
+        Robot.getInstance().getHangingLift().setHookPower(0);
+        Robot.getInstance().getHangingLift().setLiftPower(0);
     }
 }

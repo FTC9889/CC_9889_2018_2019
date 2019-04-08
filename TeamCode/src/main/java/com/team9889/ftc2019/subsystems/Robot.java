@@ -63,6 +63,7 @@ public class Robot extends Subsystem {
     @Override
     public void init(HardwareMap hardwareMap, boolean autonomous) {
         RevExtensions2.init();
+
         mRevHubs.init(hardwareMap);
         mRevHubs.update();
 
@@ -109,7 +110,7 @@ public class Robot extends Subsystem {
 
             case COLLECTING:
                     getDumper().wantedDumperState = Dumper.dumperStates.COLLECTING;
-                    if (getDumper().dumperTimer.milliseconds() > 300)
+                    if (getDumper().dumperTimer.milliseconds() > 800)
                         getLift().setLiftState(LiftStates.DOWN);
                 break;
 
