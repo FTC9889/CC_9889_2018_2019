@@ -3,6 +3,7 @@ package com.team9889.ftc2019.auto.actions.Dumper;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.states.LiftStates;
+import com.team9889.ftc2019.subsystems.Dumper;
 import com.team9889.ftc2019.subsystems.Robot;
 
 /**
@@ -19,13 +20,15 @@ public class DumperCollecting extends Action {
 
     @Override
     public void start() {
-        Robot.getInstance().setScorerStates(Robot.scorerStates.COLLECTING);
+        Robot.getInstance().getDumper().setDumperStates(Dumper.dumperStates.COLLECTING);
+        Robot.getInstance().getLift().setLiftState(LiftStates.DOWN);
         timer.reset();
     }
 
     @Override
     public void update() {
-        Robot.getInstance().update(timer);
+        Robot.getInstance().getLift().update(timer);
+        Robot.getInstance().getDumper().update(timer);
     }
 
     @Override

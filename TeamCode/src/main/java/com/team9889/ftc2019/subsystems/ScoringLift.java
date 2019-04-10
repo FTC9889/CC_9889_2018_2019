@@ -31,8 +31,7 @@ public class ScoringLift extends Subsystem {
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
-        liftMotor = (ExpansionHubMotor) hardwareMap.dcMotor
-                .get(Constants.ScoringLiftConstants.kLeftLiftId);
+        liftMotor = hardwareMap.get(DcMotorEx.class, Constants.ScoringLiftConstants.kLeftLiftId);
 
         lowerLimit = hardwareMap
                 .get(DigitalChannel.class, Constants.ScoringLiftConstants.kLiftLowerLimitSensorId);
