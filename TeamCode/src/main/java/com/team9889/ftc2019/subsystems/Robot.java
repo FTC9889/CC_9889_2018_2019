@@ -33,9 +33,6 @@ public class Robot extends Subsystem {
     private ElapsedTime liftUpTimer = new ElapsedTime();
 
     public boolean transitionDone = false;
-
-    public boolean stopIntake = false;
-
     public boolean autoSampled = true;
 
     private List<Subsystem> subsystems = Arrays.asList(

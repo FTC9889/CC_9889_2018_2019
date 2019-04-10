@@ -1,6 +1,5 @@
 package com.team9889.ftc2019.subsystems;
 
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
@@ -24,7 +23,7 @@ public class Intake extends Subsystem {
     // Hardware
     private ExpansionHubMotor intakeMotor, extender;
     private Servo intakeRotator, intakeGate;
-    private CRServo markerDumper;
+    private Servo markerDumper;
     private DigitalChannel inSwitch;
 
     // PID for extending the intake
@@ -66,7 +65,7 @@ public class Intake extends Subsystem {
 
         intakeRotator = hardwareMap.get(Servo.class, Constants.IntakeConstants.kIntakeRotatorId);
         intakeGate = hardwareMap.get(Servo.class, Constants.IntakeConstants.kIntakeGate);
-        markerDumper = hardwareMap.crservo.get(Constants.IntakeConstants.kMarkerDumper);
+        markerDumper = hardwareMap.get(Servo.class, Constants.IntakeConstants.kMarkerDumper);
 
         inSwitch = hardwareMap.get(DigitalChannel.class, Constants.IntakeConstants.kIntakeInSwitchId);
 
@@ -115,16 +114,11 @@ public class Intake extends Subsystem {
 
         switch (wantedIntakeState) {
             case INTAKING:
-                if (Robot.getInstance().stopIntake) {
-                        intakeOperatorControl = false;
-
-                        currentIntakeState = IntakeStates.INTAKING;
-                        setWantedIntakeState(IntakeStates.GRABBING);
-                } else {
-                    intakeOperatorControl = true;
-                    setIntakeGateState(IntakeGateStates.DOWN);
-                    intake();
-                }
+                intakeOperatorControl = true;
+                setIntakeGateState(IntakeGateStates.DOWN);
+                setIntakeRotatorState(Intake.RotatorStates.DOWN);
+                intake();
+                currentIntakeState = IntakeStates.INTAKING;
                 break;
             case GRABBING:
                 if (intakeInSwitchValue()){
@@ -155,9 +149,7 @@ public class Intake extends Subsystem {
                     } else {
                         intakeOperatorControl = false;
                         setIntakeRotatorState(RotatorStates.UP);
-
-//                        TODO speed this up
-                        setIntakeExtenderPower(-0.5);
+                        setIntakeExtenderPower(-1);
                     }
                 }
                 break;
@@ -188,7 +180,6 @@ public class Intake extends Subsystem {
                     setIntakeExtenderPower(0);
                     setIntakePower(0);
                     setIntakeRotatorState(RotatorStates.UP);
-                    Robot.getInstance().stopIntake = false;
                     currentIntakeState = IntakeStates.TRANSITION;
                     intakeOperatorControl = true;
                 }
@@ -330,11 +321,11 @@ public class Intake extends Subsystem {
     public void setIntakeGateState(IntakeGateStates state){
         switch (state){
             case UP:
-                setIntakeGatePosition(0.25);
+                setIntakeGatePosition(0.4);
                 break;
 
             case DOWN:
-                setIntakeGatePosition(0);
+                setIntakeGatePosition(0.1);
                 break;
 
             case HOLDINGMARKER:
@@ -347,7 +338,7 @@ public class Intake extends Subsystem {
      * @return If the ScoringLift is pressing the Lower Limit Switch
      */
     private boolean intakeInSwitchValue() {
-        boolean intakeInSwitch = !inSwitch.getState();
+        boolean intakeInSwitch = !RevHub.getInstance().getDigitalState(inSwitch);
         if (intakeInSwitch)
             zeroSensors();
         return intakeInSwitch;

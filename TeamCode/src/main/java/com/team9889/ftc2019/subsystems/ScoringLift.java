@@ -89,9 +89,9 @@ public class ScoringLift extends Subsystem {
                     break;
 
                 case UP:
-                    setLiftPosition(-1500);
+                    setLiftPosition(-2625);
 
-                    if (getHeight() < -1219.0 || liftMotor.getCurrentDraw() > 5500) {
+                    if (getHeight() < -2133.25 || liftMotor.getCurrentDraw() > 5400) {
                         setLiftPower(0);
                         currentState = LiftStates.UP;
                     }
@@ -131,8 +131,8 @@ public class ScoringLift extends Subsystem {
     private void setLiftPosition(double wantedHeight) {
         double power = pid.update(getHeight(), wantedHeight);
 
-        if (power>0.3)
-            power = 0.3;
+        if (power>0.2)
+            power = 0.2;
 
         setLiftPower(power);
     }
