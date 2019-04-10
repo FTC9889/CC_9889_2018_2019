@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.states.LiftStates;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.openftc.revextensions2.RevExtensions2;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,8 +17,6 @@ import java.util.List;
 public class Robot extends Subsystem {
 
     private static Robot mInstance = null;
-
-    private RevHub mRevHubs = RevHub.getInstance();
 
     private Drive mDrive = new Drive();
     private ScoringLift mScoringLift = new ScoringLift();
@@ -59,11 +56,6 @@ public class Robot extends Subsystem {
      */
     @Override
     public void init(HardwareMap hardwareMap, boolean autonomous) {
-        RevExtensions2.init();
-
-        mRevHubs.init(hardwareMap);
-        mRevHubs.update();
-
         for (Subsystem subsystem : subsystems) {
             RobotLog.a("=========== Initialing " + subsystem.toString() + " ===========");
             subsystem.init(hardwareMap, autonomous);
@@ -93,8 +85,6 @@ public class Robot extends Subsystem {
 
     @Override
     public void update(ElapsedTime time) {
-        mRevHubs.update();
-
         switch (wantedScorerState) {
             case SCORING:
                 getLift().setLiftState(LiftStates.UP);
@@ -141,8 +131,6 @@ public class Robot extends Subsystem {
 
     @Override
     public void stop() {
-        mRevHubs.stop();
-
         for (Subsystem subsystem : subsystems) {
             RobotLog.a("=========== Stopping " + subsystem.toString() + " ===========");
             subsystem.stop();

@@ -1,6 +1,7 @@
 package com.team9889.ftc2019.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -12,7 +13,6 @@ import com.team9889.lib.CruiseLib;
 import com.team9889.lib.control.controllers.PID;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.openftc.revextensions2.ExpansionHubMotor;
 
 /**
  * Created by licorice17 on 9/14/2018.
@@ -21,7 +21,7 @@ import org.openftc.revextensions2.ExpansionHubMotor;
 public class Intake extends Subsystem {
 
     // Hardware
-    private ExpansionHubMotor intakeMotor, extender;
+    private DcMotorEx intakeMotor, extender;
     private Servo intakeRotator, intakeGate;
     private Servo markerDumper;
     private DigitalChannel inSwitch;
@@ -54,8 +54,8 @@ public class Intake extends Subsystem {
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
-        intakeMotor = (ExpansionHubMotor) hardwareMap.dcMotor.get(Constants.IntakeConstants.kIntakeMotorId);
-        extender = (ExpansionHubMotor) hardwareMap.dcMotor.get(Constants.IntakeConstants.kIntakeExtenderId);
+        intakeMotor = hardwareMap.get(DcMotorEx.class, Constants.IntakeConstants.kIntakeMotorId);
+        extender = hardwareMap.get(DcMotorEx.class, Constants.IntakeConstants.kIntakeExtenderId);
 
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -236,7 +236,7 @@ public class Intake extends Subsystem {
     }
 
     private double getIntakeExtenderPositionTicks() {
-        return RevHub.getInstance().getMotorPosition(extender);
+        return extender.getCurrentPosition();
     }
 
     /**
@@ -338,7 +338,7 @@ public class Intake extends Subsystem {
      * @return If the ScoringLift is pressing the Lower Limit Switch
      */
     private boolean intakeInSwitchValue() {
-        boolean intakeInSwitch = !RevHub.getInstance().getDigitalState(inSwitch);
+        boolean intakeInSwitch = !inSwitch.getState();
         if (intakeInSwitch)
             zeroSensors();
         return intakeInSwitch;

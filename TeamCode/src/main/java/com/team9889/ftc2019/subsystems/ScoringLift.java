@@ -1,6 +1,7 @@
 package com.team9889.ftc2019.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -18,7 +19,7 @@ import org.openftc.revextensions2.ExpansionHubMotor;
 
 public class ScoringLift extends Subsystem {
 
-    private ExpansionHubMotor liftMotor;
+    private DcMotorEx liftMotor;
     private DigitalChannel lowerLimit;
     private PID pid;
     public boolean liftOperatorControl = false;
@@ -59,7 +60,6 @@ public class ScoringLift extends Subsystem {
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
 //        telemetry.addData("Rev Position", );
-        telemetry.addData("Current Draw", liftMotor.getCurrentDraw());
         telemetry.addData("Offset", offset);
         telemetry.addData("Height of lift", getHeight());
         telemetry.addData("Height of lift in ticks", getHeightTicks());
@@ -91,7 +91,7 @@ public class ScoringLift extends Subsystem {
                 case UP:
                     setLiftPosition(-2625);
 
-                    if (getHeight() < -2133.25 || liftMotor.getCurrentDraw() > 5400) {
+                    if (getHeight() < -2133.25) { // || liftMotor.getCurrentDraw() > 5400) {
                         setLiftPower(0);
                         currentState = LiftStates.UP;
                     }
@@ -138,7 +138,7 @@ public class ScoringLift extends Subsystem {
     }
 
     private double getHeightTicks() {
-        return RevHub.getInstance().getMotorPosition(liftMotor);
+        return liftMotor.getCurrentPosition();
     }
 
     public double getHeight() {
@@ -150,7 +150,7 @@ public class ScoringLift extends Subsystem {
     }
 
     public boolean getLowerLimitPressed() {
-        boolean lowerLimitPressed = !RevHub.getInstance().getDigitalState(lowerLimit);
+        boolean lowerLimitPressed = !lowerLimit.getState();
 
         if (lowerLimitPressed)
             zeroSensors();
