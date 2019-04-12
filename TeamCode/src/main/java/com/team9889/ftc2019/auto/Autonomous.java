@@ -62,7 +62,7 @@ public class Autonomous extends AutoModeBase {
 
 //                Drop Marker
         runAction(new IntakeUp());
-        runAction(new DriveMotionProfile(17, 0));
+        runAction(new DriveMotionProfile(18, 0));
         runAction(new IntakeInFront(30, 5000, true));
         runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
         ThreadAction(new DumperCollecting());
@@ -72,25 +72,31 @@ public class Autonomous extends AutoModeBase {
 
 //                Collect Sample
         if (middle){ // Middle
-            ThreadAction(new DriveMotionProfile(-15, 0));
+            ThreadAction(new DriveMotionProfile(-18, 0));
+            runAction(new IntakeUp());
             runAction(new IntakeZeroing(false, 2000));
-            runAction(new IntakeInFront(15, 1000 ,true));
+
+            runAction(new IntakeInFront(16, 1000 ,true));
             runAction(new Intake(1000));
 
         } else if (right){ //Right
-            ThreadAction(new DriveMotionProfile(-5, 0));
+            runAction(new IntakeUp());
             runAction(new IntakeZeroing(false, 2000));
+            runAction(new DriveMotionProfile(-16, 0));
 
-            runAction(new Turn(new Rotation2d(35, AngleUnit.DEGREES), 1000));
-            runAction(new IntakeInFront(6, 5000, false));
-            runAction(new Intake(3000));
+            runAction(new Turn(new Rotation2d(33, AngleUnit.DEGREES), 1000));
+            runAction(new Turn(new Rotation2d(33, AngleUnit.DEGREES), 1000));
+            runAction(new IntakeInFront(19, 5000, false));
+            runAction(new Intake(1000));
         } else{ //Left
-            ThreadAction(new DriveMotionProfile(-2, 0));
+            runAction(new IntakeUp());
             runAction(new IntakeZeroing(false, 2000));
+            runAction(new DriveMotionProfile(-16, 0));
 
-            runAction(new Turn(new Rotation2d(-50, AngleUnit.DEGREES), 1000));
-            runAction(new IntakeInFront(6, 5000, false));
-            runAction(new Intake(3000));
+            runAction(new Turn(new Rotation2d(-30, AngleUnit.DEGREES), 1000));
+            runAction(new Turn(new Rotation2d(-30, AngleUnit.DEGREES), 1000));
+            runAction(new IntakeInFront(19, 5000, false));
+            runAction(new Intake(1000));
         }
 
         if (scoreSample) {
@@ -98,16 +104,20 @@ public class Autonomous extends AutoModeBase {
             runAction(new Wait(250));
             runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
 
+            if (!middle)
+                ThreadAction(new DriveMotionProfile(-10, 0));
+
             runAction(new Wait(250));
             runAction(new DumperScoring());
             ThreadAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
             runAction(new DumperDump());
+        }else
+            ThreadAction(new IntakeZeroing());
 
-            runAction(new DriveMotionProfile(10, 0));
-        }
-
+        runAction(new DriveMotionProfile(13, 0));
 
         // Drive to Crater
+
         ThreadAction(new DumperCollecting());
 
         runAction(new IntakeUp());
@@ -116,7 +126,7 @@ public class Autonomous extends AutoModeBase {
 
         runAction(new DriveMotionProfile(40, -90));
 
-        runAction(new Turn(new Rotation2d(-120, AngleUnit.DEGREES), 2000));
+        runAction(new Turn(new Rotation2d(-120, AngleUnit.DEGREES), 1000));
 
         runAction(new IntakeInFront(20, 5000, true));
     }

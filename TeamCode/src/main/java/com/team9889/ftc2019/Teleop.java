@@ -84,6 +84,13 @@ public class Teleop extends Team9889Linear {
                 Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.GRABBING);
             }
 
+            if (gamepad1.dpad_left || gamepad2.dpad_left)
+                Robot.getHangingLift().setHookPower(1);
+            else if (gamepad1.dpad_right || gamepad2.dpad_right)
+                Robot.getHangingLift().setHookPower(-1);
+            else
+                Robot.getHangingLift().setHookPower(0);
+
             // Set Camera Position
             Robot.getCamera().setCameraPosition(Camera.CameraPositions.TELEOP);
 

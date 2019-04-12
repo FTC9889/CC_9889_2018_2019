@@ -66,9 +66,9 @@ public class DriveMotionProfile extends Action {
     // See https://github.com/TeamOverdrive/Relic_Main/blob/master/TeamCode/src/main/java/com/team2753/Constants.java#L28
     // Current v and a values based on ratio from above site
     private MotionProfileFollower leftMotionProfileFollower =
-            new MotionProfileFollower(0.000003, 0, 0.0225, 0.0005);
+            new MotionProfileFollower(0.00003, 0, 0.0225, 0.0005);
     private MotionProfileFollower rightMotionProfileFollower =
-            new MotionProfileFollower(0.000003, 0, 0.0225, 0.0005);
+            new MotionProfileFollower(0.00003, 0, 0.0225, 0.0005);
 
     private ElapsedTime timer = new ElapsedTime();
 

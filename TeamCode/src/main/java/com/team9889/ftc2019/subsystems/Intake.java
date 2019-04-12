@@ -73,8 +73,7 @@ public class Intake extends Subsystem {
         this.auto = auto;
         if (auto){
             zeroSensors();
-            setIntakeRotatorState(RotatorStates.UP);
-            setIntakeGateState(IntakeGateStates.HOLDINGMARKER);
+            setIntakeRotatorState(RotatorStates.DUMPING);
             wantedIntakeState = IntakeStates.ZEROING;
             currentIntakeState = IntakeStates.ZEROING;
         }else {
@@ -310,6 +309,22 @@ public class Intake extends Subsystem {
         }
     }
 
+    private void setMarkerDumperPosition(double position){
+        markerDumper.setPosition(position);
+    }
+
+    public void setMarkerDumperState(MarkerDumperStates state){
+        switch (state){
+            case HOLDING:
+                setMarkerDumperPosition(.4);
+                break;
+
+            case DUMPING:
+                setMarkerDumperPosition(.6);
+                break;
+        }
+    }
+
     private double intakeGatePosition = 0;
 
     private void setIntakeGatePosition(double position) {
@@ -361,6 +376,10 @@ public class Intake extends Subsystem {
 
     public enum IntakeGateStates {
         UP, DOWN, HOLDINGMARKER
+    }
+
+    public enum MarkerDumperStates {
+        HOLDING, DUMPING
     }
 }
 
