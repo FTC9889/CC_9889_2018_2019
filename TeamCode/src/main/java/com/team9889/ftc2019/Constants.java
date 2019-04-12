@@ -25,10 +25,7 @@ public class Constants {
         public final static String kLeftDriveMasterId = "lf";
         public final static String kRightDriveMasterId = "rf";
         public final static String kLeftDriveSlaveId = "lb";
-        public final static String getkRightDriveSlaveId = "rb";
-
-        public final static String kUltrasonic = "u";
-
+        public final static String kRightDriveSlaveId = "rb";
 
         public final static double WheelbaseWidth = 16;
         public final static double WheelDiameter = 4;
@@ -67,26 +64,6 @@ public class Constants {
         public final static double kIntakeTicksToInchRatio = kIntakeSpoolDiameter * Math.PI / kIntakeTicksPerRev;
     }
 
-
-
-   /*---------------------
-    |                     |
-    |        Arms!        |
-    |                     |
-    ---------------------*/
-
-    //Settings for Arms
-    public static class ArmConstants {
-        public final static String kLeftShoulderId = "leftshoulder";
-        public final static String kRightShoulderId = "rightshoulder";
-        public final static String kLeftElbowId = "leftelbow";
-        public final static String kRightElbowId = "rightelbow";
-        public final static String kLeftClawId = "leftclaw";
-        public final static String kRightClawId = "rightclaw";
-    }
-
-
-
     /*---------------------
     |                     |
     |       Dumper!       |
@@ -95,8 +72,6 @@ public class Constants {
 
     //Settings for Dumper
     public static class DumperConstants {
-        public final static String kRightDumperShoulderId = "rightdumpershoulder";
-        public final static String kLeftDumperShoulderId = "leftdumpershoulder";
         public final static String kDumperRotatorId = "dumperrotator";
     }
 

@@ -111,13 +111,15 @@ public class Intake extends Subsystem {
 
     @Override
     public void update(ElapsedTime time) {
-
         switch (wantedIntakeState) {
             case INTAKING:
                 intakeOperatorControl = true;
                 setIntakeGateState(IntakeGateStates.DOWN);
-                setIntakeRotatorState(Intake.RotatorStates.DOWN);
                 intake();
+
+                if(currentIntakeState != IntakeStates.INTAKING)
+                    setIntakeRotatorState(Intake.RotatorStates.DOWN);
+
                 currentIntakeState = IntakeStates.INTAKING;
                 break;
             case GRABBING:

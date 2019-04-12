@@ -89,7 +89,7 @@ public class Robot extends Subsystem {
             case SCORING:
                 getLift().setLiftState(LiftStates.UP);
 
-                if (getLift().getHeight() < -600) {
+                if (getLift().getHeight() < -1700) {
                     getDumper().wantedDumperState = Dumper.dumperStates.SCORING;
                 }
                 liftUpTimer.reset();

@@ -1,10 +1,8 @@
 package com.team9889.ftc2019.auto.actions.Lift;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.states.LiftStates;
-import com.team9889.ftc2019.subsystems.Dumper;
 import com.team9889.ftc2019.subsystems.Robot;
 
 /**
@@ -28,6 +26,7 @@ public class Land2 extends Action {
     @Override
     public void update() {
         Robot.getInstance().getHangingLift().update(timer);
+
         if (Robot.getInstance().getHangingLift().getCurrentState() == LiftStates.HOOKHEIGHT && first){
             Robot.getInstance().getHangingLift().setHookPower(1);
             timer.reset();

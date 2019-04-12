@@ -19,7 +19,6 @@ public class Teleop extends Team9889Linear {
 
     @Override
     public void runOpMode() {
-        boolean firstRun = true;
         DriverStation driverStation = new DriverStation(gamepad1, gamepad2);
         waitForStart(false);
 

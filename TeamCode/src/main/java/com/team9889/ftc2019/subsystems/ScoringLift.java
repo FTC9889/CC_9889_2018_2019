@@ -8,10 +8,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.Constants;
 import com.team9889.ftc2019.states.LiftStates;
+import com.team9889.lib.RunningAverage;
 import com.team9889.lib.control.controllers.PID;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.openftc.revextensions2.ExpansionHubMotor;
 
 /**
  * Created by joshua9889 on 3/28/2018.
@@ -26,8 +26,23 @@ public class ScoringLift extends Subsystem {
 
     private double offset = 0;
 
+    private double lastTime = 0;
+    private double lastPosition = 0;
+    private double currentSpeed = 0;
+    private boolean first = true;
+    private RunningAverage averageSpeed = new RunningAverage(10);
+
     private LiftStates currentState = LiftStates.NULL;
     private LiftStates wantedState = LiftStates.NULL;
+
+    public static void main(String... args) {
+        System.out.println(-2625 + 2500);
+
+        double p = .01/2625.0;
+        System.out.println(2625.0/2 * p);
+        System.out.println(p *2);
+        System.out.println(p);
+    }
 
     @Override
     public void init(HardwareMap hardwareMap, boolean auto) {
@@ -39,7 +54,7 @@ public class ScoringLift extends Subsystem {
         liftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        pid = new PID(.6, 0, 0.6);
+        pid = new PID(1./125., 0, 0.005);
 
         if(auto) {
             zeroSensors();
@@ -49,6 +64,8 @@ public class ScoringLift extends Subsystem {
             getLowerLimitPressed();
             wantedState = LiftStates.NULL;
         }
+
+        first = true;
     }
 
     @Override
@@ -58,10 +75,12 @@ public class ScoringLift extends Subsystem {
 
     @Override
     public void outputToTelemetry(Telemetry telemetry) {
-//        telemetry.addData("Rev Position", );
+        telemetry.addData("Velocity", currentSpeed);
+        telemetry.addData("Average Speed", averageSpeed.get());
         telemetry.addData("Offset", offset);
         telemetry.addData("Height of lift", getHeight());
         telemetry.addData("Height of lift in ticks", getHeightTicks());
+
         telemetry.addData("ScoringLift PID Output", pid.getOutput());
 
         telemetry.addData("Lower limit pressed", getLowerLimitPressed());
@@ -76,6 +95,18 @@ public class ScoringLift extends Subsystem {
     public void update(ElapsedTime time) {
         getLowerLimitPressed();
 
+        if(first) {
+            lastPosition = getHeight();
+            lastTime = time.milliseconds();
+            first = !first;
+        } else {
+            currentSpeed = (getHeight() - lastPosition) / (time.milliseconds() - lastTime);
+            averageSpeed.calculate(currentSpeed);
+
+            lastPosition = getHeight();
+            lastTime = time.milliseconds();
+        }
+
         if(currentState != wantedState) {
             switch (wantedState) {
                 case DOWN:
@@ -88,9 +119,9 @@ public class ScoringLift extends Subsystem {
                     break;
 
                 case UP:
-                    setLiftPosition(-2625);
+                    setLiftPosition(-2290);
 
-                    if (getHeight() < -2133.25) { // || liftMotor.getCurrentDraw() > 5400) {
+                    if (getHeight() < -2170 || Math.abs(averageSpeed.get()) < 0.01) {
                         setLiftPower(0);
                         currentState = LiftStates.UP;
                     }
@@ -102,7 +133,7 @@ public class ScoringLift extends Subsystem {
                     break;
             }
         } else {
-            setLiftPower(0);
+            averageSpeed.calculate(2);
         }
 
         liftOperatorControl = currentState == wantedState;
@@ -130,8 +161,8 @@ public class ScoringLift extends Subsystem {
     private void setLiftPosition(double wantedHeight) {
         double power = pid.update(getHeight(), wantedHeight);
 
-        if (power>0.2)
-            power = 0.2;
+        if (power>0.4)
+            power = 0.4;
 
         setLiftPower(power);
     }
@@ -145,7 +176,7 @@ public class ScoringLift extends Subsystem {
     }
 
     private boolean inPosition() {
-        return Math.abs(pid.getError()) < 5;
+        return Math.abs(pid.getError()) < 200;
     }
 
     public boolean getLowerLimitPressed() {

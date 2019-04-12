@@ -43,7 +43,9 @@ public class PID extends FeedBackController {
             // P control first time
             output = p * error;
             first = false;
-            RobotLog.a(String.valueOf(output));
+            try {
+                RobotLog.a(String.valueOf(output));
+            } catch (Exception ignored){}
         } else {
             double currentTime = System.currentTimeMillis() - lastTime;
             integral = integral + (error *currentTime);
