@@ -1,11 +1,11 @@
-package com.team9889.ftc2019.auto.actions.Intake;
+package com.team9889.ftc2019.auto.actions.Lift;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.team9889.ftc2019.auto.actions.Action;
-import com.team9889.ftc2019.subsystems.Intake;
+import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.ftc2019.subsystems.Robot;
 
-public class MarkerDumper extends Action {
+public class LiftDown extends Action {
 
     private ElapsedTime timer = new ElapsedTime();
 
@@ -16,22 +16,21 @@ public class MarkerDumper extends Action {
 
     @Override
     public void start() {
-        Robot.getInstance().getIntake().setMarkerDumperState(Intake.MarkerDumperStates.DUMPING);
-        timer.reset();
+        Robot.getInstance().getHangingLift().setLiftState(LiftStates.DOWN);
     }
 
     @Override
     public void update() {
-        Robot.getInstance().getIntake().update(timer);
+        Robot.getInstance().getHangingLift().update(timer);
     }
 
     @Override
     public boolean isFinished() {
-        return timer.milliseconds() > 250;
+        return Robot.getInstance().getHangingLift().isCurrentWantedState();
     }
 
     @Override
     public void done() {
-
+        Robot.getInstance().getHangingLift().setLiftPower(0);
     }
 }

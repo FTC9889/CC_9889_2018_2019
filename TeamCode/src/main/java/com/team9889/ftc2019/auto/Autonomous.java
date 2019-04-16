@@ -11,6 +11,11 @@ import com.team9889.ftc2019.auto.actions.Intake.IntakeGrabbing;
 import com.team9889.ftc2019.auto.actions.Intake.IntakeInFront;
 import com.team9889.ftc2019.auto.actions.Intake.IntakeUp;
 import com.team9889.ftc2019.auto.actions.Intake.IntakeZeroing;
+import com.team9889.ftc2019.auto.actions.Intake.MarkerDumper;
+import com.team9889.ftc2019.auto.actions.Intake.MarkerDumperUp;
+import com.team9889.ftc2019.auto.actions.Intake.Outtake;
+import com.team9889.ftc2019.auto.actions.Lift.Land2;
+import com.team9889.ftc2019.auto.actions.Lift.LiftDown;
 import com.team9889.ftc2019.auto.actions.Wait;
 import com.team9889.ftc2019.subsystems.Camera;
 import com.team9889.lib.control.math.cartesian.Rotation2d;
@@ -33,22 +38,27 @@ public class Autonomous extends AutoModeBase {
 
         switch (side){
             case DEPOT:
-                depotSingle(scoreSample);
+                depotSingle(scoreSample, doubleSample);
                 break;
 
             case CRATER:
-                craterSingle(scoreSample);
+                craterSingle(scoreSample, doubleSample);
                 break;
         }
         
     }
 
-    public void depotSingle(boolean scoreSample){
+    public void depotSingle(boolean scoreSample, boolean doubleSample){
+        Robot.getIntake().setIntakeGateState(com.team9889.ftc2019.subsystems.Intake.IntakeGateStates.HOLDINGMARKER);
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
-//                land here
+//        land
+        if (doubleSample)
+            runAction(new Land2());
+        else
+            runAction(new Wait(1000));
 
-//                Scan Mineral
-        runAction(new Wait(2000));
+//        Scan Mineral
+        runAction(new Wait(1000));
         if (Robot.getCamera().isGoldInfront())
             middle = true;
         else{
@@ -62,40 +72,43 @@ public class Autonomous extends AutoModeBase {
 
 //                Drop Marker
         runAction(new IntakeUp());
-        runAction(new DriveMotionProfile(18, 0));
+        runAction(new DriveMotionProfile(16, 0));
         runAction(new IntakeInFront(30, 5000, true));
-        runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
+        ThreadAction(new LiftDown());
         ThreadAction(new DumperCollecting());
-        runAction(new IntakeUp());
+        runAction(new MarkerDumper());
+        ThreadAction(new MarkerDumperUp());
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.TELEOP);
 
 
 //                Collect Sample
         if (middle){ // Middle
-            ThreadAction(new DriveMotionProfile(-18, 0));
-            runAction(new IntakeUp());
             runAction(new IntakeZeroing(false, 2000));
 
+            runAction(new DriveMotionProfile(-24, 0));
+
+            runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
             runAction(new IntakeInFront(16, 1000 ,true));
+
             runAction(new Intake(1000));
 
         } else if (right){ //Right
-            runAction(new IntakeUp());
             runAction(new IntakeZeroing(false, 2000));
-            runAction(new DriveMotionProfile(-16, 0));
 
-            runAction(new Turn(new Rotation2d(33, AngleUnit.DEGREES), 1000));
-            runAction(new Turn(new Rotation2d(33, AngleUnit.DEGREES), 1000));
-            runAction(new IntakeInFront(19, 5000, false));
+            runAction(new DriveMotionProfile(-24, 0));
+
+            runAction(new Turn(new Rotation2d(31.5, AngleUnit.DEGREES), 1000));
+            runAction(new Turn(new Rotation2d(31.5, AngleUnit.DEGREES), 1000));
+            runAction(new IntakeInFront(21.5, 5000, false));
             runAction(new Intake(1000));
         } else{ //Left
-            runAction(new IntakeUp());
             runAction(new IntakeZeroing(false, 2000));
-            runAction(new DriveMotionProfile(-16, 0));
 
-            runAction(new Turn(new Rotation2d(-30, AngleUnit.DEGREES), 1000));
-            runAction(new Turn(new Rotation2d(-30, AngleUnit.DEGREES), 1000));
-            runAction(new IntakeInFront(19, 5000, false));
+            runAction(new DriveMotionProfile(-24, 0));
+
+            runAction(new Turn(new Rotation2d(-29.5, AngleUnit.DEGREES), 1000));
+            runAction(new Turn(new Rotation2d(-29.5, AngleUnit.DEGREES), 1000));
+            runAction(new IntakeInFront(21.5, 5000, false));
             runAction(new Intake(1000));
         }
 
@@ -111,8 +124,12 @@ public class Autonomous extends AutoModeBase {
             runAction(new DumperScoring());
             ThreadAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
             runAction(new DumperDump());
-        }else
-            ThreadAction(new IntakeZeroing());
+        }else {
+            runAction(new IntakeZeroing());
+            runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
+            if (!middle)
+                runAction(new DriveMotionProfile(-5, 0));
+        }
 
         runAction(new DriveMotionProfile(13, 0));
 
@@ -131,10 +148,14 @@ public class Autonomous extends AutoModeBase {
         runAction(new IntakeInFront(20, 5000, true));
     }
 
-    public void craterSingle(boolean scoreSample) {
+    public void craterSingle(boolean scoreSample, boolean doubleSample) {
         Robot.getIntake().setIntakeGateState(com.team9889.ftc2019.subsystems.Intake.IntakeGateStates.HOLDINGMARKER);
         Robot.getCamera().setCameraPosition(Camera.CameraPositions.FRONTCENTER);
-        runAction(new Wait(1300));
+
+//        Land
+        if (doubleSample)
+            runAction(new Land2());
+        runAction(new Wait(800));
         Robot.getIntake().setIntakeGateState(com.team9889.ftc2019.subsystems.Intake.IntakeGateStates.DOWN);
 
 
@@ -143,8 +164,9 @@ public class Autonomous extends AutoModeBase {
             // Grab Gold Block
             middle = true;
             Robot.getCamera().setCameraPosition(Camera.CameraPositions.TELEOP);
-            runAction(new IntakeInFront(17, 2000, false));
+            runAction(new IntakeUp());
 
+            runAction(new IntakeInFront(17, 2000, false));
             runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
             runAction(new Intake(1000));
         } else{
@@ -155,7 +177,8 @@ public class Autonomous extends AutoModeBase {
                 right = true;
                 Robot.getCamera().setCameraPosition(Camera.CameraPositions.TELEOP);
                 runAction(new DriveMotionProfile(5, 0));
-                runAction(new Turn(new Rotation2d(30, AngleUnit.DEGREES), 1500));
+                runAction(new Turn(new Rotation2d(36, AngleUnit.DEGREES), 1500));
+                runAction(new IntakeUp());
                 runAction(new IntakeInFront(18, 2000, false));
                 runAction(new Intake(1000));
                 runAction(new IntakeUp());
@@ -163,7 +186,8 @@ public class Autonomous extends AutoModeBase {
                 Robot.getCamera().setCameraPosition(Camera.CameraPositions.TELEOP);
                 runAction(new DriveToDistanceAndAngle(5, 0, 500));
                 runAction(new Turn(new Rotation2d(-30, AngleUnit.DEGREES), 1500));
-                runAction(new IntakeInFront(18, 2000, false));
+                runAction(new IntakeUp());
+                runAction(new IntakeInFront(20, 2000, false));
                 runAction(new Intake(1000));
                 runAction(new IntakeUp());
             }
@@ -203,11 +227,13 @@ public class Autonomous extends AutoModeBase {
 //            ThreadAction(new IntakeZeroing());
         }else {
             ThreadAction(new IntakeZeroing());
+            runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
             if (!right)
                 runAction(new DriveMotionProfile(5, 0));
         }
 
 //         Drive to Wall
+        ThreadAction(new LiftDown());
         runAction(new DriveMotionProfile(10, 0));
         runAction(new Turn(new Rotation2d(-90, AngleUnit.DEGREES), 2000));
         runAction(new DriveMotionProfile(40, -90));
@@ -215,10 +241,14 @@ public class Autonomous extends AutoModeBase {
 
 
         // Drive to Depot
-        ThreadAction(new DriveMotionProfile(20, -135));
-        runAction(new IntakeInFront(20, 2000, true));
-        runAction(new Wait(1000));
+        runAction(new IntakeInFront(35, 2000, true));
+
+        if (!scoreSample)
+            ThreadAction(new Outtake(1, 1000));
+
+        runAction(new MarkerDumper());
         ThreadAction(new IntakeZeroing());
+        ThreadAction(new MarkerDumperUp());
         runAction(new DriveMotionProfile(-52, -135));
 
 

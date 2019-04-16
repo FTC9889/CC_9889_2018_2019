@@ -27,6 +27,8 @@ public class HangingLift extends Subsystem {
 
     private double offset = 0;
 
+    private ElapsedTime hookTimer = new ElapsedTime();
+
     private LiftStates currentState = LiftStates.NULL;
     private LiftStates wantedState = LiftStates.NULL;
 
@@ -46,8 +48,10 @@ public class HangingLift extends Subsystem {
         currentState = LiftStates.NULL;
         wantedState = LiftStates.NULL;
 
-        if (auto)
+        if (auto) {
+            hookTimer.reset();
             setLiftState(LiftStates.HANGING);
+        }
     }
 
     @Override
@@ -90,7 +94,7 @@ public class HangingLift extends Subsystem {
                 case HOOKHEIGHT:
                     setLiftPosition(3200);
 
-                    if (inPosition()) {
+                    if (inPosition() || getHeight() > 3200) {
                         setLiftPower(0);
                         currentState = LiftStates.HOOKHEIGHT;
                     }
@@ -102,6 +106,9 @@ public class HangingLift extends Subsystem {
                         zeroSensors();
                     } else {
                         setLiftPower(-.7);
+                    }
+                    if (hookTimer.milliseconds() < 1000){
+                        setHookPower(-.5);
                     }
 
                     // Never Set the currentState to Hanging in order to make it still run during init

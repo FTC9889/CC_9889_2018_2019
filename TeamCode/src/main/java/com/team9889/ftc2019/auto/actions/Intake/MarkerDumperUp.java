@@ -5,7 +5,7 @@ import com.team9889.ftc2019.auto.actions.Action;
 import com.team9889.ftc2019.subsystems.Intake;
 import com.team9889.ftc2019.subsystems.Robot;
 
-public class MarkerDumper extends Action {
+public class MarkerDumperUp extends Action {
 
     private ElapsedTime timer = new ElapsedTime();
 
@@ -16,7 +16,7 @@ public class MarkerDumper extends Action {
 
     @Override
     public void start() {
-        Robot.getInstance().getIntake().setMarkerDumperState(Intake.MarkerDumperStates.DUMPING);
+        Robot.getInstance().getIntake().setMarkerDumperState(Intake.MarkerDumperStates.HOLDING);
         timer.reset();
     }
 

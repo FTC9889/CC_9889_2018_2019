@@ -73,9 +73,10 @@ public class Intake extends Subsystem {
         this.auto = auto;
         if (auto){
             zeroSensors();
+            setMarkerDumperState(MarkerDumperStates.HOLDING);
             setIntakeRotatorState(RotatorStates.DUMPING);
             wantedIntakeState = IntakeStates.ZEROING;
-            currentIntakeState = IntakeStates.ZEROING;
+            currentIntakeState = IntakeStates.NULL;
         }else {
             wantedIntakeState = IntakeStates.NULL;
         }
@@ -316,11 +317,11 @@ public class Intake extends Subsystem {
     public void setMarkerDumperState(MarkerDumperStates state){
         switch (state){
             case HOLDING:
-                setMarkerDumperPosition(.4);
+                setMarkerDumperPosition(1);
                 break;
 
             case DUMPING:
-                setMarkerDumperPosition(.6);
+                setMarkerDumperPosition(.4);
                 break;
         }
     }

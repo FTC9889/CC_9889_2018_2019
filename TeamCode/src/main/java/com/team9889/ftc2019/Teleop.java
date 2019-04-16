@@ -107,7 +107,8 @@ public class Teleop extends Team9889Linear {
             double dtMilli = dt.milliseconds();
             telemetry.addData("dt", dtMilli);
             telemetry.addData("Cycles Per Second", 1000 / dtMilli);
-            Robot.outputToTelemetry(telemetry);
+
+//            Robot.outputToTelemetry(telemetry);
             telemetry.update();
             dt.reset();
         }

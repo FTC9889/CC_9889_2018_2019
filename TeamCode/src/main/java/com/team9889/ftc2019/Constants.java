@@ -60,7 +60,7 @@ public class Constants {
         public final static String kIntakeInSwitchId = "intakeinswitch";
 
         final static double kIntakeTicksPerRev = 537.6;  //NeveRest Orbital 20
-        final static double kIntakeSpoolDiameter = 1.5;
+        final static double kIntakeSpoolDiameter = 2;
         public final static double kIntakeTicksToInchRatio = kIntakeSpoolDiameter * Math.PI / kIntakeTicksPerRev;
     }
 
