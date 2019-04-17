@@ -28,6 +28,7 @@ public class IntakeZeroing extends Action {
     @Override
     public void start() {
         intakeTimer.reset();
+        Robot.getInstance().getIntake().zeroingFirst = true;
         Robot.getInstance().getIntake().setWantedIntakeState(Intake.IntakeStates.ZEROING);
     }
 

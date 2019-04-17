@@ -88,7 +88,7 @@ public class Autonomous extends AutoModeBase {
             runAction(new DriveMotionProfile(-24, 0));
 
             runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
-            runAction(new IntakeInFront(16, 1000 ,true));
+            runAction(new IntakeInFront(17, 1000 ,true));
 
             runAction(new Intake(1000));
 
@@ -193,50 +193,19 @@ public class Autonomous extends AutoModeBase {
             }
         }
 
-
-//        Collect and Score
-        if (scoreSample){
-//            runAction(new IntakeUp());
-//            ThreadAction(new IntakeInFront(30, 2000, true));
-//            runAction(new DriveMotionProfile(15, 0));
-//            runAction(new Intake(1500));
-
-            runAction(new IntakeGrabbing());
-
-//            runAction(new DriveMotionProfile(-12, 0));
-
-            runAction(new Turn(new Rotation2d(25, AngleUnit.DEGREES), 1000));
-
-            if (!middle)
-                runAction(new DriveMotionProfile(-8, 25));
-            else
-                runAction(new DriveMotionProfile(-3, 25));
-
-            runAction(new DumperScoring());
-
-            runAction(new DumperDump());
-
-            if (right)
-                runAction(new DriveMotionProfile(5, 25));
-            else
-                runAction(new DriveMotionProfile(8, 25));
-
-            ThreadAction(new DumperCollecting());
-
-            runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1500));
-//            ThreadAction(new IntakeZeroing());
-        }else {
             ThreadAction(new IntakeZeroing());
             runAction(new Turn(new Rotation2d(0, AngleUnit.DEGREES), 1000));
-            if (!right)
-                runAction(new DriveMotionProfile(5, 0));
-        }
+            if (middle)
+                runAction(new DriveMotionProfile(15, 0));
+            else if (right)
+                runAction(new DriveMotionProfile(10, 0));
+            else
+                runAction(new DriveMotionProfile(12, 0));
 
 //         Drive to Wall
         ThreadAction(new LiftDown());
-        runAction(new DriveMotionProfile(10, 0));
         runAction(new Turn(new Rotation2d(-90, AngleUnit.DEGREES), 2000));
-        runAction(new DriveMotionProfile(40, -90));
+        runAction(new DriveMotionProfile(50, -90));
         runAction(new Turn(new Rotation2d(-135, AngleUnit.DEGREES), 1000));
 
 
@@ -247,9 +216,11 @@ public class Autonomous extends AutoModeBase {
             ThreadAction(new Outtake(1, 1000));
 
         runAction(new MarkerDumper());
-        ThreadAction(new IntakeZeroing());
+        runAction(new IntakeZeroing());
         ThreadAction(new MarkerDumperUp());
-        runAction(new DriveMotionProfile(-52, -135));
+        runAction(new Turn(new Rotation2d(45, AngleUnit.DEGREES), 1500));
+        runAction(new DriveMotionProfile(30, 45));
+        runAction(new IntakeInFront(20, 3000, true));
 
 
 //        Dump Marker in Depot

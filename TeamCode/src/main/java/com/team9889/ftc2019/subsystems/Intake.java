@@ -33,6 +33,9 @@ public class Intake extends Subsystem {
     private double maximumPosition = 35; // Inches
     private double offset = 0; // Ticks
 
+    public boolean zeroingFirst = true;
+    private ElapsedTime zeroingTimer = new ElapsedTime();
+
     private boolean intakeOperatorControl = true;
     public IntakeStates currentIntakeState = IntakeStates.NULL;
     private IntakeStates wantedIntakeState = IntakeStates.ZEROING;
@@ -144,14 +147,23 @@ public class Intake extends Subsystem {
 
             case ZEROING:
                 if (currentIntakeState != wantedIntakeState) {
-                    if (intakeInSwitchValue()) {
+                    if (zeroingFirst){
+                        zeroingTimer.reset();
+                        zeroingFirst = false;
+                    }
+
+                    if (intakeInSwitchValue() || zeroingTimer.milliseconds() > 4000) {
                         setIntakeExtenderPower(0);
                         intakeOperatorControl = true;
+                        zeroingFirst = true;
                         currentIntakeState = IntakeStates.ZEROING;
                     } else {
                         intakeOperatorControl = false;
                         setIntakeRotatorState(RotatorStates.UP);
-                        setIntakeExtenderPower(-1);
+                        if (auto)
+                            setIntakeExtenderPower(-0.5);
+                        else
+                            setIntakeExtenderPower(-1);
                     }
                 }
                 break;
@@ -173,12 +185,12 @@ public class Intake extends Subsystem {
             case TRANSITION:
                 setIntakeGateState(IntakeGateStates.UP);
 
-                if(transitionTimer.milliseconds() > 800 && transitionTimer.milliseconds() < 900) {
+                if(transitionTimer.milliseconds() > 800 && transitionTimer.milliseconds() < 1000) {
                     intakeOperatorControl = false;
                     setIntakeRotatorState(RotatorStates.UP);
                     setIntakeExtenderPower(1);
                     Robot.getInstance().transitionDone = true;
-                } else if(transitionTimer.milliseconds() > 900 && transitionTimer.milliseconds() < 1200) {
+                } else if(transitionTimer.milliseconds() > 1000 && transitionTimer.milliseconds() < 1200) {
                     setIntakeExtenderPower(0);
                     setIntakePower(0);
                     setIntakeRotatorState(RotatorStates.UP);

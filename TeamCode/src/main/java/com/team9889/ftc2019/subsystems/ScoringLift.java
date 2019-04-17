@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.RobotLog;
 import com.team9889.ftc2019.Constants;
 import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.lib.RunningAverage;
@@ -25,6 +26,9 @@ public class ScoringLift extends Subsystem {
     public boolean liftOperatorControl = false;
 
     private double offset = 0;
+
+    private boolean downFirst = true;
+    private ElapsedTime timer = new ElapsedTime();
 
     private double lastTime = 0;
     private double lastPosition = 0;
@@ -55,6 +59,8 @@ public class ScoringLift extends Subsystem {
         liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         pid = new PID(1./125., 0, 0.005);
+
+        averageSpeed.calculate(20);
 
         if(auto) {
             zeroSensors();
@@ -95,6 +101,8 @@ public class ScoringLift extends Subsystem {
     public void update(ElapsedTime time) {
         getLowerLimitPressed();
 
+        RobotLog.e(String.valueOf(averageSpeed.get()));
+
         if(first) {
             lastPosition = getHeight();
             lastTime = time.milliseconds();
@@ -110,11 +118,15 @@ public class ScoringLift extends Subsystem {
         if(currentState != wantedState) {
             switch (wantedState) {
                 case DOWN:
-                    setLiftPosition(0);
+                    setLiftPower(1);
 
-                    if (inPosition()) {
+                    if (downFirst) {
+                        timer.reset();
+                        downFirst = false;
+                    }else if (getLowerLimitPressed() || timer.milliseconds() > 2000) {
                         setLiftPower(0);
                         currentState = LiftStates.DOWN;
+                        downFirst = true;
                     }
                     break;
 
@@ -160,9 +172,6 @@ public class ScoringLift extends Subsystem {
      */
     private void setLiftPosition(double wantedHeight) {
         double power = pid.update(getHeight(), wantedHeight);
-
-        if (power>0.4)
-            power = 0.4;
 
         setLiftPower(power);
     }

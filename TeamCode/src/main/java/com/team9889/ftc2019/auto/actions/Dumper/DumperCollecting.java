@@ -21,12 +21,14 @@ public class DumperCollecting extends Action {
     @Override
     public void start() {
         Robot.getInstance().getDumper().setDumperStates(Dumper.dumperStates.COLLECTING);
-        Robot.getInstance().getLift().setLiftState(LiftStates.DOWN);
         timer.reset();
     }
 
     @Override
     public void update() {
+        if (timer.milliseconds() > 1000)
+            Robot.getInstance().getLift().setLiftState(LiftStates.DOWN);
+
         Robot.getInstance().getLift().update(timer);
         Robot.getInstance().getDumper().update(timer);
     }
