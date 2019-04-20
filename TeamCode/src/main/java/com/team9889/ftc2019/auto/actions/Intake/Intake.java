@@ -22,6 +22,7 @@ public class Intake extends Action {
     public void start() {
         Robot.getInstance().getIntake().intake();
         Robot.getInstance().getIntake().setIntakeGateState(com.team9889.ftc2019.subsystems.Intake.IntakeGateStates.DOWN);
+        Robot.getInstance().getIntake().setIntakeRotatorState(com.team9889.ftc2019.subsystems.Intake.RotatorStates.DOWN);
         timer.reset();
     }
 

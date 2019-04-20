@@ -49,11 +49,11 @@ public class Dumper extends Subsystem{
     public void update(ElapsedTime time) {
         switch (wantedDumperState) {
             case SCORING:
-                    setDumperRotatorPosition(.25);
+                    setDumperRotatorPosition(.225);
                 break;
 
             case DUMPAUTO:
-                setDumperRotatorPosition(.15);
+                setDumperRotatorPosition(.1);
 
                 if (timerReset) {
                     timer.reset();
@@ -62,12 +62,12 @@ public class Dumper extends Subsystem{
                 break;
 
             case COLLECTING:
-                setDumperRotatorPosition(.525);
+                setDumperRotatorPosition(.475);
                 timerReset = true;
                 break;
 
             case DUMP:
-                setDumperRotatorPosition(0.05);
+                setDumperRotatorPosition(0.025);
                 if (collectingTimer.milliseconds() > 1500) {
                     Robot.getInstance().setScorerStates(Robot.scorerStates.COLLECTING);
                     dumperTimer.reset();

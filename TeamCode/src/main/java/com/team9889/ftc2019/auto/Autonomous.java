@@ -222,6 +222,8 @@ public class Autonomous extends AutoModeBase {
         runAction(new DriveMotionProfile(30, 45));
         runAction(new IntakeInFront(20, 3000, true));
 
+        runAction(new Intake(20000));
+
 
 //        Dump Marker in Depot
 

@@ -54,6 +54,7 @@ public class Teleop extends Team9889Linear {
 
             if(driverStation.getStartIntaking()) {
                 Robot.getIntake().setWantedIntakeState(Intake.IntakeStates.INTAKING);
+                Robot.getIntake().setIntakeRotatorState(Intake.RotatorStates.DOWN);
             } else if(Robot.getIntake().isIntakeOperatorControl()){
                 if(gamepad2Intake)
                     Robot.getIntake().setIntakeExtenderPower(driverStation.getIntakeExtenderPower());
@@ -67,7 +68,7 @@ public class Teleop extends Team9889Linear {
             if (gamepad2.y || gamepad1.y){
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.SCORING);
                 Robot.transitionDone = false;
-            }else if (gamepad1.right_bumper && Robot.getLift().getCurrentState() == LiftStates.UP){
+            }else if (gamepad1.right_bumper){
                 Robot.getDumper().collectingTimer.reset();
                 Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.DUMP);
             }else if (gamepad2.b || gamepad1.b){

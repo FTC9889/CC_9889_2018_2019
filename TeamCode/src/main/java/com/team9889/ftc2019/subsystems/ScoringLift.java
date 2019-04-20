@@ -58,7 +58,7 @@ public class ScoringLift extends Subsystem {
         liftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        pid = new PID(1./125., 0, 0.005);
+        pid = new PID(1./125., 0, 0.01);
 
         averageSpeed.calculate(20);
 
@@ -115,38 +115,43 @@ public class ScoringLift extends Subsystem {
             lastTime = time.milliseconds();
         }
 
-        if(currentState != wantedState) {
             switch (wantedState) {
                 case DOWN:
-                    setLiftPower(1);
+                    if(currentState != wantedState) {
 
-                    if (downFirst) {
-                        timer.reset();
-                        downFirst = false;
-                    }else if (getLowerLimitPressed() || timer.milliseconds() > 2000) {
-                        setLiftPower(0);
-                        currentState = LiftStates.DOWN;
-                        downFirst = true;
-                    }
+                        setLiftPower(1);
+
+                        if (downFirst) {
+                            timer.reset();
+                            downFirst = false;
+                        } else if (getLowerLimitPressed() || timer.milliseconds() > 2000) {
+                            setLiftPower(0);
+                            currentState = LiftStates.DOWN;
+                            downFirst = true;
+                        }
+                    } else
+                        averageSpeed.calculate(2);
                     break;
 
                 case UP:
-                    setLiftPosition(-2290);
+                    if(currentState != wantedState) {
+                        setLiftPosition(-2150);
+                    } else
+                        setLiftPower(-0.15);
 
-                    if (getHeight() < -2170 || Math.abs(averageSpeed.get()) < 0.01) {
-                        setLiftPower(0);
+                    if (getHeight() < -2100 || Math.abs(averageSpeed.get()) < 0.008) {
                         currentState = LiftStates.UP;
                     }
                     break;
 
                 case NULL:
-                    setLiftPower(0);
-                    currentState = LiftStates.NULL;
+                    if (currentState != wantedState) {
+                        setLiftPower(0);
+                        currentState = LiftStates.NULL;
+                    }else
+                        averageSpeed.calculate(2);
                     break;
             }
-        } else {
-            averageSpeed.calculate(2);
-        }
 
         liftOperatorControl = currentState == wantedState;
     }

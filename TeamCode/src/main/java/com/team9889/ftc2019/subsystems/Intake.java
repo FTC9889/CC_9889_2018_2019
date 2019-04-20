@@ -126,10 +126,16 @@ public class Intake extends Subsystem {
                 currentIntakeState = IntakeStates.INTAKING;
                 break;
             case GRABBING:
-                if (intakeInSwitchValue()){
+                if (zeroingFirst){
+                    zeroingTimer.reset();
+                    zeroingFirst = false;
+                }
+
+                if (intakeInSwitchValue() || zeroingTimer.milliseconds() > 2000){
                     setIntakeExtenderPower(0);
                     intakeOperatorControl = true;
                     transitionTimer.reset();
+                    zeroingFirst = true;
                     setIntakeRotatorState(RotatorStates.DUMPING);
                     currentIntakeState = IntakeStates.GRABBING;
                     wantedIntakeState = IntakeStates.TRANSITION;
@@ -152,7 +158,7 @@ public class Intake extends Subsystem {
                         zeroingFirst = false;
                     }
 
-                    if (intakeInSwitchValue() || zeroingTimer.milliseconds() > 4000) {
+                    if (intakeInSwitchValue() || zeroingTimer.milliseconds() > 2000) {
                         setIntakeExtenderPower(0);
                         intakeOperatorControl = true;
                         zeroingFirst = true;
