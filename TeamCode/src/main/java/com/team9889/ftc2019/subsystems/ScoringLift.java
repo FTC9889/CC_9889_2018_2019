@@ -136,8 +136,7 @@ public class ScoringLift extends Subsystem {
                 case UP:
                     if(currentState != wantedState) {
                         setLiftPosition(-2150);
-                    } else
-                        setLiftPower(-0.15);
+                    }
 
                     if (getHeight() < -2100 || Math.abs(averageSpeed.get()) < 0.008) {
                         currentState = LiftStates.UP;

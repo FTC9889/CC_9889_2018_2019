@@ -8,6 +8,8 @@ import com.team9889.ftc2019.states.LiftStates;
 import com.team9889.ftc2019.subsystems.Camera;
 import com.team9889.ftc2019.subsystems.Intake;
 
+import org.firstinspires.ftc.robotcore.internal.usb.exception.RobotUsbTimeoutException;
+
 /**
  * Created by MannoMation on 1/14/2019.
  */
@@ -43,6 +45,8 @@ public class Teleop extends Team9889Linear {
                     Robot.getLift().setLiftPower(-gamepad2.right_trigger);
                 else if(Math.abs(gamepad2.right_trigger) < 0.1)
                     Robot.getLift().setLiftPower(gamepad2.left_trigger);
+                else if (Robot.getLift().getCurrentState() == LiftStates.UP)
+                    Robot.getLift().setLiftPower(-0.15);
                 else
                     Robot.getLift().setLiftPower(0);
             }

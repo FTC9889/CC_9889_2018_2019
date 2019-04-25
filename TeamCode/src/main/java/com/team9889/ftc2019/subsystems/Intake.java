@@ -78,6 +78,7 @@ public class Intake extends Subsystem {
             zeroSensors();
             setMarkerDumperState(MarkerDumperStates.HOLDING);
             setIntakeRotatorState(RotatorStates.DUMPING);
+            setMarkerDumperState(MarkerDumperStates.HOLDING);
             wantedIntakeState = IntakeStates.ZEROING;
             currentIntakeState = IntakeStates.NULL;
         }else {
