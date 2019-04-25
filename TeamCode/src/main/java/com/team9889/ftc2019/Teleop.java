@@ -45,7 +45,7 @@ public class Teleop extends Team9889Linear {
                     Robot.getLift().setLiftPower(-gamepad2.right_trigger);
                 else if(Math.abs(gamepad2.right_trigger) < 0.1)
                     Robot.getLift().setLiftPower(gamepad2.left_trigger);
-                else if (Robot.getLift().getCurrentState() == LiftStates.UP)
+                else if(Robot.getLift().getCurrentState() == LiftStates.UP)
                     Robot.getLift().setLiftPower(-0.15);
                 else
                     Robot.getLift().setLiftPower(0);

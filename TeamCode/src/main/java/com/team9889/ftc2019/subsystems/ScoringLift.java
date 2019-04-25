@@ -115,33 +115,33 @@ public class ScoringLift extends Subsystem {
             lastTime = time.milliseconds();
         }
 
-            switch (wantedState) {
-                case DOWN:
-                    if(currentState != wantedState) {
+        switch (wantedState) {
+            case DOWN:
+                if(currentState != wantedState) {
+                    setLiftPower(1);
 
-                        setLiftPower(1);
-
-                        if (downFirst) {
-                            timer.reset();
-                            downFirst = false;
-                        } else if (getLowerLimitPressed() || timer.milliseconds() > 2000) {
-                            setLiftPower(0);
-                            currentState = LiftStates.DOWN;
-                            downFirst = true;
-                        }
-                    } else
-                        averageSpeed.calculate(2);
-                    break;
-
-                case UP:
-                    if(currentState != wantedState) {
-                        setLiftPosition(-2150);
+                    if (downFirst) {
+                        timer.reset();
+                        downFirst = false;
+                    } else if (getLowerLimitPressed() || timer.milliseconds() > 2000) {
+                        setLiftPower(0);
+                        currentState = LiftStates.DOWN;
+                        downFirst = true;
                     }
+                } else
+                    averageSpeed.calculate(2);
+                break;
 
-                    if (getHeight() < -2100 || Math.abs(averageSpeed.get()) < 0.008) {
-                        currentState = LiftStates.UP;
-                    }
-                    break;
+            case UP:
+                if(currentState != wantedState) {
+                    setLiftPosition(-2150);
+                }
+
+                if (getHeight() < -2100 || Math.abs(averageSpeed.get()) < 0.008) {
+                    currentState = LiftStates.UP;
+                }
+
+                break;
 
                 case NULL:
                     if (currentState != wantedState) {
