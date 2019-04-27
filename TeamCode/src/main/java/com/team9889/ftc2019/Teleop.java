@@ -27,6 +27,8 @@ public class Teleop extends Team9889Linear {
         Robot.getDumper().dumperTimer.reset();
         Robot.setScorerStates(com.team9889.ftc2019.subsystems.Robot.scorerStates.COLLECTING);
 
+        Robot.getIntake().setIntakeGateState(Intake.IntakeGateStates.DOWN);
+
         while (opModeIsActive()) {
             dt.reset();
 

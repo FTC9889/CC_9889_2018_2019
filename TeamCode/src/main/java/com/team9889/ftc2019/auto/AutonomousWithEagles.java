@@ -27,13 +27,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
  */
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous
-public class Autonomous extends AutoModeBase {
+public class AutonomousWithEagles extends AutoModeBase {
 
     private boolean middle = false;
     private boolean right = false;
 
     @Override
-    public void run(AutoModeBase.Side side, boolean doubleSample, boolean scoreSample) {
+    public void run(Side side, boolean doubleSample, boolean scoreSample) {
 //        runAction(new Land2());
 
         switch (side){
@@ -205,6 +205,12 @@ public class Autonomous extends AutoModeBase {
 //         Drive to Wall
         ThreadAction(new LiftDown());
         runAction(new Turn(new Rotation2d(-90, AngleUnit.DEGREES), 2000));
+
+        if (!right)
+            runAction(new Wait(5000));
+        else
+            runAction(new Wait(3000));
+
         runAction(new DriveMotionProfile(50, -90));
         runAction(new Turn(new Rotation2d(-135, AngleUnit.DEGREES), 1000));
 

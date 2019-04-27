@@ -83,6 +83,7 @@ public class Intake extends Subsystem {
             currentIntakeState = IntakeStates.NULL;
         }else {
             wantedIntakeState = IntakeStates.NULL;
+            zeroingFirst = true;
         }
 
     }
