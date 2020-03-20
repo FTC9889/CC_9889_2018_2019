@@ -25,7 +25,7 @@ public class Drive extends Subsystem {
     /**
      * Hardware
      */
-    private DcMotorEx rightMaster_, leftMaster_, rightSlave_, leftSlave_ = null;
+    public DcMotorEx rightMaster_, leftMaster_, rightSlave_, leftSlave_ = null;
     private RevIMU imu = null;
 
     /**

@@ -112,6 +112,7 @@ public class Teleop extends Team9889Linear {
                 setBackground(Color.BLACK);
 
             double dtMilli = dt.milliseconds();
+            telemetry.addData("encoder", Robot.getDrive().rightMaster_.getVelocity());
             telemetry.addData("dt", dtMilli);
             telemetry.addData("Cycles Per Second", 1000 / dtMilli);
 
